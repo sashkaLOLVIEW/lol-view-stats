@@ -362,8 +362,17 @@ def item_assets(ids):
         except Exception as e: print("  item icons unavailable:", e)
     return {i: cache[i] for i in map(str, set(ids)) if i in cache}
 
+TRINKETS = {3340, 3363, 3364}
+def tidy_items(it):
+    """Keep the player's own slot order, show each item once, trinket last."""
+    seen, main, tr = set(), [], []
+    for i in it:
+        if i in seen: continue
+        seen.add(i); (tr if i in TRINKETS else main).append(i)
+    return main + tr
+
 def attach_items(w, GD, PD, CD):
-    IT = map_items(w)
+    IT = {k: tidy_items(v) for k, v in map_items(w).items()}
     if not IT: return
     for g in GD["games"]:
         for t in g["teams"]:
