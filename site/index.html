@@ -124,6 +124,7 @@ h2 svg { flex: none; }
 .live .box { width: 32px; height: 30px; border: 1.5px solid var(--live-line); border-radius: 4px; background: color-mix(in srgb, var(--live-line) 35%, transparent); }
 .live .score { font-size: 15px; font-weight: 700; letter-spacing: .06em; }
 .live .clock { text-align: right; font-size: 12px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.live .clock .ck { display: block; font-size: 12px; color: var(--fg); }
 .live .clock span { display: block; font-size: 11px; color: var(--muted); }
 .col-live h2.sec { margin-top: 28px; }
 .col-live .stack { margin-top: 12px; }
@@ -382,13 +383,7 @@ html { scroll-padding-top: 84px; }
       <!-- Live Now: hidden until a match is live. Remove the "hidden" attribute (or set live-wrap.hidden = false) to show it. -->
       <div id="live-wrap" hidden>
       <h2>Live Now</h2>
-      <div class="live" aria-label="No live match">
-        <span class="lg" id="live-logo"></span>
-        <div class="side"><b>-</b>-.--</div>
-        <div class="mid"><span class="box"></span><span class="score">0:0</span><span class="box"></span></div>
-        <div class="side"><b>-</b>-.--</div>
-        <div class="clock">00:00<span>Game -</span></div>
-      </div>
+      <div id="live-list"></div>
       </div>
 
       <h2 class="sec">Upcoming Matches <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></h2>
@@ -519,8 +514,52 @@ html { scroll-padding-top: 84px; }
   })();
 
   // Live
-  $('live-logo').innerHTML = worlds(26);
-  $('live-logo').style.color = 'var(--fg)';
+  // Live Now: polled from Riot's public lolesports feed in the visitor's browser every 30 s; hidden when nothing is live.
+  (function () {
+    var KEY = '0TvQnueqKa5mxJntVWt0w4LpLfEkrV1Ta8rQBb9Z', GW = 'https://esports-api.lolesports.com/persisted/gw', FEED = 'https://feed.lolesports.com/livestats/v1';
+    var H = {headers: {'x-api-key': KEY}}, starts = {}, live = [], busy = false;
+    function jget(u) { return fetch(u, H).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
+    function iso(ms) { return new Date(ms).toISOString(); }
+    function mmss(sec) { sec = Math.max(0, Math.floor(sec)); var m = Math.floor(sec / 60), x = sec % 60; return (m < 10 ? '0' : '') + m + ':' + (x < 10 ? '0' : '') + x; }
+    function gold(g) { return (g / 1000).toFixed(1) + 'k'; }
+    function frameInfo(gid) {
+      var t = Math.floor((Date.now() - 75e3) / 1e4) * 1e4;
+      var first = starts[gid] ? Promise.resolve(starts[gid]) : jget(FEED + '/window/' + gid).then(function (j) { var f = (j.frames || [])[0]; if (f) starts[gid] = Date.parse(f.rfc460Timestamp); return starts[gid]; });
+      return Promise.all([first, jget(FEED + '/window/' + gid + '?startingTime=' + encodeURIComponent(iso(t)))]).then(function (r) {
+        var fr = r[1].frames || [], last = fr[fr.length - 1];
+        return {md: r[1].gameMetadata, last: last, start: r[0]};
+      });
+    }
+    function poll() {
+      if (busy) return; busy = true;
+      jget(GW + '/getLive?hl=en-US').then(function (j) {
+        var ev = (((j.data || {}).schedule || {}).events || []).filter(function (e) { return e.type === 'match' && e.league && e.league.slug === 'worlds' && e.match && e.state === 'inProgress'; });
+        return Promise.all(ev.map(function (e) {
+          var g = (e.match.games || []).filter(function (x) { return x.state === 'inProgress'; })[0];
+          if (!g) return null;
+          return frameInfo(g.id).then(function (fi) {
+            if (!fi.last) return null;
+            var bid = fi.md.blueTeamMetadata.esportsTeamId, tm = e.match.teams, bl = tm.filter(function (t) { return t.id === bid; })[0] || tm[0], rd = tm.filter(function (t) { return t !== bl; })[0] || tm[1];
+            var running = fi.last.gameState === 'in_game', at = Date.now();
+            return {bl: bl, rd: rd, num: g.number, bo: (e.match.strategy || {}).count, b: fi.last.blueTeam, r: fi.last.redTeam, base: (Date.parse(fi.last.rfc460Timestamp) - fi.start) / 1000, at: at, run: running};
+          });
+        }));
+      }).then(function (L) { live = L.filter(Boolean); draw(); }).catch(function () { /* feed unreachable: keep what is shown */ }).then(function () { busy = false; });
+    }
+    function draw() {
+      var el = $('live-list');
+      $('live-wrap').hidden = !live.length;
+      el.innerHTML = live.map(function (m, i) {
+        function side(t, d) { return '<div class="side"><b>' + (t.code || '-') + '</b>' + d.totalKills + ' &middot; ' + gold(d.totalGold) + '</div>'; }
+        return '<div class="live" style="margin-top:' + (i ? 8 : 12) + 'px" aria-label="Live match"><span class="lg">' + worlds(26) + '</span>' + side(m.bl, m.b)
+          + '<div class="mid">' + logo(m.bl.code, 30) + '<span class="score">' + ((m.bl.result || {}).gameWins || 0) + ':' + ((m.rd.result || {}).gameWins || 0) + '</span>' + logo(m.rd.code, 30) + '</div>'
+          + side(m.rd, m.r) + '<div class="clock"><span class="ck" data-i="' + i + '">00:00</span><span>Game ' + m.num + (m.bo ? ' &middot; BO' + m.bo : '') + '</span></div></div>';
+      }).join('');
+      tick();
+    }
+    function tick() { Array.prototype.forEach.call(document.querySelectorAll('#live-list .ck'), function (c) { var m = live[+c.getAttribute('data-i')]; if (m) c.textContent = mmss(m.base + (m.run ? (Date.now() - m.at) / 1000 : 0)); }); }
+    poll(); setInterval(poll, 30e3); setInterval(tick, 1000);
+  })();
 
   // Upcoming matches: filled by build.py from the lolesports schedule (rows: home, away, UK time, date, BO, league, start-epoch-ms)
   var UP = {"global": [], "lck": [], "lpl": [], "lec": [], "lcs": [], "cblol": [], "lcp": []};
