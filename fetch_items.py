@@ -48,7 +48,7 @@ def finished_matches():
         if not token or (old and min(e["startTime"] for e in old)[:10] < SINCE): break
     return out
 
-def fetch_game(game, number, codes):
+def fetch_game(game, number, codes, bo=0):
     gid = game["id"]
     w0 = get(FEED + "/window/" + gid)
     md = w0["gameMetadata"]; t0 = iso(w0["frames"][0]["rfc460Timestamp"])
@@ -68,7 +68,7 @@ def fetch_game(game, number, codes):
             perk = p.get("perkMetadata") or {}
             players[side + ":" + pos] = dict(name=pm.get("summonerName"), champ=pm.get("championId"), items=[i for i in (p.get("items") or []) if i],
                                              runes=dict(style=perk.get("styleId"), sub=perk.get("subStyleId"), perks=perk.get("perks")))
-    return dict(id=gid, number=number, codes=sorted(codes), start=fmt(t0), patch=md.get("patchVersion"), players=players)
+    return dict(id=gid, number=number, bo=bo, codes=sorted(codes), start=fmt(t0), patch=md.get("patchVersion"), players=players)
 
 def main():
     try: cache = json.loads(OUT.read_text(encoding="utf-8"))
@@ -79,9 +79,11 @@ def main():
         codes = [t["code"].upper() for t in e["match"]["teams"]]
         try: games = get(GW + "/getEventDetails", hl="en-US", id=mid)["data"]["event"]["match"]["games"]
         except Exception as ex: print("  match", mid, "details failed:", ex); bad += 1; continue
+        bo = int(((e["match"].get("strategy") or {}).get("count")) or 0)
         for g in games:
+            if g["id"] in cache and bo and not cache[g["id"]].get("bo"): cache[g["id"]]["bo"] = bo       # backfill best-of on older entries
             if g.get("state") != "completed" or g["id"] in cache: continue
-            try: cache[g["id"]] = fetch_game(g, g["number"], codes); new += 1
+            try: cache[g["id"]] = fetch_game(g, g["number"], codes, bo); new += 1
             except Exception as ex: print("  game", g["id"], codes, "failed:", ex); bad += 1
             time.sleep(0.3)
     OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(cache, ensure_ascii=False))

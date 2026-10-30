@@ -230,8 +230,30 @@ def build_game(w, logos_all):
         games.append(dict(id=gid, patch=("%.2f" % float(g.patch.iloc[0]) if "patch" in g and pd.notna(g.patch.iloc[0]) else None), date=pd.Timestamp(g.date.iloc[0]).tz_localize("UTC").tz_convert(TZ).strftime("%b %-d"), start=str(g.date.iloc[0]), len=gl, teams=teams, gold=series))
     games.sort(key=lambda x: x["start"])
     for i, g in enumerate(games): g["n"] = i + 1
+    # series = same two teams, less than 12 h apart; best-of is read from the Riot schedule when cached, else inferred
+    cache = {}
+    try: cache = json.loads((ROOT / "data" / "items_cache.json").read_text(encoding="utf-8"))
+    except Exception: pass
+    sers = []
+    for g in games:
+        pair = frozenset(t["code"] for t in g["teams"]); t0 = pd.Timestamp(g["start"])
+        for s_ in reversed(sers):
+            if s_["pair"] == pair:
+                if t0 - s_["last"] < pd.Timedelta(hours=12): s_["g"].append(g); s_["last"] = t0; break
+                sers.append(dict(pair=pair, g=[g], last=t0)); break
+        else: sers.append(dict(pair=pair, g=[g], last=t0))
+    for k, s_ in enumerate(sers):
+        wins = {}
+        for g in s_["g"]:
+            wc = next(t["code"] for t in g["teams"] if t["win"]); wins[wc] = wins.get(wc, 0) + 1
+        n = len(s_["g"]); mx = max(wins.values())
+        bo = 5 if (mx >= 3 or n >= 4) else 3 if (n >= 2 or mx >= 2) else 1
+        for g in s_["g"]:
+            rec = cache.get(g["id"]) or {}
+            if rec.get("bo"): bo = int(rec["bo"]); break
+        for g in s_["g"]: g["sid"] = k; g["bo"] = bo
     used = {t["code"] for g in games for t in g["teams"]}
-    return dict(games=games, icons=icons, logos={k: logos_all[k] for k in used if k in logos_all})
+    return dict(games=games, icons=icons, tournament="Worlds 2026", logos={k: logos_all[k] for k in used if k in logos_all})
 
 def build_profiles(w, faces_fallback, logos_all):
     p = w[w.position != "team"].copy(); t = w[w.position == "team"]
