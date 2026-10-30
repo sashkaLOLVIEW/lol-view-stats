@@ -14,6 +14,7 @@ OUT = ROOT / "data" / "player_info_auto.json"
 API = "https://lol.fandom.com/api.php"
 UA = "lol-view-stats fan site (github.com/sashkaLOLVIEW/lol-view-stats)"
 BATCH = 20
+REFRESH_DAYS = 7        # look a player up again after this many days
 
 def find_field(fields, *needles):
     for n in needles:
@@ -33,6 +34,8 @@ def pick(rows, team_names):
         if len(c) == 1: return c[0]
     return None
 
+class RateLimited(Exception): pass
+
 def main():
     import requests
     sys.path.insert(0, str(ROOT))
@@ -41,44 +44,50 @@ def main():
     w = build.load_event(csv); pl = w[w.position != "team"]
     teams = {n: {n.lower(), build.need_code(n).lower()} for n in pl.teamname.unique()}
     players = sorted({(r.playername, r.teamname) for r in pl.itertuples()})
+    try: old = json.loads(OUT.read_text(encoding="utf-8"))
+    except Exception: old = {}
+    now = time.time()
+    todo = [p for p in players if now - (old.get(p[0]) or {}).get("ts", 0) > REFRESH_DAYS * 86400]
+    print("%d players on the site, %d already looked up recently, %d to look up now" % (len(players), len(players) - len(todo), len(todo)))
     s = requests.Session(); s.headers["User-Agent"] = UA
     def get(**p):
-        r = s.get(API, params=dict(format="json", **p), timeout=60); r.raise_for_status(); return r.json()
+        for attempt in range(5):                           # patient: wait and retry when the wiki says "ratelimited"
+            r = s.get(API, params=dict(format="json", **p), timeout=60); r.raise_for_status(); d = r.json()
+            if (d.get("error") or {}).get("code") != "ratelimited": return d
+            wait = 30 * (attempt + 1); print("  rate limited, waiting %ds (attempt %d/5)" % (wait, attempt + 1)); time.sleep(wait)
+        raise RateLimited()
     fl = get(action="cargofields", table="Players")
     cf = fl.get("cargofields") or {}
     fields = list(cf.keys()) if isinstance(cf, dict) else [f.get("fieldname", f) if isinstance(f, dict) else str(f) for f in cf]
-    print("Players table fields:", ", ".join(fields))
     f_bd = find_field(fields, "birth"); f_ct = find_field(fields, "contract")
     print("using birthdate field:", f_bd, "| contract field:", f_ct)
     want = [f for f in ("ID", "Team", "IsRetired", f_bd, f_ct) if f and f in fields]
-    out, missing = {}, []
-    for i in range(0, len(players), BATCH):
-        chunk = players[i:i + BATCH]
+    out = dict(old); blocked = False
+    for i in range(0, len(todo), BATCH):
+        chunk = todo[i:i + BATCH]
         ids = ",".join("'" + n.replace("'", "\\'") + "'" for n, _ in chunk)
-        def query(where):
-            d = get(action="cargoquery", tables="Players", fields=",".join(want), where=where, limit=500)
-            if i == 0 and where.startswith("ID IN"): print("first batch raw reply:", json.dumps(d, ensure_ascii=False)[:700])
-            if d.get("error"): print("wiki error:", json.dumps(d["error"])[:300])
-            return d.get("cargoquery", [])
-        rows = query("ID IN (%s)" % ids)
-        if not rows:                                       # retry one name at a time
-            for n, _ in chunk:
-                rows += query("ID='%s'" % n.replace("'", "\\'")); time.sleep(1)
+        try: d = get(action="cargoquery", tables="Players", fields=",".join(want), where="ID IN (%s)" % ids, limit=500)
+        except RateLimited: blocked = True; print("  still rate limited - stopping; the rest is tried again on the next run"); break
+        if d.get("error"): print("wiki error:", json.dumps(d["error"])[:300]); continue
         by = {}
-        for row in rows:
+        for row in d.get("cargoquery", []):
             t = row.get("title", row); by.setdefault((t.get("ID") or "").lower(), []).append(t)
         for name, team in chunk:
             r = pick(by.get(name.lower(), []), teams[team])
-            if not r: missing.append(name + " (no unique wiki match)"); continue
+            if not r: out[name] = dict(bd=None, contract=None, ts=now, nomatch=True); continue
             bd = (r.get(f_bd) or "").strip() if f_bd else ""; ct = month_year((r.get(f_ct) or "").strip()) if f_ct else None
-            out[name] = dict(bd=bd if re.match(r"\d{4}-\d{2}-\d{2}", bd) else None, contract=ct)
-        time.sleep(2)
+            out[name] = dict(bd=bd if re.match(r"\d{4}-\d{2}-\d{2}", bd) else None, contract=ct, ts=now)
+        time.sleep(5)
     OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1))
-    nb = sum(1 for v in out.values() if v["bd"]); nc = sum(1 for v in out.values() if v["contract"])
-    print("player info: %d players looked up | %d birthdates | %d contract dates | %d without a wiki match" % (len(out), nb, nc, len(missing)))
-    print("no contract date:", ", ".join(sorted(n for n, v in out.items() if not v["contract"])) or "-")
-    print("no birthdate:", ", ".join(sorted(n for n, v in out.items() if not v["bd"])) or "-")
-    print("not matched:", ", ".join(missing) or "-")
+    mine = {n: out.get(n) for n, _ in players}
+    have = {n: v for n, v in mine.items() if v and not v.get("nomatch")}
+    print("player info: %d of %d players found | %d birthdates | %d contract dates | %d without a wiki match | %d not looked up yet" % (
+        len(have), len(players), sum(1 for v in have.values() if v["bd"]), sum(1 for v in have.values() if v["contract"]),
+        sum(1 for v in mine.values() if v and v.get("nomatch")), sum(1 for v in mine.values() if v is None)))
+    print("no contract date:", ", ".join(sorted(n for n, v in have.items() if not v["contract"])) or "-")
+    print("no birthdate:", ", ".join(sorted(n for n, v in have.items() if not v["bd"])) or "-")
+    print("not matched:", ", ".join(sorted(n for n, v in mine.items() if v and v.get("nomatch"))) or "-")
+    if blocked: print("NOTE: the wiki limited us; run the workflow again in a few minutes to fetch the rest.")
 
 if __name__ == "__main__":
     try: main()
