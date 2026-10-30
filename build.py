@@ -346,13 +346,20 @@ def map_items(w):
     try: cache = json.loads((ROOT / "data" / "items_cache.json").read_text(encoding="utf-8"))
     except Exception: print("  no item cache - item builds are skipped"); return {}
     recs = list(cache.values()); out = {}; matched = 0; total = 0; champ_bad = 0
-    norm = lambda s: re.sub(r"[^a-z]", "", str(s).lower())
+    ALIAS = {"monkeyking": "wukong", "renata": "renataglasc", "nunu": "nunuwillump"}
+    def norm(s):
+        n = re.sub(r"[^a-z]", "", str(s).lower()); return ALIAS.get(n, n)
     for gid, g in w[w.position == "team"].groupby("gameid"):
         total += 1
         blue = g[g.side == "Blue"].iloc[0]; red = g[g.side == "Red"].iloc[0]
         codes = sorted([CODE.get(blue.teamname, ""), CODE.get(red.teamname, "")])
         t0 = pd.Timestamp(blue.date).tz_localize("UTC")
         cand = [r for r in recs if r["codes"] == codes and int(r["number"]) == int(blue.game) and abs((pd.Timestamp(r["start"]) - t0).total_seconds()) < 12 * 3600]
+        if not cand:      # team codes can differ between Riot and Oracle's Elixir: fall back to game number, start time and the ten champions
+            mine = {norm(c) for c in w[(w.gameid == gid) & (w.position != "team")].champion}
+            cand = [r for r in recs if int(r["number"]) == int(blue.game) and abs((pd.Timestamp(r["start"]) - t0).total_seconds()) < 3 * 3600
+                    and len(mine & {norm(p["champ"]) for p in r["players"].values()}) >= 9]
+            if cand: print("  matched by champions:", gid, codes, "riot codes", cand[0]["codes"])
         if not cand: print("  no Riot data for", gid, codes, "game", int(blue.game), str(blue.date)); continue
         r = cand[0]; matched += 1
         for _, p in w[(w.gameid == gid) & (w.position != "team")].iterrows():
