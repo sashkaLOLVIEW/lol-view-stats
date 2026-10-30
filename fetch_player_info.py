@@ -77,7 +77,7 @@ def main():
             if not r: out[name] = dict(bd=None, contract=None, ts=now, nomatch=True); continue
             bd = (r.get(f_bd) or "").strip() if f_bd else ""; ct = month_year((r.get(f_ct) or "").strip()) if f_ct else None
             out[name] = dict(bd=bd if re.match(r"\d{4}-\d{2}-\d{2}", bd) else None, contract=ct, ts=now)
-        time.sleep(5)
+        time.sleep(25)                                     # be gentle: the wiki limits bursts
     OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1))
     mine = {n: out.get(n) for n, _ in players}
     have = {n: v for n, v in mine.items() if v and not v.get("nomatch")}
