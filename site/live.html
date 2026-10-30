@@ -396,10 +396,11 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     return mmss(base + (S.frame.gameState === "in_game" ? (Date.now() - S.updated.getTime()) / 1000 : 0));
   }
   var DD = "https://ddragon.leagueoflegends.com/cdn/";
-  // icon above number; red side is listed in reverse so both sides mirror around the game time
+  // icon above number; listed from the game time outward: kills, gold, dragons, towers, barons, elders (blue side is reversed so both sides mirror)
   function objPills(ft, red) {
-    var o = [["kills", ft.totalKills || 0], ["gold", fmt(ft.totalGold || 0)], ["turret", ft.towers || 0], ["dragon", (ft.dragons || []).length], ["nashor", ft.barons || 0]];
-    if (red) o.reverse();
+    var dr = (ft.dragons || []).map(function (d) { return String(d).toLowerCase(); }), el = dr.filter(function (d) { return d === "elder"; }).length;
+    var o = [["kills", ft.totalKills || 0], ["gold", fmt(ft.totalGold || 0)], ["dragon", dr.length - el], ["turret", ft.towers || 0], ["nashor", ft.barons || 0], ["elder", el]];
+    if (!red) o.reverse();
     return '<div class="opills' + (red ? " r" : "") + '">' + o.map(function (x) { return '<div class="ost" title="' + x[0] + '">' + ico(x[0]) + "<b>" + x[1] + "</b></div>"; }).join("") + "</div>";
   }
   // Spell ids come from the feed when present (field names vary, so check the likely ones); icons from Data Dragon.
