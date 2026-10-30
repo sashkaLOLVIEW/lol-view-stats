@@ -340,12 +340,9 @@ html { scroll-padding-top: 84px; }
       return '<span class="rn2"><img class="k" src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img class="s" src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></span>';
     };
     var lo6 = function (it) {
-      var m = D.items, has = m && it && it.some(function (id) { return m[id]; });
-      if (!has) return '<span class="lo6"><i></i><i></i><i></i><i></i><i></i><i></i></span>';
-      var main = it.filter(function (id) { return !TRK[id]; }).slice(0, 6), tr = it.filter(function (id) { return TRK[id]; })[0], o = '';
-      main.forEach(function (id) { var x = m[id]; o += x ? '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : '<i></i>'; });
-      for (var k = main.length; k < 6; k++) o += '<i></i>';
-      o += (tr && m[tr]) ? '<img class="tr" src="' + m[tr][1] + '" alt="' + m[tr][0] + '" title="' + m[tr][0] + '">' : '<i></i>';
+      var m = D.items;
+      if (!m || !it || !it.length) return '<span class="lo6"><i></i><i></i><i></i><i></i><i></i><i></i></span>';
+      var o = ''; for (var k = 0; k < 7; k++) { var id = it[k], x = id ? m[id] : null; o += x ? '<img' + (k === 6 ? ' class="tr"' : '') + ' src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : '<i></i>'; }
       return '<span class="lo6 filled">' + o + '</span>';
     };
     $('hist').innerHTML = P.games.map(function (g) {

@@ -343,9 +343,9 @@ html { scroll-padding-top: 84px; }
     // bans
     // games
     var rnrow = function (r) { var m = D.runes, rn = r.rn; if (!m || !rn || !m[rn[0]] || !m[rn[1]]) return ''; return '<span class="rs"><img class="k" src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img class="s" src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></span>'; };
-    var itrow = function (it, pre) { pre = pre || ''; var m = D.items; if (!m || !it || !it.length) return pre ? '<div class="its">' + pre + '</div>' : ''; var TRK = {3340: 1, 3363: 1, 3364: 1}, main = it.filter(function (id) { return !TRK[id]; }).slice(0, 6), tr = it.filter(function (id) { return TRK[id]; })[0], o = '';
-      var sq = function (id, cl) { var x = m[id]; return x ? '<img' + (cl ? ' class="' + cl + '"' : '') + ' src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : '<i></i>'; };
-      main.forEach(function (id) { o += sq(id); }); for (var k = main.length; k < 6; k++) o += '<i></i>'; o += tr ? sq(tr, 'tr') : '<i></i>'; return '<div class="its">' + pre + o + '</div>'; };
+    var itrow = function (it, pre) { pre = pre || ''; var m = D.items; if (!m || !it || !it.length) return pre ? '<div class="its">' + pre + '</div>' : ''; var o = '';
+      for (var k = 0; k < 7; k++) { var id = it[k], x = id ? m[id] : null; o += x ? '<img' + (k === 6 ? ' class="tr"' : '') + ' src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : '<i></i>'; }
+      return '<div class="its">' + pre + o + '</div>'; };
     $('games').innerHTML = pk ? R.map(function (r) { return '<div class="gr gm"><div><div class="t"><span class="pt">' + logo(r.team, 16) + '<a href="player.html#' + encodeURIComponent(r.player) + '">' + r.player + '</a></span> <span class="vs">vs ' + logo(r.opp, 16) + ' ' + r.op + '</span></div><div class="s"><span>' + im('kills') + r.k + '/' + r.d + '/' + r.a + '</span><span>&middot;</span><span>' + im('minion') + r.cspm.toFixed(1) + ' CS/M</span></div>' + itrow(r.it, rnrow(r)) + '</div><div class="r"><span class="res ' + (r.win ? 'w' : 'l') + '">' + (r.win ? 'WIN' : 'LOSS') + '</span><div style="margin-top:4px"><a href="game.html#' + r.game + '">' + r.date + ' &rsaquo;</a></div></div></div>'; }).join('') : '<div class="empty">No games played with ' + n + ' yet.</div>';
     // matchups
     var mg = {}; R.forEach(function (r) { (mg[r.oc] = mg[r.oc] || {oc: r.oc, oi: r.oi, rs: []}).rs.push(r); });

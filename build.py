@@ -343,34 +343,37 @@ def map_items(w):
     return out
 
 def item_assets(ids):
-    """{item id: [name, icon data-uri]} from Data Dragon; cached in data/item_icons.json. Empty on failure."""
+    """{item id: [name, icon data-uri, is_trinket]} from Data Dragon; cached in data/item_icons.json. Empty on failure."""
     import requests
     path = ROOT / "data" / "item_icons.json"
     try: cache = json.loads(path.read_text(encoding="utf-8"))
     except Exception: cache = {}
-    need = [str(i) for i in sorted(set(ids)) if str(i) not in cache]
+    need = [str(i) for i in sorted(set(ids)) if str(i) not in cache or len(cache[str(i)]) < 3]
     if need:
         try:
             vers = requests.get("https://ddragon.leagueoflegends.com/api/versions.json", timeout=30).json()
             items = requests.get("https://ddragon.leagueoflegends.com/cdn/%s/data/en_US/item.json" % vers[0], timeout=60).json()["data"]
             for i in need:
+                meta = items.get(i) or {}; tr = int("Trinket" in (meta.get("tags") or []) or int(i) in TRINKETS)
+                if i in cache: cache[i] = list(cache[i][:2]) + [tr]; continue
                 try:
                     r = requests.get("https://ddragon.leagueoflegends.com/cdn/%s/img/item/%s.png" % (vers[0], i), timeout=30); r.raise_for_status()
                     im = Image.open(io.BytesIO(r.content)).convert("RGBA"); im.thumbnail((36, 36))
-                    cache[i] = [(items.get(i) or {}).get("name", "Item " + i), b64webp(im, 78)]
+                    cache[i] = [meta.get("name", "Item " + i), b64webp(im, 78), tr]
                 except Exception as e: print("  no icon for item", i, "(%s)" % e)
             path.parent.mkdir(exist_ok=True); path.write_text(json.dumps(cache, ensure_ascii=False))
         except Exception as e: print("  item icons unavailable:", e)
     return {i: cache[i] for i in map(str, set(ids)) if i in cache}
 
 TRINKETS = {3340, 3363, 3364}
-def tidy_items(it):
-    """Keep the player's own slot order, show each item once, trinket last."""
+def tidy_items(it, trset=TRINKETS):
+    """Exactly 7 entries: up to 6 distinct items in the player's own slot order (0 = empty), then the trinket (0 = none)."""
     seen, main, tr = set(), [], []
     for i in it:
         if i in seen: continue
-        seen.add(i); (tr if i in TRINKETS else main).append(i)
-    return main + tr
+        seen.add(i); (tr if i in trset else main).append(i)
+    main = main[:6]
+    return main + [0] * (6 - len(main)) + [tr[0] if tr else 0]
 
 def rune_assets(pairs):
     """{id: [name, icon data-uri]} for keystones and secondary trees from Data Dragon; cached in data/rune_icons.json."""
@@ -401,7 +404,10 @@ def rune_assets(pairs):
 def attach_items(w, GD, PD, CD):
     M = map_items(w)
     if not M: return
-    IT = {k: tidy_items(v[0]) for k, v in M.items()}
+    raw = {k: v[0] for k, v in M.items()}
+    icons = item_assets({i for v in raw.values() for i in v})
+    trset = TRINKETS | {int(i) for i, x in icons.items() if len(x) > 2 and x[2]}
+    IT = {k: tidy_items(v, trset) for k, v in raw.items()}
     RN = {k: v[1] for k, v in M.items() if v[1]}
     for g in GD["games"]:
         for t in g["teams"]:
@@ -413,11 +419,13 @@ def attach_items(w, GD, PD, CD):
     for c in CD["champs"].values():
         for r in c["rows"]:
             k = (r["game"], r["side"], POS_OF_ROLE[r["role"]]); r["it"] = IT.get(k); r["rn"] = RN.get(k)
-    icons = item_assets({i for v in IT.values() for i in v}); runes = rune_assets(list(RN.values()))
-    miss = sorted({i for v in IT.values() for i in v if str(i) not in icons}); notr = sum(1 for v in IT.values() if not any(i in TRINKETS for i in v))
+    runes = rune_assets(list(RN.values()))
+    miss = sorted({i for v in raw.values() for i in v if str(i) not in icons}); notr = sum(1 for v in IT.values() if not v[6])
     if miss: print("  items without an icon:", miss)
-    print("  players without a trinket in the feed: %d of %d" % (notr, len(IT)))
-    def used(rows): return {str(i) for r in rows for i in (r.get("it") or [])}
+    print("  players without a trinket: %d of %d" % (notr, len(IT)))
+    for k, v in raw.items():
+        if not IT[k][6] and k[2] == "jng" and len(v) > 5: print("   no trinket, raw feed items:", k, v)
+    def used(rows): return {str(i) for r in rows for i in (r.get("it") or []) if i}
     def usedr(rows): return {str(i) for r in rows for i in (r.get("rn") or [])}
     gp = [p for g in GD["games"] for t in g["teams"] for p in t["players"]]
     pr = [r for pl in PD["players"].values() for r in pl["games"]]; cr = [r for c in CD["champs"].values() for r in c["rows"]]
