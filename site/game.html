@@ -121,8 +121,8 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .gcols::before { content: ""; position: absolute; left: 50%; top: 8px; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--divider) 15%, var(--divider) 85%, transparent); }
 .panel-sub { font-size: 11.5px; color: var(--muted); margin-top: 6px; }
 .cmp { margin-top: 16px; display: flex; flex-direction: column; gap: 0; }
-.cmp-row { display: grid; grid-template-columns: 1fr 120px 1fr; align-items: center; min-height: 52px; border-top: 1px solid var(--divider); padding: 0 16px; }
-.cmp-row:first-child { border-top: 0; }
+.cmp-row { display: grid; grid-template-columns: 1fr 120px 1fr; align-items: center; min-height: 52px; padding: 0 16px; position: relative; }
+.cmp-row + .cmp-row::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--divider); -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent); mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent); }
 .cmp-l { font-size: 15px; font-weight: 700; text-align: left; font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 4px; }
 .cmp-r { font-size: 15px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
 .cmp-c { text-align: center; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; color: var(--muted); }
@@ -150,10 +150,10 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .its i { display: block; width: 20px; height: 20px; border-radius: 4px; background: var(--pill); border: 1px solid var(--dim); box-sizing: border-box; flex: none; }
 .its i:last-child { margin-left: 3px; }
 .pc { flex: none; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px; }
-.rn { display: flex; justify-content: center; align-items: center; gap: 6px; height: 22px; }
+.rn { width: 100%; display: flex; justify-content: center; align-items: center; gap: 6px; height: 22px; }
 .rn img { display: block; width: 22px; height: 22px; }
 .rn img.k { width: 22px; height: 22px; }
-.rn img.s { width: 17px; height: 17px; }
+.rn img.s { width: 14px; height: 14px; }
 .bv { display: flex; align-items: center; gap: 10px; margin-top: 3px; }
 .pl.r .bv { flex-direction: row-reverse; }
 .bv .pl-v { margin-top: 0; min-width: 44px; line-height: 1; }
