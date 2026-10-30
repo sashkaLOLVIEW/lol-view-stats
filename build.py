@@ -337,7 +337,8 @@ def map_items(w):
             rp = r["players"].get(p.side.lower() + ":" + p.position)
             if not rp: continue
             if norm(rp["champ"]) != norm(p.champion) and norm(rp["champ"]) not in norm(p.champion) and norm(p.champion) not in norm(rp["champ"]): champ_bad += 1
-            out[(gid, p.side, p.position)] = rp["items"]
+            rn = rp.get("runes") or {}; pk = rn.get("perks") or []
+            out[(gid, p.side, p.position)] = (rp["items"], [pk[0], rn.get("sub")] if pk and rn.get("sub") else None)
     print("  items: %d of %d games matched to Riot data%s" % (matched, total, ("; %d champion name differences (check aliases)" % champ_bad) if champ_bad else ""))
     return out
 
@@ -371,23 +372,56 @@ def tidy_items(it):
         seen.add(i); (tr if i in TRINKETS else main).append(i)
     return main + tr
 
+def rune_assets(pairs):
+    """{id: [name, icon data-uri]} for keystones and secondary trees from Data Dragon; cached in data/rune_icons.json."""
+    import requests
+    path = ROOT / "data" / "rune_icons.json"
+    try: cache = json.loads(path.read_text(encoding="utf-8"))
+    except Exception: cache = {}
+    need = {str(i) for pr in pairs for i in pr if str(i) not in cache}
+    if need:
+        try:
+            ver = requests.get("https://ddragon.leagueoflegends.com/api/versions.json", timeout=30).json()[0]
+            styles = requests.get("https://ddragon.leagueoflegends.com/cdn/%s/data/en_US/runesReforged.json" % ver, timeout=60).json()
+            ent = {}
+            for s in styles:
+                ent[str(s["id"])] = (s["name"], s["icon"])
+                for sl in s["slots"]:
+                    for r in sl["runes"]: ent[str(r["id"])] = (r["name"], r["icon"])
+            for i in need:
+                try:
+                    nm, ic = ent[i]
+                    r = requests.get("https://ddragon.leagueoflegends.com/cdn/img/" + ic, timeout=30); r.raise_for_status()
+                    im = Image.open(io.BytesIO(r.content)).convert("RGBA"); im.thumbnail((40, 40)); cache[i] = [nm, b64webp(im, 80)]
+                except Exception as e: print("  no icon for rune", i, "(%s)" % e)
+            path.parent.mkdir(exist_ok=True); path.write_text(json.dumps(cache, ensure_ascii=False))
+        except Exception as e: print("  rune icons unavailable:", e)
+    return cache
+
 def attach_items(w, GD, PD, CD):
-    IT = {k: tidy_items(v) for k, v in map_items(w).items()}
-    if not IT: return
+    M = map_items(w)
+    if not M: return
+    IT = {k: tidy_items(v[0]) for k, v in M.items()}
+    RN = {k: v[1] for k, v in M.items() if v[1]}
     for g in GD["games"]:
         for t in g["teams"]:
-            for p in t["players"]: p["it"] = IT.get((g["id"], t["side"], POS_OF_ROLE[p["role"]]))
+            for p in t["players"]:
+                k = (g["id"], t["side"], POS_OF_ROLE[p["role"]]); p["it"] = IT.get(k); p["rn"] = RN.get(k)
     for pl in PD["players"].values():
-        for r in pl["games"]: r["it"] = IT.get((r["gid"], r["side"], POS_OF_ROLE[r["role"]]))
+        for r in pl["games"]:
+            k = (r["gid"], r["side"], POS_OF_ROLE[r["role"]]); r["it"] = IT.get(k); r["rn"] = RN.get(k)
     for c in CD["champs"].values():
-        for r in c["rows"]: r["it"] = IT.get((r["game"], r["side"], POS_OF_ROLE[r["role"]]))
-    ids = {i for v in IT.values() for i in v}
-    icons = item_assets(ids)
+        for r in c["rows"]:
+            k = (r["game"], r["side"], POS_OF_ROLE[r["role"]]); r["it"] = IT.get(k); r["rn"] = RN.get(k)
+    icons = item_assets({i for v in IT.values() for i in v}); runes = rune_assets(list(RN.values()))
     def used(rows): return {str(i) for r in rows for i in (r.get("it") or [])}
-    GD["items"] = {i: icons[i] for i in used(p for g in GD["games"] for t in g["teams"] for p in t["players"]) if i in icons}
-    PD["items"] = {i: icons[i] for i in used(r for pl in PD["players"].values() for r in pl["games"]) if i in icons}
-    CD["items"] = {i: icons[i] for i in used(r for c in CD["champs"].values() for r in c["rows"]) if i in icons}
-    print("  item icons embedded:", len(GD["items"]), "(game page)")
+    def usedr(rows): return {str(i) for r in rows for i in (r.get("rn") or [])}
+    gp = [p for g in GD["games"] for t in g["teams"] for p in t["players"]]
+    pr = [r for pl in PD["players"].values() for r in pl["games"]]; cr = [r for c in CD["champs"].values() for r in c["rows"]]
+    for D_, rows in ((GD, gp), (PD, pr), (CD, cr)):
+        D_["items"] = {i: icons[i] for i in used(rows) if i in icons}
+        D_["runes"] = {i: runes[i] for i in usedr(rows) if i in runes}
+    print("  item icons embedded:", len(GD["items"]), "| rune icons:", len(GD["runes"]), "(game page)")
 
 # ----------------------------------------------------------------------------------------------
 # 4c. Global Power Rankings: team Elo over all 2026 games, for tier 1 teams

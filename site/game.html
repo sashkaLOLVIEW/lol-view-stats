@@ -139,6 +139,9 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .pl.r .its { justify-content: flex-end; }
 .its img { width: 20px; height: 20px; border-radius: 4px; display: block; background: var(--pill); }
 .its img.tr { opacity: .85; border-radius: 50%; margin-left: 3px; }
+.rn { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; flex: none; width: 26px; }
+.rn img { width: 20px; height: 20px; display: block; }
+.rn img.k { width: 28px; height: 28px; }
 .bv { display: flex; align-items: center; gap: 10px; margin-top: 3px; }
 .pl.r .bv { flex-direction: row-reverse; }
 .bv .pl-v { margin-top: 0; min-width: 44px; line-height: 1; }
@@ -317,13 +320,14 @@ html { scroll-padding-top: 84px; }
     $('cmp').innerHTML = c;
     $('gd').innerHTML = chart(g);
     var mx = 0; A.players.concat(B.players).forEach(function (p) { mx = Math.max(mx, p.dmg); });
+    var rnc = function (rn) { var m = D.runes; if (!m || !rn || !m[rn[0]] || !m[rn[1]]) return ''; return '<div class="rn"><img class="k" src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></div>'; };
     var TRK = {3340: 1, 3363: 1, 3364: 1};
     var itrow = function (it) { var m = D.items; if (!m || !it || !it.length) return ''; var o = ''; it.forEach(function (id) { var x = m[id]; if (x) o += '<img' + (TRK[id] ? ' class="tr"' : '') + ' src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">'; }); return '<div class="its">' + o + '</div>'; };
     $('dm').className = 'dm' + (D.items && Object.keys(D.items).length ? ' hasit' : '');
     var dm = '', dl = '', dr = '';
     for (var r = 0; r < 5; r++) {
       var pa = A.players[r], pb = B.players[r];
-      var cell = function (p, rt) { return '<div class="pl' + (rt ? ' r' : '') + '">' + ico(p.ic, p.champ) + '<div class="pl-b"><a class="pl-n" href="' + U.profile + '#' + encodeURIComponent(p.name) + '" style="display:block">' + p.name + '</a><div class="pl-s">' + im('kills', 'si') + p.k + '/' + p.d + '/' + p.a + '<span class="sp"></span>' + im('minion', 'si minion') + p.cs + '<span class="sp"></span>' + im('gold', 'si') + k1(p.gold) + '</div><div class="bv"><span class="pl-v">' + k1(p.dmg) + '</span><div class="bt"><div class="bar" style="width:' + Math.max(3, p.dmg / mx * 100).toFixed(1) + '%"></div></div></div>' + itrow(p.it) + '</div></div>'; };
+      var cell = function (p, rt) { return '<div class="pl' + (rt ? ' r' : '') + '">' + ico(p.ic, p.champ) + rnc(p.rn) + '<div class="pl-b"><a class="pl-n" href="' + U.profile + '#' + encodeURIComponent(p.name) + '" style="display:block">' + p.name + '</a><div class="pl-s">' + im('kills', 'si') + p.k + '/' + p.d + '/' + p.a + '<span class="sp"></span>' + im('minion', 'si minion') + p.cs + '<span class="sp"></span>' + im('gold', 'si') + k1(p.gold) + '</div><div class="bv"><span class="pl-v">' + k1(p.dmg) + '</span><div class="bt"><div class="bar" style="width:' + Math.max(3, p.dmg / mx * 100).toFixed(1) + '%"></div></div></div>' + itrow(p.it) + '</div></div>'; };
       dl += cell(pa, 0); dr += cell(pb, 1);
     }
     var dmid = ''; ['Top', 'Jungle', 'Mid', 'Bot', 'Support'].forEach(function (rn) { dmid += '<div class="dm-ic" title="' + rn + '">' + (RIC[rn] || '') + '</div>'; });

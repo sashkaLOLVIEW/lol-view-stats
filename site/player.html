@@ -155,6 +155,7 @@ img.lwi { }
 .hrow .lo6 { display: grid; grid-template-columns: repeat(6, 22px); gap: 3px; }
 .cn .cl { display: inline-flex; align-items: center; gap: inherit; color: inherit; text-decoration: none; }
 .cn .cl:hover { text-decoration: underline; }
+.hrow .rn2 img { width: 22px; height: 22px; display: block; }
 .hrow .lo6.filled { grid-template-columns: repeat(6, 22px) 22px; }
 .hrow .lo6 img { width: 22px; height: 22px; border-radius: 4px; display: block; }
 .hrow .lo6 img.tr { border-radius: 50%; margin-left: 3px; opacity: .85; }
@@ -330,6 +331,10 @@ html { scroll-padding-top: 84px; }
     var OG = {}; Object.keys(D.players).forEach(function (k) { D.players[k].games.forEach(function (x) { OG[x.gid + '|' + x.role + '|' + x.team] = {n: k, g: x}; }); });
     var GI = "data:image/webp;base64,UklGRpYAAABXRUJQVlA4TIoAAAAvE8AEEAWDtpEcDX/S/rI3XwFEuK1tW1HezODaAZFr7LFD5lID8XRARhfE3gGxF+Du7nAnIPTXGDFlA1d3PQWahloTZleBQgPW5gW0j0gbN/aTHDhZFIqTMdCG+FRNfU5KRBMAe+jMAaAVWuqDDZ6eiFzUGHx4V0wGMNsIhEpyvJarn7mGPHnorwE=";
     var TRK = {3340: 1, 3363: 1, 3364: 1};
+    var rn2 = function (rn) {
+      var m = D.runes; if (!m || !rn || !m[rn[0]] || !m[rn[1]]) return '<span class="lo2"><i></i><i></i></span>';
+      return '<span class="lo2 rn2"><img src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></span>';
+    };
     var lo6 = function (it) {
       var m = D.items, has = m && it && it.some(function (id) { return m[id]; });
       if (!has) return '<span class="lo6"><i></i><i></i><i></i><i></i><i></i><i></i></span>';
@@ -349,7 +354,7 @@ html { scroll-padding-top: 84px; }
         + '<span class="ep">' + (o && D.icons[o.g.ic] ? '<img src="' + D.icons[o.g.ic] + '" alt="">' : '') + '</span>'
         + '<span class="et">' + logo(g.opp, 20) + '<b>' + g.opp + '</b></span><span class="sep">/</span>'
         + '<span class="en"><b>' + (o ? o.n : g.opp) + '</b></span>'
-        + '<span class="loadout"><span class="lo2"><i></i><i></i></span><span class="lo2"><i></i><i></i></span>' + lo6(g.it) + '</span>'
+        + '<span class="loadout"><span class="lo2"><i></i><i></i></span>' + rn2(g.rn) + lo6(g.it) + '</span>'
         + '<span class="dt">' + g.date + '</span></a>'; }).join('');
     $('radars').innerHTML = RAD.map(function (r) { return '<div class="rcard"><h3>' + r[0] + '</h3>' + radar(r[0], r[1], ag, P.role) + '</div>'; }).join('');
     document.title = name + ' · Player Profile';
