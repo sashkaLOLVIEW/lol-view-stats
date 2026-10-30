@@ -522,23 +522,26 @@ def attach_items(w, GD, PD, CD):
 # ----------------------------------------------------------------------------------------------
 # 4c. Global Power Rankings: team Elo over all 2026 games, for tier 1 teams
 # ----------------------------------------------------------------------------------------------
+WORLDS_RANK_FROM = "2026-10-15"   # Worlds 2026 starts with the Play-Ins; the Global Power Rankings use only these games (no domestic or other international results)
+
 def build_rankings(csv):
+    """Elo ranking of the teams at Worlds 2026, from Worlds 2026 games only (everyone starts level at 1500)."""
     import data as RD, elo as RE, config as RC
     df = RD.load(str(csv)); teams, _ = RD.split(df)
-    t1 = teams[teams.league.isin(TIER1_LEAGUES)]
-    n = t1.groupby("teamname").gameid.nunique(); keep = sorted(n[n >= RANK_MIN_GAMES].index)
-    region = t1.groupby(["teamname", "league"]).gameid.nunique().reset_index().sort_values("gameid").groupby("teamname").last().league
-    _, now_r = RE.run(teams, RC.ELO_K, RC.ELO_INIT_MODE)
-    cut = teams.date.max() - pd.Timedelta(days=RANK_CHANGE_DAYS)
-    _, old_r = RE.run(teams[teams.date < cut], RC.ELO_K, RC.ELO_INIT_MODE)
+    ww = teams[(teams.league == LEAGUE) & (teams.date >= pd.Timestamp(WORLDS_RANK_FROM))]
+    keep = sorted(ww[ww.date >= pd.Timestamp(MAIN_START)].teamname.unique())          # the teams in the main stage
+    _, now_r = RE.run(ww, RC.ELO_K, "flat")
+    cut = ww.date.max() - pd.Timedelta(days=RANK_CHANGE_DAYS)
+    old = ww[ww.date < cut]; played = set(old.teamname)
+    old_r = RE.run(old, RC.ELO_K, "flat")[1] if len(old) else {}
     order = lambda r, names: {t: i + 1 for i, t in enumerate(sorted([x for x in names if x in r], key=lambda x: -r[x]))}
-    rn, ro = order(now_r, keep), order(old_r, keep)
+    rn = order(now_r, [t for t in keep if t in played] if played else keep); ro = order(old_r, [t for t in keep if t in played])
     rows = []
     for t in sorted(keep, key=lambda x: -now_r[x]):
-        d = (ro[t] - rn[t]) if t in ro else 0
+        d = (ro[t] - rn[t]) if (t in ro and t in rn) else 0                           # arrows only for teams that already had a game a week ago
         code = CODE.get(t)
         if not code: code = re.sub(r"[^A-Z0-9]", "", "".join(w[0] for w in t.split()).upper())[:4]; print("  no code for", t, "- using", code)
-        rows.append([t, region[t], code, ("up%d" % d if d > 0 else "dn%d" % -d if d < 0 else ""), int(round(now_r[t]))])
+        rows.append([t, REGION.get(code, ""), code, ("up%d" % d if d > 0 else "dn%d" % -d if d < 0 else ""), int(round(now_r[t]))])
     upd = pd.Timestamp(teams.date.max()).tz_localize("UTC").tz_convert(TZ).strftime("%-m/%-d/%y")
     print("  rankings: %d teams, top 3: %s" % (len(rows), ", ".join(r[2] for r in rows[:3])))
     return rows, upd
