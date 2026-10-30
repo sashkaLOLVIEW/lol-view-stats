@@ -367,7 +367,7 @@ def map_items(w):
             if not rp: continue
             if norm(rp["champ"]) != norm(p.champion) and norm(rp["champ"]) not in norm(p.champion) and norm(p.champion) not in norm(rp["champ"]): champ_bad += 1; print("  champion differs:", gid, p.side, p.position, "riot=" + str(rp["champ"]), "oe=" + str(p.champion))
             rn = rp.get("runes") or {}; pk = rn.get("perks") or []
-            out[(gid, p.side, p.position)] = (rp["items"], [pk[0], rn.get("sub")] if pk and rn.get("sub") else None)
+            out[(gid, p.side, p.position)] = (rp["items"] + ([rp["tr0"]] if rp.get("tr0") and not any(i in TRINKETS for i in rp["items"]) else []), [pk[0], rn.get("sub")] if pk and rn.get("sub") else None)
     print("  items: %d of %d games matched to Riot data%s" % (matched, total, ("; %d champion name differences (check aliases)" % champ_bad) if champ_bad else ""))
     return out
 

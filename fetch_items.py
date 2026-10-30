@@ -19,7 +19,7 @@ LEAGUE_SLUG = "worlds"            # lolesports slug of the event shown on the si
 SINCE = "2026-10-22"              # ignore matches before this date (the Worlds main stage starts on 2026-10-23)
 MAX_PAGES = 6
 TRINKET_IDS = {3330, 3340, 3363, 3364}
-FORMAT = 3                        # bump to refetch every older cache entry (v2 could carry a trinket copied from an earlier frame)
+FORMAT = 4                        # bump to refetch every older cache entry (v2 could carry a trinket copied from an earlier frame)
 ROLES = {"top": "top", "jungle": "jng", "mid": "mid", "bottom": "bot", "support": "sup"}   # Riot role -> Oracle's Elixir position
 
 def get(url, **params):
@@ -62,6 +62,20 @@ def fetch_game(game, number, codes, bo=0):
     frames = det.get("frames") or []
     last = frames[-1]
     byid = {p["participantId"]: p for p in last["participants"]}
+    snaps = {}            # minutes before the end -> participants, fetched only when a player has no trinket at the end
+    def last_trinket(pid):
+        """The trinket this player held most recently before it vanished (e.g. replaced by the Eye of the Herald)."""
+        for m in range(2, 60, 2):
+            t = tend - dt.timedelta(minutes=m)
+            if t < t0: return None
+            if m not in snaps:
+                try: snaps[m] = (get(FEED + "/details/" + gid, startingTime=fmt(floor10(t))).get("frames") or [{}])[0].get("participants") or []
+                except Exception: snaps[m] = []
+                time.sleep(0.15)
+            q = next((x for x in snaps[m] if x.get("participantId") == pid), None)
+            tr = [i for i in ((q or {}).get("items") or []) if i in TRINKET_IDS]
+            if tr: return tr[0]
+        return None
     players = {}
     for side in ("blue", "red"):
         for pm in md[side + "TeamMetadata"]["participantMetadata"]:
@@ -70,7 +84,8 @@ def fetch_game(game, number, codes, bo=0):
             if not pos: continue
             perk = p.get("perkMetadata") or {}
             items = [i for i in (p.get("items") or []) if i]       # Riot lists stacked consumables once per charge; junglers sometimes sell the trinket, so none is a real state
-            players[side + ":" + pos] = dict(name=pm.get("summonerName"), champ=pm.get("championId"), items=items,
+            tr0 = None if any(i in TRINKET_IDS for i in items) else last_trinket(pm["participantId"])
+            players[side + ":" + pos] = dict(name=pm.get("summonerName"), champ=pm.get("championId"), items=items, tr0=tr0,
                                              runes=dict(style=perk.get("styleId"), sub=perk.get("subStyleId"), perks=perk.get("perks")))
     return dict(id=gid, v=FORMAT, number=number, bo=bo, codes=sorted(codes), start=fmt(t0), patch=md.get("patchVersion"), players=players)
 
