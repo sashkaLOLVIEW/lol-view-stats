@@ -141,6 +141,13 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .its img.tr { opacity: .85; border-radius: 50%; margin-left: 3px; }
 .dm.hasit { --rh: 98px; }
 @media (max-width: 640px) { .pl.r .its { justify-content: flex-start; } }
+@media (min-width: 641px) {
+  .dm { position: relative; }
+  .dm-ic, .pl { border-bottom: 0 !important; }
+  .dm::after { content: ""; position: absolute; left: 0; right: 0; top: 0; bottom: var(--rh, 76px); pointer-events: none;
+    background: repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--rh, 76px) - 1px), var(--divider) calc(var(--rh, 76px) - 1px), var(--divider) var(--rh, 76px));
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent); mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent); }
+}
 .pl-n:hover { text-decoration: underline; }
 .pl-n { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pl-s { font-size: 10.5px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

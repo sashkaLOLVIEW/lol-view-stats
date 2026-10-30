@@ -96,7 +96,8 @@ img.lwi { }
 :root:not([data-theme="dark"]) img.lwi { filter: invert(1); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) img.lwi { filter: none; } }
 :root[data-theme="dark"] img.lwi { filter: none; } :root[data-theme="light"] img.lwi { filter: invert(1); }
-.hero { display: flex; align-items: flex-end; gap: 32px; margin-top: 44px; padding-bottom: 0; border-bottom: 1px solid var(--line); min-height: 190px; }
+.hero { display: flex; align-items: flex-end; gap: 32px; margin-top: 44px; padding-bottom: 0; position: relative; min-height: 190px; }
+.hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(to right, var(--line) 60%, transparent); }
 .portrait { flex: none; width: 200px; height: 190px; display: flex; align-items: flex-end; justify-content: center; }
 .portrait img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
 .portrait .ph { width: 140px; height: 150px; background: var(--pill); border-radius: 8px 8px 0 0; }
