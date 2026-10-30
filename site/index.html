@@ -116,6 +116,7 @@ h2 svg { flex: none; }
 
 /* live column */
 .live { margin-top: 12px; display: grid; grid-template-columns: 32px 1fr auto 1fr auto; align-items: center; gap: 8px; height: 50px; padding: 0 17px 0 16px; border: 1.5px solid var(--live-line); background: var(--live-bg); border-radius: 14px; }
+.liverow { border-color: var(--live-line); background: var(--live-bg); }
 .live { cursor: pointer; transition: filter .12s; }
 .live:hover { filter: brightness(1.12); }
 .live .side { display: flex; flex-direction: column; align-items: center; font-size: 10px; line-height: 1.15; color: var(--muted); }
@@ -516,6 +517,7 @@ html { scroll-padding-top: 84px; }
   })();
 
   // Live
+  var liveN = 0;
   // Live Now: polled from Riot's public lolesports feed in the visitor's browser every 30 s; hidden when nothing is live.
   (function () {
     var KEY = '0TvQnueqKa5mxJntVWt0w4LpLfEkrV1Ta8rQBb9Z', GW = 'https://esports-api.lolesports.com/persisted/gw', FEED = 'https://feed.lolesports.com/livestats/v1';
@@ -556,12 +558,12 @@ html { scroll-padding-top: 84px; }
       var el = $('live-list');
       $('live-wrap').hidden = !live.length;
       el.innerHTML = live.map(function (m, i) {
-        function side(t, d) { return '<div class="side"><b>' + (t.code || '-') + '</b>' + (d ? d.totalKills + ' &middot; ' + gold(d.totalGold) : '&nbsp;') + '</div>'; }
-        return '<a class="live" href="live.html#live/' + m.id + '" style="margin-top:' + (i ? 8 : 12) + 'px;color:inherit;text-decoration:none" aria-label="Watch live match"><span class="lg">' + worlds(26) + '</span>' + side(m.bl, m.b)
-          + '<div class="mid">' + logo(m.bl.code, 30) + '<span class="score">' + ((m.bl.result || {}).gameWins || 0) + ':' + ((m.rd.result || {}).gameWins || 0) + '</span>' + logo(m.rd.code, 30) + '</div>'
-          + side(m.rd, m.r) + '<div class="clock"><span class="ck" data-i="' + i + '">' + (m.lv ? 'Live' : m.brk ? 'Break' : '00:00') + '</span><span>' + (m.brk && !m.lv ? 'Next: Game ' : 'Game ') + m.num + (m.bo ? ' &middot; BO' + m.bo : '') + '</span></div></a>';
+        var w1 = (m.bl.result || {}).gameWins || 0, w2 = (m.rd.result || {}).gameWins || 0;
+        return '<a class="row match res liverow" href="live.html#live/' + m.id + '" style="margin-top:' + (i ? 8 : 12) + 'px;color:inherit;text-decoration:none" aria-label="Watch live match"><div class="lgw"><span class="lg">' + worlds(24) + '</span>' + (m.bo ? '<span class="bo">BO' + m.bo + '</span>' : '') + '</div>'
+          + '<div class="res-center"><span class="tag">' + m.bl.code + '</span>' + logo(m.bl.code, 32) + '<span class="score">' + w1 + ':' + w2 + '</span>' + logo(m.rd.code, 32) + '<span class="tag">' + m.rd.code + '</span></div>'
+          + '<div class="when"><em class="ck" style="font-style:normal;color:var(--fg);font-weight:600" data-i="' + i + '">' + (m.lv ? 'Live' : m.brk ? 'Break' : '00:00') + '</em><span>' + (m.brk && !m.lv ? 'Next: Game ' : 'Game ') + m.num + '</span></div></a>';
       }).join('');
-      tick();
+      tick(); liveN = live.length; if (window.renderUp) window.renderUp();
     }
     function tick() { Array.prototype.forEach.call(document.querySelectorAll('#live-list .ck'), function (c) { var m = live[+c.getAttribute('data-i')]; if (m && !m.brk) c.textContent = mmss(m.base + (m.run ? (Date.now() - m.at) / 1000 : 0)); }); }
     poll(); setInterval(poll, 30e3); setInterval(tick, 1000);
@@ -572,8 +574,9 @@ html { scroll-padding-top: 84px; }
   var UPN = [["global", "Global"], ["lck", "LCK"], ["lpl", "LPL"], ["lec", "LEC"], ["lcs", "LCS"], ["cblol", "CBLOL"], ["lcp", "LCP"]], upKey = 'global';
   var TBDI = '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--muted)" stroke-width="2" aria-label="TBD"><circle cx="16" cy="16" r="12.5"/><path d="M10.500 16h11" stroke-linecap="round"/></svg>';
   function tl(c) { return c === 'TBD' ? TBDI : logo(c, 32); }
+  window.renderUp = renderUp;
   function renderUp() {
-    var now = Date.now(), list = (UP[upKey] || []).filter(function (m) { return m[6] + 3 * 3600e3 > now; }).slice(0, 4);
+    var now = Date.now(), list = (UP[upKey] || []).filter(function (m) { return m[6] + 3 * 3600e3 > now; }).slice(0, Math.max(1, 4 - liveN));
     $('upcoming').innerHTML = list.length ? list.map(function (m) {
       var lg = m[5] === 'worlds' ? worlds(24) : '<span style="font-size:10px;font-weight:700;color:var(--muted)">' + String(m[5]).toUpperCase() + '</span>';
       return '<div class="row match res"><div class="lgw"><span class="lg">' + lg + '</span><span class="bo">' + m[4] + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + tl(m[0]) + '<span class="score vsx">vs</span>' + tl(m[1]) + '<span class="tag">' + m[1] + '</span></div><div class="when">' + m[2] + '<span>' + m[3] + '</span></div></div>';
