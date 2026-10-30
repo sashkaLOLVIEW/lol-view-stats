@@ -22,6 +22,11 @@ Run locally: `pip install -r requirements.txt`, put the CSV in `data/`, then `py
 - **Global Power Rankings** list and its "Updated" stamp.
 - **Flags** (`NAT` in `site/team.html`) and **team logos** (`LOGOS` in `site/index.html`).
 
+## Player age and contract
+
+`fetch_player_info.py` looks every player up on Leaguepedia (birthdate, contract end). Type anything it misses into `config/player_info.csv`
+(`player,birthdate,contract`, birthdate as `1996-05-07`, contract as `2027-11-30` or `Nov 2027`); your values always win.
+
 ## Settings at the top of `build.py`
 
 `LEAGUE`, `MAIN_START`, `CODE` (team name to short code), `REGION`. A new team that is not in `CODE` stops the build with a clear message.

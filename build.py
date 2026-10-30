@@ -304,6 +304,26 @@ def build_champions(w, GD):
     return dict(champs={n: dict(ic=ic(n), **v) for n, v in ch.items()}, avg=avg, icons=icons, games=len(order), logos=GD["logos"])
 
 # ----------------------------------------------------------------------------------------------
+# 4a. player age / contract (auto: data/player_info_auto.json from fetch_player_info.py; manual: config/player_info.csv wins)
+# ----------------------------------------------------------------------------------------------
+def month_year(v):
+    m = re.match(r"(\d{4})-(\d{2})", str(v or ""))
+    return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][int(m.group(2)) - 1] + " " + m.group(1) if m else (str(v).strip() or None)
+
+def load_player_info():
+    info = {}
+    try: info = json.loads((ROOT / "data" / "player_info_auto.json").read_text(encoding="utf-8"))
+    except Exception: print("  no automatic player info file")
+    p = ROOT / "config" / "player_info.csv"
+    if p.exists():
+        for r in pd.read_csv(p, dtype=str).fillna("").to_dict("records"):
+            if not r.get("player"): continue
+            cur = info.setdefault(r["player"], {})
+            if r.get("birthdate"): cur["bd"] = r["birthdate"].strip()
+            if r.get("contract"): cur["contract"] = month_year(r["contract"])
+    return info
+
+# ----------------------------------------------------------------------------------------------
 # 4b. upcoming matches (from data/schedule.json, written by fetch_schedule.py)
 # ----------------------------------------------------------------------------------------------
 UP_KEYS = ["global", "lck", "lpl", "lec", "lcs", "cblol", "lcp"]
@@ -360,6 +380,10 @@ def main(csv):
     logos_all = jget(idx, "LOGOS"); faces_old = jget(idx, "FACES")
     GD = build_game(w, logos_all)
     PD = build_profiles(w, faces_old, logos_all)
+    PI = load_player_info()
+    for n, pl_ in PD["players"].items():
+        pl_["bd"] = (PI.get(n) or {}).get("bd"); pl_["contract"] = (PI.get(n) or {}).get("contract")
+    print("  player info: %d birthdates, %d contracts" % (sum(1 for p_ in PD["players"].values() if p_["bd"]), sum(1 for p_ in PD["players"].values() if p_["contract"])))
     TD = build_teams(w, PD); G20 = build_g20(w)
     CD = build_champions(w, GD)
 
