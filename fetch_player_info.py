@@ -55,9 +55,17 @@ def main():
     for i in range(0, len(players), BATCH):
         chunk = players[i:i + BATCH]
         ids = ",".join("'" + n.replace("'", "\\'") + "'" for n, _ in chunk)
-        data = get(action="cargoquery", tables="Players", fields=",".join(want), where="ID IN (%s)" % ids, limit=500)
+        def query(where):
+            d = get(action="cargoquery", tables="Players", fields=",".join(want), where=where, limit=500)
+            if i == 0 and where.startswith("ID IN"): print("first batch raw reply:", json.dumps(d, ensure_ascii=False)[:700])
+            if d.get("error"): print("wiki error:", json.dumps(d["error"])[:300])
+            return d.get("cargoquery", [])
+        rows = query("ID IN (%s)" % ids)
+        if not rows:                                       # retry one name at a time
+            for n, _ in chunk:
+                rows += query("ID='%s'" % n.replace("'", "\\'")); time.sleep(1)
         by = {}
-        for row in data.get("cargoquery", []):
+        for row in rows:
             t = row.get("title", row); by.setdefault((t.get("ID") or "").lower(), []).append(t)
         for name, team in chunk:
             r = pick(by.get(name.lower(), []), teams[team])
