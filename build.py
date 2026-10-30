@@ -522,10 +522,10 @@ def attach_items(w, GD, PD, CD):
 # ----------------------------------------------------------------------------------------------
 # 4c. Global Power Rankings: team Elo over all 2026 games, for tier 1 teams
 # ----------------------------------------------------------------------------------------------
-WORLDS_RANK_FROM = "2026-10-15"   # Worlds 2026 starts with the Play-Ins; the Global Power Rankings use only these games (no domestic or other international results)
+WORLDS_RANK_FROM = MAIN_START   # the Global Power Rankings use only Worlds 2026 main stage games (no Play-Ins, domestic or other international results)
 
 def build_rankings(csv):
-    """Elo ranking of the teams at Worlds 2026, from Worlds 2026 games only (everyone starts level at 1500)."""
+    """Elo ranking of the teams at Worlds 2026, from main stage games only (everyone starts level at 1500)."""
     import data as RD, elo as RE, config as RC
     df = RD.load(str(csv)); teams, _ = RD.split(df)
     ww = teams[(teams.league == LEAGUE) & (teams.date >= pd.Timestamp(WORLDS_RANK_FROM))]
