@@ -341,6 +341,8 @@ def build_champions(w, GD):
 # ----------------------------------------------------------------------------------------------
 POS_OF_ROLE = {v: k for k, v in ROLE.items()}      # "Top" -> "top"
 
+RIOT_MAP = {}   # Riot game id -> Oracle's Elixir game id, so the live page can hand finished games over to the post game page
+
 def map_items(w):
     """(oe gameid, side, position) -> list of item ids, by matching teams + game number + start time to the Riot games."""
     try: cache = json.loads((ROOT / "data" / "items_cache.json").read_text(encoding="utf-8"))
@@ -361,7 +363,7 @@ def map_items(w):
                     and len(mine & {norm(p["champ"]) for p in r["players"].values()}) >= 9]
             if cand: print("  matched by champions:", gid, codes, "riot codes", cand[0]["codes"])
         if not cand: print("  no Riot data for", gid, codes, "game", int(blue.game), str(blue.date)); continue
-        r = cand[0]; matched += 1
+        r = cand[0]; matched += 1; RIOT_MAP[r["id"]] = gid
         for _, p in w[(w.gameid == gid) & (w.position != "team")].iterrows():
             rp = r["players"].get(p.side.lower() + ":" + p.position)
             if not rp: continue
@@ -625,6 +627,7 @@ def main(csv):
         s = rd("site/%s.html" % fn); s = jreplace(s, "D", val)
         if fn == "team": s = jreplace(s, "G20", G20)
         s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / (fn + ".html"), stamp(s))
+    wr(out / "live-map.json", json.dumps(RIOT_MAP))
     wr(out / "live.html", rd("site/live.html"))   # live game page: polls Riot's feed in the browser, no build-time data
     wr(out / ".nojekyll", "")
 
