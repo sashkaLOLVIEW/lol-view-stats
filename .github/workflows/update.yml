@@ -38,13 +38,13 @@ jobs:
         env:
           LOLESPORTS_API_KEY: ${{ secrets.LOLESPORTS_API_KEY }}
         run: python fetch_schedule.py
-      - name: Download player ages and contracts
-        run: python fetch_player_info.py
       - name: Download newest data
         env:
           DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
           DATA_FOLDER_ID: ${{ vars.DATA_FOLDER_ID }}
         run: python fetch_data.py
+      - name: Download player ages and contracts
+        run: python fetch_player_info.py
       - name: Build site
         run: python build.py
       - uses: actions/configure-pages@v5
