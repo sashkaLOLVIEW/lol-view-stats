@@ -28,7 +28,8 @@ def via_api(key):
     print("API: found", f["name"], f.get("size"), "bytes, modified", f["modifiedTime"])
     with requests.get(f"https://www.googleapis.com/drive/v3/files/{f['id']}", params={"alt": "media", "key": key}, stream=True, timeout=600) as d:
         d.raise_for_status()
-        with open(OUT, "wb") as fh: shutil.copyfileobj(d.raw, fh)
+        with open(OUT, "wb") as fh:
+            for chunk in d.iter_content(1 << 20): fh.write(chunk)     # iter_content handles gzip; d.raw would not
 
 def via_gdown():
     import gdown
