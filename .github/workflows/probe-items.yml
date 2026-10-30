@@ -1,0 +1,14 @@
+name: Probe item data (diagnostic)
+on: workflow_dispatch
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install requests
+      - name: Print raw item data for one match
+        env:
+          LOLESPORTS_API_KEY: ${{ secrets.LOLESPORTS_API_KEY }}
+        run: python tools/probe_items.py BLG TES
