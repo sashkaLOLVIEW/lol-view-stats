@@ -692,7 +692,8 @@ def main(csv):
         if fn == "team": s = jreplace(s, "G20", G20)
         s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / (fn + ".html"), stamp(s))
     wr(out / "live-map.json", json.dumps(RIOT_MAP))
-    wr(out / "live.html", rd("site/live.html"))   # live game page: polls Riot's feed in the browser, no build-time data
+    ps = {"ri": jget(rd("site/bootcamp.html"), "SD").get("r", {}), "p": {"%s|%s" % (p["t"], p["r"]): [p["p"], p["rt"], p["kda"], p["cs"], p["gd"], p["dpm"], p["kp"], p["ds"], p["g"]] for p in WD["players"]}}
+    wr(out / "live.html", jreplace(rd("site/live.html"), "PS", ps))   # season stats for the live page's role-by-role team comparison   # live game page: polls Riot's feed in the browser, no build-time data
     s = rd("site/bootcamp.html"); s = jreplace(s, "BC", build_bootcamp(WD, logos_all, s)); s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "bootcamp.html", stamp(s))
     wr(out / ".nojekyll", "")
 
