@@ -569,11 +569,13 @@ html { scroll-padding-top: 84px; }
   // Upcoming matches: filled by build.py from the lolesports schedule (rows: home, away, UK time, date, BO, league, start-epoch-ms)
   var UP = {"global": [], "lck": [], "lpl": [], "lec": [], "lcs": [], "cblol": [], "lcp": []};
   var UPN = [["global", "Global"], ["lck", "LCK"], ["lpl", "LPL"], ["lec", "LEC"], ["lcs", "LCS"], ["cblol", "CBLOL"], ["lcp", "LCP"]], upKey = 'global';
+  var TBDI = '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--muted)" stroke-width="2" aria-label="TBD"><circle cx="16" cy="16" r="12.5"/><path d="M10.500 16h11" stroke-linecap="round"/></svg>';
+  function tl(c) { return c === 'TBD' ? TBDI : logo(c, 32); }
   function renderUp() {
     var now = Date.now(), list = (UP[upKey] || []).filter(function (m) { return m[6] + 3 * 3600e3 > now; }).slice(0, 4);
     $('upcoming').innerHTML = list.length ? list.map(function (m) {
       var lg = m[5] === 'worlds' ? worlds(24) : '<span style="font-size:10px;font-weight:700;color:var(--muted)">' + String(m[5]).toUpperCase() + '</span>';
-      return '<div class="row match res"><div class="lgw"><span class="lg">' + lg + '</span><span class="bo">' + m[4] + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + logo(m[0], 32) + '<span class="score vsx">vs</span>' + logo(m[1], 32) + '<span class="tag">' + m[1] + '</span></div><div class="when">' + m[2] + '<span>' + m[3] + '</span></div></div>';
+      return '<div class="row match res"><div class="lgw"><span class="lg">' + lg + '</span><span class="bo">' + m[4] + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + tl(m[0]) + '<span class="score vsx">vs</span>' + tl(m[1]) + '<span class="tag">' + m[1] + '</span></div><div class="when">' + m[2] + '<span>' + m[3] + '</span></div></div>';
     }).join('') : '<div class="row" style="color:var(--muted);font-size:12px">No upcoming matches' + (upKey === 'global' ? ' in the schedule yet' : ' for this league') + '</div>';
   }
   $('upTabs').innerHTML = UPN.map(function (n) { return '<button class="chip' + (n[0] === upKey ? ' on' : '') + '" type="button" data-k="' + n[0] + '">' + n[1] + '</button>'; }).join('');
