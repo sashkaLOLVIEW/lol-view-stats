@@ -29,6 +29,7 @@ jobs:
       - name: Download newest data
         env:
           DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
+          DATA_FOLDER_ID: ${{ vars.DATA_FOLDER_ID }}
         run: python fetch_data.py
       - name: Build site
         run: python build.py

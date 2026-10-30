@@ -11,7 +11,9 @@ If both fail, the script exits with an error and the workflow stops without touc
 import os, sys, shutil, tempfile
 from pathlib import Path
 
-FOLDER_ID = "1gLSw0RLjBbtaNy0dgnGQDAZOHIgCe-HH"
+# Oracle's Elixir's folder is rate-limited by Google. Set the repository variable DATA_FOLDER_ID to a public folder of your own
+# that holds a copy of the file (see README) and the download comes from there instead.
+FOLDER_ID = os.environ.get("DATA_FOLDER_ID", "").strip() or "1gLSw0RLjBbtaNy0dgnGQDAZOHIgCe-HH"
 FILE_NAME = "2026_LoL_esports_match_data_from_OraclesElixir.csv"
 OUT = Path(__file__).resolve().parent / "data" / FILE_NAME
 MIN_BYTES = 20_000_000        # a real file is ~80 MB; anything tiny is an error page
