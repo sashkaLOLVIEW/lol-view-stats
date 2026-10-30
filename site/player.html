@@ -345,7 +345,7 @@ html { scroll-padding-top: 84px; }
       var main = it.filter(function (id) { return !TRK[id]; }).slice(0, 6), tr = it.filter(function (id) { return TRK[id]; })[0], o = '';
       main.forEach(function (id) { var x = m[id]; o += x ? '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : '<i></i>'; });
       for (var k = main.length; k < 6; k++) o += '<i></i>';
-      if (tr && m[tr]) o += '<img class="tr" src="' + m[tr][1] + '" alt="' + m[tr][0] + '" title="' + m[tr][0] + '">';
+      o += (tr && m[tr]) ? '<img class="tr" src="' + m[tr][1] + '" alt="' + m[tr][0] + '" title="' + m[tr][0] + '">' : '<i></i>';
       return '<span class="lo6 filled">' + o + '</span>';
     };
     $('hist').innerHTML = P.games.map(function (g) {

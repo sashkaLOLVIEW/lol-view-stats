@@ -414,6 +414,9 @@ def attach_items(w, GD, PD, CD):
         for r in c["rows"]:
             k = (r["game"], r["side"], POS_OF_ROLE[r["role"]]); r["it"] = IT.get(k); r["rn"] = RN.get(k)
     icons = item_assets({i for v in IT.values() for i in v}); runes = rune_assets(list(RN.values()))
+    miss = sorted({i for v in IT.values() for i in v if str(i) not in icons}); notr = sum(1 for v in IT.values() if not any(i in TRINKETS for i in v))
+    if miss: print("  items without an icon:", miss)
+    print("  players without a trinket in the feed: %d of %d" % (notr, len(IT)))
     def used(rows): return {str(i) for r in rows for i in (r.get("it") or [])}
     def usedr(rows): return {str(i) for r in rows for i in (r.get("rn") or [])}
     gp = [p for g in GD["games"] for t in g["teams"] for p in t["players"]]

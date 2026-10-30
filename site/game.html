@@ -148,10 +148,13 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .pl.r .its { justify-content: flex-end; }
 .its img { width: 20px; height: 20px; border-radius: 4px; display: block; background: var(--pill); }
 .its img.tr { opacity: .85; border-radius: 50%; margin-left: 3px; }
+.its i { display: block; width: 20px; height: 20px; border-radius: 4px; background: var(--pill); border: 1px solid var(--dim); box-sizing: border-box; flex: none; }
+.its i:last-child { margin-left: 3px; }
 .pc { flex: none; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px; }
 .rn { display: flex; justify-content: center; align-items: center; gap: 6px; height: 22px; }
 .rn img { display: block; width: 22px; height: 22px; }
 .rn img.k { width: 22px; height: 22px; }
+.rn img.s { width: 17px; height: 17px; }
 .bv { display: flex; align-items: center; gap: 10px; margin-top: 3px; }
 .pl.r .bv { flex-direction: row-reverse; }
 .bv .pl-v { margin-top: 0; min-width: 44px; line-height: 1; }
@@ -334,7 +337,9 @@ html { scroll-padding-top: 84px; }
     var mx = 0; A.players.concat(B.players).forEach(function (p) { mx = Math.max(mx, p.dmg); });
     var rnc = function (rn) { var m = D.runes; if (!m || !rn || !m[rn[0]] || !m[rn[1]]) return ''; return '<div class="rn"><img class="k" src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img class="s" src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></div>'; };
     var TRK = {3340: 1, 3363: 1, 3364: 1};
-    var itrow = function (it) { var m = D.items; if (!m || !it || !it.length) return ''; var o = ''; it.forEach(function (id) { var x = m[id]; if (x) o += '<img' + (TRK[id] ? ' class="tr"' : '') + ' src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">'; }); return '<div class="its">' + o + '</div>'; };
+    var itrow = function (it) { var m = D.items; if (!m || !it || !it.length) return ''; var main = it.filter(function (id) { return !TRK[id]; }).slice(0, 6), tr = it.filter(function (id) { return TRK[id]; })[0], o = '';
+      var sq = function (id, c) { var x = m[id]; return x ? '<img' + (c ? ' class="' + c + '"' : '') + ' src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : '<i></i>'; };
+      main.forEach(function (id) { o += sq(id); }); for (var k = main.length; k < 6; k++) o += '<i></i>'; o += tr ? sq(tr, 'tr') : '<i></i>'; return '<div class="its">' + o + '</div>'; };
     $('dm').className = 'dm' + (D.items && Object.keys(D.items).length ? ' hasit' : '');
     var dm = '', dl = '', dr = '';
     for (var r = 0; r < 5; r++) {
