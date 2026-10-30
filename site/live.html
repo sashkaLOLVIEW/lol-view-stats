@@ -226,7 +226,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   function feed(path) {
     return fetch(FEED + path).then(function (r) {
       if (!r.ok) throw new Error("Feed " + r.status);
-      return r.json();
+      return r.text().then(function (t) { if (!t) throw new Error("NOFRAMES"); return JSON.parse(t); });   // empty body = the game has not started yet
     });
   }
   function startingTime(offsetSec) {
@@ -242,7 +242,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       var o = offsets[i++], st = startingTime(o);
       return feed("/window/" + gameId + "?startingTime=" + encodeURIComponent(st)).then(function (w) {
         return feed("/details/" + gameId + "?startingTime=" + encodeURIComponent(st)).catch(function () { return null; }).then(function (d) { return { w: w, d: d }; });
-      }).catch(function (e) { if (i < offsets.length) return next(); throw e; });
+      }).catch(function (e) { if (e.message === "NOFRAMES") throw e; if (i < offsets.length) return next(); throw e; });
     }
     return next();
   }
@@ -325,7 +325,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     var chain = S.match ? poll() : loadMatch().then(poll);
     chain.then(function () { setNotice("live", "<b>Live</b> Updated " + S.updated.toLocaleTimeString()); render(); })
       .catch(function (e) {
-        if (!S.frame) { noLive(e); } else { setNotice("err", "<b>Connection issue</b> " + esc(e.message) + ". Showing the last update."); }
+        if (e && e.message === "NOFRAMES" && S.match && !S.frame) { renderWaiting(); } else if (!S.frame) { noLive(e); } else { setNotice("err", "<b>Connection issue</b> " + esc(e.message) + ". Showing the last update."); }
       });
   }
   function setNotice(kind, html) { var n = $("notice"); n.className = "notice" + (kind === "demo" ? " demo" : kind === "err" ? " err" : ""); n.innerHTML = html; }
@@ -349,6 +349,24 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   }
   function logoHtml(t) { return t && t.image ? '<img src="' + esc(t.image) + '" alt="">' : '<span class="ph">' + esc((t && t.code || "?").slice(0, 3)) + "</span>"; }
 
+  function chipsHtml() {
+    return (S.match.games || []).map(function (g) {
+      // a finished game that is already in the site's data opens its post game page (same as Recent Results)
+      if (g.state === "completed") return '<a class="chip" style="display:inline-flex;align-items:center" href="game.html#' + (MAP[g.id] ? encodeURIComponent(MAP[g.id]) : "riot/" + matchId + "/" + g.id) + '">Game ' + g.number + " &rsaquo;</a>";
+      return '<button class="chip' + (g.number === S.gameNo ? " on" : "") + '" type="button" data-id="' + esc(g.id) + '" data-n="' + g.number + '">Game ' + g.number + "</button>";
+    }).join("");
+  }
+  // the next game of a live series has not started: show the series, with finished games reachable
+  function renderWaiting() {
+    var m = S.match, tm = m.teams, wins = function (t) { return t && t.result ? t.result.gameWins : 0; };
+    $("match").className = "match idle";
+    $("match").innerHTML =
+      '<div class="side">' + logoHtml(tm[0]) + '<div><div class="tn">' + esc(tm[0].name) + '</div><div class="tc">' + esc(tm[0].code) + "</div></div></div>" +
+      '<div class="center"><div class="score">' + wins(tm[0]) + ":" + wins(tm[1]) + '</div><div class="state">Game ' + S.gameNo + " &middot; Waiting to start</div></div>" +
+      '<div class="side r"><div><div class="tn">' + esc(tm[1].name) + '</div><div class="tc">' + esc(tm[1].code) + "</div></div>" + logoHtml(tm[1]) + "</div>";
+    $("games").innerHTML = chipsHtml(); $("gold").innerHTML = ""; $("board").innerHTML = "";
+    setNotice("", "<b>Live</b> Game " + S.gameNo + " has not started yet. This page updates by itself.");
+  }
   function render() {
     if (!S.match || !S.frame) return;
     var bt = teamFor("blue"), rt = teamFor("red"), f = S.frame;
@@ -362,11 +380,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       '<div class="center"><div class="score">' + wins(bt) + ":" + wins(rt) + '</div><div class="state">Game ' + S.gameNo + " · " + stateText + "</div></div>" +
       '<div class="side r"><div><div class="tn">' + esc(rt.name) + '</div><div class="tc">' + esc(rt.code) + " · Red side</div></div>" + logoHtml(rt) + "</div>";
 
-    $("games").innerHTML = (S.match.games || []).map(function (g) {
-      // a finished game that is already in the site's data opens its post game page (same as Recent Results)
-      if (g.state === "completed") return '<a class="chip" style="display:inline-flex;align-items:center" href="game.html#' + (MAP[g.id] ? encodeURIComponent(MAP[g.id]) : "riot/" + matchId + "/" + g.id) + '">Game ' + g.number + " &rsaquo;</a>";
-      return '<button class="chip' + (g.number === S.gameNo ? " on" : "") + '" type="button" data-id="' + esc(g.id) + '" data-n="' + g.number + '">Game ' + g.number + "</button>";
-    }).join("");
+    $("games").innerHTML = chipsHtml();
 
     var bg = f.blueTeam.totalGold, rg = f.redTeam.totalGold, tot = (bg + rg) || 1, diff = bg - rg;
     $("gold").innerHTML =
