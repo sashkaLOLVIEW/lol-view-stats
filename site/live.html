@@ -364,7 +364,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 
     $("games").innerHTML = (S.match.games || []).map(function (g) {
       // a finished game that is already in the site's data opens its post game page (same as Recent Results)
-      if (g.state === "completed" && MAP[g.id]) return '<a class="chip" style="display:inline-flex;align-items:center" href="game.html#' + encodeURIComponent(MAP[g.id]) + '">Game ' + g.number + " &rsaquo;</a>";
+      if (g.state === "completed") return '<a class="chip" style="display:inline-flex;align-items:center" href="game.html#' + (MAP[g.id] ? encodeURIComponent(MAP[g.id]) : "riot/" + matchId + "/" + g.id) + '">Game ' + g.number + " &rsaquo;</a>";
       return '<button class="chip' + (g.number === S.gameNo ? " on" : "") + '" type="button" data-id="' + esc(g.id) + '" data-n="' + g.number + '">Game ' + g.number + "</button>";
     }).join("");
 
