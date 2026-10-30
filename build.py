@@ -321,10 +321,8 @@ def build_upcoming(path=ROOT / "data" / "schedule.json"):
         h, a = UP_ALIAS.get(m["home"], m["home"]), UP_ALIAS.get(m["away"], m["away"])
         uk = t0.tz_convert(TZ)
         row = [h, a, uk.strftime("%H:%M"), uk.strftime("%b %-d"), "BO%d" % m["bo"], m["league"], int(t0.timestamp() * 1000)]
-        keys = {"global"}
+        keys = {"global"}                       # Worlds / MSI etc. appear only under Global
         if m["league"] in UP_KEYS: keys.add(m["league"])
-        for c in (h, a):                      # a Worlds match also appears under each team's home region
-            if REGION.get(c, "").lower() in UP_KEYS: keys.add(REGION[c].lower())
         for k in keys:
             if len(out[k]) < PER_FILTER: out[k].append(row)
     print("  upcoming:", {k: len(v) for k, v in out.items()})
