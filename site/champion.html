@@ -223,14 +223,16 @@ h2 .li.hi { margin: 0; width: 18px; height: 18px; }
 .gr .its { display: flex; gap: 3px; margin-top: 6px; }
 .gr .its img { width: 20px; height: 20px; border-radius: 4px; background: var(--pill); border: 1px solid var(--dim); box-sizing: border-box; }
 .gr .its .rs img { border: 0; }
-.bpage { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin-top: 8px; }
-.bpage .rr { display: flex; align-items: center; gap: 4px; }
-.bpage .rr img { width: 24px; height: 24px; display: block; }
-.bpage .rr img.k { width: 36px; height: 36px; }
-.bpage .rr img.sh { width: 18px; height: 18px; }
-.bpage .rr .gap { width: 1px; height: 26px; background: var(--divider); margin: 0 6px; }
-.bpage .bs { margin-left: auto; text-align: right; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1.5; }
-.bpage .bs b { color: var(--fg); font-size: 14px; }
+#runes { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-top: 8px; }
+.bpage { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 16px 12px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.bpage .bs { text-align: center; font-size: 15px; color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1.35; }
+.bpage .bs b { color: var(--fg); font-size: 15px; }
+.bpage .bs small { display: block; font-size: 12.5px; }
+.bpage .rr { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.bpage .rr img { width: 44px; height: 44px; display: block; border-radius: 50%; background: #0b0d12; }
+.bpage .rr img.k { width: 56px; height: 56px; }
+.bpage .rr img.sh { width: 22px; height: 22px; background: none; border-radius: 0; }
+.bpage .rr.sh { gap: 22px; margin-top: 2px; }
 .ibgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 8px; }
 .ibc { padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
 .ibc h4 { margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
@@ -376,8 +378,11 @@ html { scroll-padding-top: 84px; }
       var anyR = pl.length && pl.some(function (p) { return p.pk.some(function (id) { return ri[id]; }); });
       $('runes').innerHTML = anyR ? pl.map(function (p) {
         var k = p.pk, w = wr(p.w, p.n);
-        return '<div class="bpage"><div class="rr">' + im(k[0], 'k') + k.slice(1, 4).map(function (i) { return im(i); }).join('') + '<span class="gap"></span>' + k.slice(4, 6).map(function (i) { return im(i); }).join('') + '<span class="gap"></span>' + k.slice(6).map(function (i) { return im(i, 'sh'); }).join('') + '</div>'
-          + '<div class="bs"><b>' + Math.round(p.n / R.length * 100) + '%</b> pick &middot; <b>' + w + '%</b> WR<br>' + p.n + ' game' + (p.n === 1 ? '' : 's') + '</div></div>';
+        return '<div class="bpage"><div class="bs"><b>' + Math.round(p.n / R.length * 100) + '%</b> pick &middot; <b>' + w + '%</b> win<small>(' + p.n + ' game' + (p.n === 1 ? '' : 's') + ')</small></div>'
+          + '<div class="rr">' + im(k[0], 'k') + '</div>'
+          + '<div class="rr">' + k.slice(1, 4).map(function (i) { return im(i); }).join('') + '</div>'
+          + '<div class="rr">' + k.slice(4, 6).map(function (i) { return im(i); }).join('') + '</div>'
+          + '<div class="rr sh">' + k.slice(6).map(function (i) { return im(i, 'sh'); }).join('') + '</div></div>';
       }).join('') : '<div class="bnone">No rune data for these games yet.</div>';
       var cols = ['1st item', '2nd item', '3rd item'].map(function (t, j) {
         var rows = R.filter(function (r) { return r.bo && r.bo.length > j; }), by = {};
