@@ -171,7 +171,7 @@ def build_standings(w):
         out[c] = dict(w=w_, l=l_, rounds=[dict(res=s["res"], opp=s["opp"], sc=(f'{s["gw"]}-{s["gl"]}' if s["bo3"] else "")) for s in series])
     return out
 
-def build_recent(w):
+def build_recent(w, extra=()):
     """One entry per series: games between the same two teams less than 12 hours apart belong to the same series
     (so a best-of-3 that runs past midnight is still one series)."""
     tm = w[w.position == "team"].copy(); tm["code"] = tm.teamname.map(need_code)
@@ -179,6 +179,7 @@ def build_recent(w):
     for gid, g in tm.groupby("gameid"):
         b = g[g.side == "Blue"].iloc[0]; r = g[g.side == "Red"].iloc[0]
         games.append((pd.Timestamp(b.date), frozenset([b.code, r.code]), b, r, gid))
+    games += list(extra)
     games.sort(key=lambda x: x[0])
     ser = []          # each: dict(pair, games)
     for g in games:
@@ -201,6 +202,43 @@ def build_recent(w):
 # ----------------------------------------------------------------------------------------------
 # 4. game / player / team / champion page data
 # ----------------------------------------------------------------------------------------------
+def load_riot_games():
+    try: return json.loads((ROOT / "data" / "riot_games.json").read_text(encoding="utf-8"))
+    except Exception: return {}
+
+def riot_only_games(w, ic):
+    """Finished games that Riot's feed (data/riot_games.json, written by fetch_riot_games.py) has but Oracle's Elixir does not yet,
+    in the same shape as the other game-page entries. Damage is only a share of the team total here, so they are flagged pct."""
+    RG = load_riot_games(); out = []
+    if not RG: return out
+    oe = []
+    for gid, g in w[w.position == "team"].groupby("gameid"):
+        b = g[g.side == "Blue"].iloc[0]; r = g[g.side == "Red"].iloc[0]
+        oe.append((sorted([CODE.get(b.teamname, ""), CODE.get(r.teamname, "")]), int(b.game), pd.Timestamp(b.date)))
+    for rid, r in RG.items():
+        codes = sorted(t["code"] for t in r["teams"]); n = int(r["number"]); t0 = pd.Timestamp(r["start"]).tz_convert("UTC").tz_localize(None)
+        if any(c == codes and k == n and abs((d - t0).total_seconds()) < 12 * 3600 for c, k, d in oe): continue
+        teams, ok = [], True
+        for ti, t in enumerate(r["teams"]):
+            by = {p_["pos"]: p_ for p_ in t["players"]}; players = []
+            for pos in ORDER:
+                p_ = by.get(pos)
+                if not p_: ok = False; break
+                players.append(dict(role=ROLE[pos], name=p_["name"], champ=p_["champ"], ic=ic(p_["champ"]), k=p_["k"], d=p_["d"], a=p_["a"], dmg=p_["share"], cs=p_["cs"], gold=p_["gold"],
+                                    it=tidy_items(p_["items"]), rn=([p_["perks"][0], p_["sub"]] if p_.get("perks") and p_.get("sub") else None)))
+            if not ok: break
+            dr = {}
+            for x in t["dragons"]: dr[x] = dr.get(x, 0) + 1
+            teams.append(dict(code=t["code"], name=t["name"], side=t["side"].capitalize(), win=int(r["blue_win"] if ti == 0 else not r["blue_win"]), k=sum(q["k"] for q in players), d=sum(q["d"] for q in players),
+                              a=sum(q["a"] for q in players), gold=t["gold"], towers=t["towers"], grubs=0, heralds=0, elders=dr.get("elder", 0), barons=t["barons"],
+                              drakes=[(k_, dr.get(k_, 0)) for k_ in ("infernal", "mountain", "cloud", "ocean", "chemtech", "hextech")], bans=[], players=players))
+        if not ok or len(teams) != 2: print("  skipped incomplete Riot game", rid); continue
+        RIOT_MAP[rid] = rid
+        out.append(dict(id=rid, pct=1, bo=r.get("bo") or 0, patch=(".".join(str(r["patch"]).split(".")[:2]) if r.get("patch") else None),
+                        date=t0.tz_localize("UTC").tz_convert(TZ).strftime("%b %-d"), start=str(t0), len=r["len"], teams=teams, gold=r["gold"]))
+    if out: print("  games from Riot's feed (not in Oracle's Elixir yet):", len(out))
+    return out
+
 def build_game(w, logos_all):
     icons = {}
     def ic(n):
@@ -228,12 +266,15 @@ def build_game(w, logos_all):
             if b.notna().all() and len(b) == 5 and gl > m * 60 + 30: series.append([m, int(b.sum() - r.sum())])
         series.append([round(gl / 60, 1), teams[0]["gold"] - teams[1]["gold"]])
         games.append(dict(id=gid, patch=("%.2f" % float(g.patch.iloc[0]) if "patch" in g and pd.notna(g.patch.iloc[0]) else None), date=pd.Timestamp(g.date.iloc[0]).tz_localize("UTC").tz_convert(TZ).strftime("%b %-d"), start=str(g.date.iloc[0]), len=gl, teams=teams, gold=series))
+    games += riot_only_games(w, ic)
     games.sort(key=lambda x: x["start"])
     for i, g in enumerate(games): g["n"] = i + 1
     # series = same two teams, less than 12 h apart; best-of is read from the Riot schedule when cached, else inferred
     cache = {}
     try: cache = json.loads((ROOT / "data" / "items_cache.json").read_text(encoding="utf-8"))
     except Exception: pass
+    for g in games:
+        if g.get("pct") and g.get("bo"): cache.setdefault(g["id"], {}).setdefault("bo", g["bo"])
     sers = []
     for g in games:
         pair = frozenset(t["code"] for t in g["teams"]); t0 = pd.Timestamp(g["start"])
@@ -398,7 +439,7 @@ def item_assets(ids):
         except Exception as ex: print("  item icons unavailable:", ex)
     return {i: cache[i] for i in map(str, set(ids)) if i in cache}
 
-TRINKETS = {3340, 3363, 3364}
+TRINKETS = {3330, 3340, 3363, 3364}
 def tidy_items(it, trset=TRINKETS):
     """Exactly 7 entries: up to 6 distinct items in the player's own slot order (0 = empty), then the trinket (0 = none)."""
     seen, main, tr = set(), [], []
@@ -440,9 +481,10 @@ def rune_assets(pairs):
 
 def attach_items(w, GD, PD, CD):
     M = map_items(w)
-    if not M: return
+    ro = [p for g in GD["games"] if g.get("pct") for t in g["teams"] for p in t["players"]]
+    if not M and not ro: return
     raw = {k: v[0] for k, v in M.items()}
-    icons = item_assets({i for v in raw.values() for i in v} | {i for v in M.values() for i in v[3]})
+    icons = item_assets({i for v in raw.values() for i in v} | {i for v in M.values() for i in v[3]} | {i for p in ro for i in p["it"] if i})
     trset = TRINKETS | {int(i) for i, x in icons.items() if len(x) > 2 and x[2]}
     IT = {k: tidy_items(v, trset) for k, v in raw.items()}
     RN = {k: v[1] for k, v in M.items() if v[1]}
@@ -457,14 +499,14 @@ def attach_items(w, GD, PD, CD):
     for g in GD["games"]:
         for t in g["teams"]:
             for p in t["players"]:
-                k = (g["id"], t["side"], POS_OF_ROLE[p["role"]]); p["it"] = IT.get(k); p["rn"] = RN.get(k)
+                k = (g["id"], t["side"], POS_OF_ROLE[p["role"]]); p["it"] = IT.get(k) or p.get("it"); p["rn"] = RN.get(k) or p.get("rn")
     for pl in PD["players"].values():
         for r in pl["games"]:
             k = (r["gid"], r["side"], POS_OF_ROLE[r["role"]]); r["it"] = IT.get(k); r["rn"] = RN.get(k)
     for c in CD["champs"].values():
         for r in c["rows"]:
             k = (r["game"], r["side"], POS_OF_ROLE[r["role"]]); r["it"] = IT.get(k); r["rn"] = RN.get(k); r["pk"] = PK.get(k); r["bo"] = BO.get(k)
-    runes = rune_assets(list(RN.values()) + list(PK.values()))
+    runes = rune_assets(list(RN.values()) + list(PK.values()) + [p["rn"] for p in ro if p.get("rn")])
     miss = sorted({i for v in raw.values() for i in v if str(i) not in icons}); notr = sum(1 for v in IT.values() if not v[6])
     if miss: print("  items without an icon:", miss)
     print("  players without a trinket: %d of %d | with a build order: %d" % (notr, len(IT), sum(1 for v in BO.values() if v)))
@@ -571,12 +613,15 @@ def main(csv):
     print("  %d games, %d players" % (w.gameid.nunique(), w[w.position != "team"].playername.nunique()))
     rt = ratings(csv)
     WD = build_wd(w, rt)
-    ST = build_standings(w); allres = build_recent(w); rec = allres[:4]
+    ST = build_standings(w)
     lastuk = pd.Timestamp(w.date.max()).tz_localize("UTC").tz_convert(TZ); date_s = lastuk.strftime("%b %-d")
 
     idx = rd("site/index.html")
     logos_all = jget(idx, "LOGOS"); faces_old = jget(idx, "FACES")
     GD = build_game(w, logos_all)
+    from types import SimpleNamespace as NS
+    extra = [(pd.Timestamp(g["start"]), frozenset(t["code"] for t in g["teams"]), NS(code=g["teams"][0]["code"], result=g["teams"][0]["win"]), NS(code=g["teams"][1]["code"], result=g["teams"][1]["win"]), g["id"]) for g in GD["games"] if g.get("pct")]
+    allres = build_recent(w, extra); rec = allres[:4]
     PD = build_profiles(w, faces_old, logos_all)
     PI = load_player_info()
     for n, pl_ in PD["players"].items():

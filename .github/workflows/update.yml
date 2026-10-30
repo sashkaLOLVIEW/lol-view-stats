@@ -3,6 +3,7 @@ name: Update data and publish site
 on:
   schedule:
     - cron: "15 */6 * * *"      # every 6 hours (UTC), at quarter past
+    - cron: "*/20 * * * *"      # every 20 minutes: picks up newly finished games from Riot's feed (GitHub may delay these runs)
   workflow_dispatch:             # "Run workflow" button in the Actions tab
   push:
     branches: [main]             # also rebuild whenever you change the pages or scripts
@@ -33,6 +34,7 @@ jobs:
             data/schedule.json
             data/items_cache.json
             data/item_icons.json
+            data/riot_games.json
           key: cache-${{ github.run_id }}
           restore-keys: cache-
       - name: Download upcoming matches
@@ -43,6 +45,10 @@ jobs:
         env:
           LOLESPORTS_API_KEY: ${{ secrets.LOLESPORTS_API_KEY }}
         run: python fetch_items.py
+      - name: Download finished games from Riot
+        env:
+          LOLESPORTS_API_KEY: ${{ secrets.LOLESPORTS_API_KEY }}
+        run: python fetch_riot_games.py
       - name: Download newest data
         env:
           DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}

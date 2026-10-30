@@ -125,7 +125,7 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .gcols::before { content: ""; position: absolute; left: 50%; top: 8px; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--divider) 15%, var(--divider) 85%, transparent); }
 .panel-sub { font-size: 11.5px; color: var(--muted); margin-top: 6px; }
 .cmp { margin-top: 16px; display: flex; flex-direction: column; gap: 0; }
-.cmp-row { display: grid; grid-template-columns: 1fr 120px 1fr; align-items: center; min-height: 52px; padding: 0 16px; position: relative; }
+.cmp-row { display: grid; grid-template-columns: 1fr 120px 1fr; align-items: center; min-height: 52px; padding: 0; position: relative; }
 .cmp-row + .cmp-row::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--divider); -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent); mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent); }
 .cmp-l { font-size: 15px; font-weight: 700; text-align: left; font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 4px; }
 .cmp-r { font-size: 15px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
@@ -143,7 +143,7 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .dm-ic { height: var(--rh, 76px); display: grid; place-items: center; color: var(--muted); border-bottom: 1px solid var(--line); }
 .dm-ic svg { width: 16px; height: 16px; display: block; }
 .dm-ic:last-child, .dm-col .pl:last-child { border-bottom: 0; }
-.pl { display: flex; align-items: center; gap: 12px; height: var(--rh, 76px); background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 0 12px; min-width: 0; }
+.pl { display: flex; align-items: center; gap: 12px; height: var(--rh, 76px); background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 0; min-width: 0; }
 .pl.r { flex-direction: row-reverse; text-align: right; }
 .pl img.ch { width: 52px; height: 52px; border-radius: 6px; object-fit: cover; flex: none; display: block; }
 .pl .ph { width: 52px; height: 52px; border-radius: 6px; background: var(--pill); flex: none; }
@@ -351,16 +351,17 @@ html { scroll-padding-top: 84px; }
     var dm = '', dl = '', dr = '';
     for (var r = 0; r < 5; r++) {
       var pa = A.players[r], pb = B.players[r];
-      var cell = function (p, rt) { return '<div class="pl' + (rt ? ' r' : '') + '"><div class="pc">' + ico(p.ic, p.champ) + rnc(p.rn) + '</div><div class="pl-b"><a class="pl-n" href="' + U.profile + '#' + encodeURIComponent(p.name) + '" style="display:block">' + p.name + '</a><div class="pl-s">' + im('kills', 'si') + p.k + '/' + p.d + '/' + p.a + '<span class="sp"></span>' + im('minion', 'si minion') + p.cs + '<span class="sp"></span>' + im('gold', 'si') + k1(p.gold) + '</div><div class="bv"><span class="pl-v">' + (g.live ? Math.round(p.dmg * 100) + '%' : k1(p.dmg)) + '</span><div class="bt"><div class="bar" style="width:' + Math.max(3, p.dmg / mx * 100).toFixed(1) + '%"></div></div></div>' + itrow(p.it) + '</div></div>'; };
+      var cell = function (p, rt) { return '<div class="pl' + (rt ? ' r' : '') + '"><div class="pc">' + ico(p.ic, p.champ) + rnc(p.rn) + '</div><div class="pl-b"><a class="pl-n" href="' + U.profile + '#' + encodeURIComponent(p.name) + '" style="display:block">' + p.name + '</a><div class="pl-s">' + im('kills', 'si') + p.k + '/' + p.d + '/' + p.a + '<span class="sp"></span>' + im('minion', 'si minion') + p.cs + '<span class="sp"></span>' + im('gold', 'si') + k1(p.gold) + '</div><div class="bv"><span class="pl-v">' + (g.live || g.pct ? Math.round(p.dmg * 100) + '%' : k1(p.dmg)) + '</span><div class="bt"><div class="bar" style="width:' + Math.max(3, p.dmg / mx * 100).toFixed(1) + '%"></div></div></div>' + itrow(p.it) + '</div></div>'; };
       dl += cell(pa, 0); dr += cell(pb, 1);
     }
     var dmid = ''; ['Top', 'Jungle', 'Mid', 'Bot', 'Support'].forEach(function (rn) { dmid += '<div class="dm-ic" title="' + rn + '">' + (RIC[rn] || '') + '</div>'; });
     $('dm').innerHTML = '<div class="dm-col">' + dl + '</div><div class="dm-mid">' + dmid + '</div><div class="dm-col">' + dr + '</div>';
     var bn = function (t) { return t.bans.map(function (b, i) { return (i === 3 ? '<span class="sl">/</span>' : '') + (b.ic && D.icons[b.ic] ? '<img src="' + D.icons[b.ic] + '" alt="' + b.c + '">' : ''); }).join(''); };
+    $('bans').style.display = g.live || g.pct ? 'none' : '';
     $('bans').innerHTML = '<div class="bans-l">' + bn(A) + '</div><div class="bans-t">Bans</div><div class="bans-r">' + bn(B) + '</div>';
     var ser = []; D.games.forEach(function (x, j) { if (x.sid === g.sid) ser.push(j); });
     var box = $('games');
-    box.innerHTML = g.live ? g.chips : ser.map(function (j, n) { return '<button class="chip' + (j === i ? ' on' : '') + '" type="button" aria-pressed="' + (j === i) + '" data-i="' + j + '">GAME ' + (n + 1) + '</button>'; }).join('');
+    box.innerHTML = g.live && g.chips ? g.chips : ser.map(function (j, n) { return '<button class="chip' + (j === i ? ' on' : '') + '" type="button" aria-pressed="' + (j === i) + '" data-i="' + j + '">GAME ' + (n + 1) + '</button>'; }).join('');
     $('mdet').innerHTML = '<span>' + (D.tournament || 'Worlds 2026') + '</span><span class="dot">&middot;</span><span>' + g.date + '</span>' + (g.bo ? '<span class="bo">BO' + g.bo + '</span>' : '');
     Array.prototype.forEach.call(box.querySelectorAll('button.chip'), function (b) { b.addEventListener('click', function () { render(+b.getAttribute('data-i')); }); });
   }
@@ -431,7 +432,8 @@ html { scroll-padding-top: 84px; }
   }
   window.addEventListener('hashchange', function () { if (LV || /^#riot\//.test(location.hash)) location.reload(); });
   var LV = location.hash.match(/^#riot\/(\d+)\/(\d+)/);
-  if (LV) loadLive(LV[1], LV[2]); else render(hi);
+  var LJ = -1; if (LV) D.games.forEach(function (g, j) { if (g.id === LV[2]) LJ = j; });
+  if (LJ > -1) render(LJ); else if (LV) loadLive(LV[1], LV[2]); else render(hi);
   var root = document.documentElement, btn = $('theme');
   try { var saved = localStorage.getItem('theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
   btn.addEventListener('click', function () {
