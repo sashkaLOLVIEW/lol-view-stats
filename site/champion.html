@@ -222,7 +222,11 @@ h2 .li.hi { margin: 0; width: 18px; height: 18px; }
 .gr .t .vs img { width: 16px; height: 16px; border-radius: 0; }
 .gr .its { display: flex; gap: 3px; margin-top: 6px; }
 .gr .its img { width: 20px; height: 20px; border-radius: 4px; background: var(--pill); }
-.gr .its img.rk { border-radius: 50%; background: none; margin-right: 1px; }
+.gr .its .rs { position: relative; width: 28px; height: 28px; margin-right: 10px; flex: none; }
+.gr .its .rs img { position: absolute; background: none; }
+.gr .its .rs img.k { left: 0; top: 0; width: 28px; height: 28px; border-radius: 0; }
+.gr .its .rs img.s { right: -5px; bottom: -3px; width: 15px; height: 15px; border-radius: 50%; background: var(--surface); padding: 1px; box-sizing: content-box; }
+.gr .its { align-items: center; }
 .gr .its img.tr { border-radius: 50%; margin-left: 3px; opacity: .85; }
 .gr .s > span { display: inline-flex; align-items: center; }
 .gr .s img.si { width: 13px; height: 13px; border-radius: 0; margin-right: 4px; object-fit: contain; }
@@ -336,7 +340,7 @@ html { scroll-padding-top: 84px; }
     $('stats').innerHTML = s;
     // bans
     // games
-    var rnrow = function (r) { var m = D.runes, rn = r.rn; if (!m || !rn || !m[rn[0]] || !m[rn[1]]) return ''; return '<img class="rk" src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img class="rk" src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '">'; };
+    var rnrow = function (r) { var m = D.runes, rn = r.rn; if (!m || !rn || !m[rn[0]] || !m[rn[1]]) return ''; return '<span class="rs"><img class="k" src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img class="s" src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></span>'; };
     var itrow = function (it, pre) { pre = pre || ''; var m = D.items; if (!m || !it || !it.length) return ''; var o = ''; it.forEach(function (id) { var x = m[id]; if (x) o += '<img' + ({3340: 1, 3363: 1, 3364: 1}[id] ? ' class="tr"' : '') + ' src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">'; }); return (o || pre) ? '<div class="its">' + pre + o + '</div>' : ''; };
     $('games').innerHTML = pk ? R.map(function (r) { return '<div class="gr gm"><div><div class="t"><span class="pt">' + logo(r.team, 16) + '<a href="player.html#' + encodeURIComponent(r.player) + '">' + r.player + '</a></span> <span class="vs">vs ' + logo(r.opp, 16) + ' ' + r.op + '</span></div><div class="s"><span>' + im('kills') + r.k + '/' + r.d + '/' + r.a + '</span><span>&middot;</span><span>' + im('minion') + r.cspm.toFixed(1) + ' CS/M</span></div>' + itrow(r.it, rnrow(r)) + '</div><div class="r"><span class="res ' + (r.win ? 'w' : 'l') + '">' + (r.win ? 'WIN' : 'LOSS') + '</span><div style="margin-top:4px"><a href="game.html#' + r.game + '">' + r.date + ' &rsaquo;</a></div></div></div>'; }).join('') : '<div class="empty">No games played with ' + n + ' yet.</div>';
     // matchups

@@ -139,16 +139,19 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .pl.r .its { justify-content: flex-end; }
 .its img { width: 20px; height: 20px; border-radius: 4px; display: block; background: var(--pill); }
 .its img.tr { opacity: .85; border-radius: 50%; margin-left: 3px; }
-.rn { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; flex: none; width: 26px; }
-.rn img { width: 20px; height: 20px; display: block; }
-.rn img.k { width: 28px; height: 28px; }
+.rn { position: relative; flex: none; width: 34px; height: 34px; margin-right: 6px; }
+.pl.r .rn { margin-right: 0; margin-left: 6px; }
+.rn img { position: absolute; display: block; }
+.rn img.k { left: 0; top: 0; width: 34px; height: 34px; }
+.rn img.s { right: -5px; bottom: -3px; width: 18px; height: 18px; border-radius: 50%; background: var(--bg); padding: 1px; box-sizing: content-box; }
+.pl.r .rn img.s { right: auto; left: -5px; }
 .bv { display: flex; align-items: center; gap: 10px; margin-top: 3px; }
 .pl.r .bv { flex-direction: row-reverse; }
 .bv .pl-v { margin-top: 0; min-width: 44px; line-height: 1; }
 .bt { flex: 1; min-width: 0; }
 .bt .bar { margin-top: 0; }
 .dm.hasit { --rh: 88px; }
-@media (max-width: 640px) { .pl.r .bv { flex-direction: row; } }
+@media (max-width: 640px) { .pl.r .bv { flex-direction: row; } .pl.r .rn { margin-left: 0; margin-right: 6px; } .pl.r .rn img.s { left: auto; right: -5px; } }
 @media (max-width: 640px) { .pl.r .its { justify-content: flex-start; } }
 @media (min-width: 641px) {
   .dm { position: relative; }
@@ -320,7 +323,7 @@ html { scroll-padding-top: 84px; }
     $('cmp').innerHTML = c;
     $('gd').innerHTML = chart(g);
     var mx = 0; A.players.concat(B.players).forEach(function (p) { mx = Math.max(mx, p.dmg); });
-    var rnc = function (rn) { var m = D.runes; if (!m || !rn || !m[rn[0]] || !m[rn[1]]) return ''; return '<div class="rn"><img class="k" src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></div>'; };
+    var rnc = function (rn) { var m = D.runes; if (!m || !rn || !m[rn[0]] || !m[rn[1]]) return ''; return '<div class="rn"><img class="k" src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img class="s" src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></div>'; };
     var TRK = {3340: 1, 3363: 1, 3364: 1};
     var itrow = function (it) { var m = D.items; if (!m || !it || !it.length) return ''; var o = ''; it.forEach(function (id) { var x = m[id]; if (x) o += '<img' + (TRK[id] ? ' class="tr"' : '') + ' src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">'; }); return '<div class="its">' + o + '</div>'; };
     $('dm').className = 'dm' + (D.items && Object.keys(D.items).length ? ' hasit' : '');

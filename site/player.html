@@ -155,7 +155,10 @@ img.lwi { }
 .hrow .lo6 { display: grid; grid-template-columns: repeat(6, 22px); gap: 3px; }
 .cn .cl { display: inline-flex; align-items: center; gap: inherit; color: inherit; text-decoration: none; }
 .cn .cl:hover { text-decoration: underline; }
-.hrow .rn2 img { width: 22px; height: 22px; display: block; }
+.hrow .rn2 { position: relative; width: 36px; height: 36px; margin: 0 6px 0 2px; flex: none; }
+.hrow .rn2 img { position: absolute; display: block; }
+.hrow .rn2 img.k { left: 0; top: 0; width: 36px; height: 36px; }
+.hrow .rn2 img.s { right: -5px; bottom: -3px; width: 18px; height: 18px; border-radius: 50%; background: var(--surface); padding: 1px; box-sizing: content-box; }
 .hrow .lo6.filled { grid-template-columns: repeat(6, 22px) 22px; }
 .hrow .lo6 img { width: 22px; height: 22px; border-radius: 4px; display: block; }
 .hrow .lo6 img.tr { border-radius: 50%; margin-left: 3px; opacity: .85; }
@@ -333,7 +336,7 @@ html { scroll-padding-top: 84px; }
     var TRK = {3340: 1, 3363: 1, 3364: 1};
     var rn2 = function (rn) {
       var m = D.runes; if (!m || !rn || !m[rn[0]] || !m[rn[1]]) return '<span class="lo2"><i></i><i></i></span>';
-      return '<span class="lo2 rn2"><img src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></span>';
+      return '<span class="rn2"><img class="k" src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img class="s" src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></span>';
     };
     var lo6 = function (it) {
       var m = D.items, has = m && it && it.some(function (id) { return m[id]; });
