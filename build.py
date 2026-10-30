@@ -25,7 +25,18 @@ CSV_DEFAULT = ROOT / "data" / "2026_LoL_esports_match_data_from_OraclesElixir.cs
 
 CODE = {"Gen.G": "GEN", "Invictus Gaming": "IG", "Hanwha Life Esports": "HLE", "Top Esports": "TES", "Movistar KOI": "MKOI",
         "Bilibili Gaming": "BLG", "Karmine Corp": "KC", "Anyone's Legend": "AL", "Dplus Kia": "DK", "G2 Esports": "G2",
-        "Team Liquid": "TL", "CTBC Flying Oyster": "CFO", "LØS": "LOS", "T1": "T1", "LYON": "LYON", "Team Secret Whales": "TSW"}
+        "Team Liquid": "TL", "CTBC Flying Oyster": "CFO", "LØS": "LOS", "T1": "T1", "LYON": "LYON", "Team Secret Whales": "TSW",
+        # other tier 1 teams (used by the Global Power Rankings; codes match the logo keys on the homepage)
+        "FURIA": "FUR", "Fluxo W7M": "FX", "LOUD": "LOUD", "Leviatan": "LEV", "RED Canids": "RED", "Vivo Keyd Stars": "VKS", "paiN Gaming": "PAIN",
+        "BNK FEARX": "BFX", "DN SOOPers": "DNS", "HANJIN BRION": "BRO", "KT Rolster": "KT", "Kiwoom DRX": "KRX", "Nongshim RedForce": "NS",
+        "Deep Cross Gaming": "DCG", "DetonatioN FocusMe": "DFM", "Fukuoka SoftBank HAWKS gaming": "SHG", "GAM Esports": "GAM", "Ground Zero Gaming": "GZ", "MVK Esports": "MVK",
+        "Cloud9": "C9", "Dignitas": "DIG", "Disguised": "DSG", "FlyQuest": "FLY", "Sentinels": "SEN", "Shopify Rebellion": "SR",
+        "Fnatic": "FNC", "GiantX": "GX", "Natus Vincere": "NAVI", "SK Gaming": "SK", "Shifters": "SHFT", "Team Heretics": "TH", "Team Vitality": "VIT",
+        "EDward Gaming": "EDG", "JD Gaming": "JDG", "LGD Gaming": "LGD", "LNG Esports": "LNG", "Ninjas in Pyjamas": "NIP", "Oh My God": "OMG",
+        "Team WE": "WE", "ThunderTalk Gaming": "TT", "Ultra Prime": "UP", "Weibo Gaming": "WBG"}
+TIER1_LEAGUES = ["LCK", "LPL", "LEC", "LCS", "LCP", "CBLOL"]   # which leagues count as tier 1 for the Global Power Rankings
+RANK_MIN_GAMES = 20          # a team needs this many games in those leagues this year to be ranked (58 teams on today's data)
+RANK_CHANGE_DAYS = 7         # the up/down arrows compare with the ranking this many days ago
 REGION = {"LYON": "LCS", "TSW": "LCP", "GEN": "LCK", "HLE": "LCK", "DK": "LCK", "T1": "LCK", "IG": "LPL", "TES": "LPL", "BLG": "LPL",
           "AL": "LPL", "G2": "LEC", "KC": "LEC", "MKOI": "LEC", "TL": "LCS", "CFO": "LCP", "LOS": "CBLOL"}
 ROLE = {"top": "Top", "jng": "Jungle", "mid": "Mid", "bot": "Bot", "sup": "Support"}
@@ -304,6 +315,30 @@ def build_champions(w, GD):
     return dict(champs={n: dict(ic=ic(n), **v) for n, v in ch.items()}, avg=avg, icons=icons, games=len(order), logos=GD["logos"])
 
 # ----------------------------------------------------------------------------------------------
+# 4c. Global Power Rankings: team Elo over all 2026 games, for tier 1 teams
+# ----------------------------------------------------------------------------------------------
+def build_rankings(csv):
+    import data as RD, elo as RE, config as RC
+    df = RD.load(str(csv)); teams, _ = RD.split(df)
+    t1 = teams[teams.league.isin(TIER1_LEAGUES)]
+    n = t1.groupby("teamname").gameid.nunique(); keep = sorted(n[n >= RANK_MIN_GAMES].index)
+    region = t1.groupby(["teamname", "league"]).gameid.nunique().reset_index().sort_values("gameid").groupby("teamname").last().league
+    _, now_r = RE.run(teams, RC.ELO_K, RC.ELO_INIT_MODE)
+    cut = teams.date.max() - pd.Timedelta(days=RANK_CHANGE_DAYS)
+    _, old_r = RE.run(teams[teams.date < cut], RC.ELO_K, RC.ELO_INIT_MODE)
+    order = lambda r, names: {t: i + 1 for i, t in enumerate(sorted([x for x in names if x in r], key=lambda x: -r[x]))}
+    rn, ro = order(now_r, keep), order(old_r, keep)
+    rows = []
+    for t in sorted(keep, key=lambda x: -now_r[x]):
+        d = (ro[t] - rn[t]) if t in ro else 0
+        code = CODE.get(t)
+        if not code: code = re.sub(r"[^A-Z0-9]", "", "".join(w[0] for w in t.split()).upper())[:4]; print("  no code for", t, "- using", code)
+        rows.append([t, region[t], code, ("up%d" % d if d > 0 else "dn%d" % -d if d < 0 else ""), int(round(now_r[t]))])
+    upd = pd.Timestamp(teams.date.max()).tz_localize("UTC").tz_convert(TZ).strftime("%-m/%-d/%y")
+    print("  rankings: %d teams, top 3: %s" % (len(rows), ", ".join(r[2] for r in rows[:3])))
+    return rows, upd
+
+# ----------------------------------------------------------------------------------------------
 # 4a. player age / contract (auto: config/player_info_auto.json from fetch_player_info.py; manual: config/player_info.csv wins)
 # ----------------------------------------------------------------------------------------------
 def month_year(v):
@@ -386,6 +421,7 @@ def main(csv):
     print("  player info: %d birthdates, %d contracts" % (sum(1 for p_ in PD["players"].values() if p_["bd"]), sum(1 for p_ in PD["players"].values() if p_["contract"])))
     TD = build_teams(w, PD); G20 = build_g20(w)
     CD = build_champions(w, GD)
+    RK, RKUPD = build_rankings(csv); HAS = {c: 1 for c in TD['teams']}
 
     FACES = {p["name"]: p["face"] for p in PD["players"].values() if p["face"]}
     # small (128px) portraits for the leaderboards
@@ -408,9 +444,13 @@ def main(csv):
     s = idx
     for name, val in (("WD", WD), ("FACES", FACES), ("FACESF", FACES), ("CHAMPS", CH), ("SW", ST)): s = jreplace(s, name, val)
     s = re.sub(r"  var rec = \[\[.*?\]\];\n", lambda m: "  var rec = " + json.dumps(rec, ensure_ascii=False) + ";\n", s, count=1, flags=re.S)
+    s = jreplace(s, "rank", RK); s = jreplace(s, "rankUpd", RKUPD); s = jreplace(s, "hasTeam", HAS)
     s = jreplace(s, "UP", build_upcoming())
     s = jreplace(s, "SD", build_search(s, WD, CH))
     wr(out / "index.html", stamp(s))
+    # global power rankings
+    s = rd("site/rankings.html"); s = jreplace(s, "rank", RK); s = jreplace(s, "rankUpd", RKUPD); s = jreplace(s, "hasTeam", HAS); s = jreplace(s, "LOGOS", logos_all)
+    s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "rankings.html", stamp(s))
     # recent results (all series)
     s = rd("site/results.html"); s = jreplace(s, "RES", allres); s = jreplace(s, "LOGOS", logos_all)
     s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "results.html", stamp(s))

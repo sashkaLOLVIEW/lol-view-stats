@@ -336,7 +336,7 @@ html { scroll-padding-top: 84px; }
 <div class="page">
   <header class="topbar">
     <nav class="nav" aria-label="Main">
-      <a href="#home" aria-current="page">Home</a><a href="#rankings">Rankings</a><a href="players.html">Players</a><a href="team.html">Teams</a><a href="#champions">Champions</a>
+      <a href="#home" aria-current="page">Home</a><a href="rankings.html">Rankings</a><a href="players.html">Players</a><a href="team.html">Teams</a><a href="#champions">Champions</a>
     </nav>
     <div class="tools">
       <a class="discord" href="https://discord.com" aria-label="Discord">
@@ -364,7 +364,7 @@ html { scroll-padding-top: 84px; }
     </section>
 
     <section class="col col-rank" id="rankings">
-      <h2>Global Power Rankings <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></h2>
+      <h2><a href="rankings.html" style="display:flex;align-items:center;gap:7px">Global Power Rankings <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2>
       <div class="updated"><b>Updated:</b> 10/19/26 6:00 AM</div>
       <div class="stack" id="rank-list"></div>
     </section>
@@ -466,17 +466,16 @@ html { scroll-padding-top: 84px; }
   var $ = function (id) { return document.getElementById(id); };
 
   // Global power rankings
-  var rank = [
-    ['Hanwha Life Esports', 'LCK', 'HLE', ''], ['Gen.G Esports', 'LCK', 'GEN', ''], ['BILIBILI GAMING', 'LPL', 'BLG', ''],
-    ['G2 Esports', 'LEC', 'G2', ''], ['T1', 'LCK', 'T1', ''], ['LYON', 'LCS', 'LYON', ''],
-    ['Karmine Corp', 'LEC', 'KC', 'up2'], ['Dplus KIA', 'LCK', 'DK', 'dn1'], ['Anyone’s Legend', 'LPL', 'AL', 'dn1'], ['kt Rolster', 'LCK', 'KT', '']
-  ];
+  var rank = [];   // [name, region, code, change, rating] - filled in by build.py (Elo ranking of tier 1 teams)
+  var rankUpd = "";
+  var ARW = {up: '<svg width="9" height="6" viewBox="0 0 9 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m1 5 3.500-3.500L8 5"/></svg>', dn: '<svg width="9" height="6" viewBox="0 0 9 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 3.500 3.500L8 1"/></svg>'};
+  function chgChip(c) { var m = /^(up|dn)(\d+)$/.exec(c || ''); return m ? '<span class="chg ' + (m[1] === 'up' ? 'up' : 'down') + '">' + ARW[m[1]] + m[2] + '</span>' : '<span class="chg">-</span>'; }
+  var hasTeam = {};
   $('rank-list').innerHTML = rank.slice(0, 5).map(function (r, i) {
-    var n = i + 1, ch = r[3] === '' ? '<span class="chg">-</span>' :
-      r[3] === 'up2' ? '<span class="chg up"><svg width="9" height="6" viewBox="0 0 9 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m1 5 3.500-3.500L8 5"/></svg>2</span>' :
-      '<span class="chg down"><svg width="9" height="6" viewBox="0 0 9 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 3.500 3.500L8 1"/></svg>1</span>';
-    return '<div class="row"><span class="rk ' + (n < 4 ? 'r' + n : '') + '">' + n + '</span><div class="team"><span class="logo">' + logo(r[2]) + '</span><div class="grow"><a class="name" href="team.html#' + r[2] + '">' + r[0] + '</a><div class="sub">' + r[1] + '</div></div></div>' + ch + '</div>';
+    var n = i + 1;
+    return '<div class="row"><span class="rk ' + (n < 4 ? 'r' + n : '') + '">' + n + '</span><div class="team"><span class="logo">' + logo(r[2]) + '</span><div class="grow"><a class="name" href="' + (hasTeam[r[2]] ? 'team.html#' + r[2] : 'rankings.html') + '">' + r[0] + '</a><div class="sub">' + r[1] + '</div></div></div>' + chgChip(r[3]) + '</div>';
   }).join('');
+  if (rankUpd) document.querySelector('.updated').innerHTML = '<b>Updated:</b> ' + rankUpd;
 
   // Cross-page links
   var U = { home: 'index.html', players: 'players.html', game: 'game.html', profile: 'player.html' };
