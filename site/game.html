@@ -373,6 +373,8 @@ html { scroll-padding-top: 84px; }
     var KEY = '0TvQnueqKa5mxJntVWt0w4LpLfEkrV1Ta8rQBb9Z', GW = 'https://esports-api.lolesports.com/persisted/gw', FEED = 'https://feed.lolesports.com/livestats/v1', DDN = 'https://ddragon.leagueoflegends.com/';
     var jf = function (u, h) { return fetch(u, h ? { headers: { 'x-api-key': KEY } } : undefined).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); };
     var snap = function (t) { return new Date(Math.floor(t / 1e4) * 1e4).toISOString(); };
+    // once the game is in the site's own data (with exact damage numbers) use that page instead
+    fetch('live-map.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (mp) { if (mp && mp[gid]) location.replace('game.html#' + encodeURIComponent(mp[gid])); }).catch(function () {});
     $('score').innerHTML = '<div class="sc-mid"><div class="sc-c"><div class="sc-sub">Loading game from the Riot feed&hellip;</div></div></div>';
     document.title = 'Game Stats';
     Promise.all([jf(GW + '/getEventDetails?hl=en-US&id=' + mid, 1), jf(FEED + '/window/' + gid), jf(DDN + 'api/versions.json').catch(function () { return ['16.21.1']; })]).then(function (r) {
