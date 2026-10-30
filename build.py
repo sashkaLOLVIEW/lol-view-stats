@@ -625,6 +625,7 @@ def main(csv):
         s = rd("site/%s.html" % fn); s = jreplace(s, "D", val)
         if fn == "team": s = jreplace(s, "G20", G20)
         s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / (fn + ".html"), stamp(s))
+    wr(out / "live.html", rd("site/live.html"))   # live game page: polls Riot's feed in the browser, no build-time data
     wr(out / ".nojekyll", "")
 
     print("done - %d pages written to dist/ (data through %s)" % (len(list(out.glob("*.html"))), date_s))
