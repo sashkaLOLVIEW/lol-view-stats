@@ -1,0 +1,48 @@
+name: Update data and publish site
+
+on:
+  schedule:
+    - cron: "15 */6 * * *"      # every 6 hours (UTC), at quarter past
+  workflow_dispatch:             # "Run workflow" button in the Actions tab
+  push:
+    branches: [main]             # also rebuild whenever you change the pages or scripts
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Download newest data
+        env:
+          DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
+        run: python fetch_data.py
+      - name: Build site
+        run: python build.py
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

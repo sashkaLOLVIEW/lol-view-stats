@@ -1,0 +1,376 @@
+#!/usr/bin/env python3
+"""Rebuild the whole LoL View Stats site from an Oracle's Elixir CSV.
+
+    python build.py [path/to/2026_LoL_esports_match_data_from_OraclesElixir.csv]
+
+Reads the hand-designed pages in site/ (they are templates: every data blob inside them is replaced),
+writes the finished site to dist/. Nothing in site/ is modified, so the build can be re-run any time.
+"""
+import base64, io, json, os, re, sys
+from pathlib import Path
+import pandas as pd
+from PIL import Image
+
+ROOT = Path(__file__).resolve().parent
+os.chdir(ROOT)
+sys.path.insert(0, str(ROOT / "rating"))
+
+# ----------------------------------------------------------------------------------------------
+# SETTINGS - the only things that change between events
+# ----------------------------------------------------------------------------------------------
+LEAGUE = "WLDs"                 # Oracle's Elixir league tag of the event shown on the site
+MAIN_START = "2026-10-23"       # first day of the main stage (earlier Worlds rows are play-ins/qualifier)
+TZ = "Europe/London"            # all times on the site are shown in this timezone
+CSV_DEFAULT = ROOT / "data" / "2026_LoL_esports_match_data_from_OraclesElixir.csv"
+
+CODE = {"Gen.G": "GEN", "Invictus Gaming": "IG", "Hanwha Life Esports": "HLE", "Top Esports": "TES", "Movistar KOI": "MKOI",
+        "Bilibili Gaming": "BLG", "Karmine Corp": "KC", "Anyone's Legend": "AL", "Dplus Kia": "DK", "G2 Esports": "G2",
+        "Team Liquid": "TL", "CTBC Flying Oyster": "CFO", "LØS": "LOS", "T1": "T1", "LYON": "LYON", "Team Secret Whales": "TSW"}
+REGION = {"LYON": "LCS", "TSW": "LCP", "GEN": "LCK", "HLE": "LCK", "DK": "LCK", "T1": "LCK", "IG": "LPL", "TES": "LPL", "BLG": "LPL",
+          "AL": "LPL", "G2": "LEC", "KC": "LEC", "MKOI": "LEC", "TL": "LCS", "CFO": "LCP", "LOS": "CBLOL"}
+ROLE = {"top": "Top", "jng": "Jungle", "mid": "Mid", "bot": "Bot", "sup": "Support"}
+ORDER = ["top", "jng", "mid", "bot", "sup"]
+ICON_ALIASES = {"renataglasc": "renataglaasc"}   # Oracle's Elixir spelling -> asset file name
+
+# ----------------------------------------------------------------------------------------------
+# helpers
+# ----------------------------------------------------------------------------------------------
+def rd(fn): return open(fn, encoding="utf-8").read()
+def wr(fn, s):
+    Path(fn).parent.mkdir(parents=True, exist_ok=True); open(fn, "w", encoding="utf-8").write(s)
+
+def jget(s, name, sep=" = "):
+    key = "var " + name + sep; i = s.index(key) + len(key)
+    return json.JSONDecoder().raw_decode(s[i:])[0]
+
+def jreplace(s, name, new, sep=" = "):
+    key = "var " + name + sep; i = s.index(key) + len(key)
+    _, e = json.JSONDecoder().raw_decode(s[i:])
+    return s[:i] + json.dumps(new, ensure_ascii=False) + s[i + e:]
+
+def b64webp(im, q):
+    b = io.BytesIO(); im.save(b, "WEBP", quality=q); return "data:image/webp;base64," + base64.b64encode(b.getvalue()).decode()
+
+def need_code(name):
+    if name not in CODE:
+        sys.exit("Unknown team '%s' - add it to CODE and REGION at the top of build.py (and a logo to the pages)." % name)
+    return CODE[name]
+
+slug = lambda x: re.sub(r"[^a-z0-9]", "", x.lower())
+CHAMP_FILES = sorted(os.listdir("assets/champions"))
+PLAYER_FILES = sorted(os.listdir("assets/players"))
+
+def champ_key(n):
+    k = re.sub(r"[^a-z]", "", n.lower()); k = ICON_ALIASES.get(k, k)
+    for f in CHAMP_FILES:
+        if f[:-5] == k: return k
+    for f in CHAMP_FILES:
+        b = f[:-5]
+        if b != "_empty" and (k.startswith(b) or b.startswith(k)): return b
+    return None
+
+def champ_icon(key, size, q):
+    im = Image.open("assets/champions/%s.webp" % key).convert("RGBA")
+    im = im.resize((size, size), Image.LANCZOS) if size == 68 else im
+    if size != 68: im.thumbnail((size, size))
+    return b64webp(im, q)
+
+# ----------------------------------------------------------------------------------------------
+# 1. load + rating
+# ----------------------------------------------------------------------------------------------
+def load_event(csv):
+    df = pd.read_csv(csv, low_memory=False)
+    return df[(df.league == LEAGUE) & (df.date >= MAIN_START)].copy()
+
+def ratings(csv):
+    """Player rating (see rating/METHODOLOGY idea): Elo-adjusted role z-scores -> site scale."""
+    import data as RD, rating as RR
+    df = RD.load(str(csv)); teams, players = RD.split(df)
+    m = RR.match_table(players, teams)
+    lb = RR.aggregate(m, stage="Main stage").set_index("player")["rating"]
+    return {p: round(min(99.9, max(1.0, 68 + 4 * (float(v) - 50))), 1) for p, v in lb.items()}
+
+# ----------------------------------------------------------------------------------------------
+# 2. homepage / players data (WD)
+# ----------------------------------------------------------------------------------------------
+def build_wd(w, rt):
+    G = w.gameid.nunique(); pl = w[w.position != "team"]; team = w[w.position == "team"]
+    tk = team.set_index(["gameid", "side"])["teamkills"].to_dict()
+    pl = pl.assign(tkills=[tk[(g, s)] for g, s in zip(pl.gameid, pl.side)])
+    rows = []
+    for (name, tn, pos), g in pl.groupby(["playername", "teamname", "position"]):
+        n = len(g); K = g.kills.sum(); D = g.deaths.sum(); A = g.assists.sum()
+        rows.append(dict(p=name, t=need_code(tn), r=ROLE[pos], g=n, wp=float(g.result.mean() * 100), kda=float((K + A) / max(D, 1)), k=float(K / n), d=float(D / n), a=float(A / n),
+                         dpm=float(g.dpm.mean()), cs=float(g.cspm.mean()), gd=float(g.golddiffat15.mean()), csd=float(g.csdiffat15.mean()), xpd=float(g.xpdiffat15.mean()),
+                         ds=float(g.damageshare.mean() * 100), gpm=float(g["earned gpm"].mean()), kp=round(float((K + A) / g.tkills.sum() * 100), 1)))
+    for r in rows: r["rt"] = rt.get(r["p"], 50.0)
+    P = sorted(rows, key=lambda r: (-r["kda"], -r["gd"]))
+    rank = lambda role, key, v: 1 + sum(1 for r in rows if r["r"] == role and r[key] > v + 1e-9)
+    sg = lambda v: ("+" if v > 0 else "") + format(round(v), ",")
+    top = []
+    for role in ["Top", "Jungle", "Mid", "Bot", "Support"]:
+        best = sorted([r for r in rows if r["r"] == role], key=lambda r: (-r["kda"], -r["gd"]))[0]
+        keys = ["kda", "wp", "cs", "gd", "csd", "xpd"]
+        top.append(dict(role=role, p=best["p"], t=best["t"], v=[f'{best["kda"]:.1f}', f'{best["wp"]:.1f}', f'{best["cs"]:.1f}', sg(best["gd"]), sg(best["csd"]), sg(best["xpd"])],
+                        rk=[rank(role, k, best[k]) for k in keys]))
+    tb = {}
+    for _, r in team.iterrows():
+        for b in ["ban1", "ban2", "ban3", "ban4", "ban5"]:
+            if isinstance(r[b], str): tb[r[b]] = tb.get(r[b], 0) + 1
+
+    def champ_rows(frame, with_bans_only):
+        out = []
+        for c in set(frame.champion) | (set(tb) if with_bans_only else set()):
+            g = frame[frame.champion == c]; n = len(g); b = tb.get(c, 0)
+            d = dict(c=c, pk=n, bn=b, pr=round((n + b) / G * 100), w=int(g.result.sum()) if n else 0, l=int(n - g.result.sum()) if n else 0)
+            if n:
+                K, D, A = g.kills.sum(), g.deaths.sum(), g.assists.sum()
+                d.update(wr=round(g.result.mean() * 100), kda=round((K + A) / max(D, 1), 1), cs=round(g.cspm.mean(), 1), dpm=round(g.dpm.mean()),
+                         gd=round(g.golddiffat15.mean()), csd=round(g.csdiffat15.mean()))
+            for k in ("wr", "kda", "cs", "dpm", "gd", "csd"): d.setdefault(k, None)
+            out.append(d)
+        return out
+    allc = champ_rows(pl, True); allc.sort(key=lambda d: (-d["pr"], -d["pk"], -d["w"], d["c"]))
+    cbr = {}
+    for role in ["Top", "Jungle", "Mid", "Bot", "Support"]:
+        pos = [k for k, v in ROLE.items() if v == role][0]
+        l = champ_rows(pl[pl.position == pos], False); l.sort(key=lambda d: (-d["pk"], -d["w"], -d["bn"], d["c"])); cbr[role] = l
+    return dict(games=G, players=P, top=top, champs=allc[:10], cbr=cbr, champsAll=allc)
+
+# ----------------------------------------------------------------------------------------------
+# 3. Swiss standings + recent results
+# ----------------------------------------------------------------------------------------------
+def build_standings(w):
+    t = w[w.position == "team"].copy(); t["code"] = t.teamname.map(need_code)
+    o = t.set_index(["gameid", "side"])["code"].to_dict(); t["opp"] = [o[(g, "Red" if s == "Blue" else "Blue")] for g, s in zip(t.gameid, t.side)]
+    t = t.sort_values("date"); out = {}
+    for c, g in t.groupby("code"):
+        series = []
+        for r in g.itertuples():
+            if series and series[-1]["opp"] == r.opp: series[-1]["gw" if r.result else "gl"] += 1
+            else: series.append(dict(opp=r.opp, gw=int(r.result), gl=int(not r.result)))
+        w_ = l_ = 0
+        for s in series:
+            bo3 = (w_, l_) in ((2, 0), (0, 2))
+            done = (s["gw"] + s["gl"] == 1 and not bo3) or max(s["gw"], s["gl"]) >= 2
+            s["bo3"] = bo3 or s["gw"] + s["gl"] > 1
+            s["res"] = ("W" if s["gw"] > s["gl"] else "L") if done else "…"
+            if s["res"] == "W": w_ += 1
+            elif s["res"] == "L": l_ += 1
+        out[c] = dict(w=w_, l=l_, rounds=[dict(res=s["res"], opp=s["opp"], sc=(f'{s["gw"]}-{s["gl"]}' if s["bo3"] else "")) for s in series])
+    return out
+
+def build_recent(w):
+    tm = w[w.position == "team"].copy(); tm["code"] = tm.teamname.map(need_code)
+    ser = {}
+    for gid, g in tm.groupby("gameid"):
+        b = g[g.side == "Blue"].iloc[0]; r = g[g.side == "Red"].iloc[0]
+        key = (str(b.date).split(" ")[0], frozenset([b.code, r.code]))
+        ser.setdefault(key, []).append((b.date, b, r, gid))
+    out = []
+    for key, gl in ser.items():
+        gl.sort(key=lambda x: x[0]); wins = {}
+        for _, b, r, _g in gl:
+            wc = b.code if b.result else r.code; wins[wc] = wins.get(wc, 0) + 1
+        ws = max(wins, key=wins.get); ls = [c for c in key[1] if c != ws][0]
+        lastg = gl[-1]; d = pd.Timestamp(lastg[0]).tz_localize("UTC").tz_convert(TZ)
+        out.append((lastg[0], [ws, "%d:%d" % (wins[ws], wins.get(ls, 0)), ls, d.strftime("%H:%M"), d.strftime("%b %-d"), gl[0][3]]))
+    out.sort(key=lambda x: x[0], reverse=True)
+    return [x[1] for x in out[:4]]
+
+# ----------------------------------------------------------------------------------------------
+# 4. game / player / team / champion page data
+# ----------------------------------------------------------------------------------------------
+def build_game(w, logos_all):
+    icons = {}
+    def ic(n):
+        k = champ_key(n)
+        if not k: print("  no champion icon for", n); return None
+        if k not in icons: icons[k] = champ_icon(k, 72, 82)
+        return k
+    games = []
+    for gid, g in w.groupby("gameid"):
+        t = g[g.position == "team"].set_index("side"); p = g[g.position != "team"]; gl = int(t.iloc[0].gamelength); teams = []
+        for side in ["Blue", "Red"]:
+            tr = t.loc[side]; pl = p[p.side == side]; players = []
+            for pos in ORDER:
+                r = pl[pl.position == pos].iloc[0]
+                players.append(dict(role=ROLE[pos], name=r.playername, champ=r.champion, ic=ic(r.champion), k=int(r.kills), d=int(r.deaths), a=int(r.assists),
+                                    dmg=int(r.damagetochampions), cs=int(r["total cs"]), gold=int(r.totalgold)))
+            d = lambda c: int(tr[c]) if pd.notna(tr[c]) else 0
+            teams.append(dict(code=need_code(tr.teamname), name=tr.teamname, side=side, win=int(tr.result), k=int(pl.kills.sum()), d=int(pl.deaths.sum()), a=int(pl.assists.sum()),
+                              gold=int(tr.totalgold), towers=d("towers"), grubs=d("void_grubs"), heralds=d("heralds"), elders=d("elders"), barons=d("barons"),
+                              drakes=[("infernal", d("infernals")), ("mountain", d("mountains")), ("cloud", d("clouds")), ("ocean", d("oceans")), ("chemtech", d("chemtechs")), ("hextech", d("hextechs"))],
+                              bans=[dict(c=b, ic=ic(b)) for b in [tr[f"ban{i}"] for i in range(1, 6)] if isinstance(b, str)], players=players))
+        series = [[0, 0]]
+        for m in (10, 15, 20, 25):
+            b = g[(g.side == "Blue") & (g.position != "team")][f"goldat{m}"]; r = g[(g.side == "Red") & (g.position != "team")][f"goldat{m}"]
+            if b.notna().all() and len(b) == 5 and gl > m * 60 + 30: series.append([m, int(b.sum() - r.sum())])
+        series.append([round(gl / 60, 1), teams[0]["gold"] - teams[1]["gold"]])
+        games.append(dict(id=gid, date=pd.Timestamp(g.date.iloc[0]).tz_localize("UTC").tz_convert(TZ).strftime("%b %-d"), start=str(g.date.iloc[0]), len=gl, teams=teams, gold=series))
+    games.sort(key=lambda x: x["start"])
+    for i, g in enumerate(games): g["n"] = i + 1
+    used = {t["code"] for g in games for t in g["teams"]}
+    return dict(games=games, icons=icons, logos={k: logos_all[k] for k in used if k in logos_all})
+
+def build_profiles(w, faces_fallback, logos_all):
+    p = w[w.position != "team"].copy(); t = w[w.position == "team"]
+    tk = t.set_index(["gameid", "side"])["teamkills"].to_dict(); tn = t.set_index(["gameid", "side"])["teamname"].to_dict()
+    icons = {}
+    def ic(n):
+        k = champ_key(n)
+        if k and k not in icons: icons[k] = champ_icon(k, 64, 80)
+        return k
+    def face(name, tc):
+        c = [f for f in PLAYER_FILES if f[:-5] == tc.lower() + "-" + slug(name)]
+        if c:
+            im = Image.open("assets/players/" + c[0]).convert("RGBA"); im.thumbnail((240, 240)); return b64webp(im, 80)
+        print("  no portrait for", name, tc); return faces_fallback.get(name)
+    rows = []
+    for _, r in p.iterrows():
+        team = need_code(r.teamname); opp = need_code(tn[(r.gameid, "Red" if r.side == "Blue" else "Blue")])
+        rows.append(dict(player=r.playername, team=team, opp=opp, role=ROLE[r.position], champ=r.champion, ic=ic(r.champion), win=int(r.result), k=int(r.kills), d=int(r.deaths), a=int(r.assists),
+                         cs=float(r["total cs"]), gl=r.gamelength / 60, dmg=float(r.damagetochampions), gold=float(r.totalgold), tk=float(tk[(r.gameid, r.side)]), ds=float(r.damageshare), gs=float(r.earnedgoldshare),
+                         csd=float(r.csdiffat15) if pd.notna(r.csdiffat15) else None, gd=float(r.golddiffat15) if pd.notna(r.golddiffat15) else None, xpd=float(r.xpdiffat15) if pd.notna(r.xpdiffat15) else None,
+                         vs=float(r.vspm), wpm=float(r.wpm), wcpm=float(r.wcpm), dtm=float(r.damagetakenperminute), date=str(r.date)[:10], gid=r.gameid, side=r.side))
+    res = {}
+    for pl in sorted(set(x["player"] for x in rows)):
+        g = [x for x in rows if x["player"] == pl]
+        res[pl] = dict(name=pl, team=g[0]["team"], role=g[0]["role"], region=REGION.get(g[0]["team"]), games=g)
+    for pl, v in res.items(): v["face"] = face(pl, v["team"])
+    used = {v["team"] for v in res.values()} | {x["opp"] for v in res.values() for x in v["games"]}
+    return dict(players=res, icons=icons, logos={k: logos_all[k] for k in used if k in logos_all})
+
+def build_teams(w, P):
+    out = {}
+    for gid, g in w.groupby("gameid"):
+        for side in ["Blue", "Red"]:
+            t = g[(g.side == side) & (g.position == "team")].iloc[0]; pl = g[(g.side == side) & (g.position != "team")]
+            c = need_code(t.teamname); oth = "Red" if side == "Blue" else "Blue"; o = need_code(g[(g.side == oth) & (g.position == "team")].iloc[0].teamname)
+            num = lambda col: float(t[col]) if pd.notna(t[col]) else 0.0
+            row = dict(gid=gid, opp=o, win=int(t.result), gl=float(t.gamelength), date=str(t.date)[:10], k=float(pl.kills.sum()), d=float(pl.deaths.sum()), a=float(pl.assists.sum()),
+                       fb=num("firstblood"), ft=num("firsttower"), dr=num("dragons"), ba=num("barons"), tw=num("towers"), gr=num("void_grubs"), he=num("heralds"),
+                       gold=float(t.totalgold), dmg=float(pl.damagetochampions.sum()), vs=float(pl.vspm.mean() * 5), cs=float(pl["total cs"].sum()),
+                       gd=float(pl.golddiffat15.sum()), csd=float(pl.csdiffat15.sum()), xpd=float(pl.xpdiffat15.sum()))
+            out.setdefault(c, dict(code=c, name=t.teamname, region=REGION.get(c), games=[]))["games"].append(row)
+    for c, v in out.items(): v["players"] = [n for n, p in P["players"].items() if p["team"] == c]
+    players = {n: dict(name=n, team=p["team"], role=p["role"], face=p["face"], games=p["games"]) for n, p in P["players"].items()}
+    return dict(teams=out, players=players, logos=P["logos"])
+
+def build_g20(w):
+    g20 = {}
+    for r in w[w.position == "team"].itertuples():
+        if pd.notna(r.golddiffat20): g20.setdefault(r.gameid, {})[need_code(r.teamname)] = int(r.golddiffat20)
+    return g20
+
+def build_champions(w, GD):
+    pl = w[w.position != "team"]; tm = w[w.position == "team"]
+    icons = {}
+    def ic(n):
+        k = champ_key(n)
+        if not k: print("  no champion icon for", n); return None
+        if k not in icons: icons[k] = GD["icons"].get(k) or champ_icon(k, 72, 82)
+        return k
+    tk = {(r.gameid, r.side): r.kills for r in tm.itertuples()}
+    order = sorted(w.gameid.unique(), key=lambda x: w[w.gameid == x].date.iloc[0])
+    gp = {gid: [need_code(x) for x in w[(w.gameid == gid) & (w.position == "team")].sort_values("side").teamname] for gid in order}
+    f = lambda x: None if pd.isna(x) else round(float(x), 3)
+    ch = {}
+    for r in pl.itertuples():
+        opp = pl[(pl.gameid == r.gameid) & (pl.position == r.position) & (pl.side != r.side)].iloc[0]; tkills = tk[(r.gameid, r.side)]
+        row = dict(role=ROLE[r.position], player=r.playername, team=need_code(r.teamname), opp=need_code(opp.teamname), win=int(r.result), k=int(r.kills), d=int(r.deaths), a=int(r.assists),
+                   cspm=f(r.cspm), dmg=f(r.damageshare), gold=f(r.earnedgoldshare), gd=f(r.golddiffat15), csd=f(r.csdiffat15), xpd=f(r.xpdiffat15),
+                   kp=round((r.kills + r.assists) / tkills, 4) if tkills else None, oc=opp.champion, oi=ic(opp.champion), op=opp.playername, game=r.gameid, side=r.side, len=int(r.gamelength), date=r.date[:10])
+        ch.setdefault(r.champion, dict(rows=[], bans=[]))["rows"].append(row)
+    for r in tm.itertuples():
+        bl, rd_ = gp[r.gameid]; me = need_code(r.teamname); opp = rd_ if me == bl else bl
+        for n in range(1, 6):
+            b = getattr(r, "ban%d" % n)
+            if isinstance(b, str): ch.setdefault(b, dict(rows=[], bans=[]))["bans"].append(dict(by=me, vs=opp, ph=1 if n <= 3 else 2, game=r.gameid, win=int(r.result)))
+    avg = {}
+    for role, x in pl.groupby("position"):
+        tot = lambda c: float(x[c].sum())
+        avg[ROLE[role]] = dict(kda=(tot("kills") + tot("assists")) / max(1, tot("deaths")), cspm=float(x.cspm.mean()), dmg=float(x.damageshare.mean()), gold=float(x.earnedgoldshare.mean()),
+                               kp=float(((x.kills + x.assists) / x.apply(lambda r: tk[(r.gameid, r.side)], axis=1)).mean()), gd=float(x.golddiffat15.mean()), csd=float(x.csdiffat15.mean()), xpd=float(x.xpdiffat15.mean()))
+    return dict(champs={n: dict(ic=ic(n), **v) for n, v in ch.items()}, avg=avg, icons=icons, games=len(order), logos=GD["logos"])
+
+# ----------------------------------------------------------------------------------------------
+# 5. write the pages
+# ----------------------------------------------------------------------------------------------
+def build_search(s, WD, CH):
+    """Refresh the searchable teams / players / champions list; keep the static logos, flags and role icons."""
+    SD = jget(s, "SD")
+    names = {c: n for c, n in SD["t"]}
+    for c in {p["t"] for p in WD["players"]}: names.setdefault(c, next(k for k, v in CODE.items() if v == c))
+    SD["t"] = [[c, names[c]] for c in names if c in {p["t"] for p in WD["players"]}] or SD["t"]
+    SD["p"] = [[p["p"], p["t"], p["r"]] for p in WD["players"]]
+    have = {n: i for n, i in SD["c"]}
+    cs = {}
+    for c in WD["champsAll"]:
+        k = champ_key(c["c"])
+        if k: cs[c["c"]] = have.get(c["c"]) or champ_icon(k, 36, 70)
+    SD["c"] = [[n, cs[n]] for n in sorted(cs)]
+    return SD
+
+def main(csv):
+    print("reading", csv)
+    w = load_event(csv)
+    if w.empty: sys.exit("No %s rows on/after %s in %s" % (LEAGUE, MAIN_START, csv))
+    print("  %d games, %d players" % (w.gameid.nunique(), w[w.position != "team"].playername.nunique()))
+    rt = ratings(csv)
+    WD = build_wd(w, rt)
+    ST = build_standings(w); rec = build_recent(w)
+    lastuk = pd.Timestamp(w.date.max()).tz_localize("UTC").tz_convert(TZ); date_s = lastuk.strftime("%b %-d")
+
+    idx = rd("site/index.html")
+    logos_all = jget(idx, "LOGOS"); faces_old = jget(idx, "FACES")
+    GD = build_game(w, logos_all)
+    PD = build_profiles(w, faces_old, logos_all)
+    TD = build_teams(w, PD); G20 = build_g20(w)
+    CD = build_champions(w, GD)
+
+    FACES = {p["name"]: p["face"] for p in PD["players"].values() if p["face"]}
+    # small (128px) portraits for the leaderboards
+    for p in WD["players"]:
+        c = [f for f in PLAYER_FILES if f[:-5] == p["t"].lower() + "-" + slug(p["p"])]
+        if c:
+            im = Image.open("assets/players/" + c[0]).convert("RGBA"); im.thumbnail((128, 128)); FACES[p["p"]] = b64webp(im, 80)
+        elif p["p"] not in FACES and p["p"] in faces_old: FACES[p["p"]] = faces_old[p["p"]]
+    CH = {}
+    for c in WD["champsAll"]:
+        k = champ_key(c["c"])
+        if k: CH[c["c"]] = champ_icon(k, 68, 88)
+        else: print("  no champion icon for", c["c"])
+
+    def stamp(s):
+        return re.sub(r"data through [A-Z][a-z]{2} \d+", "data through " + date_s, s)
+
+    out = ROOT / "dist"
+    # index
+    s = idx
+    for name, val in (("WD", WD), ("FACES", FACES), ("FACESF", FACES), ("CHAMPS", CH), ("SW", ST)): s = jreplace(s, name, val)
+    s = re.sub(r"  var rec = \[\[.*?\]\];\n", lambda m: "  var rec = " + json.dumps(rec, ensure_ascii=False) + ";\n", s, count=1, flags=re.S)
+    s = jreplace(s, "SD", build_search(s, WD, CH))
+    wr(out / "index.html", stamp(s))
+    # players
+    s = rd("site/players.html")
+    for name, val in (("WD", WD), ("FACES", FACES), ("FACESF", FACES)): s = jreplace(s, name, val)
+    s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "players.html", stamp(s))
+    # data pages
+    for fn, val in (("game", GD), ("player", PD), ("team", {k: v for k, v in TD.items() if k != "icons"}), ("champion", CD)):
+        s = rd("site/%s.html" % fn); s = jreplace(s, "D", val)
+        if fn == "team": s = jreplace(s, "G20", G20)
+        s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / (fn + ".html"), stamp(s))
+    wr(out / ".nojekyll", "")
+
+    # sanity warnings (do not stop the build)
+    up = re.search(r"var up = (\[\[.*?\]\]);", idx, flags=re.S)
+    if up:
+        try:
+            dates = {r[3] for r in json.loads(up.group(1))}
+            print("  note: 'Upcoming' fixtures in index.html are hand-written, currently dated:", ", ".join(sorted(dates)))
+        except Exception: pass
+    print("done - %d pages written to dist/ (data through %s)" % (len(list(out.glob("*.html"))), date_s))
+
+if __name__ == "__main__":
+    main(sys.argv[1] if len(sys.argv) > 1 else CSV_DEFAULT)
