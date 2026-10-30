@@ -606,6 +606,19 @@ def build_search(s, WD, CH):
     SD["c"] = [[n, cs[n]] for n in sorted(cs)]
     return SD
 
+def build_bootcamp(WD, logos_all, tpl):
+    """SoloQ ladder data for the Bootcamp page: data/bootcamp.json (fetch_bootcamp.py) joined with the event's players."""
+    try: data = json.loads((ROOT / "data" / "bootcamp.json").read_text(encoding="utf-8"))
+    except Exception: data = {}
+    pl = data.get("players") or {}; players = []
+    for p in WD["players"]:
+        accs = [dict(id=a["id"], tier=a.get("tier"), rank=a.get("rank"), lp=a.get("lp", 0), wins=a.get("wins", 0), losses=a.get("losses", 0), missing=a.get("missing"),
+                     games=[dict(champ=g["champ"], win=g["win"], k=g["k"], d=g["d"], a=g["a"], ts=g.get("ts")) for g in a.get("games", [])]) for a in pl.get(p["p"], [])]
+        players.append(dict(p=p["p"], t=p["t"], r=p["r"], acc=accs))
+    have = any(a.get("tier") for x in players for a in x["acc"])
+    print("  bootcamp: %d players, %d with a ranked soloQ account" % (len(players), sum(1 for x in players if any(a.get("tier") for a in x["acc"]))))
+    return dict(updated=data.get("updated"), have=have, players=players, logos={t: logos_all[t] for t in {x["t"] for x in players} if t in logos_all}, ri=jget(tpl, "SD").get("r", {}))
+
 def main(csv):
     print("reading", csv)
     w = load_event(csv)
@@ -674,6 +687,7 @@ def main(csv):
         s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / (fn + ".html"), stamp(s))
     wr(out / "live-map.json", json.dumps(RIOT_MAP))
     wr(out / "live.html", rd("site/live.html"))   # live game page: polls Riot's feed in the browser, no build-time data
+    s = rd("site/bootcamp.html"); s = jreplace(s, "BC", build_bootcamp(WD, logos_all, s)); s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "bootcamp.html", stamp(s))
     wr(out / ".nojekyll", "")
 
     print("done - %d pages written to dist/ (data through %s)" % (len(list(out.glob("*.html"))), date_s))

@@ -35,6 +35,8 @@ jobs:
             data/items_cache.json
             data/item_icons.json
             data/riot_games.json
+            data/bootcamp.json
+            data/soloq_accounts.json
           key: cache-${{ github.run_id }}
           restore-keys: cache-
       - name: Download upcoming matches
@@ -54,6 +56,10 @@ jobs:
           DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
           DATA_FOLDER_ID: ${{ vars.DATA_FOLDER_ID }}
         run: python fetch_data.py
+      - name: Download soloQ ranks (Bootcamp page)
+        env:
+          RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
+        run: python fetch_bootcamp.py
       - name: Build site
         run: python build.py
       - uses: actions/configure-pages@v5
