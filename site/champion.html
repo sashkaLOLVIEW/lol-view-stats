@@ -270,7 +270,12 @@ h2 .li.hi { margin: 0; width: 18px; height: 18px; }
 .zw { display: inline-block; overflow: hidden; border-radius: 6px; line-height: 0; flex: none; }
 .big-w.zw { border-radius: 10px; display: block; width: 84px; height: 84px; border: 1px solid var(--line); }
 .big-w.zw img.big { border: 0; border-radius: 0; }
-.gr.gm { grid-template-columns: 1fr auto; }
+.gr.gm { grid-template-columns: 1fr auto auto; column-gap: 28px; }
+.gr .gs { display: flex; flex-direction: column; align-items: flex-start; min-width: 74px; gap: 4px; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.gr .gs > span { display: inline-flex; align-items: center; gap: 6px; }
+.gr .gs img { width: 13px; height: 13px; border-radius: 0; border: 0; background: none; }
+#mu { margin-top: 14px; }
+@media (max-width: 640px) { .gr.gm { column-gap: 12px; } }
 .gr .t .pt { display: inline-flex; align-items: center; gap: 6px; }
 .gr .t .pt img { width: 16px; height: 16px; border-radius: 0; }
 .cp-note { margin-top: 14px; font-size: 11.5px; color: var(--dim); line-height: 1.5; }
@@ -302,17 +307,16 @@ html { scroll-padding-top: 84px; }
     </div>
   </header>
     <section class="gh">
-    <h2>Champion Profile</h2>
     <div id="hd"></div>
   </section>
   <main class="gcols">
     <section>
-      <h2>Performance</h2>
+      <h2>Statistics</h2>
       <div class="cmp" id="stats" style="margin-top:14px"></div>
       <div id="bsec"><h2 class="cp-sub">Rune Pages</h2><div id="runes"></div><h2 class="cp-sub">Item Choices</h2><div id="ibuild"></div></div>
     </section>
     <section>
-      <h2>Games</h2>
+      <h2>Match History</h2>
       <div class="gl" id="games"></div>
       <h2 class="cp-sub">Matchups</h2>
       <div id="mu"></div>
@@ -394,7 +398,7 @@ html { scroll-padding-top: 84px; }
     var itrow = function (it, pre) { pre = pre || ''; var m = D.items; if (!m || !it || !it.length) return pre ? '<div class="its">' + pre + '</div>' : ''; var o = '';
       for (var k = 0; k < 7; k++) { var id = it[k], x = id ? m[id] : null; o += x ? (k === 6 ? '<span class="trw"><img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '"></span>' : '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">') : '<i></i>'; }
       return '<div class="its">' + pre + o + '</div>'; };
-    $('games').innerHTML = pk ? R.map(function (r) { return '<div class="gr gm"><div><div class="t"><span class="pt">' + logo(r.team, 16) + '<a href="player.html#' + encodeURIComponent(r.player) + '">' + r.player + '</a></span> <span class="vs">vs ' + logo(r.opp, 16) + ' ' + r.op + '</span></div><div class="s"><span>' + im('kills') + r.k + '/' + r.d + '/' + r.a + '</span><span>&middot;</span><span>' + im('minion') + r.cspm.toFixed(1) + ' CS/M</span></div>' + itrow(r.it, rnrow(r)) + '</div><div class="r"><span class="res ' + (r.win ? 'w' : 'l') + '">' + (r.win ? 'WIN' : 'LOSS') + '</span><div style="margin-top:4px"><a href="game.html#' + r.game + '">' + r.date + ' &rsaquo;</a></div></div></div>'; }).join('') : '<div class="empty">No games played with ' + n + ' yet.</div>';
+    $('games').innerHTML = pk ? R.map(function (r) { return '<div class="gr gm"><div><div class="t"><span class="pt">' + logo(r.team, 16) + '<a href="player.html#' + encodeURIComponent(r.player) + '">' + r.player + '</a></span> <span class="vs">vs ' + logo(r.opp, 16) + ' ' + r.op + '</span></div>' + itrow(r.it, rnrow(r)) + '</div><div class="gs"><span>' + im('kills') + r.k + '/' + r.d + '/' + r.a + '</span><span>' + im('minion') + r.cspm.toFixed(1) + ' CS/M</span></div><div class="r"><span class="res ' + (r.win ? 'w' : 'l') + '">' + (r.win ? 'WIN' : 'LOSS') + '</span><div style="margin-top:4px"><a href="game.html#' + r.game + '">' + r.date + ' &rsaquo;</a></div></div></div>'; }).join('') : '<div class="empty">No games played with ' + n + ' yet.</div>';
     // matchups
     var mg = {}; R.forEach(function (r) { (mg[r.oc] = mg[r.oc] || {oc: r.oc, oi: r.oi, rs: []}).rs.push(r); });
     var ml = Object.keys(mg).map(function (k) { return mg[k]; }).sort(function (a, b) { return b.rs.length - a.rs.length || a.oc.localeCompare(b.oc); });
