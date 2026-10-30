@@ -110,9 +110,11 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 .chev svg { transition:transform .15s; }
 .mid .chev { width:22px; height:18px; color:var(--muted); }
 .rw { display:flex; flex-direction:column; gap:6px; }
-.detail { display:grid; grid-template-columns:minmax(0,1fr) 84px minmax(0,1fr); }
+.detail { display:grid; grid-template-columns:minmax(0,1fr) 84px minmax(0,1fr); background:var(--surface); border:1px solid var(--line); border-top:0; border-radius:0 0 10px 10px; }
 .detail[hidden] { display:none; }
-.dp { display:flex; flex-wrap:wrap; gap:6px; padding:10px 12px; background:var(--surface); border:1px solid var(--line); border-radius:10px; align-content:flex-start; }
+.dp { display:flex; flex-wrap:wrap; gap:6px; padding:10px 12px 12px; align-content:flex-start; }
+.rw.open { gap:0; }
+.rw.open .cell.l { border-bottom-left-radius:0; } .rw.open .cell.r { border-bottom-right-radius:0; }
 .dp.r { justify-content:flex-end; }
 .dp .dh { flex-basis:100%; font-size:11px; font-weight:700; text-transform:uppercase; color:var(--muted); }
 .dp.r .dh { text-align:right; }
@@ -434,10 +436,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     var gs = ft.totalGold ? goldOf(ft, pm, i) / ft.totalGold : null;
     var d = {};
     if (S.details) (S.details.participants || []).forEach(function (x) { if (x.participantId === pm.participantId) d = x; });
-    var chips = [
-      ["Damage Share", pct(d.championDamageShare)], ["Gold Share", gs == null ? "-" : (gs * 100).toFixed(2) + "%"], ["Kill Participation", pct(d.killParticipation)],
-      ["Skill Order", (d.abilities || []).length ? d.abilities.join("\u2192") : "-"]
-    ];
+    var chips = [["Damage Share", pct(d.championDamageShare)], ["Gold Share", gs == null ? "-" : (gs * 100).toFixed(2) + "%"]];
     return '<div class="dp ' + side + '"><div class="dh">' + esc(pm.summonerName) + " · " + esc(pm.championId) + "</div>" +
       chips.map(function (c) { return '<span class="dchip">' + c[0] + ":<b>" + esc(c[1]) + "</b></span>"; }).join("") + "</div>";
   }
@@ -456,7 +455,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     var rows = bm.map(function (pm, i) {
       var r = rm[i], d = goldOf(f.blueTeam, pm, i) - goldOf(f.redTeam, r, i);
       var cls = d > 0 ? "b" : d < 0 ? "r" : "e";
-      return '<div class="rw"><div class="brow">' + cellHtml(pm, f.blueTeam, i, "l") + '<div class="mid ' + cls + '" title="Gold difference"><span>' + (d === 0 ? "-" : Math.abs(d)) + '</span><button class="chev" type="button" data-i="' + i + '" aria-expanded="' + (S.open[i] ? "true" : "false") + '" aria-label="' + (S.open[i] ? "Hide" : "Show") + ' player details">' + (S.open[i] ? EYE_OFF : EYE) + "</button></div>" + cellHtml(r, f.redTeam, i, "r") + "</div>" +
+      return '<div class="rw' + (S.open[i] ? " open" : "") + '"><div class="brow">' + cellHtml(pm, f.blueTeam, i, "l") + '<div class="mid ' + cls + '" title="Gold difference"><span>' + (d === 0 ? "-" : Math.abs(d)) + '</span><button class="chev" type="button" data-i="' + i + '" aria-expanded="' + (S.open[i] ? "true" : "false") + '" aria-label="' + (S.open[i] ? "Hide" : "Show") + ' player details">' + (S.open[i] ? EYE_OFF : EYE) + "</button></div>" + cellHtml(r, f.redTeam, i, "r") + "</div>" +
         '<div class="detail"' + (S.open[i] ? "" : " hidden") + ">" + detailHtml(pm, "l", f.blueTeam, i) + '<div class="dmid"></div>' + detailHtml(r, "r", f.redTeam, i) + "</div></div>";
     }).join("");
     return head + '<div class="brows">' + rows + "</div>";
