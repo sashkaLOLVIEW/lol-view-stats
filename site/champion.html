@@ -413,7 +413,7 @@ html { scroll-padding-top: 84px; }
     var shown = 5, gb = $('games');
     var drawG = function () {
       if (!pk) { gb.innerHTML = '<div class="empty">No games played with ' + n + ' yet.</div>'; return; }
-      gb.innerHTML = GR.slice(0, shown).map(gmHtml).join('') + (GR.length > 5 ? '<button type="button" class="gmore">' + (shown < GR.length ? 'Show more (' + Math.min(5, GR.length - shown) + ' of ' + (GR.length - shown) + ' remaining)' : 'Show less') + '</button>' : '');
+      gb.innerHTML = GR.slice(0, shown).map(gmHtml).join('') + (GR.length > 5 ? '<button type="button" class="gmore">' + (shown < GR.length ? 'Show more +' : 'Show less') + '</button>' : '');
       var bt = gb.querySelector('.gmore');
       if (bt) bt.onclick = function () { shown = shown < GR.length ? Math.min(GR.length, shown + 5) : 5; drawG(); };
     };
