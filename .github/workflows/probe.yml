@@ -1,0 +1,21 @@
+name: Probe Riot feed (diagnostic)
+
+on:
+  workflow_dispatch:           # run by hand from the Actions tab; changes nothing on the site
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Probe
+        env:
+          LOLESPORTS_API_KEY: ${{ secrets.LOLESPORTS_API_KEY }}
+        run: python tools/probe_livestats.py
