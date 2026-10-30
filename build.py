@@ -353,12 +353,12 @@ def map_items(w):
         codes = sorted([CODE.get(blue.teamname, ""), CODE.get(red.teamname, "")])
         t0 = pd.Timestamp(blue.date).tz_localize("UTC")
         cand = [r for r in recs if r["codes"] == codes and int(r["number"]) == int(blue.game) and abs((pd.Timestamp(r["start"]) - t0).total_seconds()) < 12 * 3600]
-        if not cand: continue
+        if not cand: print("  no Riot data for", gid, codes, "game", int(blue.game), str(blue.date)); continue
         r = cand[0]; matched += 1
         for _, p in w[(w.gameid == gid) & (w.position != "team")].iterrows():
             rp = r["players"].get(p.side.lower() + ":" + p.position)
             if not rp: continue
-            if norm(rp["champ"]) != norm(p.champion) and norm(rp["champ"]) not in norm(p.champion) and norm(p.champion) not in norm(rp["champ"]): champ_bad += 1
+            if norm(rp["champ"]) != norm(p.champion) and norm(rp["champ"]) not in norm(p.champion) and norm(p.champion) not in norm(rp["champ"]): champ_bad += 1; print("  champion differs:", gid, p.side, p.position, "riot=" + str(rp["champ"]), "oe=" + str(p.champion))
             rn = rp.get("runes") or {}; pk = rn.get("perks") or []
             out[(gid, p.side, p.position)] = (rp["items"], [pk[0], rn.get("sub")] if pk and rn.get("sub") else None)
     print("  items: %d of %d games matched to Riot data%s" % (matched, total, ("; %d champion name differences (check aliases)" % champ_bad) if champ_bad else ""))
