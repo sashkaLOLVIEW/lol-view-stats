@@ -185,7 +185,7 @@ def build_recent(w):
         lastg = gl[-1]; d = lastg[0].tz_localize("UTC").tz_convert(TZ)
         out.append((lastg[0], [ws, "%d:%d" % (wins[ws], wins.get(ls, 0)), ls, d.strftime("%H:%M"), d.strftime("%b %-d"), gl[0][4]]))
     out.sort(key=lambda x: x[0], reverse=True)
-    return [x[1] for x in out[:4]]
+    return [x[1] for x in out[:200]]
 
 # ----------------------------------------------------------------------------------------------
 # 4. game / player / team / champion page data
@@ -373,7 +373,7 @@ def main(csv):
     print("  %d games, %d players" % (w.gameid.nunique(), w[w.position != "team"].playername.nunique()))
     rt = ratings(csv)
     WD = build_wd(w, rt)
-    ST = build_standings(w); rec = build_recent(w)
+    ST = build_standings(w); allres = build_recent(w); rec = allres[:4]
     lastuk = pd.Timestamp(w.date.max()).tz_localize("UTC").tz_convert(TZ); date_s = lastuk.strftime("%b %-d")
 
     idx = rd("site/index.html")
@@ -411,6 +411,9 @@ def main(csv):
     s = jreplace(s, "UP", build_upcoming())
     s = jreplace(s, "SD", build_search(s, WD, CH))
     wr(out / "index.html", stamp(s))
+    # recent results (all series)
+    s = rd("site/results.html"); s = jreplace(s, "RES", allres); s = jreplace(s, "LOGOS", logos_all)
+    s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "results.html", stamp(s))
     # players
     s = rd("site/players.html")
     for name, val in (("WD", WD), ("FACES", FACES), ("FACESF", FACES)): s = jreplace(s, name, val)
