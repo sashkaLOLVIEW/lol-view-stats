@@ -230,6 +230,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 
   var IC = {"kills": "data:image/webp;base64,UklGRrgAAABXRUJQVlA4TKwAAAAvE8AEEAWDRpIUtX/T9XDwYCDCba1ta/KiG8SFLiU1h32yxn+yBbbJV2OpvxqXGdI9E5D+rmGigVFKIqYZMXCRiGks9WoRBxuJODgH08ONg4tGScQBLrLwALgorXBRkukBN/WMgYuSlS/0bmAzDRMlrQH+cgumnKVkbgMYrNO6zBGANiVBWLDyBeCQkgAIE60BgLN5EgBAGAGAvzwl3Q0LBuuUUtJtaNNQt/Bj", "gold": "data:image/webp;base64,UklGRpYAAABXRUJQVlA4TIoAAAAvE8AEEAWDtpEcDX/S/rI3XwFEuK1tW1HezODaAZFr7LFD5lID8XRARhfE3gGxF+Du7nAnIPTXGDFlA1d3PQWahloTZleBQgPW5gW0j0gbN/aTHDhZFIqTMdCG+FRNfU5KRBMAe+jMAaAVWuqDDZ6eiFzUGHx4V0wGMNsIhEpyvJarn7mGPHnorwE=", "turret": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQgM1Y2LjE3MTg4QzQgNi43MDMxMiA0LjIwOTM3IDcuMjEyNSA0LjU4NDM3IDcuNTg3NUw2IDlWMTRMNC4yNDM3NSAxNi4xOTY5QzQuMDg0MzggMTYuMzkzNyA0IDE2LjYzNzUgNCAxNi44OTA2QzQgMTcuNTAzMSA0LjQ5Njg3IDE4IDUuMTA5MzggMThIMTQuODg3NUMxNS41IDE4IDE1Ljk5NjkgMTcuNTAzMSAxNS45OTY5IDE2Ljg5MDZDMTUuOTk2OSAxNi42Mzc1IDE1LjkxMjUgMTYuMzkzNyAxNS43NTMxIDE2LjE5NjlMMTMuOTk2OSAxNFY5TDE1LjQxMjUgNy41ODQzN0MxNS43ODc1IDcuMjA5MzcgMTUuOTk2OSA2LjcgMTUuOTk2OSA2LjE2ODc1TDE2IDNDMTYgMi40NDY4NyAxNS41NTMxIDIgMTUgMkgxNEMxMy40NDY5IDIgMTMgMi40NDY4NyAxMyAzVjRIMTEuNVYzQzExLjUgMi40NDY4NyAxMS4wNTMxIDIgMTAuNSAySDkuNUM4Ljk0Njg4IDIgOC41IDIuNDQ2ODcgOC41IDNWNEg3VjNDNyAyLjQ0Njg3IDYuNTUzMTIgMiA2IDJINUM0LjQ0Njg3IDIgNCAyLjQ0Njg3IDQgM1oiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=", "dragon": "data:image/webp;base64,UklGRmYBAABXRUJQVlA4TFoBAAAvL8ALEHVAkiQ5bsP/f7oOMwAH8HJuAmgywm21bcfzhSsYE6RMZaPyAK5sO1lDVaqcVMYAdmU7mcAToP8yjjUbf08AsguVvbq+GpS8emy7h9eugWoWLTThbT2GWgPb5thw2njtXWZ2ycrQJMdDzDG4GV4P8pHQt3QBHQ8za7lTyxPUFsEY8dQgGfHeoOVplYnbLFvtM8dRL8cZXvWfcUd338CoRuG9wP1jG7fY3TvCbZudKpfNQsJwZ0uPfVQKw7Ykseh5JMk2lBrkthFL0m5tSVp1CGwzClKmlJFtSDXHtsEkFMKXgLJtYDXgA7OESjgJs6DiYHyBYliBoG1zq+IbjEMS+bAlLUdyVTsxU6gXoBmOoDJ1irgKclapckZVJOvEooauRhKrIKaxUO/BuMBoMHfAX2A8qD5ImhFeDwLNSapFVrO2NC3mDNs8yjQxz8Bzpg8x7L2+mX5V", "nashor": "data:image/webp;base64,UklGRsQBAABXRUJQVlA4TLcBAAAvL8ALEFVIkiQ5bCP8/9N1wEwDsL17bvZEQMG27djz/FZ1/aOSq5HGZFdXO9nJjvb2pnlvmllt+54A/w9TxEo1FP0MakFwVAGh9h2dIGFsUctYEjrf0AX2RWJ2uu7RlZJ8ZbaErjvUgZo3y1+RUHdGNuixapiahGwNIw+gZ8aH6TIYBRqAuuhYSGho4FHJPxsl8AJ3VN58kWcls1nC2tHPUBfJJfMCQ4taRCCIGjMkTIVBYKvjKvk6toSpzEoX3jAUrCeJi/nSs+IWtZCwThoOMvgD9eD4WAMq6s6MKS+9SP0Zlik/4o/88RHlmk/4tO2c+BD/AQkbyQf4T8y3RuxGlMb3omP6Nc43TjS6zvAIMG5B2Mc97CTcwoQ5c8O+bQpTfrbZb3wRXiG3bS62se2vgt0grfLOzMbM5oqoG65wbym3qXyVkyI4FiGCV4PIOEAJu0N2VdK2yDRHJXjHCvO2PYovwwT8WwS6buEWyN8oFNDdMn9dUC1yQM+5r5MjhHlmgEjknhWZ70UPqbpD/AtvrFicJLz5KQlJmFECEmxvDE+YVyZhdNHrhBmFScCF3/PJijJc+f8XAA==", "minion": "data:image/webp;base64,UklGRjgBAABXRUJQVlA4TCsBAAAvE8AEEPVIrW3bjaTOP+kDZGI4rQwaffSLiLdTAO09/W3mIqEJ4SOBCCgCABCMZivxAfaaor1Ve0+w3Y3zdTcr2Uy2kn0T4CggEXDMF267cwEKlgP++eMHsX0OYIll4TtMWGYUIXKdI/wGtW0KiKSyJ3dhxjJRhMpdjiQ1GGxjTSrhY7CENWCWQRNZzVHv7u5yF0JuahE0W6GHwZojLFLmmU+EtgFdYbcJnzE2MAGVRp4hWLqPuatIzwC9NwXPUcL4hcLkvd6FhdJaAS653K0haPeU5S4EbF3YvITvPL9bBMFS9nDxZ5Ph7PlCZLcLjfusOSmW3N0Fp5vaRL7XWi/lMC8ha3O4iT1LGCKS/6Flc3zzPHVdl9BvLxNuYl1Tc7IXZ25essXTla04BAA=", "infernal": "data:image/webp;base64,UklGRnACAABXRUJQVlA4TGMCAAAvL8ALENXQdrZNkdzs/d/0azuwPX3kwzcMbVcYKvSHoZTPqjCUVIqAAgAAwWa2b9u2bdtWspls27Zt27aRbX8CfFwI8HQnByRmMLjOBES8WQF8qiFy/FNzB+gnWiLAT0ixnwlWvioEuM6zYOY3fAdbAZ8FqHikWrgDewc4aRdLPhp/tRl2naOLc/bOS/t/+63Wc7p4prU2E7hdt3LpkpBUq4Q3ai9v3aFzDIlKVcLJ9zB7rXUjyN5EVElNzfBMKBjtqusGQ1TDDZxkZ1bYgM/nAocFCfAuBXhQl6SWv9MqzH2jH6BICJ1c8BmO4XB59CVL4Tv8Nv5e+0rRey1J2gx7oIfQu45Ywsh79k4Lmg64/kgyk7wUSh2Ek+Y6AIjYpJIK4wKVprzEMUZPUKYo+6XgID4hDPC635DKPZOZD/UN3iq4qWJVs/2BBf2NDyi87qXspZI0eBX7fBvq7wAOYBKZShJ2lvdfolW1d7j9Sr+vufPpl9cC8i+7KX5fCm2O+zkkJLXzGTilOO9l5ldXl+lUZoiyH2D3r1QLur75wdO89FLwF7g4pZJqTxxHDJHbrcLOT+O6A5CaEGv3x8/43dktCLiOELB/pirU2IcE4G5fbzKfSiXk/rs8CA3+W2bIc3Xty6epzPDyocd3DtMyQ8Xy33/1r8w9wxbCjsO6xNVLyQwjUOsHdGS2hCqwdg8fIp+qZIYLZOFkPXOGT7x0eEtQ9CatUpk/ZM5wjKzDW3/KUNJaS+YObV8JxFsDVLSeJa1mNmE6vP1Yis6zJFyj7ro85bj0I2YZhtbuacelOjzz0MvHhAA=", "mountain": "data:image/webp;base64,UklGRpACAABXRUJQVlA4TIQCAAAvL8ALENVQdm1LkVz1///0HjQos0zT0x61lVaYIUxhfrileAxXCkXAAQCAYDJb2bZt27Zt2zYu87Ntuz7btu0mIPemAIH03gGd0sXHyVQgxw5rrLCHNXUqgIsx/lV2wFedRg9p8snPeCL16SdRQVe++VOn+KdOoAILV4tf1TX4Qjq1Xw9GDi+cEpW+11EVmPhwXdBEOVUA9zkPlC3buSUvUOfIvgckqAZIaHOca7J0VJCCNbVdD61MBnhIcJ6bUnMG+CFUMF+AN+vBS07AJOjLz0WEpYcZyU3fqPKJr2uRTZ5eu9QmqgkMvA+xTN+kAhmH8imxqZt/bLrkFZrkjbPxDE9qk06Xc8hwbkKbQ5ssHT+HMic/sgJuiyMf/uZvLbn/kBDv1CnVqWLVtpYIpLaAmCuXTTQSdG3nCEngmK5lg28jblxOSU9gvnbZRCXByeHSPYZMJzds25bPoUmodO61/AZVQrujyXIFGLvyu5dDjBISnFNqzgBBaC13m5Kf3HdM/0zwc+7XZKHOALDy5fCnhFbHfssnTwOcHX3+Os84te0ByQUOsU1oUxYrSLs8tx5sA47b1dQp5QnxYzxOiHCea8K+RSq4OdUm68DOAPf1z4Q+hzolI5UtK+Q51TUeBgYmmUMykPzi0imdqWwLuBhx6BSPVJKgalN+ZBM8wGOjCuQc2JxSl59zAA0pTlf7G75Utq4g+nmsJocgklTeONYUk/Rs34ODc62FSKoCBU+uKcnp2bOHXOcU/3TAQds2pTk9+/Y89XNjINVDcfssq2ABHTvVAQm7SxpSP4cMB49wpbJ35cF4+rKOVCjmH9307A8oyIHLhYVKKqdYuWLlNOu4pHIvCg==", "cloud": "data:image/webp;base64,UklGRrYCAABXRUJQVlA4TKoCAAAvL8ALENVQd7VNkdz4/m/6MTcYfz5mKG8bghWqMJTySu1wUkopAhIAAISamm3btm3b3qt+7W3btm3btm3b9k4T4H1A8HYn+KD3VIQKUe07skNEJqUw2nc0hAmYcyzt+7FLMUjwE4LrjD3UggcQfyHUrkLi2MEQ2Rz8Bzd7EXn07XuAk58AHrzCXsaotGFq36wIM++ZACHTXv2XD1jL2O5fPkHmnDxBY/fzSa+bDRFsmTmCmdV/OAxW9o26qGcmABPvSygILWxM5sbYqAomZ3KGRJ8LKZcJyvZtupReZxItxAXZ+SBEWjcpBXKuM5MWnPxYcsNvGHRsUgWblgBNbqGuovDgOPJ3tWwwCjTv55HjDC4KAwc5Zrh/swX4RVrT0hJ8FXoWcmSGhy2qlfK0eYY3PBVB1gOYHGFzONaqwstoAFryGjHF8iItyRmyhdCVhzhf5DzDC7ghxMQkLck8g4yi980qXRKS1sIAgookkzlmkslfSBc07JzBZlkGvqQF4AAM8SpY3sNfa+08Ezogei5d+dSxqItBHswWfCz/kJOZ6/9FdH0uweEL7lVommcLBT6H7HGSn9llmkG6KcMLHrtf5OAZekEvsrOXc3IF5ZDGsEEkWr9C5A3xzRm2h4uLP32XtyFMsQ+4P71JBGhKOye19kU6/k8LykWycFJMWGWWYHRg+R5WDMj9Ky0tYC6h6rIqBZl/vbTArti2JOGV80+StMz5DGbLMvBFIUDcfWNxIJjww+0HPyfhH2AmZyiyu2L3VZ7B5aiDGMqxQuA3KF6iRdz7BCizvUWojDXKeMJMMCnVAqU3hJ6It2lnntlddQgDO7TZ1d4H6FJ6VZT/S1iDpJd1HF5QBZ/F4g1L9YJ5fhF2uPZQ6CzedBWmRw7XLy4vOty0LLIM7/EB", "ocean": "data:image/webp;base64,UklGRrICAABXRUJQVlA4TKUCAAAvL8ALENVQdmxbtd34/396NC7sc91yc5phWdsY2KEdhq1MZYdhSSsRcAAAINt0tm3bto3Ltm3btm3btm3btpFuAnSPHAiggD4F8m7Jpcsr7oJYEvgo40M8CYRiCLMkIG8WEhyUcs//Wf6Ywmxo3SAlpYAljh8bgN+997TNDDxah6WkFDgMGfAu2zV3t80HGloHpWAFRQEWS75ftj1tm2/up/3NHdA6JPUtC8DFos/3fdp9n2bsEYCf3trFExSRB0SCwB6nSy9836fTtMIigcOcu7dp0xFAiUBztmCZs066yZUG+Ox72p5GXEA1pSDguRfUNHja9uxfrwQmqTM/tr3rvwOG8PJ9f8l72Xa9MeoCVnDZ86T8EbiKlhgsV/f5KrMJBhAZj5FjzFW2u5HXakjB0svuJ2UT+j9QS5KCALvsbVw1Goaw8vbZmgDo6HTESqHyppe3iTmAjEvTWApyJJGCShIQeiZ0zZ+3SWxaouZCN0vfUv+RzRfTWMUdUOqZSPXcxv6AFxcAm+OvbYBum2EIFAEkqL9WGTblYaez7Or8mBUwM4a+sF8pdYMqn39jCrUyoHtj+sBWNFF7xZXVN7RaWqzZzIMacd3QyyO8jYvG0qfmw0RptWBm/g6hWGuIdH/dWVRjCmq+XW3TNJ6Q5DdmuUUpBmq28WvKTsj112apaQgNH1EEaqTo8TbdygYFsKx6NgEYKQ2BxJk/6T9otCwh410NvTgEIUYgMo0yCVAqWrREpPlpuG/stZbINkH6VgfGip99v665b6b+ySVI/E5A69DI8ae9e53p2+z/pUwxTLmAjGMUIay4sj33nrYZg0yZCydClaGjIwU+/qwC+PQXbIYyBCNiSt1ySQkTqtg++xGOlFJSKnXbGLq4dDZ1+1xjjNQ9QwA=", "chemtech": "data:image/webp;base64,UklGRioDAABXRUJQVlA4TB0DAAAvL8ALENVQdq3NkaTM+7/0XVRGZI5df4OHEKFhhQIXeBOtbwjcuB/9HSEJAAACjZabbdu2bb5s27Zt27Zt27Z5NtIE6FkYQGuPEEDAgCQpRjwaq0kKCCAGJmk9CktCmHAGOOGVD9wySyzsiiMA7boQyoyDBlPkF4FaB1Jc1EKk2QYBElRmn9vGU0MCIGiW1jVLlHtOl/vmL9waWkKeGei1rljCFwz/07Xd7EOoAXRBZh4Q0DoXgpnfINP106zDJwnPad7hEsBTSxSC2T7b/SM9JNE8vc3ZDwHgRBP4vIHup9x9vE2N1oklVNx9Yc690/Y0Ulp1Qx/mLmWWytu0naPAhWnbu58AbT5BJAAnqCuk/S0fbfeschoxrbpG7VE3DQi9gOQNPmzYvaobhTMi5WCaCR0GdnwxqIrMDYuipgUwVtxtb2PZgLaQQgjfeZa2WWyh2iVKPW27G00BakISUUlI3Pl5Hsxu5LRqllDy9u02FgFMhNnMoSDBz4G959zbxk6AVEdfHk1/rnHP15xOEoHonix++rajpqXaJuA8OA8MaqMhaPiXOdNMwy5t/GllmCrMwdWbM/d3pUy+fynKPJ3PfYe1aluNBJiz7EdOO4j/Kme37ZfYIADdP8hgTyad1GCgVjNEqUEUnN3u0/72d9tOfvDXh9QCAlgRgpN/vRfs+YX9EvUXUP7Ck5/bzr3nfm48NUpawsHePW9yTn+Aj25h50P2TN/Ozh6AVqElLP63PUHsaZsZRBSrNWAi1tvHaT78oFahJWiJ+3Pb9nPmsZTUJL0B/Lbqe3DqtCTBgT7OuGEEu7RQ+1hAVpPo8iyA6EwqVN+GimixY5ok6SdK3V18bow1TkgKQGO8EabpaTYo/5mlV949Dzr/zGALXdoEPb+8nS7n3DNtxiBo7Zqhr7ztNPtEvI8PuYxw8YFvOR5NTdeGEDSI7MkUuLoF/Ao5zHDG5CMgUtPVIbLd+WOcHmD9PMYIFZceYogE0DZb4CtCUqwxRjQ91BBS9PLX3L7Wo7skuPB7zgVNGP73qChCUrx6NR4ZKcbSo9/ao/a0BgA=", "hextech": "data:image/webp;base64,UklGRmACAABXRUJQVlA4TFMCAAAvL8ALENVIV7W9baT7v+oHIg+xte3vO71o0fYy1TB9RF74theBiYBjAQCB6mXbdq11ALtuY+trs23btm0bk/ccI7dtHM2K2/dU/6BX1wQAYG5SyQwIbmA5Ry9igo+8ANFPjoOsADNiMpyVfHR0aOLmSCUboEybVCXLy4N6Jg/MrtRq5oCrZwGCBZOsdiVtFvfVMwDJsrfDlFNmUiT95pf6ZKBYTaiRqE6xBnpiTR9Y9/ZiKnR6Ksq9bJsNMGqT1sGy5e1KiiK1UpoojLpttr+rTQCOXUfENSodSUdCeR0RfgQ/+mATBPYcZOx6jVmnp8J0Xe0a5gCi2kiQOPQ2aVPJjedrbBLW69ncvvG87Y9XaqNA5jghXwh4dmyjR0cifI9Q5KU4gTKiLqicOaqJ6K/g8ei6vV19Cl9/Rdg1/G6z9gIABXay4BAQNcHhzrWa+99qOhL2ZRXnhwDKujeHJV+7LsQEuKgJFjf25quayqmILtUkzHLp6wZyPjy7mhK1FAweefqXNFHs6tl8oih97W5kqTDlw2A+DVFmUsmbEfcesJDwPoiqVJFKQuXAT6Q6lUaEiFeHw9Smelfpeu1w+DPiUaQ2uOMmaRrVixIavO3B3W/SyD7xOIiWVSs0e9uzjz6pSaP7zd0gOtSaaBus/4erJk3o62YQ3RJdAxeHyaT+ceVw+BetDoe5fkomBo0Lh8nY1WEuoSdTGzzwJj07zPlmjLEvVLVjy+uTJYh3g/cZUpIrvmZfgstGAiAuzRQI5fwRdv6ZaFkJNIGV5/knK/WiV9UkAA==", "elder": "data:image/webp;base64,UklGRv4CAABXRUJQVlA4TPICAAAvL8ALENXQdra9beTM/d/0e2ANLHvb6bvdu0yITQ83Rcj2ZfINlF6IEBFwAAAsIx3ftm3btv9H27Zt27Ztb7Zt22YmwHtRoNeVczl70CGzHBQhAO8cis8Ze2FZYBAJgZ1uCD8fkCwolxgK4nRNfPh6vFBkm+pzGLLMLciFIeM8g1nKqYCLIoD1oWXYpTM42k7HKP/MudilcXII9iinaWIKyDN7gRUxQZGyGeJsJxkDoht+w5gX6WZ3XKQkn/ENt+MUTaryWbBVFBLsBYoKn/fDxAB+gi56uR9C7aCyHP5+fj5EP/eDn221MSDkrE52OkixCb/8hNQryHsZyv1XcDrW6lKeV6FigNFxnPs+yep/NvwBr/JP6St1/8u25R+VpOxb6FTfZNuDo32dcWEFwF9qHkD+klf+Z2rF61+MXs05K3e/lLJGE8tsOXyba9/mcA/J9jXKhc1ZD2rqXKipM8mcPEFqOa6LcmoWtly71RzuwcV2XJOcuS8k29KW5W0y7DiuyHS2pNZQxFzqQQ1T5KbWZOYGLMsxxQsHqZnZ8wgUmlKTGnr8Pfdz8Apaxzo1FHIeHiH2cWoNuyLwKq/InoCZz1awyMS8H3ZAMjbzFkoCstf89hPvqVxd6MueF2BajmoSGT5CjBjlfnhgdMvi/XwnJnk1/7d79BDGz/ZgWwq9uZ/FuW1h4wugyIWfoLiG3U8SiixQ/DD3z2aSfaufIax4J4w4XHEUSLjh/+WPQ3QnTxSnbpM69oKvrbM078NnX8MuNgnaV5CLv91H5PfMIMcqj6AMYd8ApNldtw8mJw6CWmjZf0SWMU7QAIMNNm2iFM7AG0DXEtXgJGgSVcERwb+VYzp8L4rB0+baZdxgJagiEQSaDgg2bK4goIg4bxCXsVqTYpTtpXNNgVhi/TW2gcgujLRbXH3436cKQrwmqQlFnFNpV1BQP8VyGaCxET5fhRcogA7PcwgXpwmvX9lVyxkITKgIJQ5uh+c7VIfnPFob3qMC"};
   function ico(k, c) { return IC[k] ? '<img class="mi ' + (c || "si") + '" src="' + IC[k] + '" alt="">' : ""; }
+  var PC = {};   // season stats of a player on a champion, filled in by build.py
   var PS = {"ri": {}, "p": {}};   // Worlds 2026 season stats and ratings per team|role, filled in by build.py
   var MAP = {};
   function loadMap() { fetch("live-map.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (m) { MAP = m || {}; if (S.frame) render(); }).catch(function () {}); }
@@ -239,7 +240,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   var fmt = function (n) { return n >= 1000 ? (n / 1000).toFixed(1) + "k" : String(n); };
 
   var matchId = (location.hash.match(/live\/(\d+)/) || [])[1] || null;
-  var S = { ik: {}, pk: {}, hp: {}, hpShown: {}, boardHtml: "", spellIcon: {}, open: {}, perkIcon: {}, ver: "14.20.1", match: null, gameId: null, gameNo: 1, blueTeam: null, redTeam: null, meta: null, frame: null, details: null, demo: false, updated: null, timer: null };
+  var S = { view: "ov", ik: {}, pk: {}, hp: {}, hpShown: {}, boardHtml: "", spellIcon: {}, open: {}, perkIcon: {}, ver: "14.20.1", match: null, gameId: null, gameNo: 1, blueTeam: null, redTeam: null, meta: null, frame: null, details: null, demo: false, updated: null, timer: null };
 
   /* ---------- api ---------- */
   function api(path) {
@@ -375,10 +376,11 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   function logoHtml(t) { return t && t.image ? '<img src="' + esc(t.image) + '" alt="">' : '<span class="ph">' + esc((t && t.code || "?").slice(0, 3)) + "</span>"; }
 
   function chipsHtml() {
-    return (S.match.games || []).map(function (g) {
+    var ov = '<button class="chip' + (S.view === "ov" ? " on" : "") + '" type="button" data-ov="1">Overview</button>';
+    return ov + (S.match.games || []).map(function (g) {
       // a finished game that is already in the site's data opens its post game page (same as Recent Results)
       if (g.state === "completed") return '<a class="chip" style="display:inline-flex;align-items:center" href="game.html#' + (MAP[g.id] ? encodeURIComponent(MAP[g.id]) : "riot/" + matchId + "/" + g.id) + '">Game ' + g.number + " &rsaquo;</a>";
-      return '<button class="chip' + (g.number === S.gameNo ? " on" : "") + '" type="button" data-id="' + esc(g.id) + '" data-n="' + g.number + '">Game ' + g.number + "</button>";
+      return '<button class="chip' + (S.view !== "ov" && g.number === S.gameNo ? " on" : "") + '" type="button" data-id="' + esc(g.id) + '" data-n="' + g.number + '">Game ' + g.number + "</button>";
     }).join("");
   }
   // the next game of a live series has not started: show the series, with finished games reachable
@@ -389,7 +391,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       '<div class="side">' + logoHtml(tm[0]) + '<div><div class="tn">' + esc(tm[0].name) + '</div><div class="tc">' + esc(tm[0].code) + "</div></div></div>" +
       '<div class="center"><div class="score">' + wins(tm[0]) + ":" + wins(tm[1]) + '</div><div class="state">Game ' + S.gameNo + " &middot; Waiting to start</div></div>" +
       '<div class="side r"><div><div class="tn">' + esc(tm[1].name) + '</div><div class="tc">' + esc(tm[1].code) + "</div></div>" + logoHtml(tm[1]) + "</div>";
-    $("games").innerHTML = chipsHtml(); $("gold").innerHTML = ""; $("board").innerHTML = "";
+    $("games").innerHTML = chipsHtml(); $("gold").innerHTML = ""; $("board").innerHTML = ""; $("cmpsec").hidden = true;
     setNotice("", "<b>Live</b> Game " + S.gameNo + " has not started yet. This page updates by itself.");
   }
   // team comparison, role by role: season stats and rating from the event data (static)
@@ -414,6 +416,36 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     });
     box.innerHTML = h; box.hidden = false;
   }
+  // each player on the champion picked in this game: the player's season stats on that champion
+  var PCST = [["Games", 0, function (v) { return v; }], ["Win rate", -1, function (v) { return v + "%"; }], ["KDA", 2, function (v) { return v.toFixed(1); }], ["CS/M", 3, function (v) { return v.toFixed(1); }],
+              ["DPM", 4, function (v) { return v; }], ["KP%", 5, function (v) { return v + "%"; }], ["Dmg share", 6, function (v) { return v + "%"; }], ["GD@15", 7, function (v) { return v == null ? "-" : (v > 0 ? "+" : "") + v; }]];
+  function drawChamps(bt, rt) {
+    var box = $("cmpsec"), bm = S.meta.blueTeamMetadata.participantMetadata, rm = S.meta.redTeamMetadata.participantMetadata;
+    var stat = function (pm, code) {
+      var nm = String(pm.summonerName || ""); if (code && nm.toUpperCase().indexOf(code.toUpperCase() + " ") === 0) nm = nm.slice(code.length + 1);
+      var cid = String(pm.championId || "").toLowerCase().replace(/[^a-z]/g, ""); if (cid === "monkeyking") cid = "wukong";
+      var pk = nm.toLowerCase().replace(/[^a-z0-9]/g, "") + "|", v = PC[pk + cid];
+      if (!v) Object.keys(PC).some(function (k) { var c = k.slice(pk.length); if (k.indexOf(pk) === 0 && c && (c.indexOf(cid) === 0 || cid.indexOf(c) === 0)) { v = PC[k]; return true; } });
+      return { nm: nm, v: v };
+    };
+    var cell = function (pm, x, right) {
+      var img = '<img src="' + DD + S.ver + "/img/champion/" + esc(pm.championId) + '.png" alt="" style="width:26px;height:26px;border-radius:50%">';
+      return '<div class="pn' + (right ? " r" : "") + '">' + (right ? "<small>" + esc(pm.championId) + "</small><b>" + esc(x.nm) + "</b>" + img : img + "<b>" + esc(x.nm) + "</b><small>" + esc(pm.championId) + "</small>") + "</div>";
+    };
+    var h = "<h2>Players on their champions</h2>", any = false;
+    bm.forEach(function (pm, i) {
+      var r = rm[i], a = stat(pm, bt.code), b = stat(r, rt.code); if (a.v || b.v) any = true;
+      var val = function (v, s) { return !v ? "-" : s[1] === -1 ? s[2](Math.round(100 * v[1] / v[0])) : s[2](v[s[1]]); };
+      var num = function (v, s) { return !v ? null : s[1] === -1 ? v[1] / v[0] : v[s[1]]; };
+      var rows = PCST.map(function (s) {
+        var x = num(a.v, s), y = num(b.v, s), c = s[1] === 0 || x == null || y == null || x === y ? ["", ""] : x > y ? ["lead", "trail"] : ["trail", "lead"];
+        return '<div class="ct"><div class="cl ' + c[0] + '">' + val(a.v, s) + '</div><div class="cm">' + s[0] + '</div><div class="cv ' + c[1] + '">' + val(b.v, s) + "</div></div>";
+      }).join("");
+      var none = !a.v && !b.v ? '<div class="ct"><div class="cm" style="grid-column:1/-1">No games on these champions at this event yet</div></div>' : rows;
+      h += '<div class="cr"><div class="hd">' + cell(pm, a, false) + '<div class="rc" title="' + CROLES[i] + '">' + (PS.ri[CROLES[i]] || CROLES[i]) + "</div>" + cell(r, b, true) + "</div>" + none + "</div>";
+    });
+    box.innerHTML = h; box.hidden = false;
+  }
   function render() {
     if (!S.match || !S.frame) return;
     var bt = teamFor("blue"), rt = teamFor("red"), f = S.frame;
@@ -434,7 +466,8 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       '<div class="gbar"><i class="b" style="width:' + (bg / tot * 100).toFixed(1) + '%"></i><i class="r" style="width:' + (rg / tot * 100).toFixed(1) + '%"></i></div>' +
       '<div class="glabels"><span></span><span>' + (diff === 0 ? "Even" : (diff > 0 ? esc(bt.code) : esc(rt.code)) + " +" + fmt(Math.abs(diff))) + "</span><span></span></div>";
 
-    drawCmp(bt, rt);
+    if (S.view === "ov") { $("gold").innerHTML = ""; $("board").innerHTML = ""; S.boardHtml = ""; drawCmp(bt, rt); return; }
+    drawChamps(bt, rt);
     // only touch the DOM when something visible changed, so item icons never blink; health bars slide to their new value
     var bh = boardHtml(bt, rt);
     if (bh !== S.boardHtml) { $("board").innerHTML = bh; S.boardHtml = bh; }
@@ -521,8 +554,10 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 
   /* ---------- events ---------- */
   $("games").addEventListener("click", function (e) {
+    var ob = e.target.closest("button[data-ov]");
+    if (ob) { S.view = "ov"; S.boardHtml = ""; render(); return; }
     var b = e.target.closest("button[data-id]"); if (!b || b.dataset.id === "demo") return;
-    S.gameId = b.dataset.id; S.gameNo = +b.dataset.n; S.frame = null; S.details = null; S.ik = {}; S.pk = {}; S.hp = {}; S.hpShown = {}; S.boardHtml = ""; tick();
+    S.view = "game"; S.gameId = b.dataset.id; S.gameNo = +b.dataset.n; S.frame = null; S.details = null; S.ik = {}; S.pk = {}; S.hp = {}; S.hpShown = {}; S.boardHtml = ""; tick();
   });
   $("board").addEventListener("click", function (e) {
     var b = e.target.closest("button.chev"); if (!b) return;
