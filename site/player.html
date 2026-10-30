@@ -149,7 +149,8 @@ img.lwi { }
 .hrow .sep { flex: none; color: var(--dim); font-size: 12px; font-weight: 700; margin: 0 -4px; }
 .hrow .et, .hrow .ep { display: inline-flex; align-items: center; gap: 8px; min-width: 0; flex: none; }
 .hrow .et b, .hrow .ep b { font-weight: 700; white-space: nowrap; }
-.hrow .loadout { order: 10; flex-basis: 100%; display: inline-flex; align-items: center; gap: 4px; margin-left: 0; }
+.hrow .loadout { display: inline-flex; align-items: center; gap: 4px; margin-left: 0; min-width: 0; }
+.hrow .mu { order: 10; flex-basis: 100%; display: flex; align-items: center; gap: 16px; min-width: 0; }
 .hrow .lo6 { margin-left: 10px; }
 .hrow .lo2 { display: grid; gap: 2px; }
 .hrow .lo6 { display: grid; grid-template-columns: repeat(6, 22px); gap: 3px; }
@@ -352,13 +353,13 @@ html { scroll-padding-top: 84px; }
       return '<a class="hrow" href="' + U.game + '#' + g.gid + '"><span class="res' + (g.win ? ' w' : ' l') + '">' + (g.win ? 'WIN' : 'LOSS') + '</span>'
         + '<span class="kd"><img class="mi" src="' + KI + '" alt="">' + g.k + '/' + g.d + '/' + g.a + '</span>'
         + '<span class="gd ' + (gd > 0 ? 'up' : gd < 0 ? 'dn' : '') + '"><img class="mi" src="' + GI + '" alt="">' + (gd > 0 ? '+' : gd < 0 ? '\u2212' : '') + Math.abs(gd).toLocaleString('en-US') + '</span>'
-        + '<span class="mc">' + (D.icons[g.ic] ? '<img src="' + D.icons[g.ic] + '" alt="' + g.champ + '">' : '') + '</span>'
-        + '<span class="sep">vs</span>'
-        + '<span class="ep">' + (o && D.icons[o.g.ic] ? '<img src="' + D.icons[o.g.ic] + '" alt="">' : '') + '</span>'
-        + '<span class="et">' + logo(g.opp, 20) + '<b>' + g.opp + '</b></span><span class="sep">/</span>'
-        + '<span class="en"><b>' + (o ? o.n : g.opp) + '</b></span>'
         + '<span class="loadout"><span class="lo2"><i></i><i></i></span>' + rn2(g.rn) + lo6(g.it) + '</span>'
-        + '<span class="dt">' + g.date + '</span></a>'; }).join('');
+        + '<span class="dt">' + g.date + '</span>'
+        + '<span class="mu"><span class="mc">' + (D.icons[g.ic] ? '<img src="' + D.icons[g.ic] + '" alt="' + g.champ + '">' : '') + '</span>'
+        + '<span class="sep">vs</span>'
+        + '<span class="et">' + logo(g.opp, 20) + '<b>' + g.opp + '</b></span>'
+        + '<span class="ep">' + (o && D.icons[o.g.ic] ? '<img src="' + D.icons[o.g.ic] + '" alt="">' : '') + '</span>'
+        + '<span class="en"><b>' + (o ? o.n : g.opp) + '</b></span></span></a>'; }).join('');
     $('radars').innerHTML = RAD.map(function (r) { return '<div class="rcard"><h3>' + r[0] + '</h3>' + radar(r[0], r[1], ag, P.role) + '</div>'; }).join('');
     document.title = name + ' · Player Profile';
   }
