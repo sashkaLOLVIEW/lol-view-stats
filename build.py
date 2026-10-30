@@ -161,20 +161,29 @@ def build_standings(w):
     return out
 
 def build_recent(w):
+    """One entry per series: games between the same two teams less than 12 hours apart belong to the same series
+    (so a best-of-3 that runs past midnight is still one series)."""
     tm = w[w.position == "team"].copy(); tm["code"] = tm.teamname.map(need_code)
-    ser = {}
+    games = []
     for gid, g in tm.groupby("gameid"):
         b = g[g.side == "Blue"].iloc[0]; r = g[g.side == "Red"].iloc[0]
-        key = (str(b.date).split(" ")[0], frozenset([b.code, r.code]))
-        ser.setdefault(key, []).append((b.date, b, r, gid))
+        games.append((pd.Timestamp(b.date), frozenset([b.code, r.code]), b, r, gid))
+    games.sort(key=lambda x: x[0])
+    ser = []          # each: dict(pair, games)
+    for g in games:
+        for s_ in reversed(ser):
+            if s_["pair"] == g[1]:
+                if g[0] - s_["games"][-1][0] < pd.Timedelta(hours=12): s_["games"].append(g); break
+                ser.append(dict(pair=g[1], games=[g])); break
+        else: ser.append(dict(pair=g[1], games=[g]))
     out = []
-    for key, gl in ser.items():
-        gl.sort(key=lambda x: x[0]); wins = {}
-        for _, b, r, _g in gl:
+    for s_ in ser:
+        gl = s_["games"]; wins = {}
+        for _, _p, b, r, _g in gl:
             wc = b.code if b.result else r.code; wins[wc] = wins.get(wc, 0) + 1
-        ws = max(wins, key=wins.get); ls = [c for c in key[1] if c != ws][0]
-        lastg = gl[-1]; d = pd.Timestamp(lastg[0]).tz_localize("UTC").tz_convert(TZ)
-        out.append((lastg[0], [ws, "%d:%d" % (wins[ws], wins.get(ls, 0)), ls, d.strftime("%H:%M"), d.strftime("%b %-d"), gl[0][3]]))
+        ws = max(wins, key=wins.get); ls = [c for c in s_["pair"] if c != ws][0]
+        lastg = gl[-1]; d = lastg[0].tz_localize("UTC").tz_convert(TZ)
+        out.append((lastg[0], [ws, "%d:%d" % (wins[ws], wins.get(ls, 0)), ls, d.strftime("%H:%M"), d.strftime("%b %-d"), gl[0][4]]))
     out.sort(key=lambda x: x[0], reverse=True)
     return [x[1] for x in out[:4]]
 
