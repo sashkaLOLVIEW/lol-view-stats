@@ -26,16 +26,23 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
-      - name: Restore last good schedule
+      - name: Restore cached schedule and item data
         uses: actions/cache@v4
         with:
-          path: data/schedule.json
+          path: |
+            data/schedule.json
+            data/items_cache.json
+            data/item_icons.json
           key: cache-${{ github.run_id }}
           restore-keys: cache-
       - name: Download upcoming matches
         env:
           LOLESPORTS_API_KEY: ${{ secrets.LOLESPORTS_API_KEY }}
         run: python fetch_schedule.py
+      - name: Download item builds
+        env:
+          LOLESPORTS_API_KEY: ${{ secrets.LOLESPORTS_API_KEY }}
+        run: python fetch_items.py
       - name: Download newest data
         env:
           DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}

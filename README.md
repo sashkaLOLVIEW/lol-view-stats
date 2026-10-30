@@ -22,6 +22,10 @@ Run locally: `pip install -r requirements.txt`, put the CSV in `data/`, then `py
 - **Global Power Rankings** list and its "Updated" stamp.
 - **Flags** (`NAT` in `site/team.html`) and **team logos** (`LOGOS` in `site/index.html`).
 
+## Item builds
+
+`fetch_items.py` reads each finished Worlds game from Riot's live stats feed (final inventory per player) into `data/items_cache.json`; `build.py` matches those games to Oracle's Elixir by teams, game number and start time, and embeds item icons from Riot Data Dragon. If the feed is down the site simply shows no items.
+
 ## Player age and contract
 
 `fetch_player_info.py` looks every player up on Leaguepedia (birthdate, contract end). Type anything it misses into `config/player_info.csv`

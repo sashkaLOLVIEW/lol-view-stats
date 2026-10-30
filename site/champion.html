@@ -220,6 +220,9 @@ h2 .li.hi { margin: 0; width: 18px; height: 18px; }
 .gr .t { display: flex; align-items: center; gap: 8px; }
 .gr .t .vs { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-weight: 500; }
 .gr .t .vs img { width: 16px; height: 16px; border-radius: 0; }
+.gr .its { display: flex; gap: 3px; margin-top: 6px; }
+.gr .its img { width: 20px; height: 20px; border-radius: 4px; background: var(--pill); }
+.gr .its img.tr { border-radius: 50%; margin-left: 3px; opacity: .85; }
 .gr .s > span { display: inline-flex; align-items: center; }
 .gr .s img.si { width: 13px; height: 13px; border-radius: 0; margin-right: 4px; object-fit: contain; }
 .gr .s img.si.minion { width: 9px; height: 9px; margin: 0 5px 0 2px; }
@@ -332,7 +335,8 @@ html { scroll-padding-top: 84px; }
     $('stats').innerHTML = s;
     // bans
     // games
-    $('games').innerHTML = pk ? R.map(function (r) { return '<div class="gr gm"><div><div class="t"><span class="pt">' + logo(r.team, 16) + '<a href="player.html#' + encodeURIComponent(r.player) + '">' + r.player + '</a></span> <span class="vs">vs ' + logo(r.opp, 16) + ' ' + r.op + '</span></div><div class="s"><span>' + im('kills') + r.k + '/' + r.d + '/' + r.a + '</span><span>&middot;</span><span>' + im('minion') + r.cspm.toFixed(1) + ' CS/M</span></div></div><div class="r"><span class="res ' + (r.win ? 'w' : 'l') + '">' + (r.win ? 'WIN' : 'LOSS') + '</span><div style="margin-top:4px"><a href="game.html#' + r.game + '">' + r.date + ' &rsaquo;</a></div></div></div>'; }).join('') : '<div class="empty">No games played with ' + n + ' yet.</div>';
+    var itrow = function (it) { var m = D.items; if (!m || !it || !it.length) return ''; var o = ''; it.forEach(function (id) { var x = m[id]; if (x) o += '<img' + ({3340: 1, 3363: 1, 3364: 1}[id] ? ' class="tr"' : '') + ' src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">'; }); return o ? '<div class="its">' + o + '</div>' : ''; };
+    $('games').innerHTML = pk ? R.map(function (r) { return '<div class="gr gm"><div><div class="t"><span class="pt">' + logo(r.team, 16) + '<a href="player.html#' + encodeURIComponent(r.player) + '">' + r.player + '</a></span> <span class="vs">vs ' + logo(r.opp, 16) + ' ' + r.op + '</span></div><div class="s"><span>' + im('kills') + r.k + '/' + r.d + '/' + r.a + '</span><span>&middot;</span><span>' + im('minion') + r.cspm.toFixed(1) + ' CS/M</span></div>' + itrow(r.it) + '</div><div class="r"><span class="res ' + (r.win ? 'w' : 'l') + '">' + (r.win ? 'WIN' : 'LOSS') + '</span><div style="margin-top:4px"><a href="game.html#' + r.game + '">' + r.date + ' &rsaquo;</a></div></div></div>'; }).join('') : '<div class="empty">No games played with ' + n + ' yet.</div>';
     // matchups
     var mg = {}; R.forEach(function (r) { (mg[r.oc] = mg[r.oc] || {oc: r.oc, oi: r.oi, rs: []}).rs.push(r); });
     var ml = Object.keys(mg).map(function (k) { return mg[k]; }).sort(function (a, b) { return b.rs.length - a.rs.length || a.oc.localeCompare(b.oc); });

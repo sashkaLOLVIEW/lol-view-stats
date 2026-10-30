@@ -152,6 +152,9 @@ img.lwi { }
 .hrow .lo6 { margin-left: 10px; }
 .hrow .lo2 { display: grid; gap: 2px; }
 .hrow .lo6 { display: grid; grid-template-columns: repeat(6, 22px); gap: 3px; }
+.hrow .lo6.filled { grid-template-columns: repeat(6, 22px) 22px; }
+.hrow .lo6 img { width: 22px; height: 22px; border-radius: 4px; display: block; }
+.hrow .lo6 img.tr { border-radius: 50%; margin-left: 3px; opacity: .85; }
 .hrow .loadout i { display: block; width: 22px; height: 22px; border-radius: 4px; background: var(--pill); border: 1px solid var(--dim); box-sizing: border-box; }
 .hrow .mc { flex: none; display: inline-flex; } .hrow .mc img { width: 28px; height: 28px; border-radius: 5px; display: block; }
 .hrow .en { flex: none; width: 92px; } .hrow .en b { font-weight: 700; white-space: nowrap; display: block; overflow: hidden; text-overflow: ellipsis; }
@@ -323,6 +326,16 @@ html { scroll-padding-top: 84px; }
     var KI = "data:image/webp;base64,UklGRrgAAABXRUJQVlA4TKwAAAAvE8AEEAWDRpIUtX/T9XDwYCDCba1ta/KiG8SFLiU1h32yxn+yBbbJV2OpvxqXGdI9E5D+rmGigVFKIqYZMXCRiGks9WoRBxuJODgH08ONg4tGScQBLrLwALgorXBRkukBN/WMgYuSlS/0bmAzDRMlrQH+cgumnKVkbgMYrNO6zBGANiVBWLDyBeCQkgAIE60BgLN5EgBAGAGAvzwl3Q0LBuuUUtJtaNNQt/Bj";
     var OG = {}; Object.keys(D.players).forEach(function (k) { D.players[k].games.forEach(function (x) { OG[x.gid + '|' + x.role + '|' + x.team] = {n: k, g: x}; }); });
     var GI = "data:image/webp;base64,UklGRpYAAABXRUJQVlA4TIoAAAAvE8AEEAWDtpEcDX/S/rI3XwFEuK1tW1HezODaAZFr7LFD5lID8XRARhfE3gGxF+Du7nAnIPTXGDFlA1d3PQWahloTZleBQgPW5gW0j0gbN/aTHDhZFIqTMdCG+FRNfU5KRBMAe+jMAaAVWuqDDZ6eiFzUGHx4V0wGMNsIhEpyvJarn7mGPHnorwE=";
+    var TRK = {3340: 1, 3363: 1, 3364: 1};
+    var lo6 = function (it) {
+      var m = D.items, has = m && it && it.some(function (id) { return m[id]; });
+      if (!has) return '<span class="lo6"><i></i><i></i><i></i><i></i><i></i><i></i></span>';
+      var main = it.filter(function (id) { return !TRK[id]; }).slice(0, 6), tr = it.filter(function (id) { return TRK[id]; })[0], o = '';
+      main.forEach(function (id) { var x = m[id]; o += x ? '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : '<i></i>'; });
+      for (var k = main.length; k < 6; k++) o += '<i></i>';
+      if (tr && m[tr]) o += '<img class="tr" src="' + m[tr][1] + '" alt="' + m[tr][0] + '" title="' + m[tr][0] + '">';
+      return '<span class="lo6 filled">' + o + '</span>';
+    };
     $('hist').innerHTML = P.games.map(function (g) {
       var o = OG[g.gid + '|' + g.role + '|' + g.opp], gd = o ? Math.round(g.gold - o.g.gold) : 0;
       return '<a class="hrow" href="' + U.game + '#' + g.gid + '"><span class="res' + (g.win ? ' w' : ' l') + '">' + (g.win ? 'WIN' : 'LOSS') + '</span>'
@@ -333,7 +346,7 @@ html { scroll-padding-top: 84px; }
         + '<span class="ep">' + (o && D.icons[o.g.ic] ? '<img src="' + D.icons[o.g.ic] + '" alt="">' : '') + '</span>'
         + '<span class="et">' + logo(g.opp, 20) + '<b>' + g.opp + '</b></span><span class="sep">/</span>'
         + '<span class="en"><b>' + (o ? o.n : g.opp) + '</b></span>'
-        + '<span class="loadout"><span class="lo2"><i></i><i></i></span><span class="lo2"><i></i><i></i></span><span class="lo6"><i></i><i></i><i></i><i></i><i></i><i></i></span></span>'
+        + '<span class="loadout"><span class="lo2"><i></i><i></i></span><span class="lo2"><i></i><i></i></span>' + lo6(g.it) + '</span>'
         + '<span class="dt">' + g.date + '</span></a>'; }).join('');
     $('radars').innerHTML = RAD.map(function (r) { return '<div class="rcard"><h3>' + r[0] + '</h3>' + radar(r[0], r[1], ag, P.role) + '</div>'; }).join('');
     document.title = name + ' · Player Profile';

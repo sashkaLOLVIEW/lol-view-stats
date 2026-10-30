@@ -127,14 +127,20 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .dm { margin-top: 16px; display: grid; grid-template-columns: 1fr 44px 1fr; gap: 0; align-items: start; }
 .dm-col { min-width: 0; display: flex; flex-direction: column; gap: 0; }
 .dm-mid { display: flex; flex-direction: column; }
-.dm-ic { height: 76px; display: grid; place-items: center; color: var(--muted); border-bottom: 1px solid var(--line); }
+.dm-ic { height: var(--rh, 76px); display: grid; place-items: center; color: var(--muted); border-bottom: 1px solid var(--line); }
 .dm-ic svg { width: 16px; height: 16px; display: block; }
 .dm-ic:last-child, .dm-col .pl:last-child { border-bottom: 0; }
-.pl { display: flex; align-items: center; gap: 12px; height: 76px; background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 0 12px; min-width: 0; }
+.pl { display: flex; align-items: center; gap: 12px; height: var(--rh, 76px); background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 0 12px; min-width: 0; }
 .pl.r { flex-direction: row-reverse; text-align: right; }
 .pl img.ch { width: 52px; height: 52px; border-radius: 6px; object-fit: cover; flex: none; display: block; }
 .pl .ph { width: 52px; height: 52px; border-radius: 6px; background: var(--pill); flex: none; }
 .pl-b { flex: 1; min-width: 0; }
+.its { display: flex; gap: 3px; margin-top: 6px; min-height: 20px; }
+.pl.r .its { justify-content: flex-end; }
+.its img { width: 20px; height: 20px; border-radius: 4px; display: block; background: var(--pill); }
+.its img.tr { opacity: .85; border-radius: 50%; margin-left: 3px; }
+.dm.hasit { --rh: 98px; }
+@media (max-width: 640px) { .pl.r .its { justify-content: flex-start; } }
 .pl-n:hover { text-decoration: underline; }
 .pl-n { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pl-s { font-size: 10.5px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -298,10 +304,13 @@ html { scroll-padding-top: 84px; }
     $('cmp').innerHTML = c;
     $('gd').innerHTML = chart(g);
     var mx = 0; A.players.concat(B.players).forEach(function (p) { mx = Math.max(mx, p.dmg); });
+    var TRK = {3340: 1, 3363: 1, 3364: 1};
+    var itrow = function (it) { var m = D.items; if (!m || !it || !it.length) return ''; var o = ''; it.forEach(function (id) { var x = m[id]; if (x) o += '<img' + (TRK[id] ? ' class="tr"' : '') + ' src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">'; }); return '<div class="its">' + o + '</div>'; };
+    $('dm').className = 'dm' + (D.items && Object.keys(D.items).length ? ' hasit' : '');
     var dm = '', dl = '', dr = '';
     for (var r = 0; r < 5; r++) {
       var pa = A.players[r], pb = B.players[r];
-      var cell = function (p, rt) { return '<div class="pl' + (rt ? ' r' : '') + '">' + ico(p.ic, p.champ) + '<div class="pl-b"><a class="pl-n" href="' + U.profile + '#' + encodeURIComponent(p.name) + '" style="display:block">' + p.name + '</a><div class="pl-s">' + im('kills', 'si') + p.k + '/' + p.d + '/' + p.a + '<span class="sp"></span>' + im('minion', 'si minion') + p.cs + '<span class="sp"></span>' + im('gold', 'si') + k1(p.gold) + '</div><div class="pl-v">' + k1(p.dmg) + '</div><div class="bar" style="width:' + Math.max(3, p.dmg / mx * 100).toFixed(1) + '%"></div></div></div>'; };
+      var cell = function (p, rt) { return '<div class="pl' + (rt ? ' r' : '') + '">' + ico(p.ic, p.champ) + '<div class="pl-b"><a class="pl-n" href="' + U.profile + '#' + encodeURIComponent(p.name) + '" style="display:block">' + p.name + '</a><div class="pl-s">' + im('kills', 'si') + p.k + '/' + p.d + '/' + p.a + '<span class="sp"></span>' + im('minion', 'si minion') + p.cs + '<span class="sp"></span>' + im('gold', 'si') + k1(p.gold) + '</div><div class="pl-v">' + k1(p.dmg) + '</div><div class="bar" style="width:' + Math.max(3, p.dmg / mx * 100).toFixed(1) + '%"></div>' + itrow(p.it) + '</div></div>'; };
       dl += cell(pa, 0); dr += cell(pb, 1);
     }
     var dmid = ''; ['Top', 'Jungle', 'Mid', 'Bot', 'Support'].forEach(function (rn) { dmid += '<div class="dm-ic" title="' + rn + '">' + (RIC[rn] || '') + '</div>'; });

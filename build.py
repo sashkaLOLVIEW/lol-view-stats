@@ -315,6 +315,72 @@ def build_champions(w, GD):
     return dict(champs={n: dict(ic=ic(n), **v) for n, v in ch.items()}, avg=avg, icons=icons, games=len(order), logos=GD["logos"])
 
 # ----------------------------------------------------------------------------------------------
+# 4d. item builds: data/items_cache.json (fetch_items.py, Riot live stats) + item icons from Data Dragon
+# ----------------------------------------------------------------------------------------------
+POS_OF_ROLE = {v: k for k, v in ROLE.items()}      # "Top" -> "top"
+
+def map_items(w):
+    """(oe gameid, side, position) -> list of item ids, by matching teams + game number + start time to the Riot games."""
+    try: cache = json.loads((ROOT / "data" / "items_cache.json").read_text(encoding="utf-8"))
+    except Exception: print("  no item cache - item builds are skipped"); return {}
+    recs = list(cache.values()); out = {}; matched = 0; total = 0; champ_bad = 0
+    norm = lambda s: re.sub(r"[^a-z]", "", str(s).lower())
+    for gid, g in w[w.position == "team"].groupby("gameid"):
+        total += 1
+        blue = g[g.side == "Blue"].iloc[0]; red = g[g.side == "Red"].iloc[0]
+        codes = sorted([CODE.get(blue.teamname, ""), CODE.get(red.teamname, "")])
+        t0 = pd.Timestamp(blue.date).tz_localize("UTC")
+        cand = [r for r in recs if r["codes"] == codes and int(r["number"]) == int(blue.game) and abs((pd.Timestamp(r["start"]) - t0).total_seconds()) < 12 * 3600]
+        if not cand: continue
+        r = cand[0]; matched += 1
+        for _, p in w[(w.gameid == gid) & (w.position != "team")].iterrows():
+            rp = r["players"].get(p.side.lower() + ":" + p.position)
+            if not rp: continue
+            if norm(rp["champ"]) != norm(p.champion) and norm(rp["champ"]) not in norm(p.champion) and norm(p.champion) not in norm(rp["champ"]): champ_bad += 1
+            out[(gid, p.side, p.position)] = rp["items"]
+    print("  items: %d of %d games matched to Riot data%s" % (matched, total, ("; %d champion name differences (check aliases)" % champ_bad) if champ_bad else ""))
+    return out
+
+def item_assets(ids):
+    """{item id: [name, icon data-uri]} from Data Dragon; cached in data/item_icons.json. Empty on failure."""
+    import requests
+    path = ROOT / "data" / "item_icons.json"
+    try: cache = json.loads(path.read_text(encoding="utf-8"))
+    except Exception: cache = {}
+    need = [str(i) for i in sorted(set(ids)) if str(i) not in cache]
+    if need:
+        try:
+            vers = requests.get("https://ddragon.leagueoflegends.com/api/versions.json", timeout=30).json()
+            items = requests.get("https://ddragon.leagueoflegends.com/cdn/%s/data/en_US/item.json" % vers[0], timeout=60).json()["data"]
+            for i in need:
+                try:
+                    r = requests.get("https://ddragon.leagueoflegends.com/cdn/%s/img/item/%s.png" % (vers[0], i), timeout=30); r.raise_for_status()
+                    im = Image.open(io.BytesIO(r.content)).convert("RGBA"); im.thumbnail((36, 36))
+                    cache[i] = [(items.get(i) or {}).get("name", "Item " + i), b64webp(im, 78)]
+                except Exception as e: print("  no icon for item", i, "(%s)" % e)
+            path.parent.mkdir(exist_ok=True); path.write_text(json.dumps(cache, ensure_ascii=False))
+        except Exception as e: print("  item icons unavailable:", e)
+    return {i: cache[i] for i in map(str, set(ids)) if i in cache}
+
+def attach_items(w, GD, PD, CD):
+    IT = map_items(w)
+    if not IT: return
+    for g in GD["games"]:
+        for t in g["teams"]:
+            for p in t["players"]: p["it"] = IT.get((g["id"], t["side"], POS_OF_ROLE[p["role"]]))
+    for pl in PD["players"].values():
+        for r in pl["games"]: r["it"] = IT.get((r["gid"], r["side"], POS_OF_ROLE[r["role"]]))
+    for c in CD["champs"].values():
+        for r in c["rows"]: r["it"] = IT.get((r["game"], r["side"], POS_OF_ROLE[r["role"]]))
+    ids = {i for v in IT.values() for i in v}
+    icons = item_assets(ids)
+    def used(rows): return {str(i) for r in rows for i in (r.get("it") or [])}
+    GD["items"] = {i: icons[i] for i in used(p for g in GD["games"] for t in g["teams"] for p in t["players"]) if i in icons}
+    PD["items"] = {i: icons[i] for i in used(r for pl in PD["players"].values() for r in pl["games"]) if i in icons}
+    CD["items"] = {i: icons[i] for i in used(r for c in CD["champs"].values() for r in c["rows"]) if i in icons}
+    print("  item icons embedded:", len(GD["items"]), "(game page)")
+
+# ----------------------------------------------------------------------------------------------
 # 4c. Global Power Rankings: team Elo over all 2026 games, for tier 1 teams
 # ----------------------------------------------------------------------------------------------
 def build_rankings(csv):
@@ -421,6 +487,7 @@ def main(csv):
     print("  player info: %d birthdates, %d contracts" % (sum(1 for p_ in PD["players"].values() if p_["bd"]), sum(1 for p_ in PD["players"].values() if p_["contract"])))
     TD = build_teams(w, PD); G20 = build_g20(w)
     CD = build_champions(w, GD)
+    attach_items(w, GD, PD, CD)
     RK, RKUPD = build_rankings(csv); HAS = {c: 1 for c in TD['teams']}
 
     FACES = {p["name"]: p["face"] for p in PD["players"].values() if p["face"]}
