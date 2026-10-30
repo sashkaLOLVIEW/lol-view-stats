@@ -89,7 +89,7 @@ a { color: inherit; text-decoration: none; }
 button { font-family: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; align-items: center; gap: 7px; }
-.chips { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.chips { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; justify-content: center; }
 .chip { height: 26px; padding: 0 9px; border-radius: 4px; border: 1px solid var(--line); background: var(--chip-bg); color: var(--chip-fg); font-size: 11.5px; font-weight: 700; cursor: pointer; }
 .chip.on { background: var(--on-active-bg); color: var(--on-active-fg); border-color: var(--on-active-bg); }
 .lw { } :root:not([data-theme="dark"]) .lwf { }
@@ -124,9 +124,13 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .gd-hd { display: flex; justify-content: space-between; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; color: var(--muted); margin-bottom: 6px; }
 .gd svg { display: block; width: 100%; height: auto; overflow: visible; }
 .gd text { font-family: var(--font); font-size: 10px; fill: var(--dim); }
-.dm { margin-top: 16px; display: flex; gap: 8px; align-items: flex-start; }
-.dm-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
-.pl { display: flex; align-items: center; gap: 12px; height: 76px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 12px; min-width: 0; }
+.dm { margin-top: 16px; display: grid; grid-template-columns: 1fr 44px 1fr; gap: 0; align-items: start; }
+.dm-col { min-width: 0; display: flex; flex-direction: column; gap: 0; }
+.dm-mid { display: flex; flex-direction: column; }
+.dm-ic { height: 76px; display: grid; place-items: center; color: var(--muted); border-bottom: 1px solid var(--line); }
+.dm-ic svg { width: 16px; height: 16px; display: block; }
+.dm-ic:last-child, .dm-col .pl:last-child { border-bottom: 0; }
+.pl { display: flex; align-items: center; gap: 12px; height: 76px; background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 0 12px; min-width: 0; }
 .pl.r { flex-direction: row-reverse; text-align: right; }
 .pl img.ch { width: 52px; height: 52px; border-radius: 6px; object-fit: cover; flex: none; display: block; }
 .pl .ph { width: 52px; height: 52px; border-radius: 6px; background: var(--pill); flex: none; }
@@ -152,7 +156,7 @@ img.lw { }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) img.lwi { filter: invert(1); } }
 :root[data-theme="dark"] img.lwi { filter: none; } :root[data-theme="light"] img.lwi { filter: invert(1); }
 @media (max-width: 1080px) { .gcols { grid-template-columns: 1fr; row-gap: 40px; } .gcols::before { display: none; } }
-@media (max-width: 640px) { .score { grid-template-columns: 1fr; padding: 18px; gap: 14px; } .sc-team, .sc-team.r { flex-direction: row; text-align: left; } .sc-mid { order: -1; } .dm { flex-direction: column; gap: 8px; } .dm-col { width: 100%; } .dm .pl.r .pl-s { justify-content: flex-start; } .pl.r { flex-direction: row; text-align: left; } .pl.r .bar { margin-left: 0; } .cmp-row { grid-template-columns: 1fr 84px 1fr; padding: 0 10px; } .bans { grid-template-columns: 1fr; justify-items: center; } .bans-l,.bans-r { justify-content: center; flex-wrap: wrap; } .nav { gap: 18px; padding: 0 16px; } }
+@media (max-width: 640px) { .score { grid-template-columns: 1fr; padding: 18px; gap: 14px; } .sc-team, .sc-team.r { flex-direction: row; text-align: left; } .sc-mid { order: -1; } .dm { display: flex; flex-direction: column; gap: 14px; } .dm-mid { display: none; } .dm-col { width: 100%; } .dm .pl.r .pl-s { justify-content: flex-start; } .pl.r { flex-direction: row; text-align: left; } .pl.r .bar { margin-left: 0; } .cmp-row { grid-template-columns: 1fr 84px 1fr; padding: 0 10px; } .bans { grid-template-columns: 1fr; justify-items: center; } .bans-l,.bans-r { justify-content: center; flex-wrap: wrap; } .nav { gap: 18px; padding: 0 16px; } }
 @media (prefers-reduced-motion: reduce) { .toggle::after { transition: none; } }
 .foot { margin-top: 56px; position: relative; }
 .foot-art { display: block; width: 164px; height: 107px; margin-bottom: -22px; position: relative; z-index: 0; object-fit: contain; object-position: left bottom; }
@@ -207,8 +211,8 @@ html { scroll-padding-top: 84px; }
     </div>
   </header>
   <section class="gh">
-    <div class="chips" id="games" role="group" aria-label="Select game"></div>
     <div class="score" id="score"></div>
+    <div class="chips" id="games" role="group" aria-label="Select game"></div>
   </section>
   <main class="gcols">
     <section>
@@ -276,6 +280,7 @@ html { scroll-padding-top: 84px; }
     out += '<path d="' + area + '" fill="var(--blue)" fill-opacity=".8" clip-path="url(#ca)"/><path d="' + area + '" fill="var(--red)" fill-opacity=".8" clip-path="url(#cb)"/>';
     return out + '</svg>';
   }
+  var RIC = {"Top": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 114 112\" fill=\"none\" aria-hidden=\"true\"><path d=\"M72 71L42 71L42 41L72 41L72 71Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M101.055 1.13167e-06L-9.79135e-06 9.9662e-06L-9.56827e-07 101.055L22 79.0552L22 21L80.0552 21L101.055 1.13167e-06Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M35.5112 91L92 91L92 34.5112L114 12.5112L114 112L14.5112 112L35.5112 91Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M101.055 1.13167e-06L-9.79135e-06 9.9662e-06L-9.56827e-07 101.055L22 79.0552L22 21L80.0552 21L101.055 1.13167e-06Z\" fill=\"currentColor\"/></svg>", "Jungle": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 112 125\" fill=\"none\" aria-hidden=\"true\"><path d=\"M64.5 60C66.9 64.8 68.1667 71.3333 68.5 74L74 61C73.6667 60 73.2 56 74 48C74.8 40 84.6667 13.3333 89.5 1C85.3333 6.66667 76 19.5 72 25.5C68 31.5 61.3333 44 58.5 49.5C59.5 51 62.1 55.2 64.5 60Z\" fill=\"currentColor\"/> <path d=\"M81 97.5C78.2 99.9 74.5 104.167 73 106L72.5 91.5C73 89.5 74.3 84.5 75.5 80.5C76.7 76.5 80 68 86.5 56.5C88.1667 54 92.9 47.7 96.5 44.5C100.1 41.3 106 37.5 111.5 34.5C104 43 105 42 98 54.5C92.302 64.6751 91.3333 80.6667 91.5 90C89.1667 91.5 83.8 95.1 81 97.5Z\" fill=\"currentColor\"/> <path d=\"M61 89C61 108.2 57.6667 121 56 125C43.2 105.8 26.6667 93 20 89C19.5 83 18 69.1 16 61.5C14 53.9 4.5 40.3333 0 34.5C4.5 36.5 15.4 42.2 23 49C30.6 55.8 35.8333 66.5 37.5 71C37.5 66.3333 37.2 54.4 36 44C34.8 33.6 25.8333 10.3333 21.5 0C25.3333 5.83333 33 15 39 25.5C43.1287 32.7252 61 65 61 89Z\" fill=\"currentColor\"/></svg>", "Mid": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 114 112\" fill=\"none\" aria-hidden=\"true\"><path d=\"M0 0H84.7495L63.7495 21H22V62.7495L0 84.7495V0Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M29.312 112H114V27.3118L92 49.3118V91H50.312L29.312 112Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M114 18.2324L20.2324 112H0V93.8281L93.8291 0H114V18.2324Z\" fill=\"currentColor\"/></svg>", "Bot": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 114 112\" fill=\"none\" aria-hidden=\"true\"><path d=\"M42 41H72V71H42V41Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M12.9448 112H114V10.9448L92 32.9448V91H33.9448L12.9448 112Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M78.4888 21H22V77.4888L0 99.4888V0H99.4888L78.4888 21Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M12.9448 112H114V10.9448L92 32.9448V91H33.9448L12.9448 112Z\" fill=\"currentColor\"/></svg>", "Support": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 136 114\" fill=\"none\" aria-hidden=\"true\"><path d=\"M63 39.5L67.5 45.5L72.5 39.5L84.5 100.5L67.5 114L51.5 100.5L63 39.5Z\" fill=\"currentColor\"/> <path d=\"M87.5 65L78.5 36L92 22.5L136 24C134 26.1667 128.9 30.7 124.5 33.5C120.1 36.3 114 39.5 108.5 40H97L108.5 56.5L87.5 65Z\" fill=\"currentColor\"/> <path d=\"M67.5 32.5L47 9L51.5 0H84.5L88.5 9L67.5 32.5Z\" fill=\"currentColor\"/> <path d=\"M56 36L44 24H0C1.66667 25.3333 3 29.5 13 34.5C20.7398 38.3699 27.1667 40.1667 28.5 40H38.5L27 56.5L48.5 65L56 36Z\" fill=\"currentColor\"/></svg>"};
   function render(i) {
     var g = D.games[i], A = g.teams[0], B = g.teams[1];
     var sideTeam = function (t, r) { return '<div class="sc-team' + (r ? ' r' : '') + '">' + logo(t.code, 64) + '<div><a class="sc-name" style="display:block" href="team.html#' + t.code + '">' + t.code + '</a><div class="sc-full">' + t.name + '</div><span class="tag' + (t.win ? ' win' : ' loss') + '">' + (t.win ? 'WIN' : 'LOSS') + '</span></div></div>'; };
@@ -299,7 +304,8 @@ html { scroll-padding-top: 84px; }
       var cell = function (p, rt) { return '<div class="pl' + (rt ? ' r' : '') + '">' + ico(p.ic, p.champ) + '<div class="pl-b"><a class="pl-n" href="' + U.profile + '#' + encodeURIComponent(p.name) + '" style="display:block">' + p.name + '</a><div class="pl-s">' + im('kills', 'si') + p.k + '/' + p.d + '/' + p.a + '<span class="sp"></span>' + im('minion', 'si minion') + p.cs + '<span class="sp"></span>' + im('gold', 'si') + k1(p.gold) + '</div><div class="pl-v">' + k1(p.dmg) + '</div><div class="bar" style="width:' + Math.max(3, p.dmg / mx * 100).toFixed(1) + '%"></div></div></div>'; };
       dl += cell(pa, 0); dr += cell(pb, 1);
     }
-    $('dm').innerHTML = '<div class="dm-col">' + dl + '</div><div class="dm-col">' + dr + '</div>';
+    var dmid = ''; ['Top', 'Jungle', 'Mid', 'Bot', 'Support'].forEach(function (rn) { dmid += '<div class="dm-ic" title="' + rn + '">' + (RIC[rn] || '') + '</div>'; });
+    $('dm').innerHTML = '<div class="dm-col">' + dl + '</div><div class="dm-mid">' + dmid + '</div><div class="dm-col">' + dr + '</div>';
     var bn = function (t) { return t.bans.map(function (b, i) { return (i === 3 ? '<span class="sl">/</span>' : '') + (b.ic && D.icons[b.ic] ? '<img src="' + D.icons[b.ic] + '" alt="' + b.c + '">' : ''); }).join(''); };
     $('bans').innerHTML = '<div class="bans-l">' + bn(A) + '</div><div class="bans-t">Bans</div><div class="bans-r">' + bn(B) + '</div>';
     var pr = function (x) { return [x.teams[0].code, x.teams[1].code].sort().join('|'); }, ser = [];
