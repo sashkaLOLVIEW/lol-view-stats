@@ -90,10 +90,11 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 .board { margin-top:32px; }
 .bhead, .brow { display:grid; grid-template-columns:minmax(0,1fr) 84px minmax(0,1fr); }
 .bhead { align-items:center; margin-bottom:12px; }
-.bh { display:flex; align-items:center; gap:14px; min-width:0; flex-wrap:wrap; }
+.bh { display:flex; align-items:center; gap:14px; min-width:0; }
 .bh.r { justify-content:flex-end; }
 .bh h2 .sw { width:10px; height:10px; border-radius:2px; flex:none; }
-.opills { display:flex; gap:6px; }
+.opills { display:flex; gap:20px; margin-left:auto; padding-right:28px; } .opills.r { margin-left:0; margin-right:auto; padding-right:0; padding-left:28px; }
+.ost { display:flex; flex-direction:column; align-items:center; gap:4px; min-width:38px; font-size:13px; font-variant-numeric:tabular-nums; } .ost .si { width:16px; height:16px; } .ost b { font-weight:700; }
 .opill { height:24px; padding:0 8px; display:inline-flex; align-items:center; gap:5px; border:1px solid var(--line); border-radius:5px; background:var(--chip-bg); font-size:11.5px; font-weight:700; font-variant-numeric:tabular-nums; }
 .opill span { color:var(--muted); font-size:10px; }
 .mhead { text-align:center; font-size:10px; font-weight:700; text-transform:uppercase; color:var(--muted); line-height:1.3; }
@@ -164,7 +165,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 @keyframes tbar { to { transform:scaleX(0); } }
 @media (prefers-reduced-motion: reduce) { .toast { animation:none; } .toast.out { transition:none; } }
 @media (max-width:1180px) { .items, .wards { display:none; } }
-@media (max-width:900px) { .detail { grid-template-columns:1fr; row-gap:6px; } .detail .dmid { display:none; } .runes { display:none; } .nav { gap:22px; padding:0 18px; } .bhead, .brow { grid-template-columns:minmax(0,1fr) 62px minmax(0,1fr); } .opills { display:none; } }
+@media (max-width:900px) { .detail { grid-template-columns:1fr; row-gap:6px; } .detail .dmid { display:none; } .runes { display:none; } .nav { gap:22px; padding:0 18px; } .bhead, .brow { grid-template-columns:minmax(0,1fr) 62px minmax(0,1fr); } .opills { gap:8px; padding-right:6px; } .opills.r { padding-left:6px; } }
 @media (max-width:640px) {
   body { padding-top:22px; }
   .match { grid-template-columns:1fr; padding:14px; } .side, .side.r { justify-content:center; text-align:left; }
@@ -364,7 +365,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     var bg = f.blueTeam.totalGold, rg = f.redTeam.totalGold, tot = (bg + rg) || 1, diff = bg - rg;
     $("gold").innerHTML =
       '<div class="gbar"><i class="b" style="width:' + (bg / tot * 100).toFixed(1) + '%"></i><i class="r" style="width:' + (rg / tot * 100).toFixed(1) + '%"></i></div>' +
-      '<div class="glabels"><span>' + ico("gold") + '<b>' + fmt(bg) + "</b></span><span>" + (diff === 0 ? "Even" : (diff > 0 ? esc(bt.code) : esc(rt.code)) + " +" + fmt(Math.abs(diff))) + "</span><span>" + ico("gold") + "<b>" + fmt(rg) + "</b></span></div>";
+      '<div class="glabels"><span></span><span>' + (diff === 0 ? "Even" : (diff > 0 ? esc(bt.code) : esc(rt.code)) + " +" + fmt(Math.abs(diff))) + "</span><span></span></div>";
 
     $("board").innerHTML = boardHtml(bt, rt);
   }
@@ -376,10 +377,11 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     return mmss(base + (S.frame.gameState === "in_game" ? (Date.now() - S.updated.getTime()) / 1000 : 0));
   }
   var DD = "https://ddragon.leagueoflegends.com/cdn/";
-  function objPills(ft) {
-    var dr = ft.dragons || [];
-    var o = [[ico("kills"), ft.totalKills || 0], [ico("turret"), ft.towers || 0], [dr.length ? '<span class="dr">' + dr.map(function (t) { return ico(String(t).toLowerCase()) || ico("dragon"); }).join("") + "</span>" : ico("dragon"), dr.length ? "" : 0], [ico("nashor"), ft.barons || 0], ["<span>INH</span>", ft.inhibitors || 0]];
-    return '<div class="opills">' + o.map(function (x) { return '<span class="opill">' + x[0] + x[1] + "</span>"; }).join("") + "</div>";
+  // icon above number; red side is listed in reverse so both sides mirror around the game time
+  function objPills(ft, red) {
+    var o = [["kills", ft.totalKills || 0], ["gold", fmt(ft.totalGold || 0)], ["turret", ft.towers || 0], ["dragon", (ft.dragons || []).length], ["nashor", ft.barons || 0]];
+    if (red) o.reverse();
+    return '<div class="opills' + (red ? " r" : "") + '">' + o.map(function (x) { return '<div class="ost" title="' + x[0] + '">' + ico(x[0]) + "<b>" + x[1] + "</b></div>"; }).join("") + "</div>";
   }
   // Spell ids come from the feed when present (field names vary, so check the likely ones); icons from Data Dragon.
   function spellHtml(pm, p, d) {
@@ -405,7 +407,6 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       '<span class="wards" title="Wards placed">' + (d.wardsPlaced != null ? d.wardsPlaced : "") + "</span>" +
       '<div class="items">' + ih + "</div>" +
       '<div class="runes">' + rh + "</div>" +
-      '<div class="spells" title="Summoner spells">' + spellHtml(pm, p, d) + "</div>" +
       '<span class="champ' + (p.maxHealth && !p.currentHealth ? " dead" : "") + '" title="' + (p.maxHealth && !p.currentHealth ? "Dead" : "") + '"><img src="' + DD + S.ver + "/img/champion/" + esc(pm.championId) + '.png" alt="" onerror="this.style.visibility=\'hidden\'"><span class="lvl">' + (p.level || 1) + "</span></span>" +
       '<div class="info"><div class="name">' + esc(pm.summonerName) + '</div><div class="l2"><span class="cs" title="CS">' + ico("minion") + (p.creepScore || 0) + '</span><span class="kda">' + ico("kills") + (p.kills || 0) + "/" + (p.deaths || 0) + "/" + (p.assists || 0) + '</span></div><div class="hp"><i style="width:' + hp.toFixed(0) + '%"></i></div></div></div>';
   }
@@ -431,7 +432,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     var total = f.blueTeam.totalGold - f.redTeam.totalGold;
     var head = '<div class="bhead"><div class="bh"><h2><span class="sw" style="background:var(--team-blue)"></span>' + esc(bt.name) + "</h2>" + objPills(f.blueTeam) + "</div>" +
       '<div class="mhead">Game time<b class="gt">' + gameTime() + '</b></div>' +
-      '<div class="bh r">' + objPills(f.redTeam) + '<h2>' + esc(rt.name) + '<span class="sw" style="background:var(--team-red)"></span></h2></div></div>';
+      '<div class="bh r">' + objPills(f.redTeam, true) + '<h2>' + esc(rt.name) + '<span class="sw" style="background:var(--team-red)"></span></h2></div></div>';
     var rows = bm.map(function (pm, i) {
       var r = rm[i], d = goldOf(f.blueTeam, pm, i) - goldOf(f.redTeam, r, i);
       var cls = d > 0 ? "b" : d < 0 ? "r" : "e";
