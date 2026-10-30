@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Look up birthdate and contract end for every player on the site from Leaguepedia (lol.fandom.com, Cargo API).
 
-    python fetch_player_info.py [path/to/csv]      -> data/player_info_auto.json  (+ a report in the log)
+    python fetch_player_info.py [path/to/csv]      -> config/player_info_auto.json  (+ a report in the log)
 
 Never fails the build: on any error the previous data/player_info_auto.json is kept.
 Hand-typed values in config/player_info.csv always win over these (merged in build.py).
@@ -10,7 +10,7 @@ import json, re, sys, time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-OUT = ROOT / "data" / "player_info_auto.json"
+OUT = ROOT / "config" / "player_info_auto.json"      # committed to the repository by .github/workflows/player-info.yml
 API = "https://lol.fandom.com/api.php"
 UA = "lol-view-stats fan site (github.com/sashkaLOLVIEW/lol-view-stats)"
 BATCH = 20

@@ -304,7 +304,7 @@ def build_champions(w, GD):
     return dict(champs={n: dict(ic=ic(n), **v) for n, v in ch.items()}, avg=avg, icons=icons, games=len(order), logos=GD["logos"])
 
 # ----------------------------------------------------------------------------------------------
-# 4a. player age / contract (auto: data/player_info_auto.json from fetch_player_info.py; manual: config/player_info.csv wins)
+# 4a. player age / contract (auto: config/player_info_auto.json from fetch_player_info.py; manual: config/player_info.csv wins)
 # ----------------------------------------------------------------------------------------------
 def month_year(v):
     m = re.match(r"(\d{4})-(\d{2})", str(v or ""))
@@ -312,7 +312,7 @@ def month_year(v):
 
 def load_player_info():
     info = {}
-    try: info = json.loads((ROOT / "data" / "player_info_auto.json").read_text(encoding="utf-8"))
+    try: info = json.loads((ROOT / "config" / "player_info_auto.json").read_text(encoding="utf-8"))
     except Exception: print("  no automatic player info file")
     p = ROOT / "config" / "player_info.csv"
     if p.exists():
