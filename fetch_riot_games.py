@@ -18,7 +18,7 @@ get, iso, fmt, floor10 = FI.get, FI.iso, FI.fmt, FI.floor10
 FEED, GW = FI.FEED, FI.GW
 ROLE_OF = {"top": "top", "jungle": "jng", "mid": "mid", "bottom": "bot", "support": "sup"}
 
-def fetch_game(game, e, bo):
+def fetch_game(game, e, bo, mid=None):
     gid = game["id"]
     w0 = get(FEED + "/window/" + gid)
     md = w0["gameMetadata"]; t0 = iso(w0["frames"][0]["rfc460Timestamp"])
@@ -57,7 +57,7 @@ def fetch_game(game, e, bo):
     series.append([round(length / 60, 1), teams[0]["gold"] - teams[1]["gold"]])
     # Riot's feed does not say who won; the team that took more inhibitors, then towers, then gold did (the nexus falls after an inhibitor)
     score = lambda t: t["inhib"] * 1e6 + t["towers"] * 1e4 + t["gold"]
-    return dict(id=gid, v=FORMAT, number=game["number"], bo=bo, start=fmt(t0), patch=md.get("patchVersion"), len=length, blue_win=score(teams[0]) >= score(teams[1]), teams=teams, gold=[[0, 0]] + series)
+    return dict(id=gid, mid=mid, v=FORMAT, number=game["number"], bo=bo, start=fmt(t0), patch=md.get("patchVersion"), len=length, blue_win=score(teams[0]) >= score(teams[1]), teams=teams, gold=[[0, 0]] + series)
 
 def main():
     try: cache = json.loads(OUT.read_text(encoding="utf-8"))
@@ -71,10 +71,11 @@ def main():
         bo = int(((e["match"].get("strategy") or {}).get("count")) or 0)
         for g in games:
             old = cache.get(g["id"])
+            if old and not old.get("mid"): old["mid"] = mid     # which series (match) the game belongs to, so game pages can link back to the live page
             if g.get("state") != "completed" or (old and old.get("v", 0) >= FORMAT): continue
             if time.time() - t_start > BUDGET: skipped += 1; continue
             try:
-                cache[g["id"]] = fetch_game(g, e, bo); new += 1
+                cache[g["id"]] = fetch_game(g, e, bo, mid); new += 1
                 OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(cache, ensure_ascii=False))
             except Exception as ex: print("  game", g["id"], "failed:", ex); bad += 1
             time.sleep(0.3)

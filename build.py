@@ -649,6 +649,10 @@ def main(csv):
     TD = build_teams(w, PD); G20 = build_g20(w)
     CD = build_champions(w, GD)
     attach_items(w, GD, PD, CD)
+    _rg = load_riot_games(); _rev = {v: k for k, v in RIOT_MAP.items()}
+    for g_ in GD["games"]:
+        m_ = (_rg.get(_rev.get(g_["id"], g_["id"])) or {}).get("mid")
+        if m_: g_["mid"] = m_    # Riot match id: lets the game page link to the series Overview and the other games on the live page
     RK, RKUPD = build_rankings(csv); HAS = {c: 1 for c in TD['teams']}
 
     FACES = {p["name"]: p["face"] for p in PD["players"].values() if p["face"]}

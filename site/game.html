@@ -362,6 +362,18 @@ html { scroll-padding-top: 84px; }
     var ser = []; D.games.forEach(function (x, j) { if (x.sid === g.sid) ser.push(j); });
     var box = $('games');
     box.innerHTML = g.live && g.chips ? g.chips : ser.map(function (j, n) { return '<button class="chip' + (j === i ? ' on' : '') + '" type="button" aria-pressed="' + (j === i) + '" data-i="' + j + '">GAME ' + (n + 1) + '</button>'; }).join('');
+    var CH = 'class="chip" style="display:inline-flex;align-items:center"';
+    if (g.mid && !(g.live && g.chips)) {
+      box.insertAdjacentHTML('afterbegin', '<a ' + CH + ' href="live.html#live/' + g.mid + '">OVERVIEW</a>');
+      // games of the series that are not in the site data yet (live or not started) come from Riot's schedule feed
+      var mid = g.mid, need = ser.length, put = function (m) {
+        (m.games || []).forEach(function (x) { if (x.number > need && !box.querySelector('[data-x="' + x.number + '"]')) box.insertAdjacentHTML('beforeend', '<a ' + CH + ' data-x="' + x.number + '" href="' + (x.state === 'completed' ? 'game.html#riot/' + mid + '/' + x.id : 'live.html#live/' + mid) + '">GAME ' + x.number + '</a>'); });
+      };
+      window.__ev = window.__ev || {};
+      if (window.__ev[mid]) put(window.__ev[mid]);
+      else fetch('https://esports-api.lolesports.com/persisted/gw/getEventDetails?hl=en-US&id=' + mid, { headers: { 'x-api-key': '0TvQnueqKa5mxJntVWt0w4LpLfEkrV1Ta8rQBb9Z' } })
+        .then(function (r) { return r.json(); }).then(function (j) { var m = j.data.event.match; window.__ev[mid] = m; put(m); }).catch(function () {});
+    }
     $('mdet').innerHTML = '<span>' + (D.tournament || 'Worlds 2026') + '</span><span class="dot">&middot;</span><span>' + g.date + '</span>' + (g.bo ? '<span class="bo">BO' + g.bo + '</span>' : '');
     Array.prototype.forEach.call(box.querySelectorAll('button.chip'), function (b) { b.addEventListener('click', function () { render(+b.getAttribute('data-i')); }); });
   }
@@ -420,7 +432,7 @@ html { scroll-padding-top: 84px; }
       var A = team('Blue', bt, lf.blueTeam, blueWin === true), B = team('Red', rt, lf.redTeam, blueWin === false);
       var len = Math.round((Date.parse(lf.rfc460Timestamp) - L.t0) / 1000), gold = [[0, 0]].concat(L.ser);
       gold.push([+(len / 60).toFixed(1), A.gold - B.gold]);
-      var chips = L.m.games.filter(function (x) { return x.state !== 'unstarted'; }).map(function (x) {
+      var chips = '<a class="chip" style="display:inline-flex;align-items:center" href="live.html#live/' + mid + '">OVERVIEW</a>' + L.m.games.filter(function (x) { return x.state !== 'unstarted'; }).map(function (x) {
         if (x.id === gid) return '<button class="chip on" type="button" aria-pressed="true">GAME ' + x.number + '</button>';
         return '<a class="chip" style="display:inline-flex;align-items:center" href="' + (x.state === 'inProgress' ? 'live.html#live/' + mid : 'game.html#riot/' + mid + '/' + x.id) + '">GAME ' + x.number + '</a>';
       }).join('');

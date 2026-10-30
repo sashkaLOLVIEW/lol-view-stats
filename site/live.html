@@ -353,7 +353,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     var chain = S.match ? poll() : loadMatch().then(poll);
     chain.then(function () { setNotice("live", "<b>Live</b> Updated " + S.updated.toLocaleTimeString()); render(); })
       .catch(function (e) {
-        if (e && e.message === "NOFRAMES" && S.match && !S.frame) { renderWaiting(); } else if (!S.frame) { noLive(e); } else { setNotice("err", "<b>Connection issue</b> " + esc(e.message) + ". Showing the last update."); }
+        if (S.match && !S.frame) { renderWaiting(); } else if (!S.frame) { noLive(e); } else { setNotice("err", "<b>Connection issue</b> " + esc(e.message) + ". Showing the last update."); }
       });
   }
   function setNotice(kind, html) { var n = $("notice"); n.className = "notice" + (kind === "demo" ? " demo" : kind === "err" ? " err" : ""); n.innerHTML = html; }
@@ -388,12 +388,15 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   // the next game of a live series has not started: show the series, with finished games reachable
   function renderWaiting() {
     var m = S.match, tm = m.teams, wins = function (t) { return t && t.result ? t.result.gameWins : 0; };
+    var bo = +((m.strategy || {}).count) || 0, done = !(m.games || []).some(function (g) { return g.state === "inProgress"; }) && bo && Math.max(wins(tm[0]), wins(tm[1])) >= Math.ceil(bo / 2);
+    var nx = (m.games || []).filter(function (g) { return g.state === "unstarted"; })[0], gn = S.view === "ov" && nx ? nx.number : S.gameNo;
     $("match").className = "match idle";
     $("match").innerHTML =
       '<div class="side">' + logoHtml(tm[0]) + '<div><div class="tn">' + esc(tm[0].name) + '</div><div class="tc">' + esc(tm[0].code) + "</div></div></div>" +
-      '<div class="center"><div class="score">' + wins(tm[0]) + ":" + wins(tm[1]) + '</div><div class="state">Game ' + S.gameNo + " &middot; Waiting to start</div></div>" +
+      '<div class="center"><div class="score">' + wins(tm[0]) + ":" + wins(tm[1]) + '</div><div class="state">' + (done ? "Series complete" : "Game " + gn + " &middot; Waiting to start") + "</div></div>" +
       '<div class="side r"><div><div class="tn">' + esc(tm[1].name) + '</div><div class="tc">' + esc(tm[1].code) + "</div></div>" + logoHtml(tm[1]) + "</div>";
     $("games").innerHTML = chipsHtml(); $("gold").innerHTML = ""; $("board").innerHTML = ""; $("cmpsec").hidden = true;
+    if (S.view === "ov") drawCmp(tm[0], tm[1]);
     setNotice("", "<b>Live</b> Game " + S.gameNo + " has not started yet. This page updates by itself.");
   }
   // team comparison, role by role: season stats and rating from the event data (static)
@@ -558,7 +561,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   /* ---------- events ---------- */
   $("games").addEventListener("click", function (e) {
     var ob = e.target.closest("button[data-ov]");
-    if (ob) { S.view = "ov"; S.boardHtml = ""; render(); return; }
+    if (ob) { S.view = "ov"; S.boardHtml = ""; if (S.frame) render(); else renderWaiting(); return; }
     var b = e.target.closest("button[data-id]"); if (!b || b.dataset.id === "demo") return;
     S.view = "game"; S.gameId = b.dataset.id; S.gameNo = +b.dataset.n; S.frame = null; S.details = null; S.ik = {}; S.pk = {}; S.hp = {}; S.hpShown = {}; S.boardHtml = ""; tick();
   });
