@@ -405,7 +405,7 @@ html { scroll-padding-top: 84px; }
     var tm = SD.t.filter(function (t) { return t[0].toLowerCase().indexOf(q) > -1 || t[1].toLowerCase().indexOf(q) > -1; }).sort(rank(q)).slice(0, 5);
     var pl = SD.p.filter(function (p) { return p[0].toLowerCase().indexOf(q) > -1; }).sort(rank(q)).slice(0, 8);
     var ch = (SD.c || []).filter(function (c) { return c[0].toLowerCase().indexOf(q) > -1; }).sort(rank(q)).slice(0, 5);
-    var LW = {DK: 1, G2: 1, TL: 1};
+    var LW = {DK: 1, G2: 1, TL: 1, TLAW: 1};
     var lg = function (c, s) { return SD.l[c] ? '<img' + (LW[c] ? ' class="lwi"' : '') + ' src="' + SD.l[c] + '" alt="" width="' + s + '" height="' + s + '">' : ''; };
     items = tm.map(function (t) { var r = SD.tr[t[0]]; return {h: 'team.html#' + t[0], l: t[1], pre: lg(t[0], 20), post: SD.g[r] ? '<img class="mi" src="' + SD.g[r] + '" alt="' + r + '" title="' + r + '" width="18" height="18">' : ''}; })
       .concat(pl.map(function (p) { return {h: 'player.html#' + encodeURIComponent(p[0]), l: p[0], pre: '', post: (SD.r[p[2]] || '') + lg(p[1], 20)}; }))

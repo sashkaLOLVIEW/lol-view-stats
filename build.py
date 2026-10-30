@@ -25,7 +25,7 @@ CSV_DEFAULT = ROOT / "data" / "2026_LoL_esports_match_data_from_OraclesElixir.cs
 
 CODE = {"Gen.G": "GEN", "Invictus Gaming": "IG", "Hanwha Life Esports": "HLE", "Top Esports": "TES", "Movistar KOI": "MKOI",
         "Bilibili Gaming": "BLG", "Karmine Corp": "KC", "Anyone's Legend": "AL", "Dplus Kia": "DK", "G2 Esports": "G2",
-        "Team Liquid": "TL", "CTBC Flying Oyster": "CFO", "LØS": "LOS", "T1": "T1", "LYON": "LYON", "Team Secret Whales": "TSW",
+        "Team Liquid": "TLAW", "CTBC Flying Oyster": "CFO", "LØS": "LOS", "T1": "T1", "LYON": "LYON", "Team Secret Whales": "TSW",
         # other tier 1 teams (used by the Global Power Rankings; codes match the logo keys on the homepage)
         "FURIA": "FUR", "Fluxo W7M": "FX", "LOUD": "LOUD", "Leviatan": "LEV", "RED Canids": "RED", "Vivo Keyd Stars": "VKS", "paiN Gaming": "PAIN",
         "BNK FEARX": "BFX", "DN SOOPers": "DNS", "HANJIN BRION": "BRO", "KT Rolster": "KT", "Kiwoom DRX": "KRX", "Nongshim RedForce": "NS",
@@ -38,7 +38,7 @@ TIER1_LEAGUES = ["LCK", "LPL", "LEC", "LCS", "LCP", "CBLOL"]   # which leagues c
 RANK_MIN_GAMES = 20          # a team needs this many games in those leagues this year to be ranked (58 teams on today's data)
 RANK_CHANGE_DAYS = 7         # the up/down arrows compare with the ranking this many days ago
 REGION = {"LYON": "LCS", "TSW": "LCP", "GEN": "LCK", "HLE": "LCK", "DK": "LCK", "T1": "LCK", "IG": "LPL", "TES": "LPL", "BLG": "LPL",
-          "AL": "LPL", "G2": "LEC", "KC": "LEC", "MKOI": "LEC", "TL": "LCS", "CFO": "LCP", "LOS": "CBLOL"}
+          "AL": "LPL", "G2": "LEC", "KC": "LEC", "MKOI": "LEC", "TLAW": "LCS", "CFO": "LCP", "LOS": "CBLOL"}
 ROLE = {"top": "Top", "jng": "Jungle", "mid": "Mid", "bot": "Bot", "sup": "Support"}
 ORDER = ["top", "jng", "mid", "bot", "sup"]
 ICON_ALIASES = {"renataglasc": "renataglaasc"}   # Oracle's Elixir spelling -> asset file name
