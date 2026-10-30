@@ -139,10 +139,11 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 .info { flex:1; min-width:0; }
 .l2 { display:flex; align-items:baseline; gap:10px; margin-top:2px; font-size:12px; font-variant-numeric:tabular-nums; }
 .cell.r .l2 { flex-direction:row-reverse; }
-.l2 .cs { color:var(--gold); font-weight:700; font-size:13px; }
+.l2 .cs { color:var(--fg); font-weight:700; font-size:13px; }
+.l2 .cs .si { width:9px; height:9px; vertical-align:0; margin-right:4px; }
 .l2 .kda { color:var(--muted); font-weight:500; }
-.hp { height:4px; border-radius:2px; background:var(--pill); margin-top:6px; overflow:hidden; }
-.hp i { display:block; height:100%; background:var(--green); transition:width .6s; }
+.hp { height:8px; border-radius:4px; background:var(--pill); margin-top:6px; overflow:hidden; }
+.hp i { display:block; height:100%; background:var(--green); transition:width .9s ease; }
 .cell.r .hp i { margin-left:auto; }
 .mid { height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line); font-size:14px; font-weight:700; font-variant-numeric:tabular-nums; position:relative; }
 .mid::before, .mid::after { content:""; position:absolute; top:14px; bottom:14px; width:3px; border-radius:2px; background:transparent; }
@@ -215,7 +216,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   var fmt = function (n) { return n >= 1000 ? (n / 1000).toFixed(1) + "k" : String(n); };
 
   var matchId = (location.hash.match(/live\/(\d+)/) || [])[1] || null;
-  var S = { spellIcon: {}, open: {}, perkIcon: {}, ver: "14.20.1", match: null, gameId: null, gameNo: 1, blueTeam: null, redTeam: null, meta: null, frame: null, details: null, demo: false, updated: null, timer: null };
+  var S = { ik: {}, pk: {}, hp: {}, hpShown: {}, boardHtml: "", spellIcon: {}, open: {}, perkIcon: {}, ver: "14.20.1", match: null, gameId: null, gameNo: 1, blueTeam: null, redTeam: null, meta: null, frame: null, details: null, demo: false, updated: null, timer: null };
 
   /* ---------- api ---------- */
   function api(path) {
@@ -317,7 +318,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       S.prev = { id: S.gameId, frame: nf };
       S.frame = nf;
       var df = res.d && res.d.frames;
-      S.details = df && df.length ? df[df.length - 1] : null;
+      if (df && df.length) S.details = df[df.length - 1];   // keep the last good snapshot if one poll comes back without details
       S.updated = new Date();
       S.demo = false;
     });
@@ -388,7 +389,14 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       '<div class="gbar"><i class="b" style="width:' + (bg / tot * 100).toFixed(1) + '%"></i><i class="r" style="width:' + (rg / tot * 100).toFixed(1) + '%"></i></div>' +
       '<div class="glabels"><span></span><span>' + (diff === 0 ? "Even" : (diff > 0 ? esc(bt.code) : esc(rt.code)) + " +" + fmt(Math.abs(diff))) + "</span><span></span></div>";
 
-    $("board").innerHTML = boardHtml(bt, rt);
+    // only touch the DOM when something visible changed, so item icons never blink; health bars slide to their new value
+    var bh = boardHtml(bt, rt);
+    if (bh !== S.boardHtml) { $("board").innerHTML = bh; S.boardHtml = bh; }
+    Array.prototype.forEach.call($("board").querySelectorAll("i[data-hp]"), function (e) {
+      var id = e.getAttribute("data-hp"), nw = S.hp[id] != null ? S.hp[id] : 0;
+      if (!e.style.width) { e.style.width = (S.hpShown[id] != null ? S.hpShown[id] : nw) + "%"; void e.offsetWidth; }
+      e.style.width = nw + "%"; S.hpShown[id] = nw;
+    });
   }
 
   function mmss(sec) { sec = Math.max(0, Math.floor(sec)); var m = Math.floor(sec / 60), x = sec % 60; return (m < 10 ? "0" : "") + m + ":" + (x < 10 ? "0" : "") + x; }
@@ -418,17 +426,21 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     var p = ft.participants.filter(function (x) { return x.participantId === pm.participantId; })[0] || ft.participants[i] || {};
     var d = {};
     if (S.details) (S.details.participants || []).forEach(function (x) { if (x.participantId === pm.participantId) d = x; });
+    var pid = pm.participantId;
+    if (d.items && d.items.length) S.ik[pid] = d.items; else if (S.ik[pid]) d = Object.assign({}, d, { items: S.ik[pid] });
+    if (d.perkMetadata && d.perkMetadata.perks && d.perkMetadata.perks.length) S.pk[pid] = d.perkMetadata; else if (S.pk[pid]) d = Object.assign({}, d, { perkMetadata: S.pk[pid] });
     var items = (d.items || []).filter(Boolean), ih = "";
     for (var k = 0; k < 7; k++) ih += "<span>" + (items[k] ? '<img src="' + DD + S.ver + "/img/item/" + items[k] + '.png" alt="" loading="lazy">' : "") + "</span>";
     var pk = d.perkMetadata || {}, key = (pk.perks || [])[0];
     var kIcon = key && S.perkIcon[key], sIcon = pk.subStyleId && S.perkIcon["s" + pk.subStyleId];
     var rh = '<span>' + (kIcon ? '<img src="' + DD + "img/" + kIcon + '" alt="">' : "") + "</span><span>" + (sIcon ? '<img src="' + DD + "img/" + sIcon + '" alt="">' : "") + "</span>";
     var hp = p.maxHealth ? Math.max(0, Math.min(100, p.currentHealth / p.maxHealth * 100)) : 0;
+    S.hp[pid] = +hp.toFixed(1);
     return '<div class="cell ' + side + '">' +
       '<div class="items">' + ih + "</div>" +
       '<div class="runes">' + rh + "</div>" +
       '<span class="champ' + (p.maxHealth && !p.currentHealth ? " dead" : "") + '" title="' + (p.maxHealth && !p.currentHealth ? "Dead" : "") + '"><img src="' + DD + S.ver + "/img/champion/" + esc(pm.championId) + '.png" alt="" onerror="this.style.visibility=\'hidden\'"><span class="lvl">' + (p.level || 1) + "</span></span>" +
-      '<div class="info"><div class="name">' + esc(pm.summonerName) + '</div><div class="l2"><span class="cs" title="CS">' + ico("minion") + (p.creepScore || 0) + '</span><span class="kda">' + ico("kills") + (p.kills || 0) + "/" + (p.deaths || 0) + "/" + (p.assists || 0) + '</span></div><div class="hp"><i style="width:' + hp.toFixed(0) + '%"></i></div></div></div>';
+      '<div class="info"><div class="name">' + esc(pm.summonerName) + '</div><div class="l2"><span class="cs" title="CS">' + ico("minion") + (p.creepScore || 0) + '</span><span class="kda">' + ico("kills") + (p.kills || 0) + "/" + (p.deaths || 0) + "/" + (p.assists || 0) + '</span></div><div class="hp"><i data-hp="' + pid + '"></i></div></div></div>';
   }
   function pct(v) { if (v == null) return "-"; return (v <= 1 ? v * 100 : v).toFixed(2) + "%"; }
   function num(v) { return v == null ? "-" : (typeof v === "number" && v % 1 ? v.toFixed(0) : v); }
@@ -464,7 +476,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   /* ---------- events ---------- */
   $("games").addEventListener("click", function (e) {
     var b = e.target.closest("button[data-id]"); if (!b || b.dataset.id === "demo") return;
-    S.gameId = b.dataset.id; S.gameNo = +b.dataset.n; S.frame = null; tick();
+    S.gameId = b.dataset.id; S.gameNo = +b.dataset.n; S.frame = null; S.details = null; S.ik = {}; S.pk = {}; S.hp = {}; S.hpShown = {}; S.boardHtml = ""; tick();
   });
   $("board").addEventListener("click", function (e) {
     var b = e.target.closest("button.chev"); if (!b) return;
