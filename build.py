@@ -601,7 +601,7 @@ def build_search(s, WD, CH):
     """Refresh the searchable teams / players / champions list; keep the static logos, flags and role icons."""
     SD = jget(s, "SD")
     names = {c: NAME_FIX.get(n, n) for c, n in SD["t"]}
-    for c in {p["t"] for p in WD["players"]}: names.setdefault(c, next(k for k, v in CODE.items() if v == c))
+    for c in {p["t"] for p in WD["players"]}: names.setdefault(c, NAME_FIX.get(next(k for k, v in CODE.items() if v == c), next(k for k, v in CODE.items() if v == c)))
     SD["t"] = [[c, names[c]] for c in names if c in {p["t"] for p in WD["players"]}] or SD["t"]
     SD["p"] = [[p["p"], p["t"], p["r"]] for p in WD["players"]]
     have = {n: i for n, i in SD["c"]}
