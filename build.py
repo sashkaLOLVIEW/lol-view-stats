@@ -23,10 +23,11 @@ MAIN_START = "2026-10-23"       # first day of the main stage (earlier Worlds ro
 TZ = "Europe/London"            # all times on the site are shown in this timezone
 CSV_DEFAULT = ROOT / "data" / "2026_LoL_esports_match_data_from_OraclesElixir.csv"
 
+NAME_FIX = {"Team Liquid": "Team Liquid Alienware"}       # shown name differs from Oracle's Elixir's
 CODE = {"Gen.G": "GEN", "Invictus Gaming": "IG", "Hanwha Life Esports": "HLE", "Top Esports": "TES", "Movistar KOI": "MKOI",
         "Bilibili Gaming": "BLG", "Karmine Corp": "KC", "Anyone's Legend": "AL", "Dplus Kia": "DK", "G2 Esports": "G2",
-        "Team Liquid": "TLAW", "CTBC Flying Oyster": "CFO", "LØS": "LOS", "T1": "T1", "LYON": "LYON", "Team Secret Whales": "TSW",
-        # other tier 1 teams (used by the Global Power Rankings; codes match the logo keys on the homepage)
+        "Team Liquid": "TLAW", "Team Liquid Alienware": "TLAW", "CTBC Flying Oyster": "CFO", "LØS": "LOS", "T1": "T1", "LYON": "LYON", "Team Secret Whales": "TSW",
+        # other tier 1 teams (used by the Power Rankings; codes match the logo keys on the homepage)
         "FURIA": "FUR", "Fluxo W7M": "FX", "LOUD": "LOUD", "Leviatan": "LEV", "RED Canids": "RED", "Vivo Keyd Stars": "VKS", "paiN Gaming": "PAIN",
         "BNK FEARX": "BFX", "DN SOOPers": "DNS", "HANJIN BRION": "BRO", "KT Rolster": "KT", "Kiwoom DRX": "KRX", "Nongshim RedForce": "NS",
         "Deep Cross Gaming": "DCG", "DetonatioN FocusMe": "DFM", "Fukuoka SoftBank HAWKS gaming": "SHG", "GAM Esports": "GAM", "Ground Zero Gaming": "GZ", "MVK Esports": "MVK",
@@ -34,7 +35,7 @@ CODE = {"Gen.G": "GEN", "Invictus Gaming": "IG", "Hanwha Life Esports": "HLE", "
         "Fnatic": "FNC", "GiantX": "GX", "Natus Vincere": "NAVI", "SK Gaming": "SK", "Shifters": "SHFT", "Team Heretics": "TH", "Team Vitality": "VIT",
         "EDward Gaming": "EDG", "JD Gaming": "JDG", "LGD Gaming": "LGD", "LNG Esports": "LNG", "Ninjas in Pyjamas": "NIP", "Oh My God": "OMG",
         "Team WE": "WE", "ThunderTalk Gaming": "TT", "Ultra Prime": "UP", "Weibo Gaming": "WBG"}
-TIER1_LEAGUES = ["LCK", "LPL", "LEC", "LCS", "LCP", "CBLOL"]   # which leagues count as tier 1 for the Global Power Rankings
+TIER1_LEAGUES = ["LCK", "LPL", "LEC", "LCS", "LCP", "CBLOL"]   # which leagues count as tier 1 for the Power Rankings
 RANK_MIN_GAMES = 20          # a team needs this many games in those leagues this year to be ranked (58 teams on today's data)
 RANK_CHANGE_DAYS = 7         # the up/down arrows compare with the ranking this many days ago
 REGION = {"LYON": "LCS", "TSW": "LCP", "GEN": "LCK", "HLE": "LCK", "DK": "LCK", "T1": "LCK", "IG": "LPL", "TES": "LPL", "BLG": "LPL",
@@ -91,7 +92,9 @@ def champ_icon(key, size, q):
 # ----------------------------------------------------------------------------------------------
 def load_event(csv):
     df = pd.read_csv(csv, low_memory=False)
-    return df[(df.league == LEAGUE) & (df.date >= MAIN_START)].copy()
+    df = df[(df.league == LEAGUE) & (df.date >= MAIN_START)].copy()
+    df["teamname"] = df["teamname"].replace(NAME_FIX)
+    return df
 
 def ratings(csv):
     """Player rating (see rating/METHODOLOGY idea): Elo-adjusted role z-scores -> site scale."""
@@ -520,9 +523,9 @@ def attach_items(w, GD, PD, CD):
     print("  item icons embedded:", len(GD["items"]), "| rune icons:", len(GD["runes"]), "(game page)")
 
 # ----------------------------------------------------------------------------------------------
-# 4c. Global Power Rankings: team Elo over all 2026 games, for tier 1 teams
+# 4c. Power Rankings: team Elo over all 2026 games, for tier 1 teams
 # ----------------------------------------------------------------------------------------------
-WORLDS_RANK_FROM = MAIN_START   # the Global Power Rankings use only Worlds 2026 main stage games (no Play-Ins, domestic or other international results)
+WORLDS_RANK_FROM = MAIN_START   # the Power Rankings use only Worlds 2026 main stage games (no Play-Ins, domestic or other international results)
 
 def build_rankings(csv):
     """Elo ranking of the teams at Worlds 2026, from main stage games only (everyone starts level at 1500)."""
@@ -541,7 +544,7 @@ def build_rankings(csv):
         d = (ro[t] - rn[t]) if (t in ro and t in rn) else 0                           # arrows only for teams that already had a game a week ago
         code = CODE.get(t)
         if not code: code = re.sub(r"[^A-Z0-9]", "", "".join(w[0] for w in t.split()).upper())[:4]; print("  no code for", t, "- using", code)
-        rows.append([t, REGION.get(code, ""), code, ("up%d" % d if d > 0 else "dn%d" % -d if d < 0 else ""), int(round(now_r[t]))])
+        rows.append([NAME_FIX.get(t, t), REGION.get(code, ""), code, ("up%d" % d if d > 0 else "dn%d" % -d if d < 0 else ""), int(round(now_r[t]))])
     upd = pd.Timestamp(teams.date.max()).tz_localize("UTC").tz_convert(TZ).strftime("%-m/%-d/%y")
     print("  rankings: %d teams, top 3: %s" % (len(rows), ", ".join(r[2] for r in rows[:3])))
     return rows, upd
@@ -597,7 +600,7 @@ def build_upcoming(path=ROOT / "data" / "schedule.json"):
 def build_search(s, WD, CH):
     """Refresh the searchable teams / players / champions list; keep the static logos, flags and role icons."""
     SD = jget(s, "SD")
-    names = {c: n for c, n in SD["t"]}
+    names = {c: NAME_FIX.get(n, n) for c, n in SD["t"]}
     for c in {p["t"] for p in WD["players"]}: names.setdefault(c, next(k for k, v in CODE.items() if v == c))
     SD["t"] = [[c, names[c]] for c in names if c in {p["t"] for p in WD["players"]}] or SD["t"]
     SD["p"] = [[p["p"], p["t"], p["r"]] for p in WD["players"]]
@@ -673,7 +676,7 @@ def main(csv):
     s = jreplace(s, "UP", build_upcoming())
     s = jreplace(s, "SD", build_search(s, WD, CH))
     wr(out / "index.html", stamp(s))
-    # global power rankings
+    # power rankings
     s = rd("site/rankings.html"); s = jreplace(s, "rank", RK); s = jreplace(s, "rankUpd", RKUPD); s = jreplace(s, "hasTeam", HAS); s = jreplace(s, "LOGOS", logos_all)
     s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "rankings.html", stamp(s))
     # recent results (all series)

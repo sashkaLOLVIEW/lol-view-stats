@@ -258,7 +258,7 @@ html { scroll-padding-top: 84px; }
   var $ = function (id) { return document.getElementById(id); };
   var LW = {"DK":1,"G2":1,"TL":1, "TLAW":1};
   function logo(t, s) { return D.logos[t] ? '<img' + (LW[t] ? ' class="lwi"' : '') + ' src="' + D.logos[t] + '" alt="' + t + '" width="' + s + '" height="' + s + '" style="display:block;object-fit:contain">' : ''; }
-  var NAMES = {GEN:'Gen.G Esports',IG:'Invictus Gaming',HLE:'Hanwha Life Esports',TES:'Top Esports',MKOI:'Movistar KOI',BLG:'Bilibili Gaming',KC:'Karmine Corp',AL:"Anyone's Legend",DK:'Dplus KIA',G2:'G2 Esports',TL:'Team Liquid',CFO:'CTBC Flying Oyster',LOS:'LØS',T1:'T1',LYON:'LYON',TSW:'Team Secret Whales'};
+  var NAMES = {GEN:'Gen.G Esports',IG:'Invictus Gaming',HLE:'Hanwha Life Esports',TES:'Top Esports',MKOI:'Movistar KOI',BLG:'Bilibili Gaming',KC:'Karmine Corp',AL:"Anyone's Legend",DK:'Dplus KIA',G2:'G2 Esports',TLAW:'Team Liquid Alienware',TL:'Team Liquid Alienware',CFO:'CTBC Flying Oyster',LOS:'LØS',T1:'T1',LYON:'LYON',TSW:'Team Secret Whales'};
   function sum(a, f) { return a.reduce(function (s, x) { return s + (f(x) || 0); }, 0); }
   function agg(g) {
     var n = g.length, mins = sum(g, function (x) { return x.gl; }), k = sum(g, function (x) { return x.k; }), d = sum(g, function (x) { return x.d; }), a = sum(g, function (x) { return x.a; });
