@@ -304,6 +304,33 @@ def build_champions(w, GD):
     return dict(champs={n: dict(ic=ic(n), **v) for n, v in ch.items()}, avg=avg, icons=icons, games=len(order), logos=GD["logos"])
 
 # ----------------------------------------------------------------------------------------------
+# 4b. upcoming matches (from data/schedule.json, written by fetch_schedule.py)
+# ----------------------------------------------------------------------------------------------
+UP_KEYS = ["global", "lck", "lpl", "lec", "lcs", "cblol", "lcp"]
+UP_ALIAS = {}          # schedule team code -> code used on this site, if they ever differ
+PER_FILTER = 8         # rows stored per filter; the page drops started matches and shows 4
+
+def build_upcoming(path=ROOT / "data" / "schedule.json"):
+    out = {k: [] for k in UP_KEYS}
+    try: raw = json.loads(Path(path).read_text(encoding="utf-8"))["matches"]
+    except Exception: print("  no schedule file - Upcoming Matches will show an empty state"); return out
+    now = pd.Timestamp.now(tz="UTC")
+    for m in sorted(raw, key=lambda x: x["start"]):
+        t0 = pd.Timestamp(m["start"])
+        if t0 + pd.Timedelta(hours=3) < now: continue
+        h, a = UP_ALIAS.get(m["home"], m["home"]), UP_ALIAS.get(m["away"], m["away"])
+        uk = t0.tz_convert(TZ)
+        row = [h, a, uk.strftime("%H:%M"), uk.strftime("%b %-d"), "BO%d" % m["bo"], m["league"], int(t0.timestamp() * 1000)]
+        keys = {"global"}
+        if m["league"] in UP_KEYS: keys.add(m["league"])
+        for c in (h, a):                      # a Worlds match also appears under each team's home region
+            if REGION.get(c, "").lower() in UP_KEYS: keys.add(REGION[c].lower())
+        for k in keys:
+            if len(out[k]) < PER_FILTER: out[k].append(row)
+    print("  upcoming:", {k: len(v) for k, v in out.items()})
+    return out
+
+# ----------------------------------------------------------------------------------------------
 # 5. write the pages
 # ----------------------------------------------------------------------------------------------
 def build_search(s, WD, CH):
@@ -359,6 +386,7 @@ def main(csv):
     s = idx
     for name, val in (("WD", WD), ("FACES", FACES), ("FACESF", FACES), ("CHAMPS", CH), ("SW", ST)): s = jreplace(s, name, val)
     s = re.sub(r"  var rec = \[\[.*?\]\];\n", lambda m: "  var rec = " + json.dumps(rec, ensure_ascii=False) + ";\n", s, count=1, flags=re.S)
+    s = jreplace(s, "UP", build_upcoming())
     s = jreplace(s, "SD", build_search(s, WD, CH))
     wr(out / "index.html", stamp(s))
     # players
@@ -372,13 +400,6 @@ def main(csv):
         s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / (fn + ".html"), stamp(s))
     wr(out / ".nojekyll", "")
 
-    # sanity warnings (do not stop the build)
-    up = re.search(r"var up = (\[\[.*?\]\]);", idx, flags=re.S)
-    if up:
-        try:
-            dates = {r[3] for r in json.loads(up.group(1))}
-            print("  note: 'Upcoming' fixtures in index.html are hand-written, currently dated:", ", ".join(sorted(dates)))
-        except Exception: pass
     print("done - %d pages written to dist/ (data through %s)" % (len(list(out.glob("*.html"))), date_s))
 
 if __name__ == "__main__":

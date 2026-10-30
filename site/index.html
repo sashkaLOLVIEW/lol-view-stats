@@ -251,6 +251,8 @@ h2 svg { flex: none; }
 .stand { margin-top: 56px; }
 .stko { margin-top: 56px; }
 .stko-tabs { margin-top: 0; }
+#upcoming .row { flex: 0 0 auto !important; height: 62px !important; min-height: 0 !important; }
+.up-tabs { margin: 12px 0 0; gap: 6px; } .up-tabs .chip { height: 26px; padding: 0 9px; font-size: 11px; }
 .stko-tabs .chip { height: 30px; padding: 0 14px; font-size: 12px; }
 .stko .stand-hd { margin-top: 16px; }
 .ko-wrap { margin-top: 24px; padding: 0 0 4px; overflow-x: auto; }
@@ -387,7 +389,8 @@ html { scroll-padding-top: 84px; }
       </div>
       </div>
 
-      <h2 class="sec">Upcoming Matches <span class="smp">Sample</span> <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></h2>
+      <h2 class="sec">Upcoming Matches <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></h2>
+      <div class="chips up-tabs" id="upTabs" role="group" aria-label="League filter"></div>
       <div class="stack" id="upcoming"></div>
 
       <h2 class="sec" style="margin-top:34px"><a href="game.html" style="display:flex;align-items:center;gap:7px">Recent Results <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2>
@@ -518,15 +521,22 @@ html { scroll-padding-top: 84px; }
   $('live-logo').innerHTML = worlds(26);
   $('live-logo').style.color = 'var(--fg)';
 
-  // Upcoming
-  // Worlds 2026 Swiss Stage Round 1 (Oct 23), snapshot. Times in UK time; TBC = start time not published.
-  // SAMPLE fixtures (placeholder, not real schedule data)
-  var up = [["G2", "T1", "17:00", "Oct 29", "BO1"], ["IG", "KC", "18:00", "Oct 29", "BO1"], ["TES", "MKOI", "19:00", "Oct 29", "BO1"], ["BLG", "LYON", "20:00", "Oct 29", "BO3"]];
-  $('upcoming').innerHTML = up.map(function (m) {
-    return '<div class="row match res"><div class="lgw"><span class="lg">' + worlds(24) + '</span><span class="bo">' + m[4] + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + logo(m[0], 32) + '<span class="score vsx">vs</span>' + logo(m[1], 32) + '<span class="tag">' + m[1] + '</span></div><div class="when">' + m[2] + '<span>' + m[3] + '</span></div></div>';
-  }).join('');
-
-  if (!up.length) $('upcoming').innerHTML = '<div class="row" style="color:var(--muted);font-size:12px">Next matches are not in the data yet</div>';
+  // Upcoming matches: filled by build.py from the lolesports schedule (rows: home, away, UK time, date, BO, league, start-epoch-ms)
+  var UP = {"global": [], "lck": [], "lpl": [], "lec": [], "lcs": [], "cblol": [], "lcp": []};
+  var UPN = [["global", "Global"], ["lck", "LCK"], ["lpl", "LPL"], ["lec", "LEC"], ["lcs", "LCS"], ["cblol", "CBLOL"], ["lcp", "LCP"]], upKey = 'global';
+  function renderUp() {
+    var now = Date.now(), list = (UP[upKey] || []).filter(function (m) { return m[6] + 3 * 3600e3 > now; }).slice(0, 4);
+    $('upcoming').innerHTML = list.length ? list.map(function (m) {
+      var lg = m[5] === 'worlds' ? worlds(24) : '<span style="font-size:10px;font-weight:700;color:var(--muted)">' + String(m[5]).toUpperCase() + '</span>';
+      return '<div class="row match res"><div class="lgw"><span class="lg">' + lg + '</span><span class="bo">' + m[4] + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + logo(m[0], 32) + '<span class="score vsx">vs</span>' + logo(m[1], 32) + '<span class="tag">' + m[1] + '</span></div><div class="when">' + m[2] + '<span>' + m[3] + '</span></div></div>';
+    }).join('') : '<div class="row" style="color:var(--muted);font-size:12px">No upcoming matches' + (upKey === 'global' ? ' in the schedule yet' : ' for this league') + '</div>';
+  }
+  $('upTabs').innerHTML = UPN.map(function (n) { return '<button class="chip' + (n[0] === upKey ? ' on' : '') + '" type="button" data-k="' + n[0] + '">' + n[1] + '</button>'; }).join('');
+  $('upTabs').addEventListener('click', function (e) {
+    var b = e.target.closest('.chip'); if (!b) return; upKey = b.getAttribute('data-k');
+    Array.prototype.forEach.call($('upTabs').children, function (c) { c.classList.toggle('on', c === b); }); renderUp();
+  });
+  renderUp();
 
   // Recent results
   var rec = [["IG", "2:1", "LYON", "23:50", "Oct 28", "LOLTMNT02_486183"], ["T1", "2:0", "MKOI", "21:12", "Oct 28", "LOLTMNT02_486159"], ["TL", "2:0", "AL", "21:54", "Oct 26", "LOLTMNT02_482911"], ["LOS", "2:0", "TSW", "20:01", "Oct 26", "LOLTMNT02_483861"]];
