@@ -19,7 +19,7 @@ LEAGUE_SLUG = "worlds"            # lolesports slug of the event shown on the si
 SINCE = "2026-10-22"              # ignore matches before this date (the Worlds main stage starts on 2026-10-23)
 MAX_PAGES = 6
 TRINKET_IDS = {3330, 3340, 3363, 3364}
-FORMAT = 2                        # bump to refetch older cache entries that lack a trinket
+FORMAT = 3                        # bump to refetch every older cache entry (v2 could carry a trinket copied from an earlier frame)
 ROLES = {"top": "top", "jungle": "jng", "mid": "mid", "bottom": "bot", "support": "sup"}   # Riot role -> Oracle's Elixir position
 
 def get(url, **params):
@@ -62,24 +62,6 @@ def fetch_game(game, number, codes, bo=0):
     frames = det.get("frames") or []
     last = frames[-1]
     byid = {p["participantId"]: p for p in last["participants"]}
-    early = None          # frames from five minutes before the end, fetched only if some player has no trinket in the final frame
-    def trinket_from_earlier(pid):
-        nonlocal early, frames
-        for fr_ in reversed(frames):
-            for q in fr_.get("participants") or []:
-                if q.get("participantId") == pid:
-                    t = [i for i in (q.get("items") or []) if i in TRINKET_IDS]
-                    if t: return t[0]
-        if early is None:
-            try: early = (get(FEED + "/details/" + gid, startingTime=fmt(floor10(tend - dt.timedelta(minutes=5)))).get("frames") or [])
-            except Exception: early = []
-        for fr_ in reversed(early):
-            for q in fr_.get("participants") or []:
-                if q.get("participantId") == pid:
-                    t = [i for i in (q.get("items") or []) if i in TRINKET_IDS]
-                    if t: return t[0]
-        return None
-    fixed = []
     players = {}
     for side in ("blue", "red"):
         for pm in md[side + "TeamMetadata"]["participantMetadata"]:
@@ -87,13 +69,9 @@ def fetch_game(game, number, codes, bo=0):
             pos = ROLES.get(pm["role"])
             if not pos: continue
             perk = p.get("perkMetadata") or {}
-            items = [i for i in (p.get("items") or []) if i]
-            if not any(i in TRINKET_IDS for i in items):
-                t = trinket_from_earlier(pm["participantId"])
-                if t: items.append(t); fixed.append(side + ":" + pos)
+            items = [i for i in (p.get("items") or []) if i]       # Riot lists stacked consumables once per charge; junglers sometimes sell the trinket, so none is a real state
             players[side + ":" + pos] = dict(name=pm.get("summonerName"), champ=pm.get("championId"), items=items,
                                              runes=dict(style=perk.get("styleId"), sub=perk.get("subStyleId"), perks=perk.get("perks")))
-    if fixed: print("  trinket taken from an earlier frame:", gid, fixed)
     return dict(id=gid, v=FORMAT, number=number, bo=bo, codes=sorted(codes), start=fmt(t0), patch=md.get("patchVersion"), players=players)
 
 def main():
@@ -109,7 +87,7 @@ def main():
         for g in games:
             if g["id"] in cache and bo and not cache[g["id"]].get("bo"): cache[g["id"]]["bo"] = bo       # backfill best-of on older entries
             old = cache.get(g["id"])
-            stale = old and old.get("v", 1) < FORMAT and any(not any(i in TRINKET_IDS for i in p["items"]) for p in old["players"].values())
+            stale = bool(old) and old.get("v", 1) < FORMAT
             if g.get("state") != "completed" or (old and not stale): continue
             try: cache[g["id"]] = fetch_game(g, g["number"], codes, bo); new += 1
             except Exception as ex: print("  game", g["id"], codes, "failed:", ex); bad += 1

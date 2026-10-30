@@ -452,8 +452,6 @@ def attach_items(w, GD, PD, CD):
     miss = sorted({i for v in raw.values() for i in v if str(i) not in icons}); notr = sum(1 for v in IT.values() if not v[6])
     if miss: print("  items without an icon:", miss)
     print("  players without a trinket: %d of %d" % (notr, len(IT)))
-    for k, v in raw.items():
-        if not IT[k][6] and k[2] == "jng" and len(v) > 5: print("   no trinket, raw feed items:", k, v)
     def used(rows): return {str(i) for r in rows for i in (r.get("it") or []) if i}
     def usedr(rows): return {str(i) for r in rows for i in (r.get("rn") or [])}
     gp = [p for g in GD["games"] for t in g["teams"] for p in t["players"]]
