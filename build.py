@@ -227,7 +227,7 @@ def build_game(w, logos_all):
             b = g[(g.side == "Blue") & (g.position != "team")][f"goldat{m}"]; r = g[(g.side == "Red") & (g.position != "team")][f"goldat{m}"]
             if b.notna().all() and len(b) == 5 and gl > m * 60 + 30: series.append([m, int(b.sum() - r.sum())])
         series.append([round(gl / 60, 1), teams[0]["gold"] - teams[1]["gold"]])
-        games.append(dict(id=gid, date=pd.Timestamp(g.date.iloc[0]).tz_localize("UTC").tz_convert(TZ).strftime("%b %-d"), start=str(g.date.iloc[0]), len=gl, teams=teams, gold=series))
+        games.append(dict(id=gid, patch=("%.2f" % float(g.patch.iloc[0]) if "patch" in g and pd.notna(g.patch.iloc[0]) else None), date=pd.Timestamp(g.date.iloc[0]).tz_localize("UTC").tz_convert(TZ).strftime("%b %-d"), start=str(g.date.iloc[0]), len=gl, teams=teams, gold=series))
     games.sort(key=lambda x: x["start"])
     for i, g in enumerate(games): g["n"] = i + 1
     used = {t["code"] for g in games for t in g["teams"]}
