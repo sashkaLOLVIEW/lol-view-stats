@@ -121,6 +121,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 .dchip { height:28px; padding:0 10px; display:inline-flex; align-items:center; border:1px solid var(--line); border-radius:6px; background:var(--chip-bg); font-size:11.5px; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums; }
 .dchip b { font-weight:600; margin-left:4px; }
 .items { display:flex; gap:3px; flex:none; }
+.cell.l .items { flex-direction:row-reverse; }   /* blue mirrors red: trinket on the outermost slot of both sides */
 .items span { width:24px; height:24px; border-radius:3px; background:var(--chip-bg); border:1px solid var(--line); overflow:hidden; }
 .items img { display:block; width:100%; height:100%; }
 .runes { display:flex; flex-direction:column; gap:3px; flex:none; }
