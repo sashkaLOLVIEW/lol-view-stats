@@ -223,6 +223,24 @@ h2 .li.hi { margin: 0; width: 18px; height: 18px; }
 .gr .its { display: flex; gap: 3px; margin-top: 6px; }
 .gr .its img { width: 20px; height: 20px; border-radius: 4px; background: var(--pill); border: 1px solid var(--dim); box-sizing: border-box; }
 .gr .its .rs img { border: 0; }
+.bpage { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin-top: 8px; }
+.bpage .rr { display: flex; align-items: center; gap: 4px; }
+.bpage .rr img { width: 24px; height: 24px; display: block; }
+.bpage .rr img.k { width: 36px; height: 36px; }
+.bpage .rr img.sh { width: 18px; height: 18px; }
+.bpage .rr .gap { width: 1px; height: 26px; background: var(--divider); margin: 0 6px; }
+.bpage .bs { margin-left: auto; text-align: right; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1.5; }
+.bpage .bs b { color: var(--fg); font-size: 14px; }
+.ibgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 8px; }
+.ibc { padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.ibc h4 { margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.ibr { display: grid; grid-template-columns: 28px 1fr auto auto; align-items: center; gap: 8px; min-height: 34px; border-top: 1px solid var(--divider); font-size: 12px; font-variant-numeric: tabular-nums; }
+.ibr:first-of-type { border-top: 0; }
+.ibr img { width: 26px; height: 26px; border-radius: 4px; border: 1px solid var(--dim); box-sizing: border-box; display: block; }
+.ibr .nm { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ibr .pc { color: var(--muted); } .ibr .wr { font-weight: 700; min-width: 38px; text-align: right; }
+.ibr .wr.up { color: var(--green); } .ibr .wr.dn { color: var(--red); }
+.bnone { margin-top: 8px; color: var(--muted); font-size: 12.5px; }
 .gr .its .rs { position: relative; width: 28px; height: 28px; margin-right: 10px; flex: none; }
 .gr .its .rs img { position: absolute; background: none; }
 .gr .its .rs img.k { left: 0; top: 0; width: 28px; height: 28px; border-radius: 0; }
@@ -291,6 +309,7 @@ html { scroll-padding-top: 84px; }
     <section>
       <h2>Performance</h2>
       <div class="cmp" id="stats" style="margin-top:14px"></div>
+      <div id="bsec"><h2 class="cp-sub">Rune Pages</h2><div id="runes"></div><h2 class="cp-sub">Item Choices</h2><div id="ibuild"></div></div>
     </section>
     <section>
       <h2>Games</h2>
@@ -343,6 +362,32 @@ html { scroll-padding-top: 84px; }
       s += '<div class="st"><span class="nm">Avg K / D / A</span><span class="v">' + mean('k').toFixed(1) + ' / ' + mean('d').toFixed(1) + ' / ' + mean('a').toFixed(1) + '</span><span class="a"></span></div>';
     } else s = '<div class="empty">' + n + ' was not picked in any game, so there are no performance stats yet.</div>';
     $('stats').innerHTML = s;
+    // rune pages and item choices (final rune pages; build order from once-a-minute snapshots of the game)
+    (function () {
+      var ri = D.runes || {}, it = D.items || {}, bs = $('bsec');
+      var wr = function (a, b) { return b ? Math.round(a / b * 100) : null; }, cls = function (v) { return v == null ? '' : v >= 55 ? ' up' : v < 45 ? ' dn' : ''; };
+      var pages = {}; R.forEach(function (r) { if (r.pk && r.pk.length) { var k = r.pk.join(','); (pages[k] = pages[k] || {pk: r.pk, n: 0, w: 0}).n++; pages[k].w += r.win ? 1 : 0; } });
+      var pl = Object.keys(pages).map(function (k) { return pages[k]; }).sort(function (a, b) { return b.n - a.n || b.w - a.w; }).slice(0, 3);
+      var im = function (id, c) { var x = ri[id]; return x ? '<img' + (c ? ' class="' + c + '"' : '') + ' src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : ''; };
+      var anyR = pl.length && pl.some(function (p) { return p.pk.some(function (id) { return ri[id]; }); });
+      $('runes').innerHTML = anyR ? pl.map(function (p) {
+        var k = p.pk, w = wr(p.w, p.n);
+        return '<div class="bpage"><div class="rr">' + im(k[0], 'k') + k.slice(1, 4).map(function (i) { return im(i); }).join('') + '<span class="gap"></span>' + k.slice(4, 6).map(function (i) { return im(i); }).join('') + '<span class="gap"></span>' + k.slice(6).map(function (i) { return im(i, 'sh'); }).join('') + '</div>'
+          + '<div class="bs"><b>' + Math.round(p.n / R.length * 100) + '%</b> pick &middot; <b>' + w + '%</b> WR<br>' + p.n + ' game' + (p.n === 1 ? '' : 's') + '</div></div>';
+      }).join('') : '<div class="bnone">No rune data for these games yet.</div>';
+      var cols = ['1st item', '2nd item', '3rd item'].map(function (t, j) {
+        var rows = R.filter(function (r) { return r.bo && r.bo.length > j; }), by = {};
+        rows.forEach(function (r) { var id = r.bo[j]; (by[id] = by[id] || {id: id, n: 0, w: 0}).n++; by[id].w += r.win ? 1 : 0; });
+        var top = Object.keys(by).map(function (k) { return by[k]; }).sort(function (a, b) { return b.n - a.n || b.w - a.w; }).slice(0, 4);
+        if (!top.length) return '';
+        return '<div class="ibc"><h4>' + t + '</h4>' + top.map(function (x) {
+          var v = it[x.id], w = wr(x.w, x.n);
+          return '<div class="ibr">' + (v ? '<img src="' + v[1] + '" alt="">' : '<span></span>') + '<span class="nm" title="' + (v ? v[0] : x.id) + '">' + (v ? v[0] : x.id) + '</span><span class="pc">' + Math.round(x.n / rows.length * 100) + '%</span><span class="wr' + cls(w) + '">' + w + '%</span></div>';
+        }).join('') + '</div>';
+      }).join('');
+      $('ibuild').innerHTML = cols ? '<div class="ibgrid">' + cols + '</div>' : '<div class="bnone">No item data for these games yet.</div>';
+      bs.style.display = (anyR || cols) ? '' : 'none';
+    })();
     // bans
     // games
     var rnrow = function (r) { var m = D.runes, rn = r.rn; if (!m || !rn || !m[rn[0]] || !m[rn[1]]) return ''; return '<span class="rs"><img class="k" src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img class="s" src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></span>'; };

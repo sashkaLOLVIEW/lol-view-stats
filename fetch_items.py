@@ -19,7 +19,8 @@ LEAGUE_SLUG = "worlds"            # lolesports slug of the event shown on the si
 SINCE = "2026-10-22"              # ignore matches before this date (the Worlds main stage starts on 2026-10-23)
 MAX_PAGES = 6
 TRINKET_IDS = {3330, 3340, 3363, 3364}
-FORMAT = 4                        # bump to refetch every older cache entry (v2 could carry a trinket copied from an earlier frame)
+BUDGET = 480                      # seconds of feed requests per run
+FORMAT = 5                        # bump to refetch every older cache entry (v2 could carry a trinket copied from an earlier frame)
 ROLES = {"top": "top", "jungle": "jng", "mid": "mid", "bottom": "bot", "support": "sup"}   # Riot role -> Oracle's Elixir position
 
 def get(url, **params):
@@ -62,18 +63,24 @@ def fetch_game(game, number, codes, bo=0):
     frames = det.get("frames") or []
     last = frames[-1]
     byid = {p["participantId"]: p for p in last["participants"]}
-    snaps = {}            # minutes before the end -> participants, fetched only when a player has no trinket at the end
+    # one snapshot a minute through the game: gives the order items were first seen (build order) and the last trinket a player held
+    samples = []
+    m = 1
+    while t0 + dt.timedelta(minutes=m) < tend:
+        try:
+            d = (get(FEED + "/details/" + gid, startingTime=fmt(floor10(t0 + dt.timedelta(minutes=m)))).get("frames") or [{}])[0].get("participants") or []
+            samples.append({q["participantId"]: [i for i in (q.get("items") or []) if i] for q in d})
+        except Exception: pass
+        m += 1; time.sleep(0.12)
+    def order_of(pid):
+        seen, out = set(), []
+        for s in samples:
+            for i in s.get(pid, []):
+                if i not in seen: seen.add(i); out.append(i)
+        return out
     def last_trinket(pid):
-        """The trinket this player held most recently before it vanished (e.g. replaced by the Eye of the Herald)."""
-        for m in range(2, 60, 2):
-            t = tend - dt.timedelta(minutes=m)
-            if t < t0: return None
-            if m not in snaps:
-                try: snaps[m] = (get(FEED + "/details/" + gid, startingTime=fmt(floor10(t))).get("frames") or [{}])[0].get("participants") or []
-                except Exception: snaps[m] = []
-                time.sleep(0.15)
-            q = next((x for x in snaps[m] if x.get("participantId") == pid), None)
-            tr = [i for i in ((q or {}).get("items") or []) if i in TRINKET_IDS]
+        for s in reversed(samples):
+            tr = [i for i in s.get(pid, []) if i in TRINKET_IDS]
             if tr: return tr[0]
         return None
     players = {}
@@ -85,7 +92,7 @@ def fetch_game(game, number, codes, bo=0):
             perk = p.get("perkMetadata") or {}
             items = [i for i in (p.get("items") or []) if i]       # Riot lists stacked consumables once per charge; junglers sometimes sell the trinket, so none is a real state
             tr0 = None if any(i in TRINKET_IDS for i in items) else last_trinket(pm["participantId"])
-            players[side + ":" + pos] = dict(name=pm.get("summonerName"), champ=pm.get("championId"), items=items, tr0=tr0,
+            players[side + ":" + pos] = dict(name=pm.get("summonerName"), champ=pm.get("championId"), items=items, tr0=tr0, order=order_of(pm["participantId"]),
                                              runes=dict(style=perk.get("styleId"), sub=perk.get("subStyleId"), perks=perk.get("perks")))
     return dict(id=gid, v=FORMAT, number=number, bo=bo, codes=sorted(codes), start=fmt(t0), patch=md.get("patchVersion"), players=players)
 
@@ -94,6 +101,7 @@ def main():
     except Exception: cache = {}
     ms = finished_matches(); new = bad = 0
     print("finished matches:", len(ms), "| games already cached:", len(cache))
+    t_start = time.time(); skipped = 0
     for mid, e in sorted(ms.items(), key=lambda x: x[1]["startTime"]):
         codes = [t["code"].upper() for t in e["match"]["teams"]]
         try: games = get(GW + "/getEventDetails", hl="en-US", id=mid)["data"]["event"]["match"]["games"]
@@ -104,11 +112,12 @@ def main():
             old = cache.get(g["id"])
             stale = bool(old) and old.get("v", 1) < FORMAT
             if g.get("state") != "completed" or (old and not stale): continue
-            try: cache[g["id"]] = fetch_game(g, g["number"], codes, bo); new += 1
+            if time.time() - t_start > BUDGET: skipped += 1; continue          # keep the run short; the rest is picked up on the next run
+            try: cache[g["id"]] = fetch_game(g, g["number"], codes, bo); new += 1; OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(cache, ensure_ascii=False))
             except Exception as ex: print("  game", g["id"], codes, "failed:", ex); bad += 1
             time.sleep(0.3)
     OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(cache, ensure_ascii=False))
-    print("items: %d games cached (%d new, %d failed)" % (len(cache), new, bad))
+    print("items: %d games cached (%d new, %d failed)%s" % (len(cache), new, bad, (" | %d games left for the next run (time budget)" % skipped) if skipped else ""))
 
 if __name__ == "__main__":
     try: main()

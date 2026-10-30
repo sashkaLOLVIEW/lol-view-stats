@@ -367,31 +367,33 @@ def map_items(w):
             if not rp: continue
             if norm(rp["champ"]) != norm(p.champion) and norm(rp["champ"]) not in norm(p.champion) and norm(p.champion) not in norm(rp["champ"]): champ_bad += 1; print("  champion differs:", gid, p.side, p.position, "riot=" + str(rp["champ"]), "oe=" + str(p.champion))
             rn = rp.get("runes") or {}; pk = rn.get("perks") or []
-            out[(gid, p.side, p.position)] = (rp["items"] + ([rp["tr0"]] if rp.get("tr0") and not any(i in TRINKETS for i in rp["items"]) else []), [pk[0], rn.get("sub")] if pk and rn.get("sub") else None)
+            out[(gid, p.side, p.position)] = (rp["items"] + ([rp["tr0"]] if rp.get("tr0") and not any(i in TRINKETS for i in rp["items"]) else []), [pk[0], rn.get("sub")] if pk and rn.get("sub") else None, pk, rp.get("order") or [])
     print("  items: %d of %d games matched to Riot data%s" % (matched, total, ("; %d champion name differences (check aliases)" % champ_bad) if champ_bad else ""))
     return out
 
 def item_assets(ids):
-    """{item id: [name, icon data-uri, is_trinket]} from Data Dragon; cached in data/item_icons.json. Empty on failure."""
+    """{item id: [name, icon data-uri, is_trinket, is_completed]} from Data Dragon; cached in data/item_icons.json. Empty on failure."""
     import requests
     path = ROOT / "data" / "item_icons.json"
     try: cache = json.loads(path.read_text(encoding="utf-8"))
     except Exception: cache = {}
-    need = [str(i) for i in sorted(set(ids)) if str(i) not in cache or len(cache[str(i)]) < 3]
+    need = [str(i) for i in sorted(set(ids)) if str(i) not in cache or len(cache[str(i)]) < 4]
     if need:
         try:
             vers = requests.get("https://ddragon.leagueoflegends.com/api/versions.json", timeout=30).json()
             items = requests.get("https://ddragon.leagueoflegends.com/cdn/%s/data/en_US/item.json" % vers[0], timeout=60).json()["data"]
             for i in need:
-                meta = items.get(i) or {}; tr = int("Trinket" in (meta.get("tags") or []) or int(i) in TRINKETS)
-                if i in cache: cache[i] = list(cache[i][:2]) + [tr]; continue
+                meta = items.get(i) or {}; tags = meta.get("tags") or []; gold = meta.get("gold") or {}
+                tr = int("Trinket" in tags or int(i) in TRINKETS)
+                cm = int(bool(gold.get("purchasable")) and not meta.get("into") and (gold.get("total") or 0) >= 2000 and not ({"Boots", "Consumable", "Trinket", "Lane", "Jungle"} & set(tags)))
+                if i in cache: cache[i] = list(cache[i][:2]) + [tr, cm]; continue
                 try:
                     r = requests.get("https://ddragon.leagueoflegends.com/cdn/%s/img/item/%s.png" % (vers[0], i), timeout=30); r.raise_for_status()
                     im = Image.open(io.BytesIO(r.content)).convert("RGBA"); im.thumbnail((36, 36))
-                    cache[i] = [meta.get("name", "Item " + i), b64webp(im, 78), tr]
-                except Exception as e: print("  no icon for item", i, "(%s)" % e)
+                    cache[i] = [meta.get("name", "Item " + i), b64webp(im, 78), tr, cm]
+                except Exception as ex: print("  no icon for item", i, "(%s)" % ex)
             path.parent.mkdir(exist_ok=True); path.write_text(json.dumps(cache, ensure_ascii=False))
-        except Exception as e: print("  item icons unavailable:", e)
+        except Exception as ex: print("  item icons unavailable:", ex)
     return {i: cache[i] for i in map(str, set(ids)) if i in cache}
 
 TRINKETS = {3340, 3363, 3364}
@@ -410,12 +412,16 @@ def rune_assets(pairs):
     path = ROOT / "data" / "rune_icons.json"
     try: cache = json.loads(path.read_text(encoding="utf-8"))
     except Exception: cache = {}
-    need = {str(i) for pr in pairs for i in pr if str(i) not in cache}
+    need = {str(i) for pr in pairs for i in pr if i and str(i) not in cache}
     if need:
         try:
             ver = requests.get("https://ddragon.leagueoflegends.com/api/versions.json", timeout=30).json()[0]
             styles = requests.get("https://ddragon.leagueoflegends.com/cdn/%s/data/en_US/runesReforged.json" % ver, timeout=60).json()
-            ent = {}
+            ent = {"5001": ("Health Scaling", "perk-images/StatMods/StatModsHealthScalingIcon.png"), "5002": ("Armor", "perk-images/StatMods/StatModsArmorIcon.png"),
+                   "5003": ("Magic Resist", "perk-images/StatMods/StatModsMagicResIcon.png"), "5005": ("Attack Speed", "perk-images/StatMods/StatModsAttackSpeedIcon.png"),
+                   "5007": ("Ability Haste", "perk-images/StatMods/StatModsCDRScalingIcon.png"), "5008": ("Adaptive Force", "perk-images/StatMods/StatModsAdaptiveForceIcon.png"),
+                   "5010": ("Move Speed", "perk-images/StatMods/StatModsMovementSpeedIcon.png"), "5011": ("Health", "perk-images/StatMods/StatModsHealthPlusIcon.png"),
+                   "5013": ("Tenacity", "perk-images/StatMods/StatModsTenacityIcon.png")}
             for s in styles:
                 ent[str(s["id"])] = (s["name"], s["icon"])
                 for sl in s["slots"]:
@@ -434,10 +440,18 @@ def attach_items(w, GD, PD, CD):
     M = map_items(w)
     if not M: return
     raw = {k: v[0] for k, v in M.items()}
-    icons = item_assets({i for v in raw.values() for i in v})
+    icons = item_assets({i for v in raw.values() for i in v} | {i for v in M.values() for i in v[3]})
     trset = TRINKETS | {int(i) for i, x in icons.items() if len(x) > 2 and x[2]}
     IT = {k: tidy_items(v, trset) for k, v in raw.items()}
     RN = {k: v[1] for k, v in M.items() if v[1]}
+    PK = {k: v[2] for k, v in M.items() if v[2]}
+    def completed(order):
+        out = []
+        for i in order:
+            x = icons.get(str(i))
+            if x and len(x) > 3 and x[3] and i not in out: out.append(i)
+        return out[:6]
+    BO = {k: completed(v[3]) for k, v in M.items()}
     for g in GD["games"]:
         for t in g["teams"]:
             for p in t["players"]:
@@ -447,13 +461,13 @@ def attach_items(w, GD, PD, CD):
             k = (r["gid"], r["side"], POS_OF_ROLE[r["role"]]); r["it"] = IT.get(k); r["rn"] = RN.get(k)
     for c in CD["champs"].values():
         for r in c["rows"]:
-            k = (r["game"], r["side"], POS_OF_ROLE[r["role"]]); r["it"] = IT.get(k); r["rn"] = RN.get(k)
-    runes = rune_assets(list(RN.values()))
+            k = (r["game"], r["side"], POS_OF_ROLE[r["role"]]); r["it"] = IT.get(k); r["rn"] = RN.get(k); r["pk"] = PK.get(k); r["bo"] = BO.get(k)
+    runes = rune_assets(list(RN.values()) + list(PK.values()))
     miss = sorted({i for v in raw.values() for i in v if str(i) not in icons}); notr = sum(1 for v in IT.values() if not v[6])
     if miss: print("  items without an icon:", miss)
-    print("  players without a trinket: %d of %d" % (notr, len(IT)))
-    def used(rows): return {str(i) for r in rows for i in (r.get("it") or []) if i}
-    def usedr(rows): return {str(i) for r in rows for i in (r.get("rn") or [])}
+    print("  players without a trinket: %d of %d | with a build order: %d" % (notr, len(IT), sum(1 for v in BO.values() if v)))
+    def used(rows): return {str(i) for r in rows for i in (r.get("it") or []) + (r.get("bo") or []) if i}
+    def usedr(rows): return {str(i) for r in rows for i in (r.get("rn") or []) + (r.get("pk") or []) if i}
     gp = [p for g in GD["games"] for t in g["teams"] for p in t["players"]]
     pr = [r for pl in PD["players"].values() for r in pl["games"]]; cr = [r for c in CD["champs"].values() for r in c["rows"]]
     for D_, rows in ((GD, gp), (PD, pr), (CD, cr)):
