@@ -150,8 +150,9 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .pl-b { flex: 1; min-width: 0; }
 .its { display: flex; gap: 3px; margin-top: 5px; min-height: 20px; }
 .its img { width: 20px; height: 20px; border-radius: 4px; display: block; background: var(--pill); border: 1px solid var(--dim); box-sizing: border-box; }
-.its .trw { width: 20px; height: 20px; border-radius: 4px; border: 1px solid var(--dim); box-sizing: border-box; background: var(--pill); display: grid; place-items: center; flex: none; margin-left: 3px; }
-.its .trw img { width: 14px; height: 14px; border: 0; border-radius: 50%; background: none; }
+/* trinket: smaller square frame, icon fills it */
+.its .trw { width: 17px; height: 17px; border-radius: 4px; border: 1px solid var(--dim); box-sizing: border-box; background: none; display: block; overflow: hidden; flex: none; margin-left: 4px; align-self: center; }
+.its .trw img { width: 100%; height: 100%; border: 0; border-radius: 0; background: none; display: block; }
 .its i { display: block; width: 20px; height: 20px; border-radius: 4px; background: var(--pill); border: 1px solid var(--dim); box-sizing: border-box; flex: none; }
 .its i:last-child { margin-left: 3px; }
 .pc { flex: none; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px; }
