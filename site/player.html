@@ -233,7 +233,7 @@ html { scroll-padding-top: 84px; }
       <button class="toggle" id="theme" type="button" aria-label="Toggle light and dark theme"></button>
       <label class="search">
         <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="var(--dim)" stroke-width="1.4" aria-hidden="true"><circle cx="5" cy="5" r="3.6"/><path d="m8 8 3 3"/></svg>
-        <input id="q" type="search" placeholder="Search players" aria-label="Search players" list="plist" autocomplete="off"><datalist id="plist"></datalist>
+        <input id="q" type="search" placeholder="Search" aria-label="Search">
       </label>
     </div>
   </header>
@@ -283,7 +283,6 @@ html { scroll-padding-top: 84px; }
   }
   var names = Object.keys(D.players).sort(function (a, b) { return a.toLowerCase() < b.toLowerCase() ? -1 : 1; });
   var AGG = {}; names.forEach(function (n) { AGG[n] = agg(D.players[n].games); });
-  $('plist').innerHTML = names.map(function (n) { return '<option value="' + n + '">' + D.players[n].team + ' \u00b7 ' + D.players[n].role + '</option>'; }).join('');
   function pct(role, key, v, inv) {
     var l = names.filter(function (n) { return D.players[n].role === role && AGG[n][key] != null; }).map(function (n) { return AGG[n][key]; });
     if (l.length < 2 || v == null) return 50;
@@ -374,9 +373,6 @@ html { scroll-padding-top: 84px; }
     $('radars').innerHTML = RAD.map(function (r) { return '<div class="rcard"><h3>' + r[0] + '</h3>' + radar(r[0], r[1], ag, P.role) + '</div>'; }).join('');
     document.title = name + ' · Player Profile';
   }
-  var q = $('q');
-  q.addEventListener('change', function () { var v = q.value.trim().toLowerCase(), m = names.filter(function (n) { return n.toLowerCase() === v; })[0] || names.filter(function (n) { return n.toLowerCase().indexOf(v) === 0; })[0]; if (m) { show(m); q.value = ''; q.blur(); } });
-  q.addEventListener('keydown', function (e) { if (e.key === 'Enter') q.dispatchEvent(new Event('change')); });
   var h = ''; try { h = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
   show(D.players[h] ? h : (D.players.Chovy ? 'Chovy' : names[0]));
   var root = document.documentElement, btn = $('theme');
