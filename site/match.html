@@ -565,7 +565,7 @@ html { scroll-padding-top: 84px; }
     $('score').innerHTML = sideTeam(A, 0) + stat(A, 0, B) + '<div class="sc-mid"><div class="sc-c"><div class="sc-time">' + CLK + fmtT(g.len) + '</div>' + (g.patch ? '<div class="sc-sub">Patch ' + g.patch + '</div>' : '') + '</div></div>' + stat(B, 1, A) + sideTeam(B, 1);
     var _m = 'Worlds 2026 · Main stage · Swiss Round 1 · Match ' + g.n + ' · ' + g.date + ' · Blue side ' + A.code + ' vs Red side ' + B.code;
     var c = '';
-    var bd = function (t, x, r) { return t[x] ? '<span class="fbd">' + (x === 'fb' ? 'First Blood' : 'First Turret') + '</span>' : ''; };
+    var bd = function (t, x, r) { return t[x] ? '<span class="fbd" title="'+(x === 'fb' ? 'First blood' : 'First turret')+'">' + '1st' + '</span>' : ''; };
     c += row('K/D/A', A.k + '/' + A.d + '/' + A.a + bd(A, 'fb'), bd(B, 'fb') + B.k + '/' + B.d + '/' + B.a, lead(A.k, B.k, 1));
     c += row('Gold', k1(A.gold), k1(B.gold), lead(A.gold, B.gold, 1));
     c += row('Turrets', A.towers + bd(A, 'ft'), bd(B, 'ft') + B.towers, lead(A.towers, B.towers, 1));
