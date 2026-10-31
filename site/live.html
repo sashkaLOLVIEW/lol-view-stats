@@ -170,6 +170,11 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 .cmps .pn { display:flex; align-items:center; gap:10px; min-width:0; } .cmps .pn.r { justify-content:flex-end; }
 .cmps .pn b { font-size:15px; } .cmps .pn small { font-size:11.5px; color:var(--muted); }
 .cmps .rt { display:inline-block; min-width:38px; text-align:center; height:22px; line-height:22px; border-radius:5px; background:var(--pill); font-size:12.5px; font-weight:700; }
+.cmps .hd.hdp { align-items:end; padding-top:6px; padding-bottom:0; }
+.cmps .hd.hdp .pn { align-items:flex-end; gap:10px; }
+.cmps .hd.hdp .pn > b, .cmps .hd.hdp .pn > .rtb { margin-bottom:14px; }
+.cmps .hd.hdp .rc { align-self:center; }
+.cmps img.pf { display:block; width:auto; height:56px; max-width:72px; object-fit:contain; object-position:bottom; background:none; border-radius:0; }
 .cmps .rc { display:flex; justify-content:center; color:var(--muted); }
 .cmps .cl { text-align:left; font-size:14px; font-weight:700; } .cmps .cv { text-align:right; font-size:14px; font-weight:700; }
 .cmps .cm { text-align:center; font-size:10.5px; font-weight:700; text-transform:uppercase; color:var(--muted); letter-spacing:.02em; }
@@ -419,7 +424,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   var RTB = function (v) { return '<span class="rtb ' + (v >= 90 ? "rg" : v >= 80 ? "rb" : v >= 70 ? "rn" : "rz") + '">' + v.toFixed(1) + "</span>"; };
   var CST = [["KDA", 2, 1, function (v) { return v.toFixed(1); }], ["CS/M", 3, 1, function (v) { return v.toFixed(1); }], ["GD@15", 4, 1, function (v) { return (v > 0 ? "+" : "") + Math.round(v); }],
              ["DPM", 5, 1, function (v) { return Math.round(v); }], ["KP%", 6, 1, function (v) { return Math.round(v) + "%"; }], ["Dmg share", 7, 1, function (v) { return Math.round(v) + "%"; }]];
-  function face(code, r) { var f = PS.f[code + "|" + r]; return f ? '<img src="' + f + '" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;object-position:top;align-self:center;background:var(--pill)">' : ""; }
+  function face(code, r) { var f = PS.f[code + "|" + r]; return f ? '<img class="pf" src="' + f + '" alt="">' : ""; }
   // the two teams' season averages side by side (kind: 1 = higher is better, -1 = lower is better, 0 = no winner)
   var TST = [["Games", 0, 0, function (v) { return v; }], ["Win rate", 1, 1, function (v) { return v + "%"; }], ["GD@15", 2, 1, function (v) { return (v > 0 ? "+" : "") + v; }], ["Kills", 3, 1, function (v) { return v.toFixed(1); }],
              ["Deaths", 4, -1, function (v) { return v.toFixed(1); }], ["Towers", 5, 1, function (v) { return v.toFixed(1); }], ["Drakes", 6, 1, function (v) { return v.toFixed(1); }], ["Barons", 7, 1, function (v) { return v.toFixed(2); }],
@@ -431,17 +436,17 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     CROLES.forEach(function (r) { A.push(PS.p[bt.code + "|" + r]); B.push(PS.p[rt.code + "|" + r]); });
     var avg = function (L) { var v = L.filter(Boolean).map(function (x) { return x[1]; }); return v.length ? v.reduce(function (p, q) { return p + q; }, 0) / v.length : null; };
     var aa = avg(A), ab = avg(B), hasAvg = aa != null && ab != null, hasT = a && b;
-    if (!hasAvg && !hasT) { box.hidden = true; return; }
+    if (!hasT) { box.hidden = true; return; }
     var lg = function (t) { return logoHtml(t).replace("<img ", '<img style="width:26px;height:26px;object-fit:contain" '); };
     var hd = function (l) { return '<div class="hd"><div class="pn">' + lg(bt) + '<b>' + esc(bt.code) + '</b></div><div class="rc" style="font-size:11px;font-weight:700;text-transform:uppercase">' + l + '</div><div class="pn r"><b>' + esc(rt.code) + "</b>" + lg(rt) + "</div></div>"; };
     var h = "<h2>Team Stats</h2>";
-    if (hasAvg) h += '<div class="cr">' + hd("Rating") + '<div class="ct"><div class="cl ' + (aa === ab ? "" : aa > ab ? "lead" : "trail") + '">' + RTB(aa) + '</div><div class="cm">Avg player rating</div><div class="cv ' + (aa === ab ? "" : ab > aa ? "lead" : "trail") + '">' + RTB(ab) + "</div></div></div>";
     if (hasT) {
       var rows = TST.map(function (s) {
         var x = a[s[1]], y = b[s[1]], c = !s[2] || x === y ? ["", ""] : (x - y) * s[2] > 0 ? ["lead", "trail"] : ["trail", "lead"];
         return '<div class="ct"><div class="cl ' + c[0] + '">' + s[3](x) + '</div><div class="cm">' + s[0] + '</div><div class="cv ' + c[1] + '">' + s[3](y) + "</div></div>";
       }).join("");
-      h += '<div class="cr">' + hd("Season") + rows + "</div>";
+      var avgRow = hasAvg ? '<div class="ct"><div class="cl ' + (aa === ab ? "" : aa > ab ? "lead" : "trail") + '">' + RTB(aa) + '</div><div class="cm">Avg player rating</div><div class="cv ' + (aa === ab ? "" : ab > aa ? "lead" : "trail") + '">' + RTB(ab) + "</div></div>" : "";
+      h += '<div class="cr">' + hd("Season") + avgRow + rows + "</div>";
     }
     box.innerHTML = h; box.hidden = false;
   }
@@ -459,7 +464,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
         var x = a ? a[s[1]] : null, y = b ? b[s[1]] : null, c = cl(x, y);
         return '<div class="ct"><div class="cl ' + c[0] + '">' + (x == null ? "-" : s[3](x)) + '</div><div class="cm">' + s[0] + '</div><div class="cv ' + c[1] + '">' + (y == null ? "-" : s[3](y)) + '</div></div>';
       }).join("");
-      h += '<div class="cr"><div class="hd"><div class="pn">' + face(bt.code, r) + '<b>' + esc(a ? a[0] : "-") + '</b>' + (a ? RTB(a[1]) : "") + '</div><div class="rc" title="' + r + '">' + (PS.ri[r] || r) + '</div><div class="pn r">' + (b ? RTB(b[1]) : "") + '<b>' + esc(b ? b[0] : "-") + '</b>' + face(rt.code, r) + '</div></div>' + rows + '</div>';
+      h += '<div class="cr"><div class="hd hdp"><div class="pn">' + face(bt.code, r) + '<b>' + esc(a ? a[0] : "-") + '</b>' + (a ? RTB(a[1]) : "") + '</div><div class="rc" title="' + r + '">' + (PS.ri[r] || r) + '</div><div class="pn r">' + (b ? RTB(b[1]) : "") + '<b>' + esc(b ? b[0] : "-") + '</b>' + face(rt.code, r) + '</div></div>' + rows + '</div>';
     });
     box.innerHTML = h; box.hidden = false;
   }
