@@ -779,9 +779,22 @@ def main(csv):
     for k_, e in acc.items():
         av = lambda v: round(sum(v) / len(v)) if v else None
         pm[k_] = [e["n"], e["w"], av(e["gd"]), av(e["cs"]), av(e["xp"])]
+    pb = {}   # each team's best champion per role at the event: "team|role" -> [champion, icon key, player, games, wins, kda, cs/min, dmg share %]
+    tr = {}
+    for pv in PD["players"].values():
+        for x in pv["games"]: tr.setdefault((x["team"], x["role"], x["champ"]), []).append(x)
+    cand = {}
+    for (t_, r_, c_), g in tr.items():
+        n = len(g); gl = sum(x["gl"] for x in g)
+        cand.setdefault("%s|%s" % (t_, r_), []).append([c_, g[0]["ic"], max(set(x["player"] for x in g), key=lambda p_: sum(1 for x in g if x["player"] == p_)), n, sum(x["win"] for x in g),
+                                                       round(sum(x["k"] + x["a"] for x in g) / max(1, sum(x["d"] for x in g)), 2), round(sum(x["cs"] for x in g) / max(gl, 1), 1), round(100 * sum(x["ds"] for x in g) / n)])
+    for k_, L in cand.items():
+        pool = [c for c in L if c[3] >= 2] or L
+        pb[k_] = sorted(pool, key=lambda c: (-c[4] / c[3], -c[3], -c[5]))[0]
+    pbi = {c[1]: champ_icon(c[1], 36, 72) for c in pb.values() if c[1]}
     ps = {"ri": jget(rd("site/bootcamp.html"), "SD").get("r", {}), "p": {"%s|%s" % (p["t"], p["r"]): [p["p"], p["rt"], p["kda"], p["cs"], p["gd"], p["dpm"], p["kp"], p["ds"], p["g"]] for p in WD["players"]}, "f": {"%s|%s" % (p["t"], p["r"]): FACES[p["p"]] for p in WD["players"] if p["p"] in FACES}, "t": {c: team_season(v["games"]) for c, v in TD["teams"].items()}}
     s = rd("site/match.html")   # the one match page: game data (D), search, season stats (PS, PC) and the Riot->Oracle's Elixir game map
-    for nm, val in (("D", GD), ("PS", ps), ("PC", pc), ("PM", pm), ("MAP0", RIOT_MAP), ("TR", {r[2]: i + 1 for i, r in enumerate(RK)})): s = jreplace(s, nm, val)
+    for nm, val in (("D", GD), ("PS", ps), ("PC", pc), ("PM", pm), ("PB", pb), ("PBI", pbi), ("MAP0", RIOT_MAP), ("TR", {r[2]: i + 1 for i, r in enumerate(RK)})): s = jreplace(s, nm, val)
     wr(out / "match.html", stamp(jreplace(s, "SD", build_search(s, WD, CH))))
     wr(out / "live.html", '<!doctype html><meta charset="utf-8"><title>Match</title><script>var h=location.hash.replace(/^#live\\//,"#");location.replace("match.html"+h)</script>')   # old links   # season stats for the live page's role-by-role team comparison   # live game page: polls Riot's feed in the browser, no build-time data
     s = rd("site/bootcamp.html"); s = jreplace(s, "BC", build_bootcamp(WD, logos_all, s)); s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "bootcamp.html", stamp(s))
