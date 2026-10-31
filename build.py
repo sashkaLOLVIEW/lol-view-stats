@@ -586,7 +586,7 @@ def build_upcoming(path=ROOT / "data" / "schedule.json"):
         if t0 + pd.Timedelta(hours=3) < now: continue
         h, a = UP_ALIAS.get(m["home"], m["home"]), UP_ALIAS.get(m["away"], m["away"])
         uk = t0.tz_convert(TZ)
-        row = [h, a, uk.strftime("%H:%M"), uk.strftime("%b %-d"), "BO%d" % m["bo"], m["league"], int(t0.timestamp() * 1000)]
+        row = [h, a, uk.strftime("%H:%M"), uk.strftime("%b %-d"), "BO%d" % m["bo"], m["league"], int(t0.timestamp() * 1000), m.get("mid")]
         keys = {"global"}                       # Worlds / MSI etc. appear only under Global
         if m["league"] in UP_KEYS: keys.add(m["league"])
         for k in keys:

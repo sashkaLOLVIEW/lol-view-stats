@@ -33,7 +33,7 @@ def parse(payload):
         if slug not in LEAGUES: continue
         codes = [(t.get("code") or "").upper() or "TBD" for t in teams]      # undecided teams stay in as TBD placeholders
         strat = m.get("strategy") or {}
-        out.append(dict(start=ev.get("startTime"), league=LEAGUES[slug], home=codes[0], away=codes[1],
+        out.append(dict(mid=m.get("id"), start=ev.get("startTime"), league=LEAGUES[slug], home=codes[0], away=codes[1],
                         home_name=teams[0].get("name"), away_name=teams[1].get("name"), bo=int(strat.get("count") or 1)))
     return out, (sch.get("pages") or {}).get("newer")
 

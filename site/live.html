@@ -249,7 +249,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   var fmt = function (n) { return n >= 1000 ? (n / 1000).toFixed(1) + "k" : String(n); };
 
   var matchId = (location.hash.match(/live\/(\d+)/) || [])[1] || null;
-  var S = { view: "ov", ik: {}, pk: {}, hp: {}, hpShown: {}, boardHtml: "", spellIcon: {}, open: {}, perkIcon: {}, ver: "14.20.1", match: null, gameId: null, gameNo: 1, blueTeam: null, redTeam: null, meta: null, frame: null, details: null, demo: false, updated: null, timer: null };
+  var S = { upcoming: false, view: "ov", ik: {}, pk: {}, hp: {}, hpShown: {}, boardHtml: "", spellIcon: {}, open: {}, perkIcon: {}, ver: "14.20.1", match: null, gameId: null, gameNo: 1, blueTeam: null, redTeam: null, meta: null, frame: null, details: null, demo: false, updated: null, timer: null };
 
   /* ---------- api ---------- */
   function api(path) {
@@ -334,6 +334,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       var m = j.data.event.match;
       S.match = m;
       var games = m.games || [];
+      S.upcoming = games.length > 0 && games.every(function (g) { return g.state === "unstarted"; });   // not started yet: only the Overview is available
       var pick = games.filter(function (g) { return g.state === "inProgress"; })[0] ||
                  games.filter(function (g) { return g.state === "completed"; }).pop() || games[0];
       if (!S.gameId) { S.gameId = pick && pick.id; S.gameNo = pick ? pick.number : 1; }
@@ -358,7 +359,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     });
   }
   function tick() {
-    var chain = S.match ? poll() : loadMatch().then(poll);
+    var chain = S.match && !S.upcoming ? poll() : loadMatch().then(poll);
     chain.then(function () { setNotice("live", "<b>Live</b> Updated " + S.updated.toLocaleTimeString()); render(); })
       .catch(function (e) {
         if (S.match && !S.frame) { renderWaiting(); } else if (!S.frame) { noLive(e); } else { setNotice("err", "<b>Connection issue</b> " + esc(e.message) + ". Showing the last update."); }
@@ -386,7 +387,8 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   function logoHtml(t) { return t && t.image ? '<img src="' + esc(t.image) + '" alt="">' : '<span class="ph">' + esc((t && t.code || "?").slice(0, 3)) + "</span>"; }
 
   function chipsHtml() {
-    var ov = '<button class="chip' + (S.view === "ov" ? " on" : "") + '" type="button" data-ov="1">Overview</button>';
+    var ov = '<button class="chip' + (S.view === "ov" || S.upcoming ? " on" : "") + '" type="button" data-ov="1">Overview</button>';
+    if (S.upcoming) return ov;
     return ov + (S.match.games || []).map(function (g) {
       // a finished game that is already in the site's data opens its post game page (same as Recent Results)
       if (g.state === "completed") return '<a class="chip" style="display:inline-flex;align-items:center" href="game.html#' + (MAP[g.id] ? encodeURIComponent(MAP[g.id]) : "riot/" + matchId + "/" + g.id) + '">Game ' + g.number + " &rsaquo;</a>";
@@ -401,7 +403,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     $("match").className = "match idle";
     $("match").innerHTML =
       '<div class="side">' + logoHtml(tm[0]) + '<div><div class="tn">' + esc(tm[0].name) + '</div><div class="tc">' + esc(tm[0].code) + "</div></div></div>" +
-      '<div class="center"><div class="score">' + wins(tm[0]) + ":" + wins(tm[1]) + '</div><div class="state">' + (done ? "Series complete" : "Game " + gn + " &middot; Waiting to start") + "</div></div>" +
+      '<div class="center"><div class="score">' + wins(tm[0]) + ":" + wins(tm[1]) + '</div><div class="state">' + (S.upcoming ? "Upcoming" : done ? "Series complete" : "Game " + gn + " &middot; Waiting to start") + "</div></div>" +
       '<div class="side r"><div><div class="tn">' + esc(tm[1].name) + '</div><div class="tc">' + esc(tm[1].code) + "</div></div>" + logoHtml(tm[1]) + "</div>";
     $("games").innerHTML = chipsHtml(); $("gold").innerHTML = ""; $("board").innerHTML = ""; $("cmpsec").hidden = true;
     if (S.view === "ov") drawCmp(tm[0], tm[1]);
