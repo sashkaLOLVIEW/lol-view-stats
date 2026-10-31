@@ -869,7 +869,7 @@ html { scroll-padding-top: 84px; }
     }
     return m.teams[side === "blue" ? 0 : 1];
   }
-  function logoHtml(t) { return t && t.image ? '<img src="' + esc(t.image) + '" alt="">' : '<span class="ph">' + esc((t && t.code || "?").slice(0, 3)) + "</span>"; }
+  function logoHtml(t) { return t && t.image ? '<img' + (/^(DK|G2|GX|KRX|PAIN|SHG|SK|SR|TL|TLAW|TSW|VKS)$/.test(t.code || "") ? ' class="lwi"' : '') + ' src="' + esc(t.image) + '" alt="">' : '<span class="ph">' + esc((t && t.code || "?").slice(0, 3)) + "</span>"; }
   function setNotice(kind, html) { var n = $("notice"); n.className = "notice" + (kind === "demo" ? " demo" : kind === "err" ? " err" : ""); n.innerHTML = html; }
   function seriesHeader() {
     var m = S.match, tm = m.teams, wins = function (t) { return t && t.result ? t.result.gameWins : 0; }, done = seriesDone(), gn = S.mode === "wait" ? S.gameNo : null;

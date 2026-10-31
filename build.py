@@ -48,7 +48,10 @@ ICON_ALIASES = {"renataglasc": "renataglaasc"}   # Oracle's Elixir spelling -> a
 # helpers
 # ----------------------------------------------------------------------------------------------
 def rd(fn): return open(fn, encoding="utf-8").read()
+WHITE_LOGOS = ["DK", "G2", "GX", "KRX", "PAIN", "SHG", "SK", "SR", "TL", "TLAW", "TSW", "VKS"]   # logos drawn in white: inverted in light mode, same list on every page
+
 def wr(fn, s):
+    s = re.sub(r"var LW = \{[^}]*\}", lambda m: "var LW = " + json.dumps({k: 1 for k in WHITE_LOGOS}), s)
     Path(fn).parent.mkdir(parents=True, exist_ok=True); open(fn, "w", encoding="utf-8").write(s)
 
 def jget(s, name, sep=" = "):
