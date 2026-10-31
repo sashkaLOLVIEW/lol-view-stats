@@ -160,6 +160,18 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 .pcell .rl { width:16px; height:16px; border-radius:3px; background:var(--chip-bg); flex:none; }
 .pcell .fl { width:18px; height:12px; border-radius:2px; background:var(--chip-bg); flex:none; }
 .pcell b { font-size:12.5px; font-weight:700; color:var(--muted); }
+.cnt { color:var(--muted); font-weight:500; }
+.tbl { min-width:1500px; }
+.tbl th.sortable { cursor:pointer; user-select:none; } .tbl th.sortable:hover { color:var(--fg); }
+.tbl tbody tr[data-h] { cursor:pointer; } .tbl tbody tr[data-h]:hover td { background:var(--stripe, var(--rowalt)); }
+.tbl tbody tr[data-h]:hover .c1, .tbl tbody tr[data-h]:hover .c2 { background:var(--stripe, var(--rowalt)); }
+.tbl td.sc { color:var(--fg); font-weight:600; }
+.tbl .pos { color:var(--pos); } .tbl .neg { color:var(--neg); }
+.tbl a { color:inherit; text-decoration:none; } .tbl a.nm { color:var(--fg); font-weight:600; } .tbl a.nm:hover, .tbl a.tm:hover span { text-decoration:underline; }
+.tbl a.tm { display:inline-flex; align-items:center; gap:7px; font-weight:600; }
+.pcell .rl { width:30px; height:30px; border-radius:50%; overflow:hidden; background:var(--chip-bg); display:block; }
+.pcell .fc { display:block; width:30px; height:30px; border-radius:50%; object-fit:cover; object-position:top; }
+.rbadge.r1 { background:var(--fg); color:var(--bg); } .rbadge.r2 { color:var(--fg); } .rbadge.r3 { color:var(--fg); opacity:.85; }
 .rbadge { display:inline-grid; place-items:center; min-width:36px; height:20px; border-radius:4px; background:var(--pill); color:var(--muted); font-weight:700; font-size:12px; }
 .mc { display:flex; flex-direction:column; align-items:center; gap:3px; }
 .mc i { display:block; width:60px; height:3px; border-radius:2px; background:var(--track); overflow:hidden; }
@@ -227,21 +239,9 @@ html { scroll-padding-top: 84px; }
   <div class="rule"></div>
 
   <section class="global">
-    <h2>Global Statistics</h2>
+    <h2>Statistics <span class="cnt" id="cnt"></span></h2>
     <div class="panel">
-      <div class="ph-row">
-        <div class="ptitle"><b>STATISTICS</b>70 players</div>
-        <label class="psearch">
-          <svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="var(--muted)" stroke-width="1.3" aria-hidden="true"><circle cx="5" cy="5" r="3.6"/><path d="m8 8 3 3"/></svg>
-          <input id="psearch" type="search" placeholder="Search player" aria-label="Search player">
-        </label>
-      </div>
       <div class="frow" id="frow"></div>
-      <div class="pager">
-        <div class="dots" id="dots" aria-hidden="true"></div>
-        <button class="arrow" id="prev" type="button" aria-label="Scroll columns left"><svg width="8" height="12" viewBox="0 0 8 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1 1.500 6 6 11"/></svg></button>
-        <button class="arrow" id="next" type="button" aria-label="Scroll columns right"><svg width="8" height="12" viewBox="0 0 8 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1 4.500 5L2 11"/></svg></button>
-      </div>
       <div class="tscroll" id="tscroll"><table class="tbl" id="tbl"></table></div>
     </div>
   </section>
@@ -318,50 +318,56 @@ html { scroll-padding-top: 84px; }
   })();
 
 
-  /* ---- Global Statistics table (structure only, no data yet) ---- */
-  var caret = '<svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 4 4 4-4"/></svg>';
-  var dd = function (t, on) { return '<button class="dd' + (on ? " on" : "") + '" type="button">' + t + caret + "</button>"; };
-  var seg = function (arr, cls, labels) { return '<div class="seg ' + (cls || "") + '">' + arr.map(function (a, i) { return '<button type="button"' + (i === 0 ? ' class="on"' : "") + (labels ? ' aria-label="' + labels[i] + '"' : "") + ">" + a + "</button>"; }).join("") + "</div>"; };
-  $("frow").innerHTML = dd("Worlds 2026") + dd("Main stage", true) + dd("All teams") + dd("All countries") +
-    seg(["All", "Blue", "Red"]) +
-    seg(["all", "top", "jungle", "mid", "bot", "support"].map(function (k) { return icons[k]; }), "icons", ["All roles", "Top", "Jungle", "Mid", "Bot", "Support"]) +
-    dd("Min 1 game") +
-    '<button class="dd" type="button"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="m7 1 5.500 3L7 7 1.500 4ZM1.500 7 7 10l5.500-3M1.500 10 7 13l5.500-3"/></svg>Group roles</button>';
-  Array.prototype.forEach.call(document.querySelectorAll(".seg"), function (g) {
-    g.addEventListener("click", function (e) {
-      var b = e.target.closest("button"); if (!b) return;
-      Array.prototype.forEach.call(g.children, function (x) { x.classList.remove("on"); }); b.classList.add("on");
-    });
+  /* ---- Statistics table: role filter, sortable columns, every cell links somewhere ---- */
+  var P = WD.players, TN = {};
+  $("cnt").textContent = "+ " + P.length + " players";
+  var RK = ["all", "top", "jungle", "mid", "bot", "support"], RL = ["All roles", "Top", "Jungle", "Mid", "Bot", "Support"], RN = { Top: "top", Jungle: "jungle", Mid: "mid", Bot: "bot", Support: "support" };
+  var role = "all", sortK = "rt", sortDir = -1;
+  $("frow").innerHTML = '<div class="seg icons" id="rseg">' + RK.map(function (k, i) { return '<button type="button" data-r="' + k + '" aria-label="' + RL[i] + '" title="' + RL[i] + '"' + (i === 0 ? ' class="on"' : '') + '>' + (k === "all" ? "All" : icons[k]) + '</button>'; }).join("") + '</div>';
+  $("rseg").querySelector('button[data-r="all"]').style.cssText = "min-width:44px;padding:0 12px";
+  $("rseg").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return; role = b.getAttribute("data-r");
+    Array.prototype.forEach.call($("rseg").children, function (x) { x.classList.toggle("on", x === b); }); draw();
   });
-
-  var cols = ["Games", "Win%", "Rating", "KDA", "K", "D", "A", "DMG/m", "CS/m", "GD@15", "CSD@15", "XPD@15", "DMG%", "Gold/m"];
-  var head = '<thead><tr><th class="c1">#</th><th class="c2" style="text-align:left">Player</th>' + cols.map(function (c) { return "<th" + (c === "KDA" ? ' class="sorted"' : "") + ">" + c + (c === "KDA" ? " ↓" : "") + "</th>"; }).join("") + "</tr></thead>";
-  var rk = { Top: "top", Jungle: "jungle", Mid: "mid", Bot: "bot", Support: "support" };
-  var P = WD.players, mx = function (k) { return Math.max.apply(null, P.map(function (r) { return Math.abs(r[k]); })) || 1; };
-  var M = { dpm: mx("dpm"), gd: mx("gd"), csd: mx("csd"), xpd: mx("xpd") };
   var sg = function (v) { return (v > 0 ? "+" : "") + Math.round(v).toLocaleString("en-US"); };
-  var bar = function (txt, v, k, signed) { var cls = signed ? (v > 0 ? "pos" : v < 0 ? "neg" : "") : ""; return '<div class="mc ' + cls + '">' + txt + '<i><b style="width:' + Math.max(2, Math.abs(v) / M[k] * 100).toFixed(0) + '%"></b></i></div>'; };
-  var body = "<tbody>";
-  P.forEach(function (r, i) {
-    body += '<tr><td class="c1">' + (i + 1) + '</td><td class="c2"><div class="pcell">' + logo(r.t, 18) + '<span class="ri" title="' + r.r + '">' + icons[rk[r.r]] + '</span><a class="nm" href="' + pl(r.p) + '" style="font-weight:inherit">' + r.p + "</a></div></td>" +
-      [r.g, r.wp.toFixed(1) + "%", '<span class="rbadge">-</span>', r.kda.toFixed(1), r.k.toFixed(1), r.d.toFixed(1), r.a.toFixed(1),
-       bar(Math.round(r.dpm), r.dpm, "dpm", false), r.cs.toFixed(1), bar(sg(r.gd), r.gd, "gd", true), bar(sg(r.csd), r.csd, "csd", true), bar(sg(r.xpd), r.xpd, "xpd", true),
-       r.ds.toFixed(1) + "%", Math.round(r.gpm)].map(function (v) { return "<td>" + v + "</td>"; }).join("") + "</tr>";
-  });
-  body += "</tbody>";
-  $("tbl").innerHTML = head + body;
-
-  var ts = $("tscroll"), dots = $("dots"), DN = 24;
-  for (var d = 0; d < DN; d++) dots.appendChild(document.createElement("i"));
-  function paintDots() {
-    var max = ts.scrollWidth - ts.clientWidth, frac = max > 0 ? ts.scrollLeft / max : 1;
-    var visible = ts.scrollWidth ? ts.clientWidth / ts.scrollWidth : 1, n = Math.max(1, Math.round(DN * visible));
-    var start = Math.round((DN - n) * frac);
-    Array.prototype.forEach.call(dots.children, function (el, i) { el.className = i >= start && i < start + n ? "f" : ""; });
+  // key, header, tooltip, formatter, default direction (-1 = high first)
+  var COLS = [
+    ["g", "Games", "Games played", function (r) { return r.g; }, -1],
+    ["wp", "Win%", "Win rate", function (r) { return r.wp.toFixed(1) + "%"; }, -1],
+    ["rt", "Rating", "Player rating", function (r) { return '<span class="rbadge ' + (r.rt >= 90 ? "r1" : r.rt >= 75 ? "r2" : r.rt >= 60 ? "r3" : "") + '">' + r.rt.toFixed(1) + "</span>"; }, -1],
+    ["kda", "KDA", "Kills + assists per death", function (r) { return r.kda.toFixed(1); }, -1],
+    ["k", "K", "Kills per game", function (r) { return r.k.toFixed(1); }, -1],
+    ["d", "D", "Deaths per game", function (r) { return r.d.toFixed(1); }, 1],
+    ["a", "A", "Assists per game", function (r) { return r.a.toFixed(1); }, -1],
+    ["kp", "KP%", "Kill participation", function (r) { return r.kp.toFixed(1) + "%"; }, -1],
+    ["dpm", "DMG/m", "Damage to champions per minute", function (r) { return Math.round(r.dpm); }, -1],
+    ["ds", "DMG%", "Share of team damage", function (r) { return r.ds.toFixed(1) + "%"; }, -1],
+    ["gpm", "Gold/m", "Gold per minute", function (r) { return Math.round(r.gpm); }, -1],
+    ["cs", "CS/m", "Creep score per minute", function (r) { return r.cs.toFixed(1); }, -1],
+    ["gd", "GD@15", "Gold difference at 15 minutes", function (r) { return '<span class="' + (r.gd > 0 ? "pos" : r.gd < 0 ? "neg" : "") + '">' + sg(r.gd) + "</span>"; }, -1],
+    ["csd", "CSD@15", "CS difference at 15 minutes", function (r) { return '<span class="' + (r.csd > 0 ? "pos" : r.csd < 0 ? "neg" : "") + '">' + sg(r.csd) + "</span>"; }, -1],
+    ["xpd", "XPD@15", "XP difference at 15 minutes", function (r) { return '<span class="' + (r.xpd > 0 ? "pos" : r.xpd < 0 ? "neg" : "") + '">' + sg(r.xpd) + "</span>"; }, -1]
+  ];
+  function draw() {
+    var rows = P.filter(function (r) { return role === "all" || RN[r.r] === role; }).slice().sort(function (a, b) { return (a[sortK] - b[sortK]) * sortDir || b.rt - a.rt; });
+    var head = '<thead><tr><th class="c1">#</th><th class="c2" style="text-align:left">Player</th><th>Team</th>' + COLS.map(function (c) {
+      var on = c[0] === sortK; return '<th class="sortable' + (on ? " sorted" : "") + '" data-k="' + c[0] + '" title="' + c[2] + '">' + c[1] + (on ? (sortDir < 0 ? " ↓" : " ↑") : "") + "</th>";
+    }).join("") + "</tr></thead>";
+    var body = "<tbody>" + rows.map(function (r, i) {
+      var face = FACES[r.p] ? '<img class="fc" src="' + FACES[r.p] + '" alt="">' : '<span class="fc"></span>';
+      return '<tr data-h="' + pl(r.p) + '"><td class="c1">' + (i + 1) + '</td><td class="c2"><div class="pcell"><a class="rl" href="' + pl(r.p) + '" tabindex="-1">' + face + '</a><span class="ri" title="' + r.r + '">' + icons[RN[r.r]] + '</span><a class="nm" href="' + pl(r.p) + '" style="font-weight:inherit">' + r.p + "</a></div></td>" +
+        '<td><a class="tm" href="team.html#' + encodeURIComponent(r.t) + '">' + logo(r.t, 18) + "<span>" + r.t + "</span></a></td>" +
+        COLS.map(function (c) { return "<td" + (c[0] === sortK ? ' class="sc"' : "") + ">" + c[3](r) + "</td>"; }).join("") + "</tr>";
+    }).join("") + "</tbody>";
+    $("tbl").innerHTML = head + body;
   }
-  ts.addEventListener("scroll", paintDots); window.addEventListener("resize", paintDots); paintDots();
-  $("prev").addEventListener("click", function () { ts.scrollBy({ left: -ts.clientWidth * 0.6, behavior: "smooth" }); });
-  $("next").addEventListener("click", function () { ts.scrollBy({ left: ts.clientWidth * 0.6, behavior: "smooth" }); });
+  $("tbl").addEventListener("click", function (e) {
+    var th = e.target.closest("th.sortable");
+    if (th) { var k = th.getAttribute("data-k"); if (k === sortK) sortDir = -sortDir; else { sortK = k; sortDir = COLS.filter(function (c) { return c[0] === k; })[0][4]; } draw(); return; }
+    if (e.target.closest("a")) return;
+    var tr = e.target.closest("tr[data-h]"); if (tr) location.href = tr.getAttribute("data-h");
+  });
+  draw();
 
   var root = document.documentElement, btn = $("theme");
   try { var sv = localStorage.getItem("theme"); if (sv) root.setAttribute("data-theme", sv); } catch (e) {}
