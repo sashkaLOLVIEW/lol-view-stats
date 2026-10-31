@@ -278,7 +278,9 @@ h2 .li.hi { margin: 0; width: 18px; height: 18px; }
 .zw { display: inline-block; overflow: hidden; border-radius: 6px; line-height: 0; flex: none; }
 .big-w.zw { border-radius: 10px; display: block; width: 84px; height: 84px; border: 1px solid var(--line); }
 .big-w.zw img.big { border: 0; border-radius: 0; }
-.gr.gm { grid-template-columns: 1fr auto auto; column-gap: 28px; }
+.gr.gm { grid-template-columns: 56px 1fr auto auto; column-gap: 28px; }
+.gr .rl { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.gr .rl .gt { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .gr .gs { display: flex; flex-direction: column; align-items: flex-start; min-width: 74px; gap: 4px; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .gr .gs > span { display: inline-flex; align-items: center; gap: 6px; }
 .gr .gs img { width: 13px; height: 13px; border-radius: 0; border: 0; background: none; }
@@ -436,7 +438,7 @@ html { scroll-padding-top: 84px; }
       for (var k = 0; k < 7; k++) { var id = it[k], x = id ? m[id] : null; o += x ? (k === 6 ? '<span class="trw"><img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '"></span>' : '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">') : '<i></i>'; }
       return '<div class="its">' + pre + o + '</div>'; };
     var GR = R.map(function (r, i) { return [r, i]; }).sort(function (a, b) { return a[0].date < b[0].date ? 1 : a[0].date > b[0].date ? -1 : b[1] - a[1]; }).map(function (x) { return x[0]; });
-    var gmHtml = function (r) { return '<div class="gr gm"><div><div class="t"><span class="pt">' + logo(r.team, 16) + '<a href="player.html#' + encodeURIComponent(r.player) + '">' + r.player + '</a></span> <span class="vs">vs ' + logo(r.opp, 16) + ' ' + r.op + '</span></div>' + itrow(r.it, rnrow(r)) + '</div><div class="gs"><span>' + im('kills') + r.k + '/' + r.d + '/' + r.a + '</span><span>' + im('minion') + r.cspm.toFixed(1) + ' CS/M</span></div><div class="r"><span class="res ' + (r.win ? 'w' : 'l') + '">' + (r.win ? 'WIN' : 'LOSS') + '</span><div style="margin-top:4px"><a href="game.html#' + r.game + '">' + r.date + ' &rsaquo;</a></div></div></div>'; };
+    var gmHtml = function (r) { var mm = Math.floor(r.len / 60), ss = ('0' + (r.len % 60)).slice(-2); return '<div class="gr gm"><div class="rl"><span class="res ' + (r.win ? 'w' : 'l') + '">' + (r.win ? 'WIN' : 'LOSS') + '</span><div class="gt">' + mm + ':' + ss + '</div></div><div><div class="t"><span class="pt">' + logo(r.team, 16) + '<a href="player.html#' + encodeURIComponent(r.player) + '">' + r.player + '</a></span> <span class="vs">vs ' + logo(r.opp, 16) + ' ' + r.op + '</span></div>' + itrow(r.it, rnrow(r)) + '</div><div class="gs"><span>' + im('kills') + r.k + '/' + r.d + '/' + r.a + '</span><span>' + im('minion') + r.cspm.toFixed(1) + ' CS/M</span></div><div class="r"><div><a href="game.html#' + r.game + '">' + r.date + ' &rsaquo;</a></div></div></div>'; };
     var shown = 5, gb = $('games');
     var drawG = function () {
       if (!pk) { gb.innerHTML = '<div class="empty">No games played with ' + n + ' yet.</div>'; return; }
