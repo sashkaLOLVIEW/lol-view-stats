@@ -789,6 +789,8 @@ def main(csv):
         cand.setdefault("%s|%s" % (t_, r_), []).append([c_, g[0]["ic"], max(set(x["player"] for x in g), key=lambda p_: sum(1 for x in g if x["player"] == p_)), n, sum(x["win"] for x in g),
                                                        round(sum(x["k"] + x["a"] for x in g) / max(1, sum(x["d"] for x in g)), 2), round(sum(x["cs"] for x in g) / max(gl, 1), 1), round(100 * sum(x["ds"] for x in g) / n)])
     for k_, L in cand.items():
+        L = [c for c in L if c[4] > 0]   # a pick to watch needs at least one win
+        if not L: continue
         pool = [c for c in L if c[3] >= 2] or L
         pb[k_] = sorted(pool, key=lambda c: (-c[4] / c[3], -c[3], -c[5]))[0]
     pbi = {c[1]: champ_icon(c[1], 36, 72) for c in pb.values() if c[1]}
