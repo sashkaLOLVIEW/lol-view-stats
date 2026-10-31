@@ -375,9 +375,12 @@ html { scroll-padding-top: 84px; }
 .mv .cmps .rt{display:inline-block; min-width:38px; text-align:center; height:22px; line-height:22px; border-radius:5px; background:var(--pill); font-size:12.5px; font-weight:700;}
 #tmsec .hd{border-bottom:0; padding-bottom:4px;}
 #tmsec .cr{padding-bottom:12px;}
-.mv .cmps .hd.hdp{align-items:end; padding-top:6px; padding-bottom:0;}
-.mv .cmps .hd.hdp .pn{align-items:flex-end; gap:10px;}
-.mv .cmps .hd.hdp .pn > b,.mv .cmps .hd.hdp .pn > .rtb{margin-bottom:14px;}
+.mv .cmps .hd.hdp{align-items:stretch; padding-top:6px; padding-bottom:0;}
+.mv .cmps .hd.hdp .pn{align-items:center; gap:14px;}
+.mv .cmps .hd.hdp .pn img.pf{align-self:flex-end;}
+.mv .cmps .hd.hdp .rc{align-self:center;}
+.mv .cmps .pi{display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:5px;}
+.mv .cmps .pn.r .pi{align-items:flex-end;}
 .mv .cmps .hd.hdp .rc{align-self:center;}
 .mv .cmps img.pf{display:block; width:auto; height:56px; max-width:72px; object-fit:contain; object-position:bottom; background:none; border-radius:0;}
 .mv .cmps .rc{display:flex; justify-content:center; color:var(--muted);}
@@ -428,7 +431,7 @@ html { scroll-padding-top: 84px; }
 .rbadge.rg, .tp-badge.gold, .rtb.rg { background:var(--gold); color:var(--on-active-fg, var(--on-fg, #0f0f0f)); }
 .rbadge.rb, .tp-badge.blue, .rtb.rb { background:var(--blue); color:var(--on-active-fg, var(--on-fg, #0f0f0f)); }
 .rbadge.rn, .tp-badge.green, .rtb.rn { background:var(--green, var(--pos)); color:var(--on-active-fg, var(--on-fg, #0f0f0f)); }
-.rbadge.rz, .rtb.rz { background:var(--pill); color:var(--muted); }
+.rbadge.rz, .rtb.rz { background:#fff; color:#3d3d3d; box-shadow:inset 0 0 0 1px #00000026; }
 .rtb { display:inline-grid; place-items:center; min-width:36px; height:20px; padding:0 5px; border-radius:4px; font-weight:700; font-size:12px; }
 
 :root { --team-blue: #4a8fe0; --team-red: #e0463c; }
@@ -1010,7 +1013,7 @@ html { scroll-padding-top: 84px; }
         var x = a ? a[s[1]] : null, y = b ? b[s[1]] : null, c = cl(x, y);
         return '<div class="ct"><div class="cl ' + c[0] + '">' + (x == null ? "-" : s[3](x)) + '</div><div class="cm">' + s[0] + '</div><div class="cv ' + c[1] + '">' + (y == null ? "-" : s[3](y)) + '</div></div>';
       }).join("");
-      h += '<div class="cr"><div class="hd hdp"><div class="pn">' + face(bt.code, r) + '<b>' + esc(a ? a[0] : "-") + '</b>' + (a ? RTB(a[1]) : "") + '</div><div class="rc" title="' + r + '">' + (PS.ri[r] || r) + '</div><div class="pn r">' + (b ? RTB(b[1]) : "") + '<b>' + esc(b ? b[0] : "-") + '</b>' + face(rt.code, r) + '</div></div>' + rows + '</div>';
+      h += '<div class="cr"><div class="hd hdp"><div class="pn">' + face(bt.code, r) + '<div class="pi"><b>' + esc(a ? a[0] : "-") + '</b>' + (a ? RTB(a[1]) : "") + '</div></div><div class="rc" title="' + r + '">' + (PS.ri[r] || r) + '</div><div class="pn r"><div class="pi"><b>' + esc(b ? b[0] : "-") + '</b>' + (b ? RTB(b[1]) : "") + '</div>' + face(rt.code, r) + '</div></div>' + rows + '</div>';
     });
     box.innerHTML = h; box.hidden = false;
   }
