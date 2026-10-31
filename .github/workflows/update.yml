@@ -9,7 +9,7 @@ on:
     branches: [main]             # also rebuild whenever you change the pages or scripts
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -42,15 +42,21 @@ jobs:
       - name: Download upcoming matches
         env:
           LOLESPORTS_API_KEY: ${{ secrets.LOLESPORTS_API_KEY }}
-        run: python fetch_schedule.py
+        run: |
+          mkdir -p runlog
+          set -o pipefail; python fetch_schedule.py 2>&1 | tee runlog/schedule.txt
       - name: Download item builds
         env:
           LOLESPORTS_API_KEY: ${{ secrets.LOLESPORTS_API_KEY }}
-        run: python fetch_items.py
+        run: |
+          mkdir -p runlog
+          set -o pipefail; python fetch_items.py 2>&1 | tee runlog/items.txt
       - name: Download finished games from Riot
         env:
           LOLESPORTS_API_KEY: ${{ secrets.LOLESPORTS_API_KEY }}
-        run: python fetch_riot_games.py
+        run: |
+          mkdir -p runlog
+          set -o pipefail; python fetch_riot_games.py 2>&1 | tee runlog/riot_games.txt
       - name: Download newest data
         env:
           DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
@@ -59,9 +65,18 @@ jobs:
       - name: Download soloQ ranks (Bootcamp page)
         env:
           RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
-        run: python fetch_bootcamp.py
+        run: |
+          mkdir -p runlog
+          set -o pipefail; python fetch_bootcamp.py 2>&1 | tee runlog/bootcamp.txt
       - name: Build site
-        run: python build.py
+        run: |
+          mkdir -p runlog
+          set -o pipefail; python build.py 2>&1 | tee runlog/build.txt
+      - name: Save the run log (branch run-log, for debugging)
+        if: always()
+        run: |
+          [ -f data/riot_games.json ] && python -c "import json;d=json.load(open('data/riot_games.json'));print(len(d),'games saved');[print(k,v.get('mid'),[t['code'] for t in v['teams']],v['number']) for k,v in d.items()]" > runlog/riot_saved.txt 2>&1 || echo "no riot_games.json" > runlog/riot_saved.txt
+          cd runlog && git init -q && git checkout -q -b run-log && git add -A && git -c user.name=bot -c user.email=bot@users.noreply.github.com commit -qm "run log $GITHUB_RUN_ID" && git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" run-log || true
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
