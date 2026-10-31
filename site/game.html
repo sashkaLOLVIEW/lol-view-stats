@@ -381,7 +381,7 @@ html.emb .gcols { margin-bottom: 0 !important; }
     var jf = function (u, h) { return fetch(u, h ? { headers: { 'x-api-key': KEY } } : undefined).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); };
     var snap = function (t) { return new Date(Math.floor(t / 1e4) * 1e4).toISOString(); };
     // once the game is in the site's own data (with exact damage numbers) use that page instead
-    fetch('live-map.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (mp) { if (mp && mp[gid]) location.replace('game.html#' + encodeURIComponent(mp[gid])); }).catch(function () {});
+    fetch('live-map.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (mp) { if (mp && mp[gid] && !/[?&]embed=1/.test(location.search)) location.replace('game.html#' + encodeURIComponent(mp[gid])); }).catch(function () {});
     $('score').innerHTML = '<div class="sc-mid"><div class="sc-c"><div class="sc-sub">Loading game from the Riot feed&hellip;</div></div></div>';
     document.title = 'Game Stats';
     Promise.all([jf(GW + '/getEventDetails?hl=en-US&id=' + mid, 1), jf(FEED + '/window/' + gid), jf(DDN + 'api/versions.json').catch(function () { return ['16.21.1']; })]).then(function (r) {
@@ -451,9 +451,15 @@ html.emb .gcols { margin-bottom: 0 !important; }
       window.addEventListener('message', function (e) {
         if (e.data && e.data.chips != null) $('games').innerHTML = e.data.chips;
         if (e.data && e.data.go) {
-          var raw = e.data.go, rv = raw.match(/^riot\/(\d+)\/(\d+)/), idx = -1;
-          D.games.forEach(function (x, j) { if (x.id === raw.split('/').pop()) idx = j; });
-          if (idx > -1) render(idx); else if (rv) loadLive(rv[1], rv[2]);
+          var raw = e.data.go, rv = raw.match(/^riot\/(\d+)\/(\d+)/), last = raw.split('/').pop(), idx = -1;
+          var find = function (id) { idx = -1; D.games.forEach(function (x, j) { if (x.id === id) idx = j; }); return idx; };
+          if (find(last) > -1) render(idx);
+          else if (rv) {
+            // Riot id: use the site's own copy of the game once it exists, otherwise build it from the feed
+            fetch('live-map.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }).then(function (mp) {
+              if (mp && mp[rv[2]] && find(mp[rv[2]]) > -1) render(idx); else loadLive(rv[1], rv[2]);
+            });
+          }
         }
       });
       $('games').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b || b.disabled) return; parent.postMessage({ click: b.hasAttribute('data-ov') ? { ov: 1 } : b.hasAttribute('data-pg') ? { pg: b.getAttribute('data-pg') } : { id: b.getAttribute('data-id') } }, '*'); });
