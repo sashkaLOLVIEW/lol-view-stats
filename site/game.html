@@ -448,7 +448,14 @@ html.emb .gcols { margin-bottom: 0 !important; }
   if (goLive) location.replace('match.html#' + goLive);
   else {
     if (EMB) {
-      window.addEventListener('message', function (e) { if (e.data && e.data.chips != null) $('games').innerHTML = e.data.chips; });
+      window.addEventListener('message', function (e) {
+        if (e.data && e.data.chips != null) $('games').innerHTML = e.data.chips;
+        if (e.data && e.data.go) {
+          var raw = e.data.go, rv = raw.match(/^riot\/(\d+)\/(\d+)/), idx = -1;
+          D.games.forEach(function (x, j) { if (x.id === raw.split('/').pop()) idx = j; });
+          if (idx > -1) render(idx); else if (rv) loadLive(rv[1], rv[2]);
+        }
+      });
       $('games').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b || b.disabled) return; parent.postMessage({ click: b.hasAttribute('data-ov') ? { ov: 1 } : b.hasAttribute('data-pg') ? { pg: b.getAttribute('data-pg') } : { id: b.getAttribute('data-id') } }, '*'); });
       try { parent.postMessage({ ready: 1 }, '*'); } catch (e) {}
       document.documentElement.classList.add('emb');

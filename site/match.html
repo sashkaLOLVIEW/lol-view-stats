@@ -405,7 +405,9 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     ["gold", "board"].forEach(function (id) { $(id).innerHTML = ""; }); S.boardHtml = "";
     $("ovgrid").style.display = "none"; $("gold").style.display = "none"; $("board").style.display = "none";
     $("cmpsec").hidden = true; $("tmsec").hidden = true; $("ovgrid").className = "ovgrid";
-    if (S.pgShown !== S.pg) {
+    var ex = $("pgframe");
+    if (ex && S.pgShown !== S.pg) { S.pgShown = S.pg; try { ex.contentWindow.postMessage({ go: S.pg }, "*"); } catch (e) {} }   // switch games inside the same frame: no reload, no blink
+    else if (S.pgShown !== S.pg) {
       S.pgShown = S.pg;
       w.innerHTML = '<iframe id="pgframe" title="Game" src="game.html?embed=1#' + encodeURI(S.pg) + '" style="display:block;width:100%;height:900px;border:0;background:transparent" scrolling="no"></iframe>';
       var f = $("pgframe"); f.addEventListener("load", function () { try { var t = root.getAttribute("data-theme"); if (t) f.contentDocument.documentElement.setAttribute("data-theme", t); } catch (e) {} });
