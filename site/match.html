@@ -314,7 +314,8 @@ html { scroll-padding-top: 84px; }
 .mv .cell, .mv .cell.l, .mv .cell.r{background:transparent; border:0; border-radius:0;}
 .mv .rw.open .cell.l, .mv .rw.open .cell.r{border-radius:0;}
 .mv .brows .mid{background:transparent; border-top:0; border-bottom:0;}
-.mv .detail{border-top:1px solid var(--line); border-radius:10px; margin-top:6px;}
+.mv .detail{position:relative; background:transparent; border:0; border-radius:10px; margin-top:6px;}
+.mv .detail::before{content:""; position:absolute; inset:0; border:1px solid var(--line); border-radius:10px; pointer-events:none; -webkit-mask-image:linear-gradient(to bottom, transparent, #000 75%); mask-image:linear-gradient(to bottom, transparent, #000 75%);}
 .mv .chev{flex:none; width:22px; height:22px; padding:0; border:0; border-radius:4px; background:transparent; color:var(--muted); cursor:pointer; display:grid; place-items:center;}
 .mv .chev:hover{color:var(--fg); background:var(--chip-bg);}
 .mv .chev svg{transition:transform .15s;}
