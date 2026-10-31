@@ -934,7 +934,7 @@ html { scroll-padding-top: 84px; }
     if (!S.match || !S.frame || S.mode !== "live") return;
     var bt = teamFor("blue"), rt = teamFor("red"), f = S.frame;
     var live = f.gameState === "in_game", paused = f.gameState === "paused";
-    var stateText = live ? '<span class="dot"></span>Live' : paused ? "Paused" : f.gameState === "finished" ? "Game finished" : esc(f.gameState || "");
+    var stateText = live ? 'Live' : paused ? "Paused" : f.gameState === "finished" ? "Game finished" : esc(f.gameState || "");
     var wins = function (t) { return t && t.result ? t.result.gameWins : 0; };
     var $m = $("match");
     $m.className = "match" + (live ? "" : " idle");
