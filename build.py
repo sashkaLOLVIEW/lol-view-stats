@@ -375,7 +375,7 @@ def build_champions(w, GD):
         opp = pl[(pl.gameid == r.gameid) & (pl.position == r.position) & (pl.side != r.side)].iloc[0]; tkills = tk[(r.gameid, r.side)]
         row = dict(role=ROLE[r.position], player=r.playername, team=need_code(r.teamname), opp=need_code(opp.teamname), win=int(r.result), k=int(r.kills), d=int(r.deaths), a=int(r.assists),
                    cspm=f(r.cspm), dmg=f(r.damageshare), gold=f(r.earnedgoldshare), gd=f(r.golddiffat15), csd=f(r.csdiffat15), xpd=f(r.xpdiffat15),
-                   kp=round((r.kills + r.assists) / tkills, 4) if tkills else None, oc=opp.champion, oi=ic(opp.champion), op=opp.playername, game=r.gameid, side=r.side, len=int(r.gamelength), date=r.date[:10])
+                   kp=round((r.kills + r.assists) / tkills, 4) if tkills else None, oc=opp.champion, oi=ic(opp.champion), op=opp.playername, game=r.gameid, side=r.side, len=int(r.gamelength), date=r.date[:10], pt=("%.2f" % r.patch) if pd.notna(r.patch) else None)
         ch.setdefault(r.champion, dict(rows=[], bans=[]))["rows"].append(row)
     for r in tm.itertuples():
         bl, rd_ = gp[r.gameid]; me = need_code(r.teamname); opp = rd_ if me == bl else bl
