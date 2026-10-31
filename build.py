@@ -500,7 +500,16 @@ def attach_items(w, GD, PD, CD):
     trset = TRINKETS | {int(i) for i, x in icons.items() if len(x) > 2 and x[2]}
     IT = {k: tidy_items(v, trset) for k, v in raw.items()}
     RN = {k: v[1] for k, v in M.items() if v[1]}
-    PK = {k: v[2] for k, v in M.items() if v[2]}
+    def fix_shards(pk):
+        """Riot's feed lists a repeated stat shard only once (two adaptive force shards come as one), so such pages have 8 ids instead of 9. Put the repeat back."""
+        if len(pk) != 8: return pk
+        sh = pk[6:]
+        a_, b_ = sh
+        off, flex, dfn = {5008, 5005, 5007}, {5008, 5010, 5001}, {5011, 5013, 5001}
+        if a_ in off & flex and b_ in dfn: return pk[:6] + [a_, a_, b_]       # same shard in the offence and flex slots (almost always adaptive force)
+        if a_ in off and b_ in flex & dfn: return pk[:6] + [a_, b_, b_]       # same shard in the flex and defence slots
+        return pk
+    PK = {k: fix_shards(list(v[2])) for k, v in M.items() if v[2]}
     def completed(order):
         out = []
         for i in order:
