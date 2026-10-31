@@ -119,6 +119,9 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .sc-st:not(.r) { flex-direction: row-reverse; }
 .sc-st > div { display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 42px; font-size: 14px; font-variant-numeric: tabular-nums; }
 .sc-st b { font-weight: 700; }
+.sc-st > div.trail { color: var(--muted); }
+.sc-st > div.trail img { opacity: .45; }
+
 .sc-st img { width: 15px; height: 15px; object-fit: contain; flex: none; }
 .sc-k { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .sc-time { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; }
@@ -331,10 +334,14 @@ html { scroll-padding-top: 84px; }
   function stageOf(s) { var d = String(s || '').slice(0, 10); if (!d) return ''; return d < '2026-10-19' ? 'Play-Ins' : d <= '2026-10-31' ? 'Swiss' : d <= '2026-11-06' ? 'Quarterfinals' : d <= '2026-11-08' ? 'Semifinals' : 'Final'; }
   function render(i) {
     var g = D.games[i], A = g.teams[0], B = g.teams[1];
-    var stat = function (t, r) { return '<div class="sc-st' + (r ? ' r' : '') + '"><div title="Kills">' + im('kills', 'si') + '<b>' + t.k + '</b></div><div title="Gold">' + im('gold', 'si') + '<b>' + k1(t.gold) + '</b></div><div title="Turrets">' + im('turret', 'si') + '<b>' + t.towers + '</b></div><div title="Inhibitors">' + im('inhibitor', 'si') + '<b>' + (t.inh || 0) + '</b></div></div>'; };
+    var dn = function (t) { return t.drakes.reduce(function (s, d) { return s + d[1]; }, 0); };
+    var stat = function (t, r, o) {
+      var rows = [['Kills', 'kills', t.k, o.k, t.k], ['Gold', 'gold', t.gold, o.gold, k1(t.gold)], ['Turrets', 'turret', t.towers, o.towers, t.towers], ['Dragons', 'dragon', dn(t), dn(o), dn(t)], ['Barons', 'nashor', t.barons, o.barons, t.barons]];
+      return '<div class="sc-st' + (r ? ' r' : '') + '">' + rows.map(function (x) { return '<div title="' + x[0] + '"' + (x[2] < x[3] ? ' class="trail"' : '') + '>' + im(x[1], 'si') + '<b>' + x[4] + '</b></div>'; }).join('') + '</div>';
+    };
     var sideTeam = function (t, r) { return '<div class="sc-team' + (r ? ' r' : '') + '">' + logo(t.code, 64) + '<div><a class="sc-name" style="display:block" href="team.html#' + t.code + '">' + t.code + '</a><div class="sc-full">' + t.name + '</div><span class="tag' + (t.win ? ' win' : ' loss') + '">' + (t.win ? 'WIN' : 'LOSS') + '</span></div></div>'; };
     var CLK = '<svg class="clk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
-    $('score').innerHTML = sideTeam(A, 0) + stat(A, 0) + '<div class="sc-mid"><div class="sc-c"><div class="sc-time">' + CLK + fmtT(g.len) + '</div>' + (g.patch ? '<div class="sc-sub">Patch ' + g.patch + '</div>' : '') + '</div></div>' + stat(B, 1) + sideTeam(B, 1);
+    $('score').innerHTML = sideTeam(A, 0) + stat(A, 0, B) + '<div class="sc-mid"><div class="sc-c"><div class="sc-time">' + CLK + fmtT(g.len) + '</div>' + (g.patch ? '<div class="sc-sub">Patch ' + g.patch + '</div>' : '') + '</div></div>' + stat(B, 1, A) + sideTeam(B, 1);
     var _m = 'Worlds 2026 · Main stage · Swiss Round 1 · Match ' + g.n + ' · ' + g.date + ' · Blue side ' + A.code + ' vs Red side ' + B.code;
     var c = '';
     c += row('K/D/A', A.k + '/' + A.d + '/' + A.a, B.k + '/' + B.d + '/' + B.a, lead(A.k, B.k, 1));
