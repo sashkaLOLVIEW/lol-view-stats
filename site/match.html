@@ -845,12 +845,13 @@ html { scroll-padding-top: 84px; }
   function openGame(rg) {
     var tok = ++S.tok, id = rg ? rg.id : S.key, oe = GV.find((rg && MAP[rg.id]) || id);
     setNotice("", "");
-    if (oe) { S.src = "oe"; GV.render(oe); return; }
+    var show = function (g) { try { GV.render(g); } catch (e) { if (window.console) console.error(e); GV.note("Could not display this game: " + esc(e && e.message || "error")); } };
+    if (oe) { S.src = "oe"; show(oe); return; }
     if (!rg) { S.src = ""; GV.note("This game is not available."); return; }
     S.src = "riot";
-    if (S.feedGames[rg.id]) { GV.render(S.feedGames[rg.id]); return; }
+    if (S.feedGames[rg.id]) { show(S.feedGames[rg.id]); return; }
     GV.note("Loading game from the Riot feed&hellip;");
-    GV.fromFeed(S.match, rg.id).then(function (g) { S.feedGames[rg.id] = g; if (tok === S.tok) GV.render(g); })
+    GV.fromFeed(S.match, rg.id).then(function (g) { S.feedGames[rg.id] = g; if (tok === S.tok) show(g); })
       .catch(function (e) { if (tok === S.tok) GV.note("Could not load this game from the Riot feed (" + esc(e && e.message || "error") + ")."); });
   }
   function setChips() {
