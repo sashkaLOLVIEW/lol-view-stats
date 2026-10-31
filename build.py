@@ -547,7 +547,7 @@ def build_rankings(csv):
         rows.append([NAME_FIX.get(t, t), REGION.get(code, ""), code, ("up%d" % d if d > 0 else "dn%d" % -d if d < 0 else ""), int(round(now_r[t]))])
     upd = pd.Timestamp(teams.date.max()).tz_localize("UTC").tz_convert(TZ).strftime("%-m/%-d/%y")
     print("  rankings: %d teams, top 3: %s" % (len(rows), ", ".join(r[2] for r in rows[:3])))
-    return rows, upd
+    return rows, upd, pd.Timestamp(teams.date.max()).tz_localize("UTC").strftime("%Y-%m-%dT%H:%M:%SZ")
 
 # ----------------------------------------------------------------------------------------------
 # 4a. player age / contract (auto: config/player_info_auto.json from fetch_player_info.py; manual: config/player_info.csv wins)
@@ -653,7 +653,7 @@ def main(csv):
     for g_ in GD["games"]:
         m_ = (_rg.get(_rev.get(g_["id"], g_["id"])) or {}).get("mid")
         if m_: g_["mid"] = m_    # Riot match id: lets the game page link to the series Overview and the other games on the live page
-    RK, RKUPD = build_rankings(csv); HAS = {c: 1 for c in TD['teams']}
+    RK, RKUPD, RKTS = build_rankings(csv); HAS = {c: 1 for c in TD['teams']}
 
     FACES = {p["name"]: p["face"] for p in PD["players"].values() if p["face"]}
     # small (128px) portraits for the leaderboards
@@ -676,7 +676,7 @@ def main(csv):
     s = idx
     for name, val in (("WD", WD), ("FACES", FACES), ("FACESF", FACES), ("CHAMPS", CH), ("SW", ST)): s = jreplace(s, name, val)
     s = re.sub(r"  var rec = \[\[.*?\]\];\n", lambda m: "  var rec = " + json.dumps(rec, ensure_ascii=False) + ";\n", s, count=1, flags=re.S)
-    s = jreplace(s, "rank", RK); s = jreplace(s, "rankUpd", RKUPD); s = jreplace(s, "hasTeam", HAS)
+    s = jreplace(s, "rank", RK); s = jreplace(s, "rankUpd", RKUPD); s = jreplace(s, "hasTeam", HAS); s = jreplace(s, "rankTs", RKTS) if "var rankTs" in s else s
     s = jreplace(s, "UP", build_upcoming())
     s = jreplace(s, "SD", build_search(s, WD, CH))
     wr(out / "index.html", stamp(s))
