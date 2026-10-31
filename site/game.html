@@ -232,12 +232,7 @@ html { scroll-padding-top: 84px; }
 .topbar { position: sticky; top: 0; z-index: 60; margin-top: -12px; padding-top: 12px; padding-bottom: 12px; margin-bottom: -12px; }
 .topbar::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: var(--bg); }
 .topbar::after { content: ""; position: absolute; z-index: -1; left: 50%; width: 100vw; transform: translateX(-50%); top: 100%; height: 40px; pointer-events: none; background: linear-gradient(to bottom, var(--bg), color-mix(in srgb, var(--bg) 0%, transparent)); }
-html.emb .topbar, html.emb .foot { display: none !important; }
 .chip.dis, .chip:disabled { opacity: .4; cursor: not-allowed; filter: brightness(.7); }
-html.emb body { padding: 0 !important; margin: 0 !important; background: transparent !important; }
-html.emb .page { padding: 0 !important; margin: 0 !important; }
-html.emb #score, html.emb .gh { margin-top: 0 !important; }
-html.emb .gcols { margin-bottom: 0 !important; }
 </style>
 </head>
 <body>
@@ -367,7 +362,7 @@ html.emb .gcols { margin-bottom: 0 !important; }
     $('bans').innerHTML = '<div class="bans-l">' + bn(A) + '</div><div class="bans-t">Bans</div><div class="bans-r">' + bn(B) + '</div>';
     var ser = []; D.games.forEach(function (x, j) { if (x.sid === g.sid) ser.push(j); });
     var box = $('games');
-    if (!EMB) box.innerHTML = g.live && g.chips ? g.chips : ser.map(function (j, n) { return '<button class="chip' + (j === i ? ' on' : '') + '" type="button" aria-pressed="' + (j === i) + '" data-i="' + j + '">GAME ' + (n + 1) + '</button>'; }).join('');
+    box.innerHTML = ser.map(function (j, n) { return '<button class="chip' + (j === i ? ' on' : '') + '" type="button" aria-pressed="' + (j === i) + '" data-i="' + j + '">GAME ' + (n + 1) + '</button>'; }).join('');
     $('mdet').innerHTML = '<span>' + (D.tournament || 'Worlds 2026') + '</span><span class="dot">&middot;</span><span>' + g.date + '</span>' + (g.bo ? '<span class="bo">BO' + g.bo + '</span>' : '');
     Array.prototype.forEach.call(box.querySelectorAll('button.chip'), function (b) { b.addEventListener('click', function () { render(+b.getAttribute('data-i')); }); });
   }
@@ -375,102 +370,11 @@ html.emb .gcols { margin-bottom: 0 !important; }
   var hi = 0; D.games.forEach(function (g, j) { var c = [g.teams[0].code, g.teams[1].code]; if (hs.length === 2 && c.indexOf(hs[0]) > -1 && c.indexOf(hs[1]) > -1) hi = j; });
   var hraw = ''; try { hraw = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
   D.games.forEach(function (g, j) { if (g.id === hraw) hi = j; });
-  // Games that are not in the site data yet are built in the browser from Riot's live stats feed: game.html#riot/<match id>/<game id>
-  function loadLive(mid, gid) {
-    var KEY = '0TvQnueqKa5mxJntVWt0w4LpLfEkrV1Ta8rQBb9Z', GW = 'https://esports-api.lolesports.com/persisted/gw', FEED = 'https://feed.lolesports.com/livestats/v1', DDN = 'https://ddragon.leagueoflegends.com/';
-    var jf = function (u, h) { return fetch(u, h ? { headers: { 'x-api-key': KEY } } : undefined).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); };
-    var snap = function (t) { return new Date(Math.floor(t / 1e4) * 1e4).toISOString(); };
-    // once the game is in the site's own data (with exact damage numbers) use that page instead
-    fetch('live-map.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (mp) { if (mp && mp[gid] && !/[?&]embed=1/.test(location.search)) location.replace('game.html#' + encodeURIComponent(mp[gid])); }).catch(function () {});
-    $('score').innerHTML = '<div class="sc-mid"><div class="sc-c"><div class="sc-sub">Loading game from the Riot feed&hellip;</div></div></div>';
-    document.title = 'Game Stats';
-    Promise.all([jf(GW + '/getEventDetails?hl=en-US&id=' + mid, 1), jf(FEED + '/window/' + gid), jf(DDN + 'api/versions.json').catch(function () { return ['16.21.1']; })]).then(function (r) {
-      var m = r[0].data.event.match, w0 = r[1], ver = r[2][0], meta = w0.gameMetadata, t0 = Date.parse(w0.frames[0].rfc460Timestamp);
-      var frameAt = function (t) { return jf(FEED + '/window/' + gid + '?startingTime=' + encodeURIComponent(snap(t))).then(function (w) { return w.frames && w.frames.length ? w : null; }).catch(function () { return null; }); };
-      var lo = t0, hi = Math.min(Date.now() - 45e3, t0 + 90 * 6e4), best = w0;
-      var search = function () { var md = Math.floor((lo + hi) / 2 / 1e4) * 1e4; if (hi - lo <= 1e4 || md <= lo) return Promise.resolve(); return frameAt(md).then(function (w) { if (w) { lo = md; best = w; } else hi = md; return search(); }); };
-      return search().then(function () {
-        var lf = best.frames[best.frames.length - 1], mins = [];
-        for (var q = 5; t0 + q * 6e4 < lo; q += 5) mins.push(q);
-        return Promise.all([
-          jf(FEED + '/details/' + gid + '?startingTime=' + encodeURIComponent(snap(lo))).catch(function () { return null; }),
-          Promise.all(mins.map(function (q) { return frameAt(t0 + q * 6e4).then(function (w) { return w ? [q, w.frames[0].blueTeam.totalGold - w.frames[0].redTeam.totalGold] : null; }); })),
-          jf(DDN + 'cdn/' + ver + '/data/en_US/item.json').catch(function () { return null; }),
-          jf(DDN + 'cdn/' + ver + '/data/en_US/runesReforged.json').catch(function () { return null; })
-        ]).then(function (x) { return { m: m, meta: meta, t0: t0, lf: lf, det: x[0], ser: x[1].filter(Boolean), items: x[2], runes: x[3], ver: ver }; });
-      });
-    }).then(function (L) {
-      var det = L.det && L.det.frames && L.det.frames.length ? L.det.frames[L.det.frames.length - 1].participants : [], lf = L.lf, TRK = { 3330: 1, 3340: 1, 3363: 1, 3364: 1 };
-      D.items = D.items || {}; D.runes = D.runes || {};
-      if (L.items) Object.keys(L.items.data).forEach(function (id) { D.items[id] = [L.items.data[id].name, DDN + 'cdn/' + L.ver + '/img/item/' + id + '.png']; });
-      if (L.runes) L.runes.forEach(function (st) { D.runes[st.id] = [st.name, DDN + 'cdn/img/' + st.icon]; st.slots.forEach(function (sl) { sl.runes.forEach(function (ru) { D.runes[ru.id] = [ru.name, DDN + 'cdn/img/' + ru.icon]; }); }); });
-      var bid = L.meta.blueTeamMetadata.esportsTeamId, tms = L.m.teams, bt = tms.filter(function (t) { return t.id === bid; })[0] || tms[0], rt = tms.filter(function (t) { return t !== bt; })[0] || tms[1];
-      var score = function (ft) { return (ft.inhibitors || 0) * 1e6 + (ft.towers || 0) * 1e4 + (ft.totalGold || 0); };
-      var blueWin = lf.gameState === 'finished' ? score(lf.blueTeam) >= score(lf.redTeam) : null;
-      var team = function (side, tm, ft, win) {
-        var pmd = L.meta[side.toLowerCase() + 'TeamMetadata'].participantMetadata, ks = 0, ds = 0, as = 0, dr = {}, elders = 0;
-        (ft.dragons || []).forEach(function (d) { d = String(d).toLowerCase(); if (d === 'elder') elders++; else dr[d] = (dr[d] || 0) + 1; });
-        var players = pmd.map(function (pm, i) {
-          var fp = ft.participants.filter(function (p) { return p.participantId === pm.participantId; })[0] || {}, dp = det.filter(function (p) { return p.participantId === pm.participantId; })[0] || {};
-          ks += fp.kills || 0; ds += fp.deaths || 0; as += fp.assists || 0;
-          var seen = {}, it = [], tr = 0; (dp.items || []).forEach(function (id) { if (!id || seen[id]) return; seen[id] = 1; if (TRK[id]) tr = id; else it.push(id); });
-          it = it.slice(0, 6); while (it.length < 6) it.push(0); it.push(tr);
-          var pk = dp.perkMetadata || {}, nm = pm.summonerName, cut = tm.code + ' ';
-          D.icons[pm.championId] = DDN + 'cdn/' + L.ver + '/img/champion/' + pm.championId + '.png';
-          return { role: pm.role, name: nm.indexOf(cut) === 0 ? nm.slice(cut.length) : nm, champ: pm.championId, ic: pm.championId, k: fp.kills || 0, d: fp.deaths || 0, a: fp.assists || 0, dmg: dp.championDamageShare || 0, cs: fp.creepScore || 0, gold: fp.totalGold || 0, it: it, rn: pk.perks && pk.perks.length ? [pk.perks[0], pk.subStyleId] : null };
-        });
-        if (tm.image && !D.logos[tm.code]) D.logos[tm.code] = tm.image;
-        return { code: tm.code, name: tm.name, side: side, win: win ? 1 : 0, k: ft.totalKills || ks, d: ds, a: as, gold: ft.totalGold || 0, towers: ft.towers || 0, grubs: 0, heralds: 0, elders: elders, barons: ft.barons || 0,
-          drakes: ['infernal', 'mountain', 'cloud', 'ocean', 'chemtech', 'hextech'].map(function (k) { return [k, dr[k] || 0]; }), bans: [], players: players };
-      };
-      var A = team('Blue', bt, lf.blueTeam, blueWin === true), B = team('Red', rt, lf.redTeam, blueWin === false);
-      var len = Math.round((Date.parse(lf.rfc460Timestamp) - L.t0) / 1000), gold = [[0, 0]].concat(L.ser);
-      gold.push([+(len / 60).toFixed(1), A.gold - B.gold]);
-      var chips = L.m.games.filter(function (x) { return x.state !== 'unstarted'; }).map(function (x) {
-        if (x.id === gid) return '<button class="chip on" type="button" aria-pressed="true">GAME ' + x.number + '</button>';
-        return '<a class="chip" style="display:inline-flex;align-items:center" href="' + (x.state === 'inProgress' ? 'match.html#' + mid : 'game.html#riot/' + mid + '/' + x.id) + '">GAME ' + x.number + '</a>';
-      }).join('');
-      var cur = L.m.games.filter(function (x) { return x.id === gid; })[0] || {};
-      D.games.push({ id: gid, live: 1, patch: L.meta.patchVersion ? L.meta.patchVersion.split('.').slice(0, 2).join('.') : null, date: new Date(L.t0).toLocaleDateString('en-GB', { month: 'short', day: 'numeric', timeZone: 'Europe/London' }).split(' ').reverse().join(' '), start: new Date(L.t0).toISOString(), len: len, teams: [A, B], gold: gold, n: cur.number || 1, sid: -1, bo: L.m.strategy && L.m.strategy.count, chips: chips });
-      $('bans').style.display = 'none';
-      render(D.games.length - 1);
-    }).catch(function (e) { $('score').innerHTML = '<div class="sc-mid"><div class="sc-c"><div class="sc-sub">Could not load this game from the Riot feed (' + (e && e.message || 'error') + ').</div></div></div>'; });
-  }
-  window.addEventListener('hashchange', function () { if (LV || /^#riot\//.test(location.hash)) location.reload(); });
+  // One page per match: a game that belongs to a Riot match opens on the match page (match.html), everything else is shown here.
   var LV = location.hash.match(/^#riot\/(\d+)\/(\d+)/);
-  var LJ = -1; if (LV) D.games.forEach(function (g, j) { if (g.id === LV[2]) LJ = j; });
-  // One page per match: opened on its own, a game goes to the match page (match.html) with this game selected. The match page shows this file in a frame (?embed=1).
-  var EMB = /[?&]embed=1/.test(location.search), goLive = null;
-  if (!EMB) {
-    if (LV) goLive = LV[1] + '/g/' + encodeURIComponent('riot/' + LV[1] + '/' + LV[2]);
-    else if (location.hash.length > 1 && D.games[hi] && D.games[hi].mid) goLive = D.games[hi].mid + '/g/' + encodeURIComponent(D.games[hi].id);
-  }
-  if (goLive) location.replace('match.html#' + goLive);
-  else {
-    if (EMB) {
-      window.addEventListener('message', function (e) {
-        if (e.data && e.data.chips != null) $('games').innerHTML = e.data.chips;
-        if (e.data && e.data.go) {
-          var raw = e.data.go, rv = raw.match(/^riot\/(\d+)\/(\d+)/), last = raw.split('/').pop(), idx = -1;
-          var find = function (id) { idx = -1; D.games.forEach(function (x, j) { if (x.id === id) idx = j; }); return idx; };
-          if (find(last) > -1) render(idx);
-          else if (rv) {
-            // Riot id: use the site's own copy of the game once it exists, otherwise build it from the feed
-            fetch('live-map.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }).then(function (mp) {
-              if (mp && mp[rv[2]] && find(mp[rv[2]]) > -1) render(idx); else loadLive(rv[1], rv[2]);
-            });
-          }
-        }
-      });
-      $('games').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b || b.disabled) return; parent.postMessage({ click: b.hasAttribute('data-ov') ? { ov: 1 } : b.hasAttribute('data-pg') ? { pg: b.getAttribute('data-pg') } : { id: b.getAttribute('data-id') } }, '*'); });
-      try { parent.postMessage({ ready: 1 }, '*'); } catch (e) {}
-      document.documentElement.classList.add('emb');
-      var bs = document.createElement('base'); bs.target = '_top'; document.head.appendChild(bs);
-      var sendH = function () { try { parent.postMessage({ lvH: document.documentElement.scrollHeight }, '*'); } catch (e) {} };
-      if (window.ResizeObserver) new ResizeObserver(sendH).observe(document.body); window.addEventListener('load', sendH); setInterval(sendH, 1500);
-    }
-    if (LJ > -1) render(LJ); else if (LV) loadLive(LV[1], LV[2]); else render(hi);
-  }
+  if (LV) location.replace('match.html#' + LV[1] + '/g/' + LV[2]);
+  else if (location.hash.length > 1 && D.games[hi] && D.games[hi].mid) location.replace('match.html#' + D.games[hi].mid + '/g/' + encodeURIComponent(D.games[hi].id));
+  else render(hi);
   var root = document.documentElement, btn = $('theme');
   try { var saved = localStorage.getItem('theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
   btn.addEventListener('click', function () {
