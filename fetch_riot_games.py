@@ -59,10 +59,27 @@ def fetch_game(game, e, bo, mid=None):
     score = lambda t: t["inhib"] * 1e6 + t["towers"] * 1e4 + t["gold"]
     return dict(id=gid, mid=mid, v=FORMAT, number=game["number"], bo=bo, start=fmt(t0), patch=md.get("patchVersion"), len=length, blue_win=score(teams[0]) >= score(teams[1]), teams=teams, gold=[[0, 0]] + series)
 
+def matches_with_games():
+    """Matches of the event that have at least one finished game. Riot keeps a series 'inProgress' in the schedule for a while after
+    the last game, so those are included too: each game is checked on its own (state 'completed') further down."""
+    leagues = get(GW + "/getLeagues", hl="en-US")["data"]["leagues"]
+    lid = next(l["id"] for l in leagues if l.get("slug") == FI.LEAGUE_SLUG)
+    out, token = {}, None
+    for _ in range(FI.MAX_PAGES):
+        p = dict(hl="en-US", leagueId=lid)
+        if token: p["pageToken"] = token
+        sch = get(GW + "/getSchedule", **p)["data"]["schedule"]; evs = sch.get("events") or []
+        for e in evs:
+            if e.get("state") in ("completed", "inProgress") and e.get("match") and (e.get("startTime") or "")[:10] >= FI.SINCE: out[e["match"]["id"]] = e
+        old = [e for e in evs if e.get("startTime")]
+        token = (sch.get("pages") or {}).get("older")
+        if not token or (old and min(e["startTime"] for e in old)[:10] < FI.SINCE): break
+    return out
+
 def main():
     try: cache = json.loads(OUT.read_text(encoding="utf-8"))
     except Exception: cache = {}
-    ms = FI.finished_matches(); new = bad = skipped = 0
+    ms = matches_with_games(); new = bad = skipped = 0
     print("finished matches:", len(ms), "| games already saved:", len(cache))
     t_start = time.time()
     for mid, e in sorted(ms.items(), key=lambda x: x[1]["startTime"]):
