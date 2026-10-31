@@ -2,6 +2,7 @@ name: Update data and publish site
 
 on:
   schedule:
+    - cron: "*/20 * * * *"      # every 20 minutes: lolesports schedule, Riot feed games, items (Oracle's Elixir's file is NOT downloaded on these runs)
     - cron: "10 7 * * *"        # once a day at 07:10 UTC (07:10 UK in winter; 08:10 UK during BST), after Oracle's Elixir's daily update (~07:05 UK)
   workflow_dispatch:             # "Run workflow" button in the Actions tab
   push:
@@ -38,6 +39,13 @@ jobs:
             data/soloq_accounts.json
           key: cache-${{ github.run_id }}
           restore-keys: cache-
+      - name: Restore the last Oracle's Elixir file
+        id: oecache
+        uses: actions/cache/restore@v4
+        with:
+          path: data/2026_LoL_esports_match_data_from_OraclesElixir.csv
+          key: oe-csv-${{ github.run_id }}
+          restore-keys: oe-csv-
       - name: Download upcoming matches
         env:
           LOLESPORTS_API_KEY: ${{ secrets.LOLESPORTS_API_KEY }}
@@ -56,11 +64,19 @@ jobs:
         run: |
           mkdir -p runlog
           set -o pipefail; python fetch_riot_games.py 2>&1 | tee runlog/riot_games.txt
-      - name: Download newest data
+      - name: Download newest data (Oracle's Elixir updates once a day, so the 20-minute runs reuse the saved file)
+        id: oedl
+        if: github.event.schedule != '*/20 * * * *' || steps.oecache.outputs.cache-hit == ''
         env:
           DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
           DATA_FOLDER_ID: ${{ vars.DATA_FOLDER_ID }}
         run: python fetch_data.py
+      - name: Save the Oracle's Elixir file for the 20-minute runs
+        if: steps.oedl.outcome == 'success'
+        uses: actions/cache/save@v4
+        with:
+          path: data/2026_LoL_esports_match_data_from_OraclesElixir.csv
+          key: oe-csv-${{ github.run_id }}
       - name: Download soloQ ranks (Bootcamp page)
         env:
           RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
