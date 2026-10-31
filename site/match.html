@@ -290,6 +290,11 @@ html { scroll-padding-top: 84px; }
 .mv .glabels{color:var(--fg); font-weight:700;}
 .mv .board{margin-top:32px;}
 .mv .bhead,.mv .brow{display:grid; grid-template-columns:minmax(0,1fr) 84px minmax(0,1fr);}
+
+.mv .otimers{grid-column:1 / -1; display:flex; justify-content:center; gap:28px; margin-top:12px; padding-top:10px; border-top:1px solid var(--divider);}
+.mv .otm{display:inline-flex; align-items:center; gap:8px; font-size:12px; color:var(--muted);}
+.mv .otm img{width:16px; height:16px;} .mv .otm i{font-style:normal; font-weight:500;}
+.mv .otm b{color:var(--fg); font-weight:700; font-variant-numeric:tabular-nums; min-width:38px;}
 .mv .bhead{align-items:center; margin-bottom:24px; padding:14px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px;}
 .mv .bh{display:flex; align-items:center; gap:14px; min-width:0;}
 .mv .bh.r{justify-content:flex-end;}
@@ -812,7 +817,7 @@ html { scroll-padding-top: 84px; }
     match: null, upcoming: false, key: null, mode: "ov", sig: "", src: "", tok: 0, feedGames: {},
     // live board
     gameId: null, gameNo: 1, meta: null, frame: null, details: null, prev: null, startTs: null, startFor: null, updated: null,
-    ik: {}, pk: {}, hp: {}, hpShown: {}, dead: {}, open: {}, boardHtml: "", perkIcon: {}, spellIcon: {}, ver: "14.20.1"
+    ik: {}, pk: {}, hp: {}, hpShown: {}, dead: {}, obj: null, open: {}, boardHtml: "", perkIcon: {}, spellIcon: {}, ver: "14.20.1"
   };
 
   /* ---------- route: the URL is the only place the selected view lives ---------- */
@@ -883,7 +888,7 @@ html { scroll-padding-top: 84px; }
     }
     var prev = S.mode; S.mode = mode;
     var live = mode === "live", game = mode === "game";
-    if (live && S.gameId !== rg.id) { S.gameId = rg.id; S.gameNo = rg.number; S.frame = null; S.details = null; S.prev = null; S.startFor = null; S.ik = {}; S.pk = {}; S.hp = {}; S.hpShown = {}; S.dead = {}; S.open = {}; S.boardHtml = ""; $("board").innerHTML = ""; }
+    if (live && S.gameId !== rg.id) { S.gameId = rg.id; S.gameNo = rg.number; S.frame = null; S.details = null; S.prev = null; S.startFor = null; S.ik = {}; S.pk = {}; S.hp = {}; S.hpShown = {}; S.dead = {}; S.obj = null; S.open = {}; S.boardHtml = ""; $("board").innerHTML = ""; }
     if (mode === "wait") S.gameNo = rg.number;
     $("match").hidden = game; $("score").hidden = !game; $("gcols").hidden = !game; $("mdet").hidden = !game;
     $("gold").hidden = !live; $("board").hidden = !live; $("ovgrid").hidden = !(mode === "ov" || live);
@@ -962,11 +967,64 @@ html { scroll-padding-top: 84px; }
       var nf = frames[frames.length - 1];
       if (S.prev && S.prev.id === gid) diffEvents(S.prev.frame, nf);
       S.prev = { id: gid, frame: nf }; S.frame = nf;
+      try { updateObj(nf); } catch (e) {}
       var df = res.d && res.d.frames;
       if (df && df.length) S.details = df[df.length - 1];
       S.updated = new Date();
     });
   }
+  // Objective spawn timers. The feed only has running totals, so a kill time is the moment the total went up
+  // (found by stepping back through earlier frames when the page was opened mid-game).
+  var DRAKE0 = 300, BARON0 = 1500, DRAKE_RE = 300, ELDER_RE = 360, BARON_RE = 360;
+  function objTotals(f) {
+    var dr = (f.blueTeam.dragons || []).concat(f.redTeam.dragons || []);
+    return { dn: dr.length, bn: (f.blueTeam.barons || 0) + (f.redTeam.barons || 0), soul: [f.blueTeam, f.redTeam].some(function (t) { return (t.dragons || []).filter(function (d) { return String(d).toLowerCase() !== "elder"; }).length >= 4; }) };
+  }
+  function updateObj(f) {
+    var t = objTotals(f), now = gameSecs(), gid = S.gameId;
+    if (!S.obj) {
+      S.obj = { dn: t.dn, bn: t.bn, dAt: null, bAt: null, soul: t.soul };
+      var back = function (key, atKey, cnt) {   // step back 30s at a time until the total was lower
+        if (!cnt || !S.startTs) return;
+        var k = 1;
+        (function step() {
+          var sec = now - 30 * k; if (sec < 0) { S.obj[atKey] = 0; return; }
+          var st = new Date(S.startTs + sec * 1000); st.setUTCMilliseconds(0); st.setUTCSeconds(Math.floor(st.getUTCSeconds() / 10) * 10);
+          feed("/window/" + gid + "?startingTime=" + encodeURIComponent(st.toISOString())).then(function (w) {
+            if (S.gameId !== gid || !S.obj) return;
+            var fr = (w.frames || [])[0]; if (!fr) return;
+            if (objTotals(fr)[key] < cnt) S.obj[atKey] = sec + 30; else if (++k <= 14) step();
+          }).catch(function () {});
+        })();
+      };
+      back("dn", "dAt", t.dn); back("bn", "bAt", t.bn);
+      return;
+    }
+    if (t.dn > S.obj.dn) S.obj.dAt = now;
+    if (t.bn > S.obj.bn) S.obj.bAt = now;
+    S.obj.dn = t.dn; S.obj.bn = t.bn; S.obj.soul = t.soul;
+  }
+  function objSpawns() {
+    var o = S.obj; if (!o) return null;
+    var elder = o.soul;
+    var d = o.dn === 0 ? DRAKE0 : o.dAt == null ? null : o.dAt + (elder ? ELDER_RE : DRAKE_RE);
+    var b = o.bn === 0 ? BARON0 : o.bAt == null ? null : o.bAt + BARON_RE;
+    return { d: d, b: b, elder: elder };
+  }
+  function curSecs() { return gameSecs() + (S.frame && S.frame.gameState === "in_game" && S.updated ? (Date.now() - S.updated.getTime()) / 1000 : 0); }
+  function objTimersHtml() {
+    var sp = objSpawns(); if (!sp) return "";
+    var one = function (ic, label, at) { return '<span class="otm">' + ic + '<i>' + label + '</i><b data-at="' + (at == null ? "" : at) + '">' + (at == null ? "-" : at - curSecs() > 0 ? mmss(at - curSecs()) : "Up") + "</b></span>"; };
+    return '<div class="otimers">' + one(ico("dragon"), sp.elder ? "Elder" : "Dragon", sp.d) + one(ico("nashor"), "Baron", sp.b) + "</div>";
+  }
+  function tickObj() {
+    var now = curSecs();
+    Array.prototype.forEach.call(document.querySelectorAll(".otm b[data-at]"), function (e) {
+      var at = e.getAttribute("data-at"); if (at === "") return;
+      var r = +at - now; e.textContent = r > 0 ? mmss(r) : "Up";
+    });
+  }
+  setInterval(tickObj, 500);
   function pollLive() {
     if (S.mode !== "live") return;
     poll().then(function () { if (S.mode !== "live") return; setNotice("live", "<b>Live</b> Updated " + S.updated.toLocaleTimeString()); renderLive(); })
@@ -1212,7 +1270,7 @@ html { scroll-padding-top: 84px; }
     var total = f.blueTeam.totalGold - f.redTeam.totalGold;
     var head = '<div class="bhead"><div class="bh">' + objPills(f.blueTeam) + "</div>" +
       '<div class="mhead">Game time<b class="gt">' + gameTime() + '</b></div>' +
-      '<div class="bh r">' + objPills(f.redTeam, true) + '</div></div>';
+      '<div class="bh r">' + objPills(f.redTeam, true) + '</div>' + objTimersHtml() + '</div>';
     var rows = bm.map(function (pm, i) {
       var r = rm[i], d = goldOf(f.blueTeam, pm, i) - goldOf(f.redTeam, r, i);
       var cls = d > 0 ? "b" : d < 0 ? "r" : "e";
