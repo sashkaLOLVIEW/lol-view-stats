@@ -565,7 +565,7 @@ html { scroll-padding-top: 84px; }
         var w1 = (m.bl.result || {}).gameWins || 0, w2 = (m.rd.result || {}).gameWins || 0;
         return '<a class="row match res liverow" href="live.html#live/' + m.id + '" style="margin-top:' + (i ? 8 : 12) + 'px;color:inherit;text-decoration:none" aria-label="Watch live match"><div class="lgw"><span class="lg">' + worlds(24) + '</span>' + (m.bo ? '<span class="bo">BO' + m.bo + '</span>' : '') + '</div>'
           + '<div class="res-center"><span class="tag">' + m.bl.code + '</span>' + logo(m.bl.code, 32) + '<span class="score">' + w1 + ':' + w2 + '</span>' + logo(m.rd.code, 32) + '<span class="tag">' + m.rd.code + '</span></div>'
-          + '<div class="when"><em class="ck" style="font-style:normal;color:var(--fg);font-weight:600" data-i="' + i + '">' + (m.lv ? 'Live' : m.brk ? 'Break' : '00:00') + '</em><span>' + (m.over && !m.lv ? 'Series over' : (m.brk && !m.lv ? 'Next: Game ' : 'Game ') + m.num) + '</span></div></a>';
+          + '<div class="when"><em class="ck" style="font-style:normal;color:var(--fg);font-weight:600" data-i="' + i + '">' + (m.lv ? 'Live' : m.over ? 'Final' : m.brk ? 'Break' : '00:00') + '</em><span>' + (m.over && !m.lv ? 'Series over' : (m.brk && !m.lv ? 'Next: Game ' : 'Game ') + m.num) + '</span></div></a>';
       }).join('');
       tick(); liveN = live.length; if (window.renderUp) window.renderUp();
     }
