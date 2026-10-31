@@ -195,10 +195,18 @@ def build_recent(w, extra=()):
                 ser.append(dict(pair=g[1], games=[g])); break
         else: ser.append(dict(pair=g[1], games=[g]))
     out = []
+    try: sched = json.loads((ROOT / "data" / "schedule.json").read_text(encoding="utf-8"))["matches"]
+    except Exception: sched = []
     for s_ in ser:
         gl = s_["games"]; wins = {}
         for _, _p, b, r, _g in gl:
             wc = b.code if b.result else r.code; wins[wc] = wins.get(wc, 0) + 1
+        # a series that is still being played (e.g. 1:1 in a best-of-3) does not belong in Recent Results
+        bo = 0; t_first = gl[0][0].tz_localize("UTC") if gl[0][0].tzinfo is None else gl[0][0]
+        for m in sched:
+            if frozenset([m["home"], m["away"]]) == s_["pair"] and abs((pd.Timestamp(m["start"]) - t_first).total_seconds()) < 12 * 3600: bo = int(m.get("bo") or 0); break
+        need = bo // 2 + 1 if bo else (2 if len(gl) >= 2 else 1)
+        if max(wins.values()) < need: continue
         ws = max(wins, key=wins.get); ls = [c for c in s_["pair"] if c != ws][0]
         lastg = gl[-1]; d = lastg[0].tz_localize("UTC").tz_convert(TZ)
         out.append((lastg[0], [ws, "%d:%d" % (wins[ws], wins.get(ls, 0)), ls, d.strftime("%H:%M"), d.strftime("%b %-d"), gl[0][4], int(lastg[0].tz_localize("UTC").timestamp() * 1000)]))
