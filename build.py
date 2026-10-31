@@ -715,7 +715,7 @@ def main(csv):
                 round(100 * sum(x["ds"] for x in g) / n), round(sum(gd) / len(gd)) if gd else None]
     ps = {"ri": jget(rd("site/bootcamp.html"), "SD").get("r", {}), "p": {"%s|%s" % (p["t"], p["r"]): [p["p"], p["rt"], p["kda"], p["cs"], p["gd"], p["dpm"], p["kp"], p["ds"], p["g"]] for p in WD["players"]}, "f": {"%s|%s" % (p["t"], p["r"]): FACES[p["p"]] for p in WD["players"] if p["p"] in FACES}, "t": {c: team_season(v["games"]) for c, v in TD["teams"].items()}}
     s = rd("site/match.html")   # the one match page: game data (D), search, season stats (PS, PC) and the Riot->Oracle's Elixir game map
-    for nm, val in (("D", GD), ("PS", ps), ("PC", pc), ("MAP0", RIOT_MAP)): s = jreplace(s, nm, val)
+    for nm, val in (("D", GD), ("PS", ps), ("PC", pc), ("MAP0", RIOT_MAP), ("TR", {r[2]: i + 1 for i, r in enumerate(RK)})): s = jreplace(s, nm, val)
     wr(out / "match.html", stamp(jreplace(s, "SD", build_search(s, WD, CH))))
     wr(out / "live.html", '<!doctype html><meta charset="utf-8"><title>Match</title><script>var h=location.hash.replace(/^#live\\//,"#");location.replace("match.html"+h)</script>')   # old links   # season stats for the live page's role-by-role team comparison   # live game page: polls Riot's feed in the browser, no build-time data
     s = rd("site/bootcamp.html"); s = jreplace(s, "BC", build_bootcamp(WD, logos_all, s)); s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "bootcamp.html", stamp(s))
