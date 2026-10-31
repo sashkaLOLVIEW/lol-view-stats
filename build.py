@@ -42,7 +42,7 @@ REGION = {"LYON": "LCS", "TSW": "LCP", "GEN": "LCK", "HLE": "LCK", "DK": "LCK", 
           "AL": "LPL", "G2": "LEC", "KC": "LEC", "MKOI": "LEC", "TLAW": "LCS", "CFO": "LCP", "LOS": "CBLOL"}
 ROLE = {"top": "Top", "jng": "Jungle", "mid": "Mid", "bot": "Bot", "sup": "Support"}
 ORDER = ["top", "jng", "mid", "bot", "sup"]
-ICON_ALIASES = {"renataglasc": "renataglaasc"}   # Oracle's Elixir spelling -> asset file name
+ICON_ALIASES = {"renataglasc": "renataglaasc", "monkeyking": "wukong"}   # OE / Riot-feed spelling -> asset file name
 
 # ----------------------------------------------------------------------------------------------
 # helpers
