@@ -32,6 +32,10 @@ def get(url, **params):
 
 def iso(s): return dt.datetime.fromisoformat(s.replace("Z", "+00:00"))
 def fmt(t): return t.strftime("%Y-%m-%dT%H:%M:%S.000Z")
+def late(t0):
+    """A moment after the game ended, for asking the feed for its final frames. Riot answers 400 for a time in the future, so a game that
+    finished less than 3 hours ago is asked at 'now' (minus a minute) instead."""
+    return floor10(min(t0 + dt.timedelta(hours=3), dt.datetime.now(dt.timezone.utc) - dt.timedelta(seconds=60)))
 def floor10(t): return t.replace(second=t.second - t.second % 10, microsecond=0)
 
 def finished_matches():
@@ -55,7 +59,7 @@ def fetch_game(game, number, codes, bo=0):
     gid = game["id"]
     w0 = get(FEED + "/window/" + gid)
     md = w0["gameMetadata"]; t0 = iso(w0["frames"][0]["rfc460Timestamp"])
-    wend = get(FEED + "/window/" + gid, startingTime=fmt(floor10(t0 + dt.timedelta(hours=3))))
+    wend = get(FEED + "/window/" + gid, startingTime=fmt(late(t0)))
     fr = wend.get("frames") or []
     if not fr or fr[-1].get("gameState") != "finished": raise RuntimeError("no finished frame")
     tend = iso(fr[-1]["rfc460Timestamp"])

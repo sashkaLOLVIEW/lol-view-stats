@@ -18,11 +18,11 @@ get, iso, fmt, floor10 = FI.get, FI.iso, FI.fmt, FI.floor10
 FEED, GW = FI.FEED, FI.GW
 ROLE_OF = {"top": "top", "jungle": "jng", "mid": "mid", "bottom": "bot", "support": "sup"}
 
-def fetch_game(game, e, bo, mid=None):
+def fetch_game(game, e, bo, mid=None, teams_by_id=None):
     gid = game["id"]
     w0 = get(FEED + "/window/" + gid)
     md = w0["gameMetadata"]; t0 = iso(w0["frames"][0]["rfc460Timestamp"])
-    wend = get(FEED + "/window/" + gid, startingTime=fmt(floor10(t0 + dt.timedelta(hours=3))))
+    wend = get(FEED + "/window/" + gid, startingTime=fmt(FI.late(t0)))
     fr = wend.get("frames") or []
     if not fr or fr[-1].get("gameState") != "finished": raise RuntimeError("no finished frame")
     lf = fr[-1]; tend = iso(lf["rfc460Timestamp"]); length = int((tend - t0).total_seconds())
@@ -36,7 +36,7 @@ def fetch_game(game, e, bo, mid=None):
             if f: series.append([m, f["blueTeam"]["totalGold"] - f["redTeam"]["totalGold"]])
         except Exception: pass
         m += 5; time.sleep(0.12)
-    byid = {t["id"]: t for t in e["match"]["teams"]}
+    byid = teams_by_id or {t["id"]: t for t in e["match"]["teams"] if t.get("id")}   # the schedule feed has no team ids; getEventDetails does
     teams = []
     for side in ("blue", "red"):
         tmeta = md[side + "TeamMetadata"]; rt = byid.get(tmeta["esportsTeamId"]) or {}; ft = lf[side + "Team"]
@@ -83,7 +83,7 @@ def main():
     print("finished matches:", len(ms), "| games already saved:", len(cache))
     t_start = time.time()
     for mid, e in sorted(ms.items(), key=lambda x: x[1]["startTime"]):
-        try: games = get(GW + "/getEventDetails", hl="en-US", id=mid)["data"]["event"]["match"]["games"]
+        try: det_m = get(GW + "/getEventDetails", hl="en-US", id=mid)["data"]["event"]["match"]; games = det_m["games"]; tbi = {t["id"]: t for t in det_m.get("teams") or [] if t.get("id")}
         except Exception as ex: print("  match", mid, "details failed:", ex); bad += 1; continue
         bo = int(((e["match"].get("strategy") or {}).get("count")) or 0)
         for g in games:
@@ -92,7 +92,7 @@ def main():
             if g.get("state") != "completed" or (old and old.get("v", 0) >= FORMAT): continue
             if time.time() - t_start > BUDGET: skipped += 1; continue
             try:
-                cache[g["id"]] = fetch_game(g, e, bo, mid); new += 1
+                cache[g["id"]] = fetch_game(g, e, bo, mid, tbi); new += 1
                 OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(cache, ensure_ascii=False))
             except Exception as ex: print("  game", g["id"], "failed:", ex); bad += 1
             time.sleep(0.3)

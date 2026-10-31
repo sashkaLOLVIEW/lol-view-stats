@@ -118,9 +118,9 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 /* divider + global statistics */
 .rule { margin:30px 0 28px; height:2px; background:linear-gradient(to right, transparent, var(--divider) 20%, var(--divider) 80%, transparent); }
 .global { display:flex; flex-direction:column; gap:14px; }
-:root { --accent:#9ea3f2; --hdr:#171717; --rowalt:#1e1e1e; --track:#2c2c2c; --pos:#4cd47a; --neg:#f0594b; --bar:#6aa9f0; }
-@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --accent:#5a5fc9; --hdr:#eeeeea; --rowalt:#f6f6f3; --track:#e2e2dd; --pos:#1e9c4a; --neg:#cf3f33; --bar:#2f78d1; } }
-:root[data-theme="light"] { --accent:#5a5fc9; --hdr:#eeeeea; --rowalt:#f6f6f3; --track:#e2e2dd; --pos:#1e9c4a; --neg:#cf3f33; --bar:#2f78d1; }
+:root { --accent:#9ea3f2; --hdr:#171717; --rowalt:#1e1e1e; --track:#2c2c2c; --pos:#7bd96a; --neg:#ef5b4b; --bar:#6aa9f0; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --accent:#5a5fc9; --hdr:#eeeeea; --rowalt:#f6f6f3; --track:#e2e2dd; --pos:#2f8f20; --neg:#d33b2c; --bar:#2a6fc0; } }
+:root[data-theme="light"] { --accent:#5a5fc9; --hdr:#eeeeea; --rowalt:#f6f6f3; --track:#e2e2dd; --pos:#2f8f20; --neg:#d33b2c; --bar:#2a6fc0; }
 .panel { background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:16px 16px 12px; min-width:0; }
 .ph-row { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
 .ptitle { font-size:12px; font-weight:600; color:var(--muted); }
@@ -154,7 +154,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 .tbl tbody tr:nth-child(even) .c1, .tbl tbody tr:nth-child(even) .c2 { background:var(--rowalt); }
 .tbl th.c1, .tbl th.c2 { background:var(--hdr); }
 .tbl .c1 { left:0; width:48px; min-width:48px; }
-.tbl .c2 { left:48px; width:220px; min-width:220px; text-align:left; border-right:1px solid var(--line); }
+.tbl .c2 { left:48px; width:220px; min-width:220px; text-align:left; }
 .pcell { display:flex; align-items:center; gap:7px; }
 .pcell .tl { width:18px; height:18px; border-radius:50%; border:2px dashed var(--line); flex:none; }
 .pcell .rl { width:16px; height:16px; border-radius:3px; background:var(--chip-bg); flex:none; }
@@ -172,7 +172,6 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 .tbl a.tm { display:inline-flex; align-items:center; gap:7px; font-weight:600; }
 .pcell .rl { width:30px; height:30px; border-radius:50%; overflow:hidden; background:var(--chip-bg); display:block; }
 .pcell .fc { display:block; width:30px; height:30px; border-radius:50%; object-fit:cover; object-position:top; }
-.rbadge.r1 { background:var(--fg); color:var(--bg); } .rbadge.r2 { color:var(--fg); } .rbadge.r3 { color:var(--fg); opacity:.85; }
 .rbadge { display:inline-grid; place-items:center; min-width:36px; height:20px; border-radius:4px; background:var(--pill); color:var(--muted); font-weight:700; font-size:12px; }
 .mc { display:flex; flex-direction:column; align-items:center; gap:3px; }
 .mc i { display:block; width:60px; height:3px; border-radius:2px; background:var(--track); overflow:hidden; }
@@ -210,12 +209,11 @@ html { scroll-padding-top: 84px; }
 </style>
 
 <style>
-/* rating badges: 90+ gold, 80+ blue, 70+ green, below that gray (same on every page) */
-.rbadge.rg, .tp-badge.gold, .rtb.rg { background:#d9b53a; color:#171200; }
-.rbadge.rb, .tp-badge.blue, .rtb.rb { background:#3f7fd9; color:#fff; }
-.rbadge.rn, .tp-badge.green, .rtb.rn { background:#2f9e57; color:#fff; }
-.rbadge.rz, .tp-badge, .rtb.rz { background:var(--pill); color:var(--muted); }
-.tp-badge.gold { background:#d9b53a; color:#171200; } .tp-badge.blue { background:#3f7fd9; color:#fff; } .tp-badge.green { background:#2f9e57; color:#fff; }
+/* rating badges: 90+ gold, 80+ blue, 70+ green, below that gray - same site colours (--gold, --blue, --green) on every page */
+.rbadge.rg, .tp-badge.gold, .rtb.rg { background:var(--gold); color:var(--on-active-fg, var(--on-fg, #0f0f0f)); }
+.rbadge.rb, .tp-badge.blue, .rtb.rb { background:var(--blue); color:var(--on-active-fg, var(--on-fg, #0f0f0f)); }
+.rbadge.rn, .tp-badge.green, .rtb.rn { background:var(--green, var(--pos)); color:var(--on-active-fg, var(--on-fg, #0f0f0f)); }
+.rbadge.rz, .rtb.rz { background:var(--pill); color:var(--muted); }
 .rtb { display:inline-grid; place-items:center; min-width:36px; height:20px; padding:0 5px; border-radius:4px; font-weight:700; font-size:12px; }
 
 /* role selector box: same look everywhere */
@@ -224,6 +222,16 @@ html { scroll-padding-top: 84px; }
 .tp .roles button svg, .roles button svg, .seg button svg, .cp-roles .rp svg { width:15px; height:15px; }
 .tp .roles button:hover, .roles button:hover, .seg button:hover, .cp-roles .rp:hover { color:var(--fg); background:transparent; }
 .tp .roles button.on, .roles button.on, .seg button.on, .cp-roles .rp.on { background:color-mix(in srgb, var(--fg) 16%, var(--surface)); color:var(--fg); font-weight:700; }
+.dd.on { background:color-mix(in srgb, var(--fg) 16%, var(--surface)); border-color:var(--line); color:var(--fg); }
+.tbl .c2 { border-right:0; }
+.tbl a.tm, .tbl button.tm { display:inline-flex; align-items:center; background:none; border:0; padding:4px; border-radius:6px; cursor:pointer; }
+.tbl button.tm:hover { background:color-mix(in srgb, var(--fg) 12%, transparent); }
+#tchip { display:inline-flex; margin-left:10px; }
+#tchip .tf { display:inline-flex; align-items:center; gap:8px; height:32px; padding:0 6px 0 10px; border:1px solid var(--line); border-radius:6px; background:var(--surface); font-size:12px; font-weight:700; }
+#tchip .tf a { color:var(--fg); text-decoration:none; } #tchip .tf a:hover { text-decoration:underline; }
+#tchip .x { width:22px; height:22px; border:0; border-radius:4px; background:transparent; color:var(--muted); font-size:16px; line-height:1; cursor:pointer; } #tchip .x:hover { color:var(--fg); background:color-mix(in srgb, var(--fg) 12%, transparent); }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --rowalt:#eeeeea; } }
+:root[data-theme="light"] { --rowalt:#eeeeea; }
 </style>
 </head>
 <body>
@@ -341,10 +349,9 @@ html { scroll-padding-top: 84px; }
   $("cnt").textContent = P.length + " players";
   var RK = ["all", "top", "jungle", "mid", "bot", "support"], RL = ["All roles", "Top", "Jungle", "Mid", "Bot", "Support"], RN = { Top: "top", Jungle: "jungle", Mid: "mid", Bot: "bot", Support: "support" };
   var role = "all", sortK = "rt", sortDir = -1;
-  $("frow").innerHTML = '<div class="seg icons" id="rseg">' + RK.map(function (k, i) { return '<button type="button" data-r="' + k + '" aria-label="' + RL[i] + '" title="' + RL[i] + '"' + (i === 0 ? ' class="on"' : '') + '>' + icons[k] + '</button>'; }).join("") + '</div>' +
-    '<button class="dd" id="grp" type="button" title="Show every team\'s five players together">' + '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="m7 1 5.500 3L7 7 1.500 4ZM1.500 7 7 10l5.500-3M1.500 10 7 13l5.500-3"/></svg>Team</button>';
-  var group = false, TNAME = TN;
-  $("grp").addEventListener("click", function () { group = !group; $("grp").classList.toggle("on", group); draw(); });
+  $("frow").innerHTML = '<div class="seg icons" id="rseg">' + RK.map(function (k, i) { return '<button type="button" data-r="' + k + '" aria-label="' + RL[i] + '" title="' + RL[i] + '"' + (i === 0 ? ' class="on"' : '') + '>' + icons[k] + '</button>'; }).join("") + '</div><span id="tchip"></span>';
+  var TNAME = TN, team = null;
+  $("tchip").addEventListener("click", function (e) { if (e.target.closest("button.x")) { team = null; draw(); } });
   $("rseg").addEventListener("click", function (e) {
     var b = e.target.closest("button"); if (!b) return; role = b.getAttribute("data-r");
     Array.prototype.forEach.call($("rseg").children, function (x) { x.classList.toggle("on", x === b); }); draw();
@@ -371,25 +378,24 @@ html { scroll-padding-top: 84px; }
   function draw() {
     var RO = { Top: 0, Jungle: 1, Mid: 2, Bot: 3, Support: 4 };
     var rows = P.filter(function (r) { return role === "all" || RN[r.r] === role; }).slice();
-    if (group) rows.sort(function (a, b) { return (TNAME[a.t] || a.t).localeCompare(TNAME[b.t] || b.t) || RO[a.r] - RO[b.r]; });
+    if (team) rows = rows.filter(function (r) { return r.t === team; });
+    $("tchip").innerHTML = team ? '<span class="tf">' + logo(team, 18) + '<a href="team.html#' + encodeURIComponent(team) + '">' + (TNAME[team] || team) + '</a><button class="x" type="button" aria-label="Show all teams" title="Show all teams">&times;</button></span>' : "";
+    if (team) rows.sort(function (a, b) { return RO[a.r] - RO[b.r]; });
     else rows.sort(function (a, b) { return (a[sortK] - b[sortK]) * sortDir || b.rt - a.rt; });
     var head = '<thead><tr><th class="c1">#</th><th class="c2" style="text-align:left">Player</th><th>Team</th>' + COLS.map(function (c) {
-      var on = !group && c[0] === sortK; return '<th class="sortable' + (on ? " sorted" : "") + '" data-k="' + c[0] + '" title="' + c[2] + '">' + c[1] + (on ? (sortDir < 0 ? " ↓" : " ↑") : "") + "</th>";
+      var on = !team && c[0] === sortK; return '<th class="sortable' + (on ? " sorted" : "") + '" data-k="' + c[0] + '" title="' + c[2] + '">' + c[1] + (on ? (sortDir < 0 ? " ↓" : " ↑") : "") + "</th>";
     }).join("") + "</tr></thead>";
-    var prev = null, n = 0, ncol = COLS.length + 3;
     var body = "<tbody>" + rows.map(function (r, i) {
-      var hdr = "";
-      if (group && r.t !== prev) { n = 0; hdr = '<tr class="tg"><td colspan="' + ncol + '"><a href="team.html#' + encodeURIComponent(r.t) + '">' + logo(r.t, 20) + "<b>" + (TNAME[r.t] || r.t) + "</b></a></td></tr>"; }
-      prev = r.t; n++;
-      return hdr + '<tr data-h="' + pl(r.p) + '"><td class="c1">' + (group ? n : i + 1) + '</td><td class="c2"><div class="pcell"><span class="ri" title="' + r.r + '">' + icons[RN[r.r]] + '</span><a class="nm" href="' + pl(r.p) + '" style="font-weight:inherit">' + r.p + "</a></div></td>" +
-        '<td><a class="tm" href="team.html#' + encodeURIComponent(r.t) + '" title="' + (TNAME[r.t] || r.t) + '">' + logo(r.t, 20) + "</a></td>" +
+      return '<tr data-h="' + pl(r.p) + '"><td class="c1">' + (i + 1) + '</td><td class="c2"><div class="pcell"><span class="ri" title="' + r.r + '">' + icons[RN[r.r]] + '</span><a class="nm" href="' + pl(r.p) + '" style="font-weight:inherit">' + r.p + "</a></div></td>" +
+        '<td><button class="tm" type="button" data-t="' + r.t + '" title="Show the five ' + (TNAME[r.t] || r.t) + ' players">' + logo(r.t, 20) + "</button></td>" +
         COLS.map(function (c) { return "<td" + (c[0] === sortK ? ' class="sc"' : "") + ">" + c[3](r) + "</td>"; }).join("") + "</tr>";
     }).join("") + "</tbody>";
     $("tbl").innerHTML = head + body;
   }
   $("tbl").addEventListener("click", function (e) {
     var th = e.target.closest("th.sortable");
-    if (th) { var k = th.getAttribute("data-k"); if (group) { group = false; $("grp").classList.remove("on"); } if (k === sortK) sortDir = -sortDir; else { sortK = k; sortDir = COLS.filter(function (c) { return c[0] === k; })[0][4]; } draw(); return; }
+    if (th) { var k = th.getAttribute("data-k"); if (team) { team = null; } if (k === sortK) sortDir = -sortDir; else { sortK = k; sortDir = COLS.filter(function (c) { return c[0] === k; })[0][4]; } draw(); return; }
+    var tb = e.target.closest("button.tm"); if (tb) { team = team === tb.getAttribute("data-t") ? null : tb.getAttribute("data-t"); draw(); return; }
     if (e.target.closest("a")) return;
     var tr = e.target.closest("tr[data-h]"); if (tr) location.href = tr.getAttribute("data-h");
   });

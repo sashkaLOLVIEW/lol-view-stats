@@ -199,12 +199,11 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 @media (prefers-reduced-motion: reduce) { .toggle::after, .gbar i, .hp i { transition:none; } }
 </style>
 <style>
-/* rating badges: 90+ gold, 80+ blue, 70+ green, below that gray (same on every page) */
-.rbadge.rg, .tp-badge.gold, .rtb.rg { background:#d9b53a; color:#171200; }
-.rbadge.rb, .tp-badge.blue, .rtb.rb { background:#3f7fd9; color:#fff; }
-.rbadge.rn, .tp-badge.green, .rtb.rn { background:#2f9e57; color:#fff; }
-.rbadge.rz, .tp-badge, .rtb.rz { background:var(--pill); color:var(--muted); }
-.tp-badge.gold { background:#d9b53a; color:#171200; } .tp-badge.blue { background:#3f7fd9; color:#fff; } .tp-badge.green { background:#2f9e57; color:#fff; }
+/* rating badges: 90+ gold, 80+ blue, 70+ green, below that gray - same site colours (--gold, --blue, --green) on every page */
+.rbadge.rg, .tp-badge.gold, .rtb.rg { background:var(--gold); color:var(--on-active-fg, var(--on-fg, #0f0f0f)); }
+.rbadge.rb, .tp-badge.blue, .rtb.rb { background:var(--blue); color:var(--on-active-fg, var(--on-fg, #0f0f0f)); }
+.rbadge.rn, .tp-badge.green, .rtb.rn { background:var(--green, var(--pos)); color:var(--on-active-fg, var(--on-fg, #0f0f0f)); }
+.rbadge.rz, .rtb.rz { background:var(--pill); color:var(--muted); }
 .rtb { display:inline-grid; place-items:center; min-width:36px; height:20px; padding:0 5px; border-radius:4px; font-weight:700; font-size:12px; }
 </style>
 </head>
