@@ -409,6 +409,11 @@ html { scroll-padding-top: 84px; }
 .page > .topbar + * { margin-top: 52px !important; padding-top: 0 !important; }
 .page > .topbar + * > .champs:first-child { margin-top: 0; }
 </style>
+<style>
+/* clickable cards: stroke brightens on hover */
+.row, .srow2, a.match, .hrow { transition: border-color .15s; }
+.row:hover, .srow2:hover, a.match:hover, .hrow:hover { border-color: var(--muted); }
+</style>
 <div class="page">
   <header class="topbar">
     <nav class="nav" aria-label="Main"><a href="index.html" aria-current="page">Home</a><a href="rankings.html">Rankings</a><a href="players.html">Players</a><a href="champions.html">Champions</a>
