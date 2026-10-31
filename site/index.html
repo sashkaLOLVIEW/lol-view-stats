@@ -170,6 +170,17 @@ h2 svg { flex: none; }
 .tp .roles { display: flex; gap: 8px; align-items: center; width: auto; padding-left: 0; }
 .tp .roles button { background: none; border: 0; padding: 0; cursor: pointer; color: var(--dim); display: grid; place-items: center; width: 18px; height: 18px; }
 .tp .roles button.on { color: var(--fg); }
+.tp .rgdd { position: relative; }
+.tp .rgb { display: inline-flex; align-items: center; gap: 8px; height: 28px; padding: 0 10px 0 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; color: var(--fg); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: border-color .15s; }
+.tp .rgb:hover, .tp .rgdd.open .rgb { border-color: var(--muted); }
+.tp .rgb svg.cv { width: 9px; height: 9px; color: var(--muted); transition: transform .15s; } .tp .rgdd.open .rgb svg.cv { transform: rotate(180deg); }
+.tp .rgi { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; overflow: hidden; flex: none; } .tp .rgi svg { display: block; }
+.tp .rgm { position: absolute; z-index: 30; right: 0; top: calc(100% + 6px); min-width: 170px; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 28px #0000004d; display: none; }
+.tp .rgdd.open .rgm { display: block; }
+.tp .rgm button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 8px; border: 0; background: none; border-radius: 5px; color: var(--muted); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; text-align: left; }
+.tp .rgm button:hover { background: var(--chip-bg); color: var(--fg); } .tp .rgm button.on { color: var(--fg); }
+.tp-empty { grid-column: 1 / -1; padding: 22px; border: 1px dashed var(--line); border-radius: 8px; color: var(--muted); font-size: 12.5px; text-align: center; }
+
 .tp-cards { margin-top: 14px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 15px; }
 .tp-card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; min-width: 0; }
 .tp-card-hd { height: 28px; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--muted); border-bottom: 1px solid var(--line); background: var(--surface-2); }
@@ -444,6 +455,7 @@ html { scroll-padding-top: 84px; }
       <div class="tp-head">
         <h2>Top Performers</h2>
         <div class="filters">
+          <div class="rgdd" id="tp-rg"></div>
           <div class="roles" id="tp-roles" role="group" aria-label="Role"></div>
         </div>
       </div>
@@ -767,7 +779,11 @@ html { scroll-padding-top: 84px; }
     var cards = [['top', 'Top'], ['jungle', 'Jungle'], ['mid', 'Mid'], ['bot', 'Bot'], ['support', 'Support']];
     var ROLES = ['Top', 'Jungle', 'Mid', 'Bot', 'Support'], KEYS = { Top: 'top', Jungle: 'jungle', Mid: 'mid', Bot: 'bot', Support: 'support' };
     var sg = function (v) { return (v > 0 ? '+' : '') + Math.round(v).toLocaleString('en-US'); };
-    var byRole = function (role) { return WD.players.filter(function (r) { return r.r === role; }).sort(function (a, b) { return b.rt - a.rt || b.kda - a.kda; }); };
+    var RGI = {"Global": "<svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9.5\"/><ellipse cx=\"12\" cy=\"12\" rx=\"4\" ry=\"9.5\"/><path d=\"M2.5 12h19M4.2 7.2h15.6M4.2 16.8h15.6\"/></svg>", "LCK": "<svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\"><rect width=\"24\" height=\"24\" fill=\"#fff\"/><circle cx=\"12\" cy=\"12\" r=\"5.2\" fill=\"#cd2e3a\"/><path d=\"M6.8 12a5.2 5.2 0 0 0 10.4 0a2.6 2.6 0 0 0-5.2 0a2.6 2.6 0 0 1-5.2 0z\" fill=\"#0047a0\"/></svg>", "LPL": "<svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\"><rect width=\"24\" height=\"24\" fill=\"#de2910\"/><polygon points=\"8,3.5 9.4,7.2 13.3,7.4 10.2,9.8 11.3,13.6 8,11.4 4.7,13.6 5.8,9.8 2.7,7.4 6.6,7.2\" fill=\"#ffde00\"/></svg>", "LEC": "<svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\"><rect width=\"24\" height=\"24\" fill=\"#039\"/><circle cx=\"12.00\" cy=\"5.80\" r=\"1.1\" fill=\"#fc0\"/><circle cx=\"15.10\" cy=\"6.63\" r=\"1.1\" fill=\"#fc0\"/><circle cx=\"17.37\" cy=\"8.90\" r=\"1.1\" fill=\"#fc0\"/><circle cx=\"18.20\" cy=\"12.00\" r=\"1.1\" fill=\"#fc0\"/><circle cx=\"17.37\" cy=\"15.10\" r=\"1.1\" fill=\"#fc0\"/><circle cx=\"15.10\" cy=\"17.37\" r=\"1.1\" fill=\"#fc0\"/><circle cx=\"12.00\" cy=\"18.20\" r=\"1.1\" fill=\"#fc0\"/><circle cx=\"8.90\" cy=\"17.37\" r=\"1.1\" fill=\"#fc0\"/><circle cx=\"6.63\" cy=\"15.10\" r=\"1.1\" fill=\"#fc0\"/><circle cx=\"5.80\" cy=\"12.00\" r=\"1.1\" fill=\"#fc0\"/><circle cx=\"6.63\" cy=\"8.90\" r=\"1.1\" fill=\"#fc0\"/><circle cx=\"8.90\" cy=\"6.63\" r=\"1.1\" fill=\"#fc0\"/></svg>", "LCS": "<svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\"><rect width=\"24\" height=\"24\" fill=\"#fff\"/><rect y=\"0.00\" width=\"24\" height=\"1.85\" fill=\"#b22234\"/><rect y=\"3.70\" width=\"24\" height=\"1.85\" fill=\"#b22234\"/><rect y=\"7.40\" width=\"24\" height=\"1.85\" fill=\"#b22234\"/><rect y=\"11.10\" width=\"24\" height=\"1.85\" fill=\"#b22234\"/><rect y=\"14.80\" width=\"24\" height=\"1.85\" fill=\"#b22234\"/><rect y=\"18.50\" width=\"24\" height=\"1.85\" fill=\"#b22234\"/><rect y=\"22.20\" width=\"24\" height=\"1.85\" fill=\"#b22234\"/><rect width=\"12\" height=\"12.9\" fill=\"#3c3b6e\"/></svg>", "CBLOL": "<svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\"><rect width=\"24\" height=\"24\" fill=\"#009c3b\"/><polygon points=\"12,3.5 21.5,12 12,20.5 2.5,12\" fill=\"#ffdf00\"/><circle cx=\"12\" cy=\"12\" r=\"4.6\" fill=\"#002776\"/></svg>", "LCP": "<svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\"><rect width=\"24\" height=\"24\" fill=\"#1e6fa8\"/><path d=\"M0 9c3-2.5 5.5-2.5 8 0s5 2.5 8 0 5.500-2.500 8 0M0 14c3-2.500 5.500-2.500 8 0s5 2.500 8 0 5.500-2.500 8 0M0 19c3-2.500 5.500-2.500 8 0s5 2.500 8 0 5.500-2.500 8 0\" fill=\"none\" stroke=\"#fff\" stroke-width=\"1.600\" stroke-linecap=\"round\" opacity=\".85\"/></svg>"}, RGL = ['Global', 'LCK', 'LPL', 'LEC', 'LCS', 'CBLOL', 'LCP'], region = 'Global', TRG = {};
+    rank.forEach(function (x) { TRG[x[2]] = x[1]; });
+    var inRegion = function (r) { return region === 'Global' || TRG[r.t] === region; };
+    var byRoleAll = function (role) { return WD.players.filter(function (r) { return r.r === role; }).sort(function (a, b) { return b.rt - a.rt || b.kda - a.kda; }); };
+    var byRole = function (role) { return byRoleAll(role).filter(inRegion); };
     var rankIn = function (list, key, v) { var n = 1; list.forEach(function (r) { if (r[key] > v + 1e-9) n++; }); return n; };
     var cardData = function (r, list) {
       return { role: r.r, p: r.p, t: r.t, rt: r.rt.toFixed(1), v: [r.kda.toFixed(1), r.cs.toFixed(1), sg(r.gd), sg(r.csd), sg(r.xpd)],
@@ -776,8 +792,9 @@ html { scroll-padding-top: 84px; }
     // 'All roles' shows the best player of each role; a single role shows its top five, left to right
     function renderTop(sel) {
       var cards = sel === 'All'
-        ? ROLES.map(function (role) { var l = byRole(role); return cardData(l[0], l); })
-        : byRole(sel).slice(0, 5).map(function (r, i, arr) { var l = byRole(sel); return cardData(r, l); });
+        ? ROLES.map(function (role) { var l = byRole(role); return l.length ? cardData(l[0], byRoleAll(role)) : null; }).filter(Boolean)
+        : byRole(sel).slice(0, 5).map(function (r) { return cardData(r, byRoleAll(sel)); });
+      if (!cards.length) { $('tp-cards').innerHTML = '<div class="tp-empty">No players from ' + region + ' at this event yet.</div>'; return; }
       $('tp-cards').innerHTML = cards.map(function (c, i) {
         var face = FACESF[c.p] ? '<span class="tp-portrait has"><img src="' + FACESF[c.p] + '" alt=""></span>' : '<span class="tp-portrait"></span>';
         return '<article class="tp-card"><div class="tp-card-hd">' + ic[KEYS[c.role]].replace('width="16" height="16"', 'width="12" height="12"') + c.role + (sel === 'All' ? '' : ' #' + (i + 1)) + '</div>' +
@@ -785,11 +802,25 @@ html { scroll-padding-top: 84px; }
           '<div class="tp-stats">' + stats.map(function (t, k) { return '<div class="tp-srow"><span>' + t + '</span><span>' + c.v[k] + '<em class="' + (c.rk[k] <= 3 ? 'r' + c.rk[k] : '') + '">' + c.rk[k] + '</em></span></div>'; }).join('') + '</div></article>';
       }).join('');
     }
+    var curSel = 'All';
     renderTop('All');
+    var chev = '<svg class="cv" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m1.500 3.500 3.500 3.500 3.500-3.500"/></svg>';
+    var drawRg = function () {
+      $('tp-rg').innerHTML = '<button type="button" class="rgb" aria-haspopup="listbox" aria-expanded="' + ($('tp-rg').classList.contains('open') ? 'true' : 'false') + '"><span class="rgi">' + RGI[region] + '</span>' + region + chev + '</button><div class="rgm" role="listbox">' +
+        RGL.map(function (g) { return '<button type="button" role="option" data-g="' + g + '"' + (g === region ? ' class="on"' : '') + '><span class="rgi">' + RGI[g] + '</span>' + g + '</button>'; }).join('') + '</div>';
+    };
+    drawRg();
+    $('tp-rg').addEventListener('click', function (e) {
+      e.stopPropagation();
+      var o = e.target.closest('button[data-g]');
+      if (o) { region = o.getAttribute('data-g'); $('tp-rg').classList.remove('open'); drawRg(); renderTop(curSel); return; }
+      if (e.target.closest('.rgb')) { $('tp-rg').classList.toggle('open'); drawRg(); }
+    });
+    document.addEventListener('click', function () { if ($('tp-rg').classList.contains('open')) { $('tp-rg').classList.remove('open'); drawRg(); } });
     $('tp-roles').addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
       var label = b.getAttribute('aria-label');
-      renderTop(label === 'All roles' ? 'All' : label);
+      curSel = label === 'All roles' ? 'All' : label; renderTop(curSel);
     });
     ['tp-roles'].forEach(function (g) {
       $(g).addEventListener('click', function (e) {
