@@ -236,8 +236,9 @@ h2 .li.hi { margin: 0; width: 18px; height: 18px; }
 .bpage .rr { display: flex; align-items: center; justify-content: center; gap: 6px; }
 .bpage .rr img { width: 28px; height: 28px; display: block; border-radius: 50%; background: #0b0d12; }
 .bpage .rr img.k { width: 36px; height: 36px; }
-.bpage .rr img.sh { width: 15px; height: 15px; background: none; border-radius: 0; }
-.bpage .rr.sh { gap: 12px; margin-top: 1px; }
+.bpage .rr img.sh, .bpage .rr .sh { box-sizing: border-box; width: 22px; height: 22px; padding: 3px; background: #0b0d12; border: 1px solid #ffffff40; border-radius: 50%; }
+.bpage .rr .sh.none { display: grid; place-items: center; color: var(--dim); font-size: 10px; font-weight: 700; padding: 0; }
+.bpage .rr.sh { gap: 8px; margin-top: 1px; }
 .ibgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 8px; }
 .ibc { padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
 .ibc h4 { margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
@@ -413,7 +414,7 @@ html { scroll-padding-top: 84px; }
           + '<div class="rr">' + im(k[0], 'k') + '</div>'
           + '<div class="rr">' + k.slice(1, 4).map(function (i) { return im(i); }).join('') + '</div>'
           + '<div class="rr">' + k.slice(4, 6).map(function (i) { return im(i); }).join('') + '</div>'
-          + '<div class="rr sh">' + k.slice(6).map(function (i) { return im(i, 'sh'); }).join('') + '</div></div>';
+          + '<div class="rr sh">' + k.slice(6).map(function (i) { return ri[i] ? im(i, 'sh') : '<span class="sh none" title="Stat shard ' + i + ' (no icon)">?</span>'; }).join('') + '</div></div>';
       }).join('') : '<div class="bnone">No rune data for these games yet.</div>';
       var cols = ['1st item', '2nd item', '3rd item'].map(function (t, j) {
         var rows = R.filter(function (r) { return r.bo && r.bo.length > j; }), by = {};

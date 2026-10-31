@@ -519,6 +519,8 @@ def attach_items(w, GD, PD, CD):
         for r in c["rows"]:
             k = (r["game"], r["side"], POS_OF_ROLE[r["role"]]); r["it"] = IT.get(k); r["rn"] = RN.get(k); r["pk"] = PK.get(k); r["bo"] = BO.get(k)
     runes = rune_assets(list(RN.values()) + list(PK.values()) + [p["rn"] for p in ro if p.get("rn")])
+    from collections import Counter as _C
+    print("  rune pages by length:", dict(_C(len(v) for v in PK.values())), "| shard sets:", dict(_C(tuple(v[6:]) for v in PK.values()).most_common(8)), "| shard ids without an icon:", sorted({i for v in PK.values() for i in v[6:] if str(i) not in runes}))
     miss = sorted({i for v in raw.values() for i in v if str(i) not in icons}); notr = sum(1 for v in IT.values() if not v[6])
     if miss: print("  items without an icon:", miss)
     print("  players without a trinket: %d of %d | with a build order: %d" % (notr, len(IT), sum(1 for v in BO.values() if v)))
