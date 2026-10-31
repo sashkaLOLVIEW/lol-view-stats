@@ -394,7 +394,7 @@ html { scroll-padding-top: 84px; }
 .mv .cmps .tavg b{font-size:16px;}
 @media (max-width:640px){.mv .cmps .ct,.mv .cmps .hd{grid-template-columns:minmax(0,1fr) 70px minmax(0,1fr); padding-left:10px; padding-right:10px;}
 .mv .cmps .pn small{display:none;}}
-.mv .feed{position:fixed; top:calc(16px + env(safe-area-inset-top, 0px)); right:max(16px, env(safe-area-inset-right, 0px)); width:min(312px, calc(100vw - 32px)); display:flex; flex-direction:column; gap:10px; z-index:20; pointer-events:none;}
+.mv .feed{position:fixed; bottom:calc(16px + env(safe-area-inset-bottom, 0px)); justify-content:flex-end; right:max(16px, env(safe-area-inset-right, 0px)); width:min(312px, calc(100vw - 32px)); display:flex; flex-direction:column; gap:10px; z-index:20; pointer-events:none;}
 .mv .toast{pointer-events:auto; position:relative; height:60px; border-radius:6px; overflow:hidden; display:flex; align-items:center; gap:12px; padding:0 34px 0 12px; color:#fff; font-weight:700; font-size:14px; box-shadow:0 6px 18px #0000004d; animation:tin .25s ease-out;}
 .mv .toast.b{background:var(--team-blue);}
 .mv .toast.r{background:var(--team-red);}
