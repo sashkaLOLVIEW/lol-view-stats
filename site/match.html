@@ -288,7 +288,7 @@ html { scroll-padding-top: 84px; }
 .mv .glabels b{color:var(--fg); font-weight:600;}
 .mv .board{margin-top:32px;}
 .mv .bhead,.mv .brow{display:grid; grid-template-columns:minmax(0,1fr) 84px minmax(0,1fr);}
-.mv .bhead{align-items:center; margin-bottom:12px;}
+.mv .bhead{align-items:center; margin-bottom:24px; padding:14px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px;}
 .mv .bh{display:flex; align-items:center; gap:14px; min-width:0;}
 .mv .bh.r{justify-content:flex-end;}
 .mv .bh h2 .sw{width:10px; height:10px; border-radius:2px; flex:none;}
@@ -1122,9 +1122,9 @@ html { scroll-padding-top: 84px; }
   function boardHtml(bt, rt) {
     var f = S.frame, bm = S.meta.blueTeamMetadata.participantMetadata, rm = S.meta.redTeamMetadata.participantMetadata;
     var total = f.blueTeam.totalGold - f.redTeam.totalGold;
-    var head = '<div class="bhead"><div class="bh"><h2><span class="sw" style="background:var(--team-blue)"></span>' + esc(bt.name) + "</h2>" + objPills(f.blueTeam) + "</div>" +
+    var head = '<div class="bhead"><div class="bh">' + objPills(f.blueTeam) + "</div>" +
       '<div class="mhead">Game time<b class="gt">' + gameTime() + '</b></div>' +
-      '<div class="bh r">' + objPills(f.redTeam, true) + '<h2>' + esc(rt.name) + '<span class="sw" style="background:var(--team-red)"></span></h2></div></div>';
+      '<div class="bh r">' + objPills(f.redTeam, true) + '</div></div>';
     var rows = bm.map(function (pm, i) {
       var r = rm[i], d = goldOf(f.blueTeam, pm, i) - goldOf(f.redTeam, r, i);
       var cls = d > 0 ? "b" : d < 0 ? "r" : "e";
