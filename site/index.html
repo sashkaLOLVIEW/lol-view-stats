@@ -813,7 +813,7 @@ html { scroll-padding-top: 84px; }
     var fk = function (v) { return (v > 0 ? '+' : v < 0 ? '\u2212' : '') + Math.abs(v / 1000).toFixed(1).replace(/\.0$/, '') + 'k'; };
     var o = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Floor and ceiling by team">';
     for (var u = y0; u <= y1; u += step) o += '<line x1="' + L + '" y1="' + Y(u) + '" x2="' + (L + iw) + '" y2="' + Y(u) + '" stroke="' + (u === 0 ? 'var(--muted)' : 'var(--line)') + '"' + (u === 0 ? '' : ' stroke-dasharray="2 4"') + '/><text class="ax" x="' + (L - 6) + '" y="' + (Y(u) + 3.5) + '" text-anchor="end">' + fk(u) + '</text>';
-    var cap = nar ? 5 : 10, lg = nar ? 12 : 28;
+    var cap = nar ? 5 : 10, lg = nar ? 12 : 22, cr = nar ? 9 : 17;
     pts.forEach(function (p, i) {
       var x = X(i), on = p.c === c, col = on ? 'var(--fg)' : 'var(--muted)', sw = on ? 2.4 : 1.6, yh = Y(p.h), yf = Y(p.f), y00 = (yh + yf) / 2;
       o += '<a href="team.html#' + p.c + '" style="cursor:pointer"><title>' + FCD.names[p.c] + ': avg gold diff in wins ' + fk(Math.round(p.h)) + ', in losses ' + fk(Math.round(p.f)) + '</title>'
@@ -821,7 +821,7 @@ html { scroll-padding-top: 84px; }
         + '<line x1="' + x + '" y1="' + yh + '" x2="' + x + '" y2="' + yf + '" stroke="' + col + '" stroke-width="' + sw + '" stroke-linecap="round"/>'
         + '<line x1="' + (x - cap) + '" y1="' + yh + '" x2="' + (x + cap) + '" y2="' + yh + '" stroke="' + col + '" stroke-width="' + sw + '" stroke-linecap="round"/>'
         + '<line x1="' + (x - cap) + '" y1="' + yf + '" x2="' + (x + cap) + '" y2="' + yf + '" stroke="' + col + '" stroke-width="' + sw + '" stroke-linecap="round"/>';
-      if (LOGOS[p.c]) o += '<circle cx="' + x + '" cy="' + y00 + '" r="' + (lg / 2 + 3) + '" fill="var(--surface)" stroke="' + (on ? 'var(--fg)' : 'var(--line)') + '" stroke-width="' + (on ? 2 : 1) + '"/><image href="' + LOGOS[p.c] + '" x="' + (x - lg / 2) + '" y="' + (y00 - lg / 2) + '" width="' + lg + '" height="' + lg + '" preserveAspectRatio="xMidYMid meet"' + (LW[p.c] ? ' class="lwi"' : '') + '/>';
+      if (LOGOS[p.c]) o += '<circle cx="' + x + '" cy="' + y00 + '" r="' + cr + '" fill="var(--surface)" stroke="' + (on ? 'var(--fg)' : 'var(--line)') + '" stroke-width="' + (on ? 2 : 1) + '"/><image href="' + LOGOS[p.c] + '" x="' + (x - lg / 2) + '" y="' + (y00 - lg / 2) + '" width="' + lg + '" height="' + lg + '" preserveAspectRatio="xMidYMid meet"' + (LW[p.c] ? ' class="lwi"' : '') + '/>';
       else o += '<text class="rl" x="' + x + '" y="' + (y00 + 3) + '" text-anchor="middle">' + p.c + '</text>';
       o += '<text class="ax" x="' + x + '" y="' + (Tp + ih + 16) + '" text-anchor="middle" style="' + (on ? 'fill:var(--fg);font-weight:700' : '') + '">' + p.c + '</text>';
       if (!nar || on) o += '<text class="ax" x="' + x + '" y="' + (yh - 7) + '" text-anchor="middle" style="' + (on ? 'fill:var(--fg);font-weight:700' : '') + '">' + fk(Math.round(p.h)) + '</text><text class="ax" x="' + x + '" y="' + (yf + 15) + '" text-anchor="middle" style="' + (on ? 'fill:var(--fg);font-weight:700' : '') + '">' + fk(Math.round(p.f)) + '</text>';
