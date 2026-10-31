@@ -1125,7 +1125,14 @@ html { scroll-padding-top: 84px; }
     var pid = pm.participantId;
     if (d.items && d.items.length) S.ik[pid] = d.items; else if (S.ik[pid]) d = Object.assign({}, d, { items: S.ik[pid] });
     if (d.perkMetadata && d.perkMetadata.perks && d.perkMetadata.perks.length) S.pk[pid] = d.perkMetadata; else if (S.pk[pid]) d = Object.assign({}, d, { perkMetadata: S.pk[pid] });
-    var items = (d.items || []).filter(Boolean), ih = "";
+    var TRK = { 3340: 1, 3363: 1, 3364: 1, 3330: 1, 3341: 1 }, STK = { 2003: 1, 2010: 1, 2031: 1, 2033: 1, 2055: 1, 2138: 1, 2139: 1, 2140: 1 };
+    var items = [], trk = null, seen = {}, ih = "";
+    (d.items || []).filter(Boolean).forEach(function (id) {
+      if (TRK[id]) { trk = trk || id; return; }
+      if (STK[id]) { if (seen[id]) return; seen[id] = 1; }   // stacked consumables take one slot
+      items.push(id);
+    });
+    items = items.slice(0, 6); if (trk) items[6] = trk; else items.length = Math.min(items.length, 6);
     for (var k = 0; k < 7; k++) ih += "<span>" + (items[k] ? '<img src="' + DD + S.ver + "/img/item/" + items[k] + '.png" alt="" loading="lazy">' : "") + "</span>";
     var pk = d.perkMetadata || {}, key = (pk.perks || [])[0];
     var kIcon = key && S.perkIcon[key], sIcon = pk.subStyleId && S.perkIcon["s" + pk.subStyleId];
