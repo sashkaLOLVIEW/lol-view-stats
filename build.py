@@ -260,7 +260,7 @@ def build_game(w, logos_all):
                                     dmg=int(r.damagetochampions), cs=int(r["total cs"]), gold=int(r.totalgold)))
             d = lambda c: int(tr[c]) if pd.notna(tr[c]) else 0
             teams.append(dict(code=need_code(tr.teamname), name=tr.teamname, side=side, win=int(tr.result), k=int(pl.kills.sum()), d=int(pl.deaths.sum()), a=int(pl.assists.sum()),
-                              gold=int(tr.totalgold), towers=d("towers"), grubs=d("void_grubs"), heralds=d("heralds"), elders=d("elders"), barons=d("barons"),
+                              gold=int(tr.totalgold), towers=d("towers"), inh=d("inhibitors"), grubs=d("void_grubs"), heralds=d("heralds"), elders=d("elders"), barons=d("barons"),
                               drakes=[("infernal", d("infernals")), ("mountain", d("mountains")), ("cloud", d("clouds")), ("ocean", d("oceans")), ("chemtech", d("chemtechs")), ("hextech", d("hextechs"))],
                               bans=[dict(c=b, ic=ic(b)) for b in [tr[f"ban{i}"] for i in range(1, 6)] if isinstance(b, str)], players=players))
         series = [[0, 0]]

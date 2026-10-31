@@ -98,9 +98,10 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .chip { height: 26px; padding: 0 9px; border-radius: 4px; border: 1px solid var(--line); background: var(--chip-bg); color: var(--chip-fg); font-size: 11.5px; font-weight: 700; cursor: pointer; }
 .chip.on { background: var(--on-active-bg); color: var(--on-active-fg); border-color: var(--on-active-bg); }
 .lw { } :root:not([data-theme="dark"]) .lwf { }
-.gh { margin-top: 36px; }
+.gh { margin-top: 0; }
+#score[hidden] + .gbar { margin-top: 36px; }
 .gh-meta { font-size: 12px; color: var(--muted); margin-top: 10px; }
-.score { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: 24px; margin-top: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 28px; }
+.score { display: grid; grid-template-columns: 1fr auto auto auto 1fr; align-items: center; gap: 28px; min-height: 128px; margin-top: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 28px; }
 .sc-team { display: flex; align-items: center; gap: 16px; min-width: 0; }
 .sc-mid { }
 .sc-team.r { flex-direction: row-reverse; text-align: right; }
@@ -112,10 +113,10 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .tag.loss { background: var(--red); color: var(--on-active-fg); }
 .sc-mid { display: flex; align-items: center; justify-content: center; gap: 0; text-align: center; }
 .sc-c { text-align: center; }
-.sc-time { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-.sc-time .clk { width: 22px; height: 22px; color: var(--muted); flex: none; }
-.sc-st { display: flex; flex-direction: row; gap: 22px; margin: 0 0 0 32px; align-self: center; }
-.sc-team.r .sc-st { flex-direction: row-reverse; margin: 0 32px 0 0; }
+.sc-time { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.sc-time .clk { width: 15px; height: 15px; color: var(--muted); flex: none; }
+.sc-st { display: flex; flex-direction: row; gap: 22px; align-self: center; }
+.sc-st:not(.r) { flex-direction: row-reverse; }
 .sc-st > div { display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 42px; font-size: 14px; font-variant-numeric: tabular-nums; }
 .sc-st b { font-weight: 700; }
 .sc-st img { width: 15px; height: 15px; object-fit: contain; flex: none; }
@@ -199,7 +200,7 @@ img.lw { }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) img.lwi { filter: invert(1); } }
 :root[data-theme="dark"] img.lwi { filter: none; } :root[data-theme="light"] img.lwi { filter: invert(1); }
 @media (max-width: 1080px) { .gcols { grid-template-columns: 1fr; row-gap: 40px; } .gcols::before { display: none; } }
-@media (max-width: 640px) { .sc-st, .sc-team.r .sc-st { margin: 0 0 0 auto; flex-direction: row; gap: 8px; } .sc-st > div { min-width: 36px; font-size: 13px; } .score { grid-template-columns: 1fr; padding: 18px; gap: 14px; } .sc-team, .sc-team.r { flex-direction: row; text-align: left; } .sc-mid { order: -1; } .dm { display: flex; flex-direction: column; gap: 14px; } .dm-mid { display: none; } .dm-col { width: 100%; } .dm .pl.r .pl-s { justify-content: flex-start; } .pl.r { flex-direction: row; text-align: left; } .pl.r .bar { margin-left: 0; } .cmp-row { grid-template-columns: 1fr 84px 1fr; padding: 0 10px; } .bans { grid-template-columns: 1fr; justify-items: center; } .bans-l,.bans-r { justify-content: center; flex-wrap: wrap; } .nav { gap: 18px; padding: 0 16px; } }
+@media (max-width: 640px) { .sc-st, .sc-st:not(.r) { margin: 0; flex-direction: row; gap: 8px; justify-content: center; } .sc-st > div { min-width: 36px; font-size: 13px; } .score { grid-template-columns: 1fr; padding: 18px; gap: 14px; } .sc-team, .sc-team.r { flex-direction: row; text-align: left; } .sc-mid { order: -1; } .dm { display: flex; flex-direction: column; gap: 14px; } .dm-mid { display: none; } .dm-col { width: 100%; } .dm .pl.r .pl-s { justify-content: flex-start; } .pl.r { flex-direction: row; text-align: left; } .pl.r .bar { margin-left: 0; } .cmp-row { grid-template-columns: 1fr 84px 1fr; padding: 0 10px; } .bans { grid-template-columns: 1fr; justify-items: center; } .bans-l,.bans-r { justify-content: center; flex-wrap: wrap; } .nav { gap: 18px; padding: 0 16px; } }
 @media (prefers-reduced-motion: reduce) { .toggle::after { transition: none; } }
 .foot { margin-top: 56px; position: relative; }
 .foot-art { display: block; width: 164px; height: 107px; margin-bottom: -22px; position: relative; z-index: 0; object-fit: contain; object-position: left bottom; }
@@ -243,18 +244,18 @@ html { scroll-padding-top: 84px; }
 .mv .grow{flex:1; min-width:0;}
 .mv .num{font-variant-numeric:tabular-nums;}
 .mv #notice{display:none;}
-.mv .match{margin-top:28px !important;}
+.mv .match{margin-top:16px !important;}
 .mv .notice{margin-top:28px; min-height:27px; display:flex; align-items:center; padding:4px 10px; border-radius:4px; font-size:12.5px; font-weight:500; border:1px solid var(--line); background:var(--chip-bg); color:var(--muted);}
 .mv .notice b{color:var(--fg); margin-right:6px;}
 .mv .notice.demo{background:#4a9bb9; border-color:#86cbe6; color:#0f0f0f;}
 .mv .notice.err{background:var(--live-bg); border-color:var(--live-line); color:var(--fg);}
-.mv .match{margin-top:16px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:16px; padding:18px 24px; border:1.5px solid var(--live-line); background:var(--live-bg); border-radius:14px;}
+.mv .match{margin-top:16px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:24px; min-height:128px; padding:22px 28px; border:1px solid var(--live-line); background:var(--live-bg); border-radius:10px;}
 .mv .match.idle{border-color:var(--line); background:var(--surface);}
 .mv .side{display:flex; align-items:center; gap:14px; min-width:0;}
 .mv .side.r{justify-content:flex-end; text-align:right;}
-.mv .side img,.mv .side .ph{width:48px; height:48px; object-fit:contain; flex:none;}
+.mv .side img,.mv .side .ph{width:64px; height:64px; object-fit:contain; flex:none;}
 .mv .ph{display:grid; place-items:center; border-radius:50%; border:3px solid var(--line); font-weight:700; font-size:12px; color:var(--muted);}
-.mv .side .tn{font-size:18px; font-weight:700; line-height:1.1;}
+.mv .side .tn{font-size:22px; font-weight:700; line-height:1.1;}
 .mv .side .tc{font-size:12px; color:var(--muted); font-weight:500;}
 .mv .center{text-align:center;}
 .mv .mscore{font-size:30px; font-weight:700; letter-spacing:.08em; font-variant-numeric:tabular-nums;}
@@ -530,10 +531,10 @@ html { scroll-padding-top: 84px; }
   var RIC = {"Top": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 114 112\" fill=\"none\" aria-hidden=\"true\"><path d=\"M72 71L42 71L42 41L72 41L72 71Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M101.055 1.13167e-06L-9.79135e-06 9.9662e-06L-9.56827e-07 101.055L22 79.0552L22 21L80.0552 21L101.055 1.13167e-06Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M35.5112 91L92 91L92 34.5112L114 12.5112L114 112L14.5112 112L35.5112 91Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M101.055 1.13167e-06L-9.79135e-06 9.9662e-06L-9.56827e-07 101.055L22 79.0552L22 21L80.0552 21L101.055 1.13167e-06Z\" fill=\"currentColor\"/></svg>", "Jungle": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 112 125\" fill=\"none\" aria-hidden=\"true\"><path d=\"M64.5 60C66.9 64.8 68.1667 71.3333 68.5 74L74 61C73.6667 60 73.2 56 74 48C74.8 40 84.6667 13.3333 89.5 1C85.3333 6.66667 76 19.5 72 25.5C68 31.5 61.3333 44 58.5 49.5C59.5 51 62.1 55.2 64.5 60Z\" fill=\"currentColor\"/> <path d=\"M81 97.5C78.2 99.9 74.5 104.167 73 106L72.5 91.5C73 89.5 74.3 84.5 75.5 80.5C76.7 76.5 80 68 86.5 56.5C88.1667 54 92.9 47.7 96.5 44.5C100.1 41.3 106 37.5 111.5 34.5C104 43 105 42 98 54.5C92.302 64.6751 91.3333 80.6667 91.5 90C89.1667 91.5 83.8 95.1 81 97.5Z\" fill=\"currentColor\"/> <path d=\"M61 89C61 108.2 57.6667 121 56 125C43.2 105.8 26.6667 93 20 89C19.5 83 18 69.1 16 61.5C14 53.9 4.5 40.3333 0 34.5C4.5 36.5 15.4 42.2 23 49C30.6 55.8 35.8333 66.5 37.5 71C37.5 66.3333 37.2 54.4 36 44C34.8 33.6 25.8333 10.3333 21.5 0C25.3333 5.83333 33 15 39 25.5C43.1287 32.7252 61 65 61 89Z\" fill=\"currentColor\"/></svg>", "Mid": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 114 112\" fill=\"none\" aria-hidden=\"true\"><path d=\"M0 0H84.7495L63.7495 21H22V62.7495L0 84.7495V0Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M29.312 112H114V27.3118L92 49.3118V91H50.312L29.312 112Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M114 18.2324L20.2324 112H0V93.8281L93.8291 0H114V18.2324Z\" fill=\"currentColor\"/></svg>", "Bot": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 114 112\" fill=\"none\" aria-hidden=\"true\"><path d=\"M42 41H72V71H42V41Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M12.9448 112H114V10.9448L92 32.9448V91H33.9448L12.9448 112Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M78.4888 21H22V77.4888L0 99.4888V0H99.4888L78.4888 21Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M12.9448 112H114V10.9448L92 32.9448V91H33.9448L12.9448 112Z\" fill=\"currentColor\"/></svg>", "Support": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 136 114\" fill=\"none\" aria-hidden=\"true\"><path d=\"M63 39.5L67.5 45.5L72.5 39.5L84.5 100.5L67.5 114L51.5 100.5L63 39.5Z\" fill=\"currentColor\"/> <path d=\"M87.5 65L78.5 36L92 22.5L136 24C134 26.1667 128.9 30.7 124.5 33.5C120.1 36.3 114 39.5 108.5 40H97L108.5 56.5L87.5 65Z\" fill=\"currentColor\"/> <path d=\"M67.5 32.5L47 9L51.5 0H84.5L88.5 9L67.5 32.5Z\" fill=\"currentColor\"/> <path d=\"M56 36L44 24H0C1.66667 25.3333 3 29.5 13 34.5C20.7398 38.3699 27.1667 40.1667 28.5 40H38.5L27 56.5L48.5 65L56 36Z\" fill=\"currentColor\"/></svg>"};
   function render(g) {
     var A = g.teams[0], B = g.teams[1];
-    var stat = function (t, r) { return '<div class="sc-st' + (r ? ' r' : '') + '"><div title="Kills">' + im('kills', 'si') + '<b>' + t.k + '</b></div><div title="Gold">' + im('gold', 'si') + '<b>' + k1(t.gold) + '</b></div><div title="Turrets">' + im('turret', 'si') + '<b>' + t.towers + '</b></div></div>'; };
-    var sideTeam = function (t, r) { return '<div class="sc-team' + (r ? ' r' : '') + '">' + logo(t.code, 64) + '<div><a class="sc-name" style="display:block" href="team.html#' + t.code + '">' + t.code + '</a><div class="sc-full">' + t.name + '</div><span class="tag' + (t.win ? ' win' : ' loss') + '">' + (t.win ? 'WIN' : 'LOSS') + '</span></div>' + stat(t, r) + '</div>'; };
+    var stat = function (t, r) { return '<div class="sc-st' + (r ? ' r' : '') + '"><div title="Kills">' + im('kills', 'si') + '<b>' + t.k + '</b></div><div title="Gold">' + im('gold', 'si') + '<b>' + k1(t.gold) + '</b></div><div title="Turrets">' + im('turret', 'si') + '<b>' + t.towers + '</b></div><div title="Inhibitors">' + im('inhibitor', 'si') + '<b>' + (t.inh || 0) + '</b></div></div>'; };
+    var sideTeam = function (t, r) { return '<div class="sc-team' + (r ? ' r' : '') + '">' + logo(t.code, 64) + '<div><a class="sc-name" style="display:block" href="team.html#' + t.code + '">' + t.code + '</a><div class="sc-full">' + t.name + '</div><span class="tag' + (t.win ? ' win' : ' loss') + '">' + (t.win ? 'WIN' : 'LOSS') + '</span></div></div>'; };
     var CLK = '<svg class="clk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
-    $('score').innerHTML = sideTeam(A, 0) + '<div class="sc-mid"><div class="sc-c"><div class="sc-time">' + CLK + fmtT(g.len) + '</div>' + (g.patch ? '<div class="sc-sub">Patch ' + g.patch + '</div>' : '') + '</div></div>' + sideTeam(B, 1);
+    $('score').innerHTML = sideTeam(A, 0) + stat(A, 0) + '<div class="sc-mid"><div class="sc-c"><div class="sc-time">' + CLK + fmtT(g.len) + '</div>' + (g.patch ? '<div class="sc-sub">Patch ' + g.patch + '</div>' : '') + '</div></div>' + stat(B, 1) + sideTeam(B, 1);
     var _m = 'Worlds 2026 · Main stage · Swiss Round 1 · Match ' + g.n + ' · ' + g.date + ' · Blue side ' + A.code + ' vs Red side ' + B.code;
     var c = '';
     c += row('K/D/A', A.k + '/' + A.d + '/' + A.a, B.k + '/' + B.d + '/' + B.a, lead(A.k, B.k, 1));
@@ -606,7 +607,7 @@ html { scroll-padding-top: 84px; }
           return { role: pm.role, name: nm.indexOf(cut) === 0 ? nm.slice(cut.length) : nm, champ: pm.championId, ic: pm.championId, k: fp.kills || 0, d: fp.deaths || 0, a: fp.assists || 0, dmg: dp.championDamageShare || 0, cs: fp.creepScore || 0, gold: fp.totalGold || 0, it: it, rn: pk.perks && pk.perks.length ? [pk.perks[0], pk.subStyleId] : null };
         });
         if (tm.image && !D.logos[tm.code]) D.logos[tm.code] = tm.image;
-        return { code: tm.code, name: tm.name, side: side, win: win ? 1 : 0, k: ft.totalKills || ks, d: ds, a: as, gold: ft.totalGold || 0, towers: ft.towers || 0, grubs: 0, heralds: 0, elders: elders, barons: ft.barons || 0,
+        return { code: tm.code, name: tm.name, side: side, win: win ? 1 : 0, k: ft.totalKills || ks, d: ds, a: as, gold: ft.totalGold || 0, towers: ft.towers || 0, inh: ft.inhibitors || 0, grubs: 0, heralds: 0, elders: elders, barons: ft.barons || 0,
           drakes: ['infernal', 'mountain', 'cloud', 'ocean', 'chemtech', 'hextech'].map(function (k) { return [k, dr[k] || 0]; }), bans: [], players: players };
       };
       var A = team('Blue', bt, lf.blueTeam, blueWin === true), B = team('Red', rt, lf.redTeam, blueWin === false);
@@ -618,7 +619,7 @@ html { scroll-padding-top: 84px; }
   }
   function note(msg) { $('score').innerHTML = '<div class="sc-mid"><div class="sc-c"><div class="sc-sub">' + msg + '</div></div></div>'; $('cmp').innerHTML = ''; $('gd').innerHTML = ''; $('dm').innerHTML = ''; $('bans').innerHTML = ''; $('mdet').innerHTML = ''; }
   function find(id) { for (var j = 0; j < D.games.length; j++) if (D.games[j].id === id) return D.games[j]; return null; }
-  return { find: find, render: render, fromFeed: fromFeed, note: note };
+  return { find: find, render: render, fromFeed: fromFeed, note: note, addIcon: function (k, v) { IC[k] = v; } };
   })();
 
   /* ---------- config ---------- */
@@ -636,6 +637,7 @@ html { scroll-padding-top: 84px; }
   var PS = {"ri": {}, "p": {}, "f": {}, "t": {}};   // Worlds 2026 season stats and ratings per team|role, filled in by build.py
   var MAP = {};
 
+  GV.addIcon("inhibitor", IC.inhibitor);
   /* ---------- api ---------- */
   function api(path) {
     return fetch(API + path, { headers: { "x-api-key": API_KEY } }).then(function (r) {
