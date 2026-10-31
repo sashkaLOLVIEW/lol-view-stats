@@ -234,6 +234,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 
   <main class="board" id="board" aria-label="Scoreboard"></main>
   <div class="ovgrid" id="ovgrid"><section class="cmps" id="cmpsec" hidden></section><section class="cmps" id="tmsec" hidden></section></div>
+  <div id="pgwrap" hidden style="margin-top:16px"></div>
 </div>
 
 <script>
@@ -252,14 +253,14 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   var PC = {};   // season stats of a player on a champion, filled in by build.py
   var PS = {"ri": {}, "p": {}, "f": {}, "t": {}};   // Worlds 2026 season stats and ratings per team|role, filled in by build.py
   var MAP = {};
-  function loadMap() { fetch("live-map.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (m) { MAP = m || {}; if (S.frame) render(); }).catch(function () {}); }
+  function loadMap() { fetch("live-map.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (m) { MAP = m || {}; if (S.match) $("games").innerHTML = chipsHtml(); if (S.frame) render(); }).catch(function () {}); }
   loadMap(); setInterval(loadMap, 120000);
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
   var fmt = function (n) { return n >= 1000 ? (n / 1000).toFixed(1) + "k" : String(n); };
 
   var matchId = (location.hash.match(/live\/(\d+)/) || [])[1] || null;
-  var S = { upcoming: false, view: "ov", ik: {}, pk: {}, hp: {}, hpShown: {}, boardHtml: "", spellIcon: {}, open: {}, perkIcon: {}, ver: "14.20.1", match: null, gameId: null, gameNo: 1, blueTeam: null, redTeam: null, meta: null, frame: null, details: null, demo: false, updated: null, timer: null };
+  var S = { upcoming: false, pg: ((location.hash.match(/\/g\/(.+)$/) || [])[1] ? decodeURIComponent(location.hash.match(/\/g\/(.+)$/)[1]) : null), pgShown: null, view: (/\/g\/./.test(location.hash) ? "post" : "ov"), ik: {}, pk: {}, hp: {}, hpShown: {}, boardHtml: "", spellIcon: {}, open: {}, perkIcon: {}, ver: "14.20.1", match: null, gameId: null, gameNo: 1, blueTeam: null, redTeam: null, meta: null, frame: null, details: null, demo: false, updated: null, timer: null };
 
   /* ---------- api ---------- */
   function api(path) {
@@ -396,13 +397,27 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   }
   function logoHtml(t) { return t && t.image ? '<img src="' + esc(t.image) + '" alt="">' : '<span class="ph">' + esc((t && t.code || "?").slice(0, 3)) + "</span>"; }
 
+  function setHash() { try { history.replaceState(null, "", "#live/" + matchId + (S.view === "post" && S.pg ? "/g/" + encodeURIComponent(S.pg) : "")); } catch (e) {} }
+  // a finished game: the post game page (game.html) shown inside this page, so the whole match lives at one address
+  function showPost() {
+    var w = $("pgwrap"); w.hidden = false;
+    ["gold", "board"].forEach(function (id) { $(id).innerHTML = ""; }); S.boardHtml = "";
+    $("ovgrid").style.display = "none"; $("gold").style.display = "none"; $("board").style.display = "none";
+    $("cmpsec").hidden = true; $("tmsec").hidden = true; $("ovgrid").className = "ovgrid";
+    if (S.pgShown !== S.pg) {
+      S.pgShown = S.pg;
+      w.innerHTML = '<iframe id="pgframe" title="Game" src="game.html?embed=1#' + encodeURI(S.pg) + '" style="display:block;width:100%;height:900px;border:0;background:transparent" scrolling="no"></iframe>';
+      var f = $("pgframe"); f.addEventListener("load", function () { try { var t = root.getAttribute("data-theme"); if (t) f.contentDocument.documentElement.setAttribute("data-theme", t); } catch (e) {} });
+    }
+  }
+  window.addEventListener("message", function (e) { var f = $("pgframe"); if (f && e.data && e.data.lvH && e.source === f.contentWindow) f.style.height = Math.max(300, e.data.lvH) + "px"; });
   function chipsHtml() {
     var ov = '<button class="chip' + (S.view === "ov" || S.upcoming ? " on" : "") + '" type="button" data-ov="1">Overview</button>';
     if (S.upcoming) return ov;
     return ov + (S.match.games || []).map(function (g) {
       // a finished game that is already in the site's data opens its post game page (same as Recent Results)
-      if (g.state === "completed") return '<a class="chip" style="display:inline-flex;align-items:center" href="game.html#' + (MAP[g.id] ? encodeURIComponent(MAP[g.id]) : "riot/" + matchId + "/" + g.id) + '">Game ' + g.number + " &rsaquo;</a>";
-      return '<button class="chip' + (S.view !== "ov" && g.number === S.gameNo ? " on" : "") + '" type="button" data-id="' + esc(g.id) + '" data-n="' + g.number + '">Game ' + g.number + "</button>";
+      if (g.state === "completed") { var ph = MAP[g.id] ? MAP[g.id] : "riot/" + matchId + "/" + g.id; return '<button class="chip' + (S.view === "post" && (S.pg === ph || S.pg === MAP[g.id] || S.pg.split("/").pop() === g.id) ? " on" : "") + '" type="button" data-pg="' + esc(ph) + '">Game ' + g.number + "</button>"; }
+      return '<button class="chip' + (S.view === "game" && g.number === S.gameNo ? " on" : "") + '" type="button" data-id="' + esc(g.id) + '" data-n="' + g.number + '">Game ' + g.number + "</button>";
     }).join("");
   }
   // the next game of a live series has not started: show the series, with finished games reachable
@@ -413,10 +428,12 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     $("match").className = "match idle";
     $("match").innerHTML =
       '<div class="side">' + logoHtml(tm[0]) + '<div><div class="tn">' + esc(tm[0].name) + '</div><div class="tc">' + esc(tm[0].code) + "</div></div></div>" +
-      '<div class="center"><div class="score">' + wins(tm[0]) + ":" + wins(tm[1]) + '</div><div class="state">' + (S.upcoming ? "Upcoming" : done ? "Series complete" : "Game " + gn + " &middot; Waiting to start") + "</div></div>" +
+      '<div class="center"><div class="score">' + wins(tm[0]) + ":" + wins(tm[1]) + '</div><div class="state">' + (S.upcoming ? "Upcoming" : done ? "Series complete" : S.view === "post" ? "Series in progress" : "Game " + gn + " &middot; Waiting to start") + "</div></div>" +
       '<div class="side r"><div><div class="tn">' + esc(tm[1].name) + '</div><div class="tc">' + esc(tm[1].code) + "</div></div>" + logoHtml(tm[1]) + "</div>";
     $("games").innerHTML = chipsHtml(); $("gold").innerHTML = ""; $("board").innerHTML = ""; $("cmpsec").hidden = true; $("tmsec").hidden = true; $("ovgrid").className = "ovgrid";
-    if (S.view === "ov") drawCmp(tm[0], tm[1]);
+    $("pgwrap").hidden = S.view !== "post"; $("ovgrid").style.display = S.view === "post" ? "none" : ""; $("gold").style.display = $("board").style.display = S.view === "post" ? "none" : "";
+    if (S.view === "post") showPost();
+    else if (S.view === "ov") drawCmp(tm[0], tm[1]);
     setNotice("", "<b>Live</b> Game " + S.gameNo + " has not started yet. This page updates by itself.");
   }
   // team comparison, role by role: season stats and rating from the event data (static)
@@ -518,6 +535,8 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       '<div class="gbar"><i class="b" style="width:' + (bg / tot * 100).toFixed(1) + '%"></i><i class="r" style="width:' + (rg / tot * 100).toFixed(1) + '%"></i></div>' +
       '<div class="glabels"><span></span><span>' + (diff === 0 ? "Even" : (diff > 0 ? esc(bt.code) : esc(rt.code)) + " +" + fmt(Math.abs(diff))) + "</span><span></span></div>";
 
+    $("pgwrap").hidden = S.view !== "post"; $("ovgrid").style.display = S.view === "post" ? "none" : ""; $("gold").style.display = $("board").style.display = S.view === "post" ? "none" : "";
+    if (S.view === "post") { showPost(); return; }
     if (S.view === "ov") { $("gold").innerHTML = ""; $("board").innerHTML = ""; S.boardHtml = ""; drawCmp(bt, rt); return; }
     $("tmsec").hidden = true; $("ovgrid").className = "ovgrid"; drawChamps(bt, rt);
     // only touch the DOM when something visible changed, so item icons never blink; health bars slide to their new value
@@ -606,10 +625,12 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 
   /* ---------- events ---------- */
   $("games").addEventListener("click", function (e) {
+    var pb = e.target.closest("button[data-pg]");
+    if (pb) { S.view = "post"; S.pg = pb.getAttribute("data-pg"); S.boardHtml = ""; setHash(); if (S.frame) render(); else renderWaiting(); return; }
     var ob = e.target.closest("button[data-ov]");
-    if (ob) { S.view = "ov"; S.boardHtml = ""; if (S.frame) render(); else renderWaiting(); return; }
+    if (ob) { S.view = "ov"; S.boardHtml = ""; setHash(); if (S.frame) render(); else renderWaiting(); return; }
     var b = e.target.closest("button[data-id]"); if (!b || b.dataset.id === "demo") return;
-    S.view = "game"; S.gameId = b.dataset.id; S.gameNo = +b.dataset.n; S.frame = null; S.details = null; S.ik = {}; S.pk = {}; S.hp = {}; S.hpShown = {}; S.boardHtml = ""; tick();
+    S.view = "game"; setHash(); S.gameId = b.dataset.id; S.gameNo = +b.dataset.n; S.frame = null; S.details = null; S.ik = {}; S.pk = {}; S.hp = {}; S.hpShown = {}; S.boardHtml = ""; tick();
   });
   $("board").addEventListener("click", function (e) {
     var b = e.target.closest("button.chev"); if (!b) return;
@@ -620,6 +641,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   $("theme").addEventListener("click", function () {
     var cur = root.getAttribute("data-theme") || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"), nx = cur === "dark" ? "light" : "dark";
     root.setAttribute("data-theme", nx); try { localStorage.setItem("theme", nx); } catch (e) {}
+    try { var pf = $("pgframe"); if (pf) pf.contentDocument.documentElement.setAttribute("data-theme", nx); } catch (e) {}
   });
 
   // current Data Dragon version for champion and item icons

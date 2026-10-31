@@ -232,6 +232,12 @@ html { scroll-padding-top: 84px; }
 .topbar { position: sticky; top: 0; z-index: 60; margin-top: -12px; padding-top: 12px; padding-bottom: 12px; margin-bottom: -12px; }
 .topbar::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: var(--bg); }
 .topbar::after { content: ""; position: absolute; z-index: -1; left: 50%; width: 100vw; transform: translateX(-50%); top: 100%; height: 40px; pointer-events: none; background: linear-gradient(to bottom, var(--bg), color-mix(in srgb, var(--bg) 0%, transparent)); }
+html.emb .topbar, html.emb .foot, html.emb #games { display: none !important; }
+html.emb body { padding: 0 !important; margin: 0 !important; background: transparent !important; }
+html.emb .page { padding: 0 !important; margin: 0 !important; }
+html.emb #score, html.emb .gh { margin-top: 0 !important; }
+html.emb .gcols { margin-bottom: 0 !important; }
+html.emb .gbar { justify-content: flex-end; }
 </style>
 </head>
 <body>
@@ -362,18 +368,6 @@ html { scroll-padding-top: 84px; }
     var ser = []; D.games.forEach(function (x, j) { if (x.sid === g.sid) ser.push(j); });
     var box = $('games');
     box.innerHTML = g.live && g.chips ? g.chips : ser.map(function (j, n) { return '<button class="chip' + (j === i ? ' on' : '') + '" type="button" aria-pressed="' + (j === i) + '" data-i="' + j + '">GAME ' + (n + 1) + '</button>'; }).join('');
-    var CH = 'class="chip" style="display:inline-flex;align-items:center"';
-    if (g.mid && !(g.live && g.chips)) {
-      box.insertAdjacentHTML('afterbegin', '<a ' + CH + ' href="live.html#live/' + g.mid + '">OVERVIEW</a>');
-      // games of the series that are not in the site data yet (live or not started) come from Riot's schedule feed
-      var mid = g.mid, need = ser.length, put = function (m) {
-        (m.games || []).forEach(function (x) { if (x.number > need && !box.querySelector('[data-x="' + x.number + '"]')) box.insertAdjacentHTML('beforeend', '<a ' + CH + ' data-x="' + x.number + '" href="' + (x.state === 'completed' ? 'game.html#riot/' + mid + '/' + x.id : 'live.html#live/' + mid) + '">GAME ' + x.number + '</a>'); });
-      };
-      window.__ev = window.__ev || {};
-      if (window.__ev[mid]) put(window.__ev[mid]);
-      else fetch('https://esports-api.lolesports.com/persisted/gw/getEventDetails?hl=en-US&id=' + mid, { headers: { 'x-api-key': '0TvQnueqKa5mxJntVWt0w4LpLfEkrV1Ta8rQBb9Z' } })
-        .then(function (r) { return r.json(); }).then(function (j) { var m = j.data.event.match; window.__ev[mid] = m; put(m); }).catch(function () {});
-    }
     $('mdet').innerHTML = '<span>' + (D.tournament || 'Worlds 2026') + '</span><span class="dot">&middot;</span><span>' + g.date + '</span>' + (g.bo ? '<span class="bo">BO' + g.bo + '</span>' : '');
     Array.prototype.forEach.call(box.querySelectorAll('button.chip'), function (b) { b.addEventListener('click', function () { render(+b.getAttribute('data-i')); }); });
   }
@@ -432,7 +426,7 @@ html { scroll-padding-top: 84px; }
       var A = team('Blue', bt, lf.blueTeam, blueWin === true), B = team('Red', rt, lf.redTeam, blueWin === false);
       var len = Math.round((Date.parse(lf.rfc460Timestamp) - L.t0) / 1000), gold = [[0, 0]].concat(L.ser);
       gold.push([+(len / 60).toFixed(1), A.gold - B.gold]);
-      var chips = '<a class="chip" style="display:inline-flex;align-items:center" href="live.html#live/' + mid + '">OVERVIEW</a>' + L.m.games.filter(function (x) { return x.state !== 'unstarted'; }).map(function (x) {
+      var chips = L.m.games.filter(function (x) { return x.state !== 'unstarted'; }).map(function (x) {
         if (x.id === gid) return '<button class="chip on" type="button" aria-pressed="true">GAME ' + x.number + '</button>';
         return '<a class="chip" style="display:inline-flex;align-items:center" href="' + (x.state === 'inProgress' ? 'live.html#live/' + mid : 'game.html#riot/' + mid + '/' + x.id) + '">GAME ' + x.number + '</a>';
       }).join('');
@@ -445,7 +439,22 @@ html { scroll-padding-top: 84px; }
   window.addEventListener('hashchange', function () { if (LV || /^#riot\//.test(location.hash)) location.reload(); });
   var LV = location.hash.match(/^#riot\/(\d+)\/(\d+)/);
   var LJ = -1; if (LV) D.games.forEach(function (g, j) { if (g.id === LV[2]) LJ = j; });
-  if (LJ > -1) render(LJ); else if (LV) loadLive(LV[1], LV[2]); else render(hi);
+  // One page per match: opened on its own, a game goes to the match page (live.html) with this game selected. The match page shows this file in a frame (?embed=1).
+  var EMB = /[?&]embed=1/.test(location.search), goLive = null;
+  if (!EMB) {
+    if (LV) goLive = LV[1] + '/g/' + encodeURIComponent('riot/' + LV[1] + '/' + LV[2]);
+    else if (location.hash.length > 1 && D.games[hi] && D.games[hi].mid) goLive = D.games[hi].mid + '/g/' + encodeURIComponent(D.games[hi].id);
+  }
+  if (goLive) location.replace('live.html#live/' + goLive);
+  else {
+    if (EMB) {
+      document.documentElement.classList.add('emb');
+      var bs = document.createElement('base'); bs.target = '_top'; document.head.appendChild(bs);
+      var sendH = function () { try { parent.postMessage({ lvH: document.documentElement.scrollHeight }, '*'); } catch (e) {} };
+      if (window.ResizeObserver) new ResizeObserver(sendH).observe(document.body); window.addEventListener('load', sendH); setInterval(sendH, 1500);
+    }
+    if (LJ > -1) render(LJ); else if (LV) loadLive(LV[1], LV[2]); else render(hi);
+  }
   var root = document.documentElement, btn = $('theme');
   try { var saved = localStorage.getItem('theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
   btn.addEventListener('click', function () {
