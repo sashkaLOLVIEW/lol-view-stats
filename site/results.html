@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Recent Results</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
@@ -384,7 +385,7 @@ html { scroll-padding-top: 84px; }
 
   <main class="rs">
     <h2 class="sec">Recent Results</h2>
-    <div class="rs-sub">Worlds 2026 · data through Oct 28 (Oracle's Elixir) · UK time</div>
+    <div class="rs-sub">Worlds 2026 · data through Oct 28 (Oracle's Elixir) · your local time</div>
     <div class="stack" id="results"></div>
     <div class="rs-more"><button class="chip" id="more" type="button">Show more</button></div>
   </main>
@@ -431,7 +432,7 @@ html { scroll-padding-top: 84px; }
   var shown = 10;
   function row(m) {
     var w = +m[1].split(':')[0], l = +m[1].split(':')[1];
-    return '<a class="row match res" href="' + U.game + '#' + m[5] + '"><div class="lgw"><span class="lg">' + worlds(24) + '</span><span class="bo">' + (w + l > 1 ? 'BO3' : 'BO1') + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + logo(m[0], 32) + '<span class="score">' + w + ':<span class="lo">' + l + '</span></span>' + logo(m[2], 32) + '<span class="tag lo">' + m[2] + '</span></div><div class="when"><span>' + m[4] + '</span></div></a>';
+    return '<a class="row match res" href="' + U.game + '#' + m[5] + '"><div class="lgw"><span class="lg">' + worlds(24) + '</span><span class="bo">' + (w + l > 1 ? 'BO3' : 'BO1') + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + logo(m[0], 32) + '<span class="score">' + w + ':<span class="lo">' + l + '</span></span>' + logo(m[2], 32) + '<span class="tag lo">' + m[2] + '</span></div><div class="when"><span>' + new Date(m[6]).toLocaleDateString('en-US', {month: 'short', day: 'numeric'}) + '</span></div></a>';
   }
   function render() {
     $('results').innerHTML = RES.length ? RES.slice(0, shown).map(row).join('') : '<div class="row" style="color:var(--muted);font-size:12px">No finished matches yet</div>';

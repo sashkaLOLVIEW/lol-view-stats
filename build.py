@@ -201,7 +201,7 @@ def build_recent(w, extra=()):
             wc = b.code if b.result else r.code; wins[wc] = wins.get(wc, 0) + 1
         ws = max(wins, key=wins.get); ls = [c for c in s_["pair"] if c != ws][0]
         lastg = gl[-1]; d = lastg[0].tz_localize("UTC").tz_convert(TZ)
-        out.append((lastg[0], [ws, "%d:%d" % (wins[ws], wins.get(ls, 0)), ls, d.strftime("%H:%M"), d.strftime("%b %-d"), gl[0][4]]))
+        out.append((lastg[0], [ws, "%d:%d" % (wins[ws], wins.get(ls, 0)), ls, d.strftime("%H:%M"), d.strftime("%b %-d"), gl[0][4], int(lastg[0].tz_localize("UTC").timestamp() * 1000)]))
     out.sort(key=lambda x: x[0], reverse=True)
     return [x[1] for x in out[:200]]
 
