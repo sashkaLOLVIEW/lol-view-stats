@@ -178,14 +178,20 @@ img.lwi { }
 .gr .gs .c { text-align: center; min-width: 46px; }
 .gr .gs .top { font-size: 14px; color: var(--fg); } .gr .gs .top b { font-weight: 700; }
 .gr .gs .sub { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
-@media (max-width: 1200px) and (min-width: 641px) { .gr .gs .c:last-child { display: none; } }
 .gr .gs .top { letter-spacing: -.02em; } .gr .gs .top i { font-style: normal; color: var(--dim); margin: 0 1px; }
 a.gr.gm { color: inherit; text-decoration: none; transition: border-color .15s; } a.gr.gm:hover { border-color: var(--muted); }
 .gr .r { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 56px; }
 .gr .r .pv { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .gr .r .ev { display: block; line-height: 0; } .gr .r .ev img { width: 22px; height: 22px; border-radius: 0; }
 .wi-l { display: none; } .wi-d { display: block; }
-.gr.gm { grid-template-columns: 56px minmax(0, 300px) auto 1fr; column-gap: 30px; }
+.gr.gm { grid-template-columns: 56px 230px auto auto 1fr; column-gap: 28px; }
+.gr .ld .its { margin-top: 0; }
+.gl, #hist, #games { display: flex; flex-direction: column; gap: 12px; }
+.gl, #hist { container-type: inline-size; }
+@container (max-width: 900px) { .gr.gm { grid-template-columns: 56px 150px auto auto 1fr; column-gap: 18px; } .gr .gs .c:last-child { display: none; } }
+@container (max-width: 700px) { .gr.gm { grid-template-columns: 56px 140px auto auto; } .gr.gm .r { display: none; } }
+@container (max-width: 560px) { .gr.gm { grid-template-columns: 52px minmax(0, 1fr) auto; } .gr.gm .ld { display: none; } }
+.gl, #hist { margin-top: 18px; }
 .gr .r { justify-self: end; }
 .gr .its { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
 .gr .its .rs { width: 24px; height: 24px; margin-right: 4px; }
@@ -195,8 +201,7 @@ a.gr.gm { color: inherit; text-decoration: none; transition: border-color .15s; 
 .gr .its .ig i { display: block; background: var(--pill); border: 1px solid var(--dim); box-sizing: border-box; }
 .gr .its .tc { display: flex; flex-direction: column; justify-content: center; gap: 3px; margin-left: 2px; }
 .gr .its .tc .trw, .gr .its .tc i { width: 20px; height: 20px; margin: 0; align-self: auto; border-radius: 4px; }
-@media (max-width: 1200px) and (min-width: 641px) { .gr.gm { column-gap: 20px; } }
-@media (max-width: 640px) { .gr.gm { grid-template-columns: 52px minmax(0, 1fr) auto; } .gr.gm .r { display: none; } .gr .gs .c:last-child { display: none; } }
+@media (max-width: 640px) { .gr.gm { grid-template-columns: 52px minmax(0, 1fr) auto; } .gr.gm .r, .gr.gm .ld { display: none; } .gr .gs .c:last-child { display: none; } }
 
 .gr.gm .rl .res { background: none; padding: 0; height: auto; line-height: 1.2; font-size: 12px; font-weight: 800; letter-spacing: .06em; color: var(--muted); }
 .gr.gm .rl .res.w { background: none; color: var(--green); } .gr.gm .rl .res.l { background: none; color: var(--red); }
@@ -455,7 +460,7 @@ html { scroll-padding-top: 84px; }
       var o = OG[g.gid + '|' + g.role + '|' + g.opp], len = Math.round(g.gl * 60), mm = Math.floor(len / 60), ss = ('0' + (len % 60)).slice(-2), kp = g.tk ? Math.round((g.k + g.a) / g.tk * 100) : null;
       var dm = /^\d{4}-(\d{2})-(\d{2})/.exec(g.date || ''), dt = dm ? new Date(2026, +dm[1] - 1, +dm[2]).toLocaleDateString('en-GB', {day: 'numeric', month: 'short'}) : '';
       return '<a class="gr gm" href="' + U.game + '#' + g.gid + '"><div class="rl"><span class="res ' + (g.win ? 'w' : 'l') + '">' + (g.win ? 'VICTORY' : 'DEFEAT') + '</span><div class="gt">' + mm + ':' + ss + '</div></div>'
-        + '<div><div class="t"><span class="pt">' + gicon(g.ic, g.champ, 'cm') + '<span>' + g.champ + '</span></span> <span class="vs">vs ' + (o ? gicon(o.g.ic, o.g.champ, 'cm') : '') + logo(g.opp, 16) + ' ' + (o ? o.n : g.opp) + '</span></div>' + itrow(g.it, rnrow(g)) + '</div>'
+        + '<div><div class="t"><span class="pt">' + gicon(g.ic, g.champ, 'cm') + '<span>' + g.champ + '</span></span> <span class="vs">vs ' + (o ? gicon(o.g.ic, o.g.champ, 'cm') : '') + logo(g.opp, 16) + ' ' + (o ? o.n : g.opp) + '</span></div>' + '</div><div class="ld">' + itrow(g.it, rnrow(g)) + '</div>'
         + '<div class="gs"><div class="c"><div class="top"><b>' + g.k + '</b><i>/</i><b>' + g.d + '</b><i>/</i><b>' + g.a + '</b></div><div class="sub">' + ((g.k + g.a) / Math.max(1, g.d)).toFixed(2) + ' KDA</div></div>'
         + '<div class="c"><div class="top"><b>' + Math.round(g.cs) + '</b> CS</div><div class="sub">' + (g.cs / g.gl).toFixed(1) + ' CS/M</div></div>'
         + '<div class="c"><div class="top"><b>' + (kp == null ? '-' : kp + '%') + '</b></div><div class="sub">KP%</div></div></div>'
