@@ -394,6 +394,10 @@ html { scroll-padding-top: 84px; }
 .page > .topbar + * { margin-top: 52px !important; padding-top: 0 !important; }
 .page > .topbar + * > .champs:first-child { margin-top: 0; }
 </style>
+<style>
+/* navbar as wide as the first column of the homepage grid (316fr of 316fr 316fr 336fr, 32px gaps) */
+@media (min-width: 1081px) { .page > .topbar > .nav { flex: none; box-sizing: border-box; width: calc((100% - 64px) * 316 / 968); justify-content: space-between; } }
+</style>
 <div class="page">
   <header class="topbar">
     <nav class="nav" aria-label="Main"><a href="index.html">Home</a><a href="rankings.html">Rankings</a><a href="players.html">Players</a><a href="champions.html" aria-current="page">Champions</a>
