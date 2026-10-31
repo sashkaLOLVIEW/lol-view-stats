@@ -321,7 +321,7 @@ def build_profiles(w, faces_fallback, logos_all):
         rows.append(dict(player=r.playername, team=team, opp=opp, role=ROLE[r.position], champ=r.champion, ic=ic(r.champion), win=int(r.result), k=int(r.kills), d=int(r.deaths), a=int(r.assists),
                          cs=float(r["total cs"]), gl=r.gamelength / 60, dmg=float(r.damagetochampions), gold=float(r.totalgold), tk=float(tk[(r.gameid, r.side)]), ds=float(r.damageshare), gs=float(r.earnedgoldshare),
                          csd=float(r.csdiffat15) if pd.notna(r.csdiffat15) else None, gd=float(r.golddiffat15) if pd.notna(r.golddiffat15) else None, xpd=float(r.xpdiffat15) if pd.notna(r.xpdiffat15) else None,
-                         vs=float(r.vspm), wpm=float(r.wpm), wcpm=float(r.wcpm), dtm=float(r.damagetakenperminute), date=str(r.date)[:10], gid=r.gameid, side=r.side))
+                         vs=float(r.vspm), wpm=float(r.wpm), wcpm=float(r.wcpm), dtm=float(r.damagetakenperminute), date=str(r.date)[:10], gid=r.gameid, side=r.side, pt=("%.2f" % float(r.patch) if "patch" in r.index and pd.notna(r.patch) else None)))
     res = {}
     for pl in sorted(set(x["player"] for x in rows)):
         g = [x for x in rows if x["player"] == pl]
