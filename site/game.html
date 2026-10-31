@@ -232,12 +232,12 @@ html { scroll-padding-top: 84px; }
 .topbar { position: sticky; top: 0; z-index: 60; margin-top: -12px; padding-top: 12px; padding-bottom: 12px; margin-bottom: -12px; }
 .topbar::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: var(--bg); }
 .topbar::after { content: ""; position: absolute; z-index: -1; left: 50%; width: 100vw; transform: translateX(-50%); top: 100%; height: 40px; pointer-events: none; background: linear-gradient(to bottom, var(--bg), color-mix(in srgb, var(--bg) 0%, transparent)); }
-html.emb .topbar, html.emb .foot, html.emb #games { display: none !important; }
+html.emb .topbar, html.emb .foot { display: none !important; }
+.chip.dis, .chip:disabled { opacity: .4; cursor: not-allowed; filter: brightness(.7); }
 html.emb body { padding: 0 !important; margin: 0 !important; background: transparent !important; }
 html.emb .page { padding: 0 !important; margin: 0 !important; }
 html.emb #score, html.emb .gh { margin-top: 0 !important; }
 html.emb .gcols { margin-bottom: 0 !important; }
-html.emb .gbar { justify-content: flex-end; }
 </style>
 </head>
 <body>
@@ -367,7 +367,7 @@ html.emb .gbar { justify-content: flex-end; }
     $('bans').innerHTML = '<div class="bans-l">' + bn(A) + '</div><div class="bans-t">Bans</div><div class="bans-r">' + bn(B) + '</div>';
     var ser = []; D.games.forEach(function (x, j) { if (x.sid === g.sid) ser.push(j); });
     var box = $('games');
-    box.innerHTML = g.live && g.chips ? g.chips : ser.map(function (j, n) { return '<button class="chip' + (j === i ? ' on' : '') + '" type="button" aria-pressed="' + (j === i) + '" data-i="' + j + '">GAME ' + (n + 1) + '</button>'; }).join('');
+    if (!EMB) box.innerHTML = g.live && g.chips ? g.chips : ser.map(function (j, n) { return '<button class="chip' + (j === i ? ' on' : '') + '" type="button" aria-pressed="' + (j === i) + '" data-i="' + j + '">GAME ' + (n + 1) + '</button>'; }).join('');
     $('mdet').innerHTML = '<span>' + (D.tournament || 'Worlds 2026') + '</span><span class="dot">&middot;</span><span>' + g.date + '</span>' + (g.bo ? '<span class="bo">BO' + g.bo + '</span>' : '');
     Array.prototype.forEach.call(box.querySelectorAll('button.chip'), function (b) { b.addEventListener('click', function () { render(+b.getAttribute('data-i')); }); });
   }
@@ -448,6 +448,9 @@ html.emb .gbar { justify-content: flex-end; }
   if (goLive) location.replace('match.html#' + goLive);
   else {
     if (EMB) {
+      window.addEventListener('message', function (e) { if (e.data && e.data.chips != null) $('games').innerHTML = e.data.chips; });
+      $('games').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b || b.disabled) return; parent.postMessage({ click: b.hasAttribute('data-ov') ? { ov: 1 } : b.hasAttribute('data-pg') ? { pg: b.getAttribute('data-pg') } : { id: b.getAttribute('data-id') } }, '*'); });
+      try { parent.postMessage({ ready: 1 }, '*'); } catch (e) {}
       document.documentElement.classList.add('emb');
       var bs = document.createElement('base'); bs.target = '_top'; document.head.appendChild(bs);
       var sendH = function () { try { parent.postMessage({ lvH: document.documentElement.scrollHeight }, '*'); } catch (e) {} };

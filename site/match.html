@@ -254,7 +254,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   var PC = {};   // season stats of a player on a champion, filled in by build.py
   var PS = {"ri": {}, "p": {}, "f": {}, "t": {}};   // Worlds 2026 season stats and ratings per team|role, filled in by build.py
   var MAP = {};
-  function loadMap() { fetch("live-map.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (m) { MAP = m || {}; if (S.match) $("games").innerHTML = chipsHtml(); if (S.frame) render(); }).catch(function () {}); }
+  function loadMap() { fetch("live-map.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (m) { MAP = m || {}; if (S.match) setChips(); if (S.frame) render(); }).catch(function () {}); }
   loadMap(); setInterval(loadMap, 120000);
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
@@ -411,12 +411,21 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       var f = $("pgframe"); f.addEventListener("load", function () { try { var t = root.getAttribute("data-theme"); if (t) f.contentDocument.documentElement.setAttribute("data-theme", t); } catch (e) {} });
     }
   }
-  window.addEventListener("message", function (e) { var f = $("pgframe"); if (f && e.data && e.data.lvH && e.source === f.contentWindow) f.style.height = Math.max(300, e.data.lvH) + "px"; });
+  window.addEventListener("message", function (e) {
+    var f0 = $("pgframe");
+    if (f0 && e.source === f0.contentWindow && e.data && e.data.ready) { setChips(); return; }
+    if (f0 && e.source === f0.contentWindow && e.data && e.data.click) { var k = e.data.click, sel = k.ov ? "button[data-ov]" : k.pg != null ? 'button[data-pg="' + String(k.pg).replace(/"/g, '\\"') + '"]' : 'button[data-id="' + k.id + '"]'; var bt = $("games").querySelector(sel); if (bt) bt.click(); return; }
+    var f = $("pgframe"); if (f && e.data && e.data.lvH && e.source === f.contentWindow) f.style.height = Math.max(300, e.data.lvH) + "px"; });
   // true once one team has won enough games for the series length and nothing is being played
   function seriesDone() {
     var m = S.match; if (!m) return false;
     var bo = +((m.strategy || {}).count) || 0, w = function (t) { return t && t.result ? t.result.gameWins : 0; };
     return !!bo && !(m.games || []).some(function (g) { return g.state === "inProgress"; }) && Math.max(w(m.teams[0]), w(m.teams[1])) >= Math.ceil(bo / 2);
+  }
+  // in a finished game's view the chips are shown by the game page itself, under its scoreboard (sent over as html, clicks come back)
+  function setChips() {
+    var h = chipsHtml(), g = $("games"); g.innerHTML = h; g.style.display = S.view === "post" ? "none" : "";
+    var f = $("pgframe"); S.chipsHtml = h; try { if (f && f.contentWindow) f.contentWindow.postMessage({ chips: h }, "*"); } catch (e) {}
   }
   function chipsHtml() {
     var over = seriesDone();
@@ -439,7 +448,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       '<div class="side">' + logoHtml(tm[0]) + '<div><div class="tn">' + esc(tm[0].name) + '</div><div class="tc">' + esc(tm[0].code) + "</div></div></div>" +
       '<div class="center"><div class="score">' + wins(tm[0]) + ":" + wins(tm[1]) + '</div><div class="state">' + (S.upcoming ? "Upcoming" : done ? "Series complete" : S.view === "post" ? "Series in progress" : "Game " + gn + " &middot; Waiting to start") + "</div></div>" +
       '<div class="side r"><div><div class="tn">' + esc(tm[1].name) + '</div><div class="tc">' + esc(tm[1].code) + "</div></div>" + logoHtml(tm[1]) + "</div>";
-    $("games").innerHTML = chipsHtml(); $("gold").innerHTML = ""; $("board").innerHTML = ""; $("cmpsec").hidden = true; $("tmsec").hidden = true; $("ovgrid").className = "ovgrid";
+    setChips(); $("gold").innerHTML = ""; $("board").innerHTML = ""; $("cmpsec").hidden = true; $("tmsec").hidden = true; $("ovgrid").className = "ovgrid";
     $("match").style.display = S.view === "post" ? "none" : ""; $("pgwrap").hidden = S.view !== "post"; $("ovgrid").style.display = S.view === "post" ? "none" : ""; $("gold").style.display = $("board").style.display = S.view === "post" ? "none" : "";
     if (S.view === "post") showPost();
     else if (S.view === "ov") drawCmp(tm[0], tm[1]);
@@ -537,7 +546,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       '<div class="center"><div class="score">' + wins(bt) + ":" + wins(rt) + '</div><div class="state">Game ' + S.gameNo + " · " + stateText + "</div></div>" +
       '<div class="side r"><div><div class="tn">' + esc(rt.name) + '</div><div class="tc">' + esc(rt.code) + " · Red side</div></div>" + logoHtml(rt) + "</div>";
 
-    $("games").innerHTML = chipsHtml();
+    setChips();
 
     var bg = f.blueTeam.totalGold, rg = f.redTeam.totalGold, tot = (bg + rg) || 1, diff = bg - rg;
     $("gold").innerHTML =
