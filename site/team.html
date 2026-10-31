@@ -125,8 +125,9 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .hrow { display: grid; grid-template-columns: 76px minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 12px; height: 54px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 16px; margin-top: 8px; font-size: 13px; }
 .hrow:hover { border-color: var(--muted); }
 .hrow .res { font-size: 11px; font-weight: 700; letter-spacing: .04em; height: 20px; line-height: 20px; text-align: center; border-radius: 5px; background: var(--pill); color: var(--muted); }
-.hrow .res.w { background: var(--green); color: var(--on-active-fg); }
-.hrow .res.l { background: var(--red); color: var(--on-active-fg); }
+.hrow .res { background: none; font-weight: 800; letter-spacing: .06em; }
+.hrow .res.w { background: none; color: var(--green); }
+.hrow .res.l { background: none; color: var(--red); }
 .hrow .op { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .hrow .op span { color: var(--muted); font-size: 12px; }
 .hrow .m.gdv.up { color: var(--green); } .hrow .m.gdv.dn { color: var(--red); }
