@@ -370,7 +370,7 @@ html { scroll-padding-top: 84px; }
 .mv .mid.e{color:var(--muted);}
 .mv .cmps{margin-top:40px;}
 .mv .ovgrid{display:grid; grid-template-columns:minmax(0,1fr); column-gap:24px; align-items:start;}
-.mv .ovgrid.two{grid-template-columns:minmax(0,1.75fr) minmax(0,1fr); column-gap:0;}
+.mv .ovgrid.two{grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:0;}
 .mv .ovgrid.two > #cmpsec{padding-right:24px; position:relative;}
 .mv .ovgrid.two > #cmpsec::after{content:""; position:absolute; right:0; top:0; bottom:0; width:1px; background:linear-gradient(to bottom, transparent, var(--divider) 15%, var(--divider) 85%, transparent);}
 .mv .ovgrid.two > #tmsec{padding-left:24px;}
@@ -1061,7 +1061,7 @@ html { scroll-padding-top: 84px; }
         var tx = '<div class="bcx"><span class="bcn" title="' + esc(v[2]) + '">' + esc(v[0]) + ' <small>' + esc(code) + "</small></span>" + st + "</div>";
         return '<div class="bcs' + (right ? " r" : "") + '">' + (right ? tx + im : im + tx) + "</div>";
       };
-      h += '<h2 class="bch2">Best champions</h2><div class="bct">' +
+      h += '<h2 class="bch2">Picks to watch</h2><div class="bct">' +
         CROLES.map(function (r, i) { return '<div class="bcr">' + side(BA[i], false, bt.code) + '<span class="bcrole" title="' + r + '">' + (PS.ri[r] || "") + "</span>" + side(BB[i], true, rt.code) + "</div>"; }).join("") + "</div>";
     }
     box.innerHTML = h; box.hidden = false;
