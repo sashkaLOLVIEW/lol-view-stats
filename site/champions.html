@@ -396,7 +396,8 @@ html { scroll-padding-top: 84px; }
 </style>
 <style>
 /* navbar as wide as the first column of the homepage grid (316fr of 316fr 316fr 336fr, 32px gaps) */
-@media (min-width: 1081px) { .page > .topbar > .nav { flex: none; box-sizing: border-box; width: calc((100% - 64px) * 316 / 968); justify-content: space-between; } }
+@media (min-width: 1081px) { .page > .topbar > .nav { flex: none; box-sizing: border-box; width: calc((100% - 64px) * 316 / 968); justify-content: space-between; }
+.page > .topbar .tools .search { flex: none; box-sizing: border-box; width: calc((min(1312px, 100vw - 32px) - 64px) * 336 / 968); } }
 </style>
 <div class="page">
   <header class="topbar">
