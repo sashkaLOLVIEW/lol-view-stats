@@ -452,14 +452,16 @@ def item_assets(ids):
     return {i: cache[i] for i in map(str, set(ids)) if i in cache}
 
 TRINKETS = {3330, 3340, 3363, 3364}
+SUPPORT_ITEMS = {3850, 3851, 3853, 3854, 3855, 3857, 3858, 3859, 3860, 3862, 3863, 3864, 3865, 3866, 3867, 3869, 3870, 3871, 3876, 3877}   # support quest items and their upgrades
 def tidy_items(it, trset=TRINKETS):
-    """Exactly 7 entries: up to 6 distinct items in the player's own slot order (0 = empty), then the trinket (0 = none)."""
-    seen, main, tr = set(), [], []
+    """7 entries: up to 6 distinct items in the player's own slot order (0 = empty), then the trinket (0 = none). A support item (if held) is added as an 8th entry instead of pushing out a regular item."""
+    seen, main, tr, sup = set(), [], [], []
     for i in it:
         if i in seen: continue
-        seen.add(i); (tr if i in trset else main).append(i)
+        seen.add(i); (tr if i in trset else sup if i in SUPPORT_ITEMS else main).append(i)
+    if sup and len(main) < 6 and False: pass
     main = main[:6]
-    return main + [0] * (6 - len(main)) + [tr[0] if tr else 0]
+    return main + [0] * (6 - len(main)) + [tr[0] if tr else 0] + ([sup[-1]] if sup else [])
 
 def rune_assets(pairs):
     """{id: [name, icon data-uri]} for keystones and secondary trees from Data Dragon; cached in data/rune_icons.json."""

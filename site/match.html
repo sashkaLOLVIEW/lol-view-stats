@@ -586,7 +586,7 @@ html { scroll-padding-top: 84px; }
     var rnc = function (rn) { var m = D.runes; if (!m || !rn || !m[rn[0]] || !m[rn[1]]) return ''; return '<div class="rn"><img class="k" src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img class="s" src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></div>'; };
     var TRK = {3340: 1, 3363: 1, 3364: 1};
     var itrow = function (it) { var m = D.items; if (!m || !it || !it.length) return ''; var o = '';
-      for (var k = 0; k < 7; k++) { var id = it[k], x = id ? m[id] : null; o += x ? (k === 6 ? '<span class="trw"><img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '"></span>' : '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">') : '<i></i>'; }
+      for (var k = 0, kn = it.length > 7 ? 8 : 7; k < kn; k++) { var id = it[k], x = id ? m[id] : null; o += x ? (k >= 6 ? '<span class="trw"><img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '"></span>' : '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">') : '<i></i>'; }
       return '<div class="its">' + o + '</div>'; };
     $('dm').className = 'dm' + (D.items && Object.keys(D.items).length ? ' hasit' : '');
     var dm = '', dl = '', dr = '';

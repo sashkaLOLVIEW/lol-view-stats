@@ -373,7 +373,7 @@ html { scroll-padding-top: 84px; }
     var lo6 = function (it) {
       var m = D.items;
       if (!m || !it || !it.length) return '<span class="lo6"><i></i><i></i><i></i><i></i><i></i><i></i></span>';
-      var o = ''; for (var k = 0; k < 7; k++) { var id = it[k], x = id ? m[id] : null; o += x ? (k === 6 ? '<span class="trw"><img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '"></span>' : '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">') : '<i></i>'; }
+      var o = ''; for (var k = 0, kn = it.length > 7 ? 8 : 7; k < kn; k++) { var id = it[k], x = id ? m[id] : null; o += x ? (k >= 6 ? '<span class="trw"><img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '"></span>' : '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">') : '<i></i>'; }
       return '<span class="lo6 filled">' + o + '</span>';
     };
     $('hist').innerHTML = P.games.map(function (g) {

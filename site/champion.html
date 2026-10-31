@@ -278,12 +278,15 @@ h2 .li.hi { margin: 0; width: 18px; height: 18px; }
 .zw { display: inline-block; overflow: hidden; border-radius: 6px; line-height: 0; flex: none; }
 .big-w.zw { border-radius: 10px; display: block; width: 84px; height: 84px; border: 1px solid var(--line); }
 .big-w.zw img.big { border: 0; border-radius: 0; }
-.gr.gm { grid-template-columns: 56px 1fr auto auto; column-gap: 28px; }
+.gr.gm { grid-template-columns: 56px 1fr auto auto; column-gap: 18px; }
 .gr .rl { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
 .gr .rl .gt { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.gr .gs { display: flex; flex-direction: column; align-items: flex-start; min-width: 74px; gap: 4px; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.gr .gs > span { display: inline-flex; align-items: center; gap: 6px; }
-.gr .gs img { width: 13px; height: 13px; border-radius: 0; border: 0; background: none; }
+.gr .gs { display: flex; align-items: center; gap: 14px; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.gr .gs .c { text-align: center; min-width: 46px; }
+.gr .gs .top { font-size: 14px; color: var(--fg); } .gr .gs .top b { font-weight: 700; }
+.gr .gs .sub { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+@media (max-width: 1200px) and (min-width: 641px) { .gr .gs .c:last-child { display: none; } }
+.gr .gs .kk { color: var(--green); } .gr .gs .dd { color: var(--red); } .gr .gs .aa { color: #e3b341; }
 #mu { margin-top: 14px; }
 @media (max-width: 640px) { .gr.gm { column-gap: 12px; } }
 .gr .t .pt { display: inline-flex; align-items: center; gap: 6px; }
@@ -435,10 +438,10 @@ html { scroll-padding-top: 84px; }
     // games
     var rnrow = function (r) { var m = D.runes, rn = r.rn; if (!m || !rn || !m[rn[0]] || !m[rn[1]]) return ''; return '<span class="rs"><img class="k" src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img class="s" src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></span>'; };
     var itrow = function (it, pre) { pre = pre || ''; var m = D.items; if (!m || !it || !it.length) return pre ? '<div class="its">' + pre + '</div>' : ''; var o = '';
-      for (var k = 0; k < 7; k++) { var id = it[k], x = id ? m[id] : null; o += x ? (k === 6 ? '<span class="trw"><img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '"></span>' : '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">') : '<i></i>'; }
+      for (var k = 0, kn = it.length > 7 ? 8 : 7; k < kn; k++) { var id = it[k], x = id ? m[id] : null; o += x ? (k >= 6 ? '<span class="trw"><img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '"></span>' : '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">') : '<i></i>'; }
       return '<div class="its">' + pre + o + '</div>'; };
     var GR = R.map(function (r, i) { return [r, i]; }).sort(function (a, b) { return a[0].date < b[0].date ? 1 : a[0].date > b[0].date ? -1 : b[1] - a[1]; }).map(function (x) { return x[0]; });
-    var gmHtml = function (r) { var mm = Math.floor(r.len / 60), ss = ('0' + (r.len % 60)).slice(-2); return '<div class="gr gm"><div class="rl"><span class="res ' + (r.win ? 'w' : 'l') + '">' + (r.win ? 'WIN' : 'LOSS') + '</span><div class="gt">' + mm + ':' + ss + '</div></div><div><div class="t"><span class="pt">' + logo(r.team, 16) + '<a href="player.html#' + encodeURIComponent(r.player) + '">' + r.player + '</a></span> <span class="vs">vs ' + logo(r.opp, 16) + ' ' + r.op + '</span></div>' + itrow(r.it, rnrow(r)) + '</div><div class="gs"><span>' + im('kills') + r.k + '/' + r.d + '/' + r.a + '</span><span>' + im('minion') + r.cspm.toFixed(1) + ' CS/M</span></div><div class="r"><div><a href="game.html#' + r.game + '">' + r.date + ' &rsaquo;</a></div></div></div>'; };
+    var gmHtml = function (r) { var mm = Math.floor(r.len / 60), ss = ('0' + (r.len % 60)).slice(-2); return '<div class="gr gm"><div class="rl"><span class="res ' + (r.win ? 'w' : 'l') + '">' + (r.win ? 'WIN' : 'LOSS') + '</span><div class="gt">' + mm + ':' + ss + '</div></div><div><div class="t"><span class="pt">' + logo(r.team, 16) + '<a href="player.html#' + encodeURIComponent(r.player) + '">' + r.player + '</a></span> <span class="vs">vs ' + logo(r.opp, 16) + ' ' + r.op + '</span></div>' + itrow(r.it, rnrow(r)) + '</div><div class="gs"><div class="c"><div class="top"><b class="kk">' + r.k + '</b> / <b class="dd">' + r.d + '</b> / <b class="aa">' + r.a + '</b></div><div class="sub">' + ((r.k + r.a) / Math.max(1, r.d)).toFixed(2) + ' KDA</div></div><div class="c"><div class="top"><b>' + Math.round(r.cspm * r.len / 60) + '</b> CS</div><div class="sub">' + r.cspm.toFixed(1) + ' CS / min</div></div><div class="c"><div class="top"><b>' + (r.kp == null ? '-' : Math.round(r.kp * 100) + '%') + '</b></div><div class="sub">Kill P.</div></div></div><div class="r"><div><a href="game.html#' + r.game + '">' + new Date(r.date).toLocaleDateString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC'}) + ' &rsaquo;</a></div></div></div>'; };
     var shown = 5, gb = $('games');
     var drawG = function () {
       if (!pk) { gb.innerHTML = '<div class="empty">No games played with ' + n + ' yet.</div>'; return; }
