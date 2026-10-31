@@ -354,7 +354,7 @@ html { scroll-padding-top: 84px; }
   var P = WD.players;
   $("cnt").textContent = P.length + " players";
   var RK = ["all", "top", "jungle", "mid", "bot", "support"], RL = ["All roles", "Top", "Jungle", "Mid", "Bot", "Support"], RN = { Top: "top", Jungle: "jungle", Mid: "mid", Bot: "bot", Support: "support" };
-  var role = "all", sortK = "rt", sortDir = -1;
+  var role = "all", sortK = "rt", sortDir = -1, group = false;   // group: Team header clicked - teams A-Z, five players each in role order
   $("frow").innerHTML = '<div class="seg icons" id="rseg">' + RK.map(function (k, i) { return '<button type="button" data-r="' + k + '" aria-label="' + RL[i] + '" title="' + RL[i] + '"' + (i === 0 ? ' class="on"' : '') + '>' + icons[k] + '</button>'; }).join("") + '</div><span id="tchip"></span>';
   var TNAME = TN, team = null;
   $("tchip").addEventListener("click", function (e) { if (e.target.closest("button.x")) { team = null; draw(); } });
@@ -387,20 +387,22 @@ html { scroll-padding-top: 84px; }
     if (team) rows = rows.filter(function (r) { return r.t === team; });
     $("tchip").innerHTML = team ? '<span class="tf">' + logo(team, 18) + '<a href="team.html#' + encodeURIComponent(team) + '">' + (TNAME[team] || team) + '</a><button class="x" type="button" aria-label="Show all teams" title="Show all teams">&times;</button></span>' : "";
     if (team) rows.sort(function (a, b) { return RO[a.r] - RO[b.r]; });
+    else if (group) rows.sort(function (a, b) { var x = (TNAME[a.t] || a.t).toLowerCase(), y = (TNAME[b.t] || b.t).toLowerCase(); return x < y ? -1 : x > y ? 1 : RO[a.r] - RO[b.r]; });
     else rows.sort(function (a, b) { return (a[sortK] - b[sortK]) * sortDir || b.rt - a.rt; });
-    var head = '<thead><tr><th class="c1">#</th><th class="c2" style="text-align:left">Player</th><th>Team</th>' + COLS.map(function (c) {
-      var on = !team && c[0] === sortK; return '<th class="sortable' + (on ? " sorted" : "") + '" data-k="' + c[0] + '" title="' + c[2] + '">' + c[1] + (on ? (sortDir < 0 ? " ↓" : " ↑") : "") + "</th>";
+    var head = '<thead><tr><th class="c1">#</th><th class="c2" style="text-align:left">Player</th><th class="sortable' + (group ? " sorted" : "") + '" data-g="1" title="Group players by team (A-Z)">Team' + (group ? " ↓" : "") + '</th>' + COLS.map(function (c) {
+      var on = !team && !group && c[0] === sortK; return '<th class="sortable' + (on ? " sorted" : "") + '" data-k="' + c[0] + '" title="' + c[2] + '">' + c[1] + (on ? (sortDir < 0 ? " ↓" : " ↑") : "") + "</th>";
     }).join("") + "</tr></thead>";
     var body = "<tbody>" + rows.map(function (r, i) {
       return '<tr data-h="' + pl(r.p) + '"><td class="c1">' + (i + 1) + '</td><td class="c2"><div class="pcell"><span class="ri" title="' + r.r + '">' + icons[RN[r.r]] + '</span><a class="nm" href="' + pl(r.p) + '" style="font-weight:inherit">' + r.p + "</a></div></td>" +
         '<td><button class="tm" type="button" data-t="' + r.t + '" title="Show the five ' + (TNAME[r.t] || r.t) + ' players">' + logo(r.t, 20) + "</button></td>" +
-        COLS.map(function (c) { return "<td" + (c[0] === sortK ? ' class="sc"' : "") + ">" + c[3](r) + "</td>"; }).join("") + "</tr>";
+        COLS.map(function (c) { return "<td" + (c[0] === sortK && !group && !team ? ' class="sc"' : "") + ">" + c[3](r) + "</td>"; }).join("") + "</tr>";
     }).join("") + "</tbody>";
     $("tbl").innerHTML = head + body;
   }
   $("tbl").addEventListener("click", function (e) {
     var th = e.target.closest("th.sortable");
-    if (th) { var k = th.getAttribute("data-k"); if (team) { team = null; } if (k === sortK) sortDir = -sortDir; else { sortK = k; sortDir = COLS.filter(function (c) { return c[0] === k; })[0][4]; } draw(); return; }
+    if (th && th.hasAttribute("data-g")) { group = !group; team = null; draw(); return; }
+    if (th) { var k = th.getAttribute("data-k"); team = null; group = false; if (k === sortK) sortDir = -sortDir; else { sortK = k; sortDir = COLS.filter(function (c) { return c[0] === k; })[0][4]; } draw(); return; }
     var tb = e.target.closest("button.tm"); if (tb) { team = team === tb.getAttribute("data-t") ? null : tb.getAttribute("data-t"); draw(); return; }
     if (e.target.closest("a")) return;
     var tr = e.target.closest("tr[data-h]"); if (tr) location.href = tr.getAttribute("data-h");
