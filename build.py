@@ -327,6 +327,12 @@ def build_profiles(w, faces_fallback, logos_all):
     used = {v["team"] for v in res.values()} | {x["opp"] for v in res.values() for x in v["games"]}
     return dict(players=res, icons=icons, logos={k: logos_all[k] for k in used if k in logos_all})
 
+def team_season(g):
+    """Season averages of a team for the live page's team comparison: [games, win%, GD@15, kills, deaths, towers, drakes, barons, grubs, heralds, first blood %, first tower %, minutes]."""
+    n = len(g) or 1; av = lambda k: sum(x[k] for x in g) / n
+    return [len(g), round(100 * sum(x["win"] for x in g) / n, 1), round(av("gd")), round(av("k"), 1), round(av("d"), 1), round(av("tw"), 1), round(av("dr"), 1), round(av("ba"), 2),
+            round(av("gr"), 1), round(av("he"), 1), round(100 * av("fb")), round(100 * av("ft")), round(av("gl") / 60, 1)]
+
 def build_teams(w, P):
     out = {}
     for gid, g in w.groupby("gameid"):
@@ -707,7 +713,7 @@ def main(csv):
             pc["%s|%s" % (re.sub(r"[^a-z0-9]", "", nm.lower()), ck)] = [n, sum(x["win"] for x in g), round((sum(x["k"] + x["a"] for x in g)) / max(1, sum(x["d"] for x in g)), 2),
                 round(sum(x["cs"] for x in g) / max(gl, 1), 2), round(sum(x["dmg"] for x in g) / max(gl, 1)), round(100 * sum(x["k"] + x["a"] for x in g) / max(tk, 1)),
                 round(100 * sum(x["ds"] for x in g) / n), round(sum(gd) / len(gd)) if gd else None]
-    ps = {"ri": jget(rd("site/bootcamp.html"), "SD").get("r", {}), "p": {"%s|%s" % (p["t"], p["r"]): [p["p"], p["rt"], p["kda"], p["cs"], p["gd"], p["dpm"], p["kp"], p["ds"], p["g"]] for p in WD["players"]}, "f": {"%s|%s" % (p["t"], p["r"]): FACES[p["p"]] for p in WD["players"] if p["p"] in FACES}}
+    ps = {"ri": jget(rd("site/bootcamp.html"), "SD").get("r", {}), "p": {"%s|%s" % (p["t"], p["r"]): [p["p"], p["rt"], p["kda"], p["cs"], p["gd"], p["dpm"], p["kp"], p["ds"], p["g"]] for p in WD["players"]}, "f": {"%s|%s" % (p["t"], p["r"]): FACES[p["p"]] for p in WD["players"] if p["p"] in FACES}, "t": {c: team_season(v["games"]) for c, v in TD["teams"].items()}}
     wr(out / "live.html", jreplace(jreplace(rd("site/live.html"), "PS", ps), "PC", pc))   # season stats for the live page's role-by-role team comparison   # live game page: polls Riot's feed in the browser, no build-time data
     s = rd("site/bootcamp.html"); s = jreplace(s, "BC", build_bootcamp(WD, logos_all, s)); s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "bootcamp.html", stamp(s))
     wr(out / ".nojekyll", "")
