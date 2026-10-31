@@ -372,7 +372,7 @@ html { scroll-padding-top: 84px; }
 .mv .ovgrid.two > #cmpsec::after{content:""; position:absolute; right:0; top:0; bottom:0; width:1px; background:linear-gradient(to bottom, transparent, var(--divider) 15%, var(--divider) 85%, transparent);}
 .mv .ovgrid.two > #tmsec{padding-left:24px;}
 @media (max-width:900px){.mv .ovgrid.two{grid-template-columns:minmax(0,1fr);}
-.mv .ovgrid.two > #cmpsec{padding-right:0; border-right:0;}
+.mv .ovgrid.two > #cmpsec{padding-right:0; border-right:0;} .mv .ovgrid.two > #cmpsec::after{display:none;}
 .mv .ovgrid.two > #tmsec{padding-left:0;}}
 .mv .cmps h2{margin-bottom:14px;}
 .mv .cmps .tr{display:grid; grid-template-columns:1fr 1fr 1fr; align-items:center; padding:12px 16px; background:var(--surface); border:1px solid var(--line); border-radius:10px; margin-bottom:10px; gap:8px;}
