@@ -99,7 +99,8 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .lw { } :root:not([data-theme="dark"]) .lwf { }
 .gh { margin-top: 36px; }
 .gh-meta { font-size: 12px; color: var(--muted); margin-top: 10px; }
-.score { display: grid; grid-template-columns: 1fr auto auto auto 1fr; align-items: center; gap: 28px; min-height: 128px; margin-top: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 28px; }
+.score { display: grid; grid-template-columns: 1fr auto auto auto 1fr; align-items: center; gap: 28px; min-height: 128px; margin-top: 16px; position: relative; padding: 22px 28px; }
+.score::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--line) 14%, var(--line) 86%, transparent); }
 .sc-team { display: flex; align-items: center; gap: 16px; min-width: 0; }
 .sc-mid { }
 .sc-team.r { flex-direction: row-reverse; text-align: right; }
