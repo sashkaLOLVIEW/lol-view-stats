@@ -190,10 +190,12 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .pl.r .bar { background: var(--red); margin-left: auto; }
 .pl.r .pl-v { }
 .role-t { font-size: 10px; color: var(--dim); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
-.bans { margin-top: 8px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+.bans { margin-top: 20px; position: relative; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding: 18px 4px 0; }
+.bans::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--divider); -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent); mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent); }
+.cmp-l .fbd, .cmp-r .fbd { font-size: 9px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); white-space: nowrap; }
 .bans-l, .bans-r { display: flex; gap: 6px; }
 .bans-r { justify-content: flex-end; }
-.bans img { width: 36px; height: 36px; border-radius: 5px; display: block; }
+.bans img { width: 26px; height: 26px; border-radius: 4px; display: block; }
 .bans .sl { color: var(--dim); font-size: 18px; font-weight: 400; align-self: center; padding: 0 2px; }
 .bans-t { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
 .asof { margin-top: 14px; font-size: 11px; color: var(--dim); line-height: 1.5; }
@@ -482,13 +484,13 @@ html { scroll-padding-top: 84px; }
   </div>
   <main class="gcols" id="gcols" hidden>
     <section>
-      <h2>Team Comparison</h2>
+      <h2>Objectives</h2>
       <div class="cmp" id="cmp"></div>
-      <h2 style="margin-top:34px">Gold Difference Over Time</h2>
+      <h2 style="margin-top:34px">Gold Difference</h2>
       <div class="gd" id="gd"></div>
     </section>
     <section>
-      <h2 id="dmh">Damage Dealt to Champions</h2>
+      <h2 id="dmh">Scoreboard</h2>
       <div class="dm" id="dm"></div>
       <div class="bans" id="bans"></div>
     </section>
@@ -563,9 +565,10 @@ html { scroll-padding-top: 84px; }
     $('score').innerHTML = sideTeam(A, 0) + stat(A, 0, B) + '<div class="sc-mid"><div class="sc-c"><div class="sc-time">' + CLK + fmtT(g.len) + '</div>' + (g.patch ? '<div class="sc-sub">Patch ' + g.patch + '</div>' : '') + '</div></div>' + stat(B, 1, A) + sideTeam(B, 1);
     var _m = 'Worlds 2026 · Main stage · Swiss Round 1 · Match ' + g.n + ' · ' + g.date + ' · Blue side ' + A.code + ' vs Red side ' + B.code;
     var c = '';
-    c += row('K/D/A', A.k + '/' + A.d + '/' + A.a, B.k + '/' + B.d + '/' + B.a, lead(A.k, B.k, 1));
+    var bd = function (t, x, r) { return t[x] ? '<span class="fbd">' + (x === 'fb' ? 'First Blood' : 'First Turret') + '</span>' : ''; };
+    c += row('K/D/A', A.k + '/' + A.d + '/' + A.a + bd(A, 'fb'), bd(B, 'fb') + B.k + '/' + B.d + '/' + B.a, lead(A.k, B.k, 1));
     c += row('Gold', k1(A.gold), k1(B.gold), lead(A.gold, B.gold, 1));
-    c += row('Turrets', A.towers, B.towers, lead(A.towers, B.towers, 1));
+    c += row('Turrets', A.towers + bd(A, 'ft'), bd(B, 'ft') + B.towers, lead(A.towers, B.towers, 1));
     c += row('Void Grubs', pips(A.grubs), pips(B.grubs));
     c += row('Herald', icons('herald', A.heralds), icons('herald', B.heralds));
     c += row('Drakes', drakes(A.drakes, soulFor(A, B)[0]), drakes(B.drakes, soulFor(A, B)[1]));
