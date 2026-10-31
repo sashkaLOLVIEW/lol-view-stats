@@ -268,6 +268,7 @@ html { scroll-padding-top: 84px; }
 .mv .side.r{justify-content:flex-end; text-align:right;}
 .mv .side img,.mv .side .ph{width:64px; height:64px; object-fit:contain; flex:none;}
 .mv .ph{display:grid; place-items:center; border-radius:50%; border:3px solid var(--line); font-weight:700; font-size:12px; color:var(--muted);}
+.mv .match .sc-team img,.mv .match .sc-team .ph{width:64px; height:64px; object-fit:contain; flex:none;}
 .mv .side .tn{font-size:22px; font-weight:700; line-height:1.1;}
 .mv .side .tc{font-size:12px; color:var(--muted); font-weight:500;}
 .mv .center{text-align:center;}
@@ -937,11 +938,12 @@ html { scroll-padding-top: 84px; }
     var stateText = live ? 'Live' : paused ? "Paused" : f.gameState === "finished" ? "Game finished" : esc(f.gameState || "");
     var wins = function (t) { return t && t.result ? t.result.gameWins : 0; };
     var $m = $("match");
+    var liveSide = function (t, r) { var rk = TR[t.code]; return '<div class="sc-team' + (r ? " r" : "") + '">' + logoHtml(t) + '<div><a class="sc-name" style="display:block" href="team.html#' + esc(t.code) + '">' + esc(t.code) + '</a><div class="sc-full">' + esc(t.name) + "</div>" + (rk ? '<span class="tag rk" title="Power ranking">#' + rk + "</span>" : "") + "</div></div>"; };
     $m.className = "match" + (live ? "" : " idle");
     $m.innerHTML =
-      '<div class="side">' + logoHtml(bt) + '<div><div class="tn">' + esc(bt.name) + '</div><div class="tc">' + esc(bt.code) + " · Blue side</div></div></div>" +
+      liveSide(bt, 0) +
       '<div class="center"><div class="mscore">' + wins(bt) + ":" + wins(rt) + '</div><div class="state">Game ' + S.gameNo + " · " + stateText + "</div></div>" +
-      '<div class="side r"><div><div class="tn">' + esc(rt.name) + '</div><div class="tc">' + esc(rt.code) + " · Red side</div></div>" + logoHtml(rt) + "</div>";
+      liveSide(rt, 1);
     var bg = f.blueTeam.totalGold, rg = f.redTeam.totalGold, tot = (bg + rg) || 1, diff = bg - rg;
     $("gold").innerHTML =
       '<div class="gbar"><i class="b" style="width:' + (bg / tot * 100).toFixed(1) + '%"></i><i class="r" style="width:' + (rg / tot * 100).toFixed(1) + '%"></i></div>' +
