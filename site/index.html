@@ -563,7 +563,7 @@ html { scroll-padding-top: 84px; }
       $('live-wrap').hidden = !live.length;
       el.innerHTML = live.map(function (m, i) {
         var w1 = (m.bl.result || {}).gameWins || 0, w2 = (m.rd.result || {}).gameWins || 0;
-        return '<a class="row match res liverow" href="live.html#live/' + m.id + '" style="margin-top:' + (i ? 8 : 12) + 'px;color:inherit;text-decoration:none" aria-label="Watch live match"><div class="lgw"><span class="lg">' + worlds(24) + '</span>' + (m.bo ? '<span class="bo">BO' + m.bo + '</span>' : '') + '</div>'
+        return '<a class="row match res liverow" href="match.html#' + m.id + '" style="margin-top:' + (i ? 8 : 12) + 'px;color:inherit;text-decoration:none" aria-label="Watch live match"><div class="lgw"><span class="lg">' + worlds(24) + '</span>' + (m.bo ? '<span class="bo">BO' + m.bo + '</span>' : '') + '</div>'
           + '<div class="res-center"><span class="tag">' + m.bl.code + '</span>' + logo(m.bl.code, 32) + '<span class="score">' + w1 + ':' + w2 + '</span>' + logo(m.rd.code, 32) + '<span class="tag">' + m.rd.code + '</span></div>'
           + '<div class="when"><em class="ck" style="font-style:normal;color:var(--fg);font-weight:600" data-i="' + i + '">' + (m.lv ? 'Live' : m.over ? 'Final' : m.brk ? 'Break' : '00:00') + '</em><span>' + (m.over && !m.lv ? 'Series over' : (m.brk && !m.lv ? 'Next: Game ' : 'Game ') + m.num) + '</span></div></a>';
       }).join('');
@@ -583,7 +583,7 @@ html { scroll-padding-top: 84px; }
     var now = Date.now(), list = (UP[upKey] || []).filter(function (m) { return m[6] + 3 * 3600e3 > now; }).slice(0, Math.max(1, 4 - liveN));
     $('upcoming').innerHTML = list.length ? list.map(function (m) {
       var lg = m[5] === 'worlds' ? worlds(24) : '<span style="font-size:10px;font-weight:700;color:var(--muted)">' + String(m[5]).toUpperCase() + '</span>';
-      return '<' + (m[7] ? 'a href="live.html#live/' + m[7] + '"' : 'div') + ' class="row match res"><div class="lgw"><span class="lg">' + lg + '</span><span class="bo">' + m[4] + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + tl(m[0]) + '<span class="score vsx">vs</span>' + tl(m[1]) + '<span class="tag">' + m[1] + '</span></div><div class="when">' + m[2] + '<span>' + m[3] + '</span></div></' + (m[7] ? 'a' : 'div') + '>';
+      return '<' + (m[7] ? 'a href="match.html#' + m[7] + '"' : 'div') + ' class="row match res"><div class="lgw"><span class="lg">' + lg + '</span><span class="bo">' + m[4] + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + tl(m[0]) + '<span class="score vsx">vs</span>' + tl(m[1]) + '<span class="tag">' + m[1] + '</span></div><div class="when">' + m[2] + '<span>' + m[3] + '</span></div></' + (m[7] ? 'a' : 'div') + '>';
     }).join('') : '<div class="row" style="color:var(--muted);font-size:12px">No upcoming matches' + (upKey === 'global' ? ' in the schedule yet' : ' for this league') + '</div>';
   }
   $('upTabs').innerHTML = UPN.map(function (n) { return '<button class="chip' + (n[0] === upKey ? ' on' : '') + '" type="button" data-k="' + n[0] + '">' + n[1] + '</button>'; }).join('');

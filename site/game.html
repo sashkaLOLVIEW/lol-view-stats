@@ -428,7 +428,7 @@ html.emb .gbar { justify-content: flex-end; }
       gold.push([+(len / 60).toFixed(1), A.gold - B.gold]);
       var chips = L.m.games.filter(function (x) { return x.state !== 'unstarted'; }).map(function (x) {
         if (x.id === gid) return '<button class="chip on" type="button" aria-pressed="true">GAME ' + x.number + '</button>';
-        return '<a class="chip" style="display:inline-flex;align-items:center" href="' + (x.state === 'inProgress' ? 'live.html#live/' + mid : 'game.html#riot/' + mid + '/' + x.id) + '">GAME ' + x.number + '</a>';
+        return '<a class="chip" style="display:inline-flex;align-items:center" href="' + (x.state === 'inProgress' ? 'match.html#' + mid : 'game.html#riot/' + mid + '/' + x.id) + '">GAME ' + x.number + '</a>';
       }).join('');
       var cur = L.m.games.filter(function (x) { return x.id === gid; })[0] || {};
       D.games.push({ id: gid, live: 1, patch: L.meta.patchVersion ? L.meta.patchVersion.split('.').slice(0, 2).join('.') : null, date: new Date(L.t0).toLocaleDateString('en-GB', { month: 'short', day: 'numeric', timeZone: 'Europe/London' }).split(' ').reverse().join(' '), start: new Date(L.t0).toISOString(), len: len, teams: [A, B], gold: gold, n: cur.number || 1, sid: -1, bo: L.m.strategy && L.m.strategy.count, chips: chips });
@@ -439,13 +439,13 @@ html.emb .gbar { justify-content: flex-end; }
   window.addEventListener('hashchange', function () { if (LV || /^#riot\//.test(location.hash)) location.reload(); });
   var LV = location.hash.match(/^#riot\/(\d+)\/(\d+)/);
   var LJ = -1; if (LV) D.games.forEach(function (g, j) { if (g.id === LV[2]) LJ = j; });
-  // One page per match: opened on its own, a game goes to the match page (live.html) with this game selected. The match page shows this file in a frame (?embed=1).
+  // One page per match: opened on its own, a game goes to the match page (match.html) with this game selected. The match page shows this file in a frame (?embed=1).
   var EMB = /[?&]embed=1/.test(location.search), goLive = null;
   if (!EMB) {
     if (LV) goLive = LV[1] + '/g/' + encodeURIComponent('riot/' + LV[1] + '/' + LV[2]);
     else if (location.hash.length > 1 && D.games[hi] && D.games[hi].mid) goLive = D.games[hi].mid + '/g/' + encodeURIComponent(D.games[hi].id);
   }
-  if (goLive) location.replace('live.html#live/' + goLive);
+  if (goLive) location.replace('match.html#' + goLive);
   else {
     if (EMB) {
       document.documentElement.classList.add('emb');

@@ -259,7 +259,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
   var fmt = function (n) { return n >= 1000 ? (n / 1000).toFixed(1) + "k" : String(n); };
 
-  var matchId = (location.hash.match(/live\/(\d+)/) || [])[1] || null;
+  var matchId = (location.hash.match(/^#(?:live\/)?(\d{6,})/) || [])[1] || null;
   var S = { upcoming: false, pg: ((location.hash.match(/\/g\/(.+)$/) || [])[1] ? decodeURIComponent(location.hash.match(/\/g\/(.+)$/)[1]) : null), pgShown: null, view: (/\/g\/./.test(location.hash) ? "post" : "ov"), ik: {}, pk: {}, hp: {}, hpShown: {}, boardHtml: "", spellIcon: {}, open: {}, perkIcon: {}, ver: "14.20.1", match: null, gameId: null, gameNo: 1, blueTeam: null, redTeam: null, meta: null, frame: null, details: null, demo: false, updated: null, timer: null };
 
   /* ---------- api ---------- */
@@ -397,7 +397,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   }
   function logoHtml(t) { return t && t.image ? '<img src="' + esc(t.image) + '" alt="">' : '<span class="ph">' + esc((t && t.code || "?").slice(0, 3)) + "</span>"; }
 
-  function setHash() { try { history.replaceState(null, "", "#live/" + matchId + (S.view === "post" && S.pg ? "/g/" + encodeURIComponent(S.pg) : "")); } catch (e) {} }
+  function setHash() { try { history.replaceState(null, "", "#" + matchId + (S.view === "post" && S.pg ? "/g/" + encodeURIComponent(S.pg) : "")); } catch (e) {} }
   // a finished game: the post game page (game.html) shown inside this page, so the whole match lives at one address
   function showPost() {
     var w = $("pgwrap"); w.hidden = false;
