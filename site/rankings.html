@@ -101,7 +101,7 @@ h2 svg { flex: none; }
 .col-rank .stack { margin-top: 16px; }
 .team { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
 .chg { flex: none; min-width: 32px; height: 18px; padding: 0 6px; border-radius: 5px; background: var(--pill); display: inline-flex; align-items: center; justify-content: center; gap: 3px; font-size: 11.5px; font-weight: 700; color: var(--fg); }
-.chg.up { color: var(--green); } .chg.down { color: var(--red); }
+.chg, .chg.up, .chg.down { color: var(--fg); } .chg.up svg { color: var(--green); } .chg.down svg { color: var(--red); }
 
 /* player stats */
 .chips { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
@@ -431,7 +431,7 @@ html { scroll-padding-top: 84px; }
   var rankUpd = "";
   var hasTeam = {};
   var U = { home: 'index.html', players: 'players.html', game: 'game.html', profile: 'player.html' };
-  var ARW = {up: '<svg width="9" height="6" viewBox="0 0 9 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m1 5 3.500-3.500L8 5"/></svg>', dn: '<svg width="9" height="6" viewBox="0 0 9 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 3.500 3.500L8 1"/></svg>'};
+  var ARW = {up: '<svg width="9" height="6" viewBox="0 0 9 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m1 5 3.500-3.500L8 5"/></svg>', dn: '<svg width="9" height="6" viewBox="0 0 9 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 3.500 3.500L8 1"/></svg>'};
   function chgChip(c) { var m = /^(up|dn)(\d+)$/.exec(c || ''); return m ? '<span class="chg ' + (m[1] === 'up' ? 'up' : 'down') + '">' + ARW[m[1]] + m[2] + '</span>' : '<span class="chg">-</span>'; }
   var REG = ['All', 'LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'], cur = 'All';
   $('rk-sub').textContent = 'Elo rating from 2026 results, including international events · ' + rank.length + ' tier 1 teams (LCK, LPL, LEC, LCS, LCP, CBLOL)' + (rankUpd ? ' · updated ' + rankUpd : '') + ' · UK time';
