@@ -380,7 +380,8 @@ html { scroll-padding-top: 84px; }
 .stko-row .l5 { gap: 3px; } .stko-row .l5 i { width: 18px; height: 18px; line-height: 18px; font-size: 10px; }
 .fcol { position: relative; grid-column: 2 / 4; min-width: 0; }
 .fcol::before { content: ""; position: absolute; left: -16.5px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--line) 14%, var(--line) 86%, transparent); }
-.fcol .perf h2 { margin: 0 0 14px; }
+.fcol .perf h2 { margin: 0 0 4px; }
+.subt { margin: 0 0 14px; font-size: 12px; color: var(--dim); line-height: 1.4; }
 .fcol { display: flex; flex-direction: column; }
 .fcol .perf { display: flex; flex-direction: column; }
 .fcol .perf:last-child { flex: 1; min-height: 0; }
@@ -471,10 +472,6 @@ html { scroll-padding-top: 84px; }
   <div class="stko-row">
   <section class="stko" id="standings">
     <h2>Standings</h2>
-    <div class="chips stko-tabs" role="tablist" aria-label="Tournament stage">
-      <button class="chip on" type="button" role="tab" aria-selected="true" data-t="swiss">Swiss Stage</button>
-      <button class="chip" type="button" role="tab" aria-selected="false" data-t="ko">Knockout Stage</button>
-    </div>
     <div id="pane-swiss">
       <div class="stand-hd" aria-hidden="true"><span>#</span><span>Team</span><span>Record</span><span>Last 5</span></div>
       <div class="stand-list" id="standings-list"></div>
@@ -487,10 +484,12 @@ html { scroll-padding-top: 84px; }
   <div class="fcol">
     <section class="perf">
       <h2>Floor &amp; Ceiling</h2>
+      <p class="subt">How each team plays at its worst and its best: average gold difference at the end of losses (bottom) and wins (top).</p>
       <div class="rcard fc"><div id="fc"></div></div>
     </section>
     <section class="perf" style="margin-top:34px">
       <h2>Closing Out Leads</h2>
+      <p class="subt">How often each team wins after leading by 2,000+ gold at 20 minutes.</p>
       <div class="rcard"><div id="lead"></div></div>
     </section>
   </div>
