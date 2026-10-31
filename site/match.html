@@ -294,7 +294,7 @@ html { scroll-padding-top: 84px; }
 .mv .otimers{grid-column:1 / -1; display:flex; justify-content:center; gap:28px; margin-top:12px; padding-top:10px; border-top:1px solid var(--divider);}
 .mv .otm{display:inline-flex; align-items:center; gap:8px; font-size:12px; color:var(--muted);}
 .mv .otm img{width:16px; height:16px;} .mv .otm i{font-style:normal; font-weight:500;}
-.mv .otm b{color:var(--fg); font-weight:700; font-variant-numeric:tabular-nums; min-width:38px;}
+.mv .otm b{color:var(--fg); font-weight:700; font-variant-numeric:tabular-nums; min-width:46px;}
 .mv .bhead{align-items:center; margin-bottom:24px; padding:14px 0; background:var(--surface); border:1px solid var(--line); border-radius:10px;}
 .mv .bh{display:flex; align-items:center; gap:14px; min-width:0;}
 .mv .bh.r{justify-content:flex-end;}
@@ -1014,14 +1014,14 @@ html { scroll-padding-top: 84px; }
   function curSecs() { return gameSecs() + (S.frame && S.frame.gameState === "in_game" && S.updated ? (Date.now() - S.updated.getTime()) / 1000 : 0); }
   function objTimersHtml() {
     var sp = objSpawns(); if (!sp) return "";
-    var one = function (ic, label, at) { return '<span class="otm">' + ic + '<i>' + label + '</i><b data-at="' + (at == null ? "" : at) + '">' + (at == null ? "-" : at - curSecs() > 0 ? mmss(at - curSecs()) : "Up") + "</b></span>"; };
+    var one = function (ic, label, at) { return '<span class="otm">' + ic + '<i>' + label + '</i><b data-at="' + (at == null ? "" : at) + '">' + (at == null ? "-" : at - curSecs() > 0 ? mmss(at - curSecs()) : "ALIVE") + "</b></span>"; };
     return '<div class="otimers">' + one(ico("dragon"), sp.elder ? "Elder" : "Dragon", sp.d) + one(ico("nashor"), "Baron", sp.b) + "</div>";
   }
   function tickObj() {
     var now = curSecs();
     Array.prototype.forEach.call(document.querySelectorAll(".otm b[data-at]"), function (e) {
       var at = e.getAttribute("data-at"); if (at === "") return;
-      var r = +at - now; e.textContent = r > 0 ? mmss(r) : "Up";
+      var r = +at - now; e.textContent = r > 0 ? mmss(r) : "ALIVE";
     });
   }
   setInterval(tickObj, 500);
