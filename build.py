@@ -696,6 +696,10 @@ def main(csv):
     s = jreplace(s, "UP", build_upcoming())
     s = jreplace(s, "SD", build_search(s, WD, CH))
     wr(out / "index.html", stamp(s))
+    # champion stats page
+    s = rd("site/champions.html")
+    for name, val in (("WD", WD), ("CHAMPS", CH)): s = jreplace(s, name, val)
+    s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "champions.html", stamp(s))
     # power rankings
     s = rd("site/rankings.html"); s = jreplace(s, "rank", RK); s = jreplace(s, "rankUpd", RKUPD); s = jreplace(s, "hasTeam", HAS); s = jreplace(s, "LOGOS", logos_all)
     s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "rankings.html", stamp(s))
