@@ -2,8 +2,7 @@ name: Update data and publish site
 
 on:
   schedule:
-    - cron: "15 */6 * * *"      # every 6 hours (UTC), at quarter past
-    - cron: "*/20 * * * *"      # every 20 minutes: picks up newly finished games from Riot's feed (GitHub may delay these runs)
+    - cron: "10 7 * * *"        # once a day at 07:10 UTC (07:10 UK in winter; 08:10 UK during BST), after Oracle's Elixir's daily update (~07:05 UK)
   workflow_dispatch:             # "Run workflow" button in the Actions tab
   push:
     branches: [main]             # also rebuild whenever you change the pages or scripts
