@@ -677,10 +677,20 @@ def main(csv):
     def stamp(s):
         return re.sub(r"data through [A-Z][a-z]{2} \d+", "data through " + date_s, s)
 
+    # floor & ceiling and closing-out leads (homepage): per team, average end-of-game gold difference in losses and wins, and wins when 2,000+ gold up at 20:00
+    T_ = TD["teams"]; gold_ = {(k, g["gid"]): g["gold"] for k, t_ in T_.items() for g in t_["games"]}; fc_pts, fc_lead = [], []
+    for k, t_ in T_.items():
+        w_, l_ = [], []
+        for g in t_["games"]:
+            og = gold_.get((g["opp"], g["gid"])); (w_ if g["win"] else l_).append(round(g["gold"] - og) if og is not None else 0)
+        if w_ and l_: fc_pts.append(dict(c=k, f=sum(l_) / len(l_), h=sum(w_) / len(w_)))
+        gg = [g for g in t_["games"] if G20.get(g["gid"], {}).get(k, -1e9) >= 2000]
+        fc_lead.append(dict(c=k, n=len(gg), w=sum(1 for g in gg if g["win"])))
+    FCD = dict(pts=fc_pts, lead=fc_lead, n=len(T_), names={k: t_["name"] for k, t_ in T_.items()}, regions={k: t_.get("region") for k, t_ in T_.items()})
     out = ROOT / "dist"
     # index
     s = idx
-    for name, val in (("WD", WD), ("FACES", FACES), ("FACESF", FACES), ("CHAMPS", CH), ("SW", ST)): s = jreplace(s, name, val)
+    for name, val in (("WD", WD), ("FACES", FACES), ("FACESF", FACES), ("CHAMPS", CH), ("SW", ST), ("FCD", FCD)): s = jreplace(s, name, val)
     s = re.sub(r"  var rec = \[\[.*?\]\];\n", lambda m: "  var rec = " + json.dumps(rec, ensure_ascii=False) + ";\n", s, count=1, flags=re.S)
     s = jreplace(s, "rank", RK); s = jreplace(s, "rankUpd", RKUPD); s = jreplace(s, "hasTeam", HAS); s = jreplace(s, "rankTs", RKTS) if "var rankTs" in s else s
     s = jreplace(s, "UP", build_upcoming())
@@ -700,7 +710,6 @@ def main(csv):
     # data pages
     for fn, val in (("game", GD), ("player", PD), ("team", {k: v for k, v in TD.items() if k != "icons"}), ("champion", CD)):
         s = rd("site/%s.html" % fn); s = jreplace(s, "D", val)
-        if fn == "team": s = jreplace(s, "G20", G20)
         s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / (fn + ".html"), stamp(s))
     wr(out / "live-map.json", json.dumps(RIOT_MAP))
     pc = {}   # player on a champion (season): [games, wins, kda, cs/min, dmg/min, kp%, dmg share%, gd@15]
