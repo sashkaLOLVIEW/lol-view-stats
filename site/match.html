@@ -440,7 +440,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       '<div class="center"><div class="score">' + wins(tm[0]) + ":" + wins(tm[1]) + '</div><div class="state">' + (S.upcoming ? "Upcoming" : done ? "Series complete" : S.view === "post" ? "Series in progress" : "Game " + gn + " &middot; Waiting to start") + "</div></div>" +
       '<div class="side r"><div><div class="tn">' + esc(tm[1].name) + '</div><div class="tc">' + esc(tm[1].code) + "</div></div>" + logoHtml(tm[1]) + "</div>";
     $("games").innerHTML = chipsHtml(); $("gold").innerHTML = ""; $("board").innerHTML = ""; $("cmpsec").hidden = true; $("tmsec").hidden = true; $("ovgrid").className = "ovgrid";
-    $("pgwrap").hidden = S.view !== "post"; $("ovgrid").style.display = S.view === "post" ? "none" : ""; $("gold").style.display = $("board").style.display = S.view === "post" ? "none" : "";
+    $("match").style.display = S.view === "post" ? "none" : ""; $("pgwrap").hidden = S.view !== "post"; $("ovgrid").style.display = S.view === "post" ? "none" : ""; $("gold").style.display = $("board").style.display = S.view === "post" ? "none" : "";
     if (S.view === "post") showPost();
     else if (S.view === "ov") drawCmp(tm[0], tm[1]);
     setNotice("", "<b>Live</b> Game " + S.gameNo + " has not started yet. This page updates by itself.");
@@ -544,7 +544,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
       '<div class="gbar"><i class="b" style="width:' + (bg / tot * 100).toFixed(1) + '%"></i><i class="r" style="width:' + (rg / tot * 100).toFixed(1) + '%"></i></div>' +
       '<div class="glabels"><span></span><span>' + (diff === 0 ? "Even" : (diff > 0 ? esc(bt.code) : esc(rt.code)) + " +" + fmt(Math.abs(diff))) + "</span><span></span></div>";
 
-    $("pgwrap").hidden = S.view !== "post"; $("ovgrid").style.display = S.view === "post" ? "none" : ""; $("gold").style.display = $("board").style.display = S.view === "post" ? "none" : "";
+    $("match").style.display = S.view === "post" ? "none" : ""; $("pgwrap").hidden = S.view !== "post"; $("ovgrid").style.display = S.view === "post" ? "none" : ""; $("gold").style.display = $("board").style.display = S.view === "post" ? "none" : "";
     if (S.view === "post") { showPost(); return; }
     if (S.view === "ov") { $("gold").innerHTML = ""; $("board").innerHTML = ""; S.boardHtml = ""; drawCmp(bt, rt); return; }
     $("tmsec").hidden = true; $("ovgrid").className = "ovgrid"; drawChamps(bt, rt);
