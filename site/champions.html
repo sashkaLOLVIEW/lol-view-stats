@@ -389,6 +389,11 @@ html { scroll-padding-top: 84px; }
 </style>
 
 
+<style>
+/* uniform gap between the navbar and the page content */
+.page > .topbar + * { margin-top: 52px !important; padding-top: 0 !important; }
+.page > .topbar + * > .champs:first-child { margin-top: 0; }
+</style>
 <div class="page">
   <header class="topbar">
     <nav class="nav" aria-label="Main"><a href="index.html">Home</a><a href="rankings.html">Rankings</a><a href="players.html">Players</a><a href="champions.html" aria-current="page">Champions</a>
