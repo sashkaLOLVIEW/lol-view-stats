@@ -686,7 +686,7 @@ html { scroll-padding-top: 84px; }
       $('tp-cards').innerHTML = cards.map(function (c, i) {
         var face = FACESF[c.p] ? '<span class="tp-portrait has"><img src="' + FACESF[c.p] + '" alt=""></span>' : '<span class="tp-portrait"></span>';
         return '<article class="tp-card"><div class="tp-card-hd">' + ic[KEYS[c.role]].replace('width="16" height="16"', 'width="12" height="12"') + c.role + (sel === 'All' ? '' : ' #' + (i + 1)) + '</div>' +
-          '<div class="tp-who"><div class="tp-who-l"><div class="tp-pname"><span class="tp-tlogo" style="border:0">' + logo(c.t, 20) + '</span><a href="' + pl(c.p) + '" style="color:var(--fg)"><b>' + c.p + '</b></a></div><div class="tp-rating">Rating <span class="tp-badge' + (c.rt >= 88 ? ' gold' : c.rt >= 80 ? ' blue' : '') + '">' + c.rt + '</span></div></div>' + face + '</div>' +
+          '<div class="tp-who"><div class="tp-who-l"><div class="tp-pname"><span class="tp-tlogo" style="border:0">' + logo(c.t, 20) + '</span><a href="' + pl(c.p) + '" style="color:var(--fg)"><b>' + c.p + '</b></a></div><div class="tp-rating">Rating <span class="tp-badge' + (c.rt >= 90 ? ' gold' : c.rt >= 80 ? ' blue' : c.rt >= 70 ? ' green' : '') + '">' + c.rt + '</span></div></div>' + face + '</div>' +
           '<div class="tp-stats">' + stats.map(function (t, k) { return '<div class="tp-srow"><span>' + t + '</span><span>' + c.v[k] + '<em class="' + (c.rk[k] <= 3 ? 'r' + c.rk[k] : '') + '">' + c.rk[k] + '</em></span></div>'; }).join('') + '</div></article>';
       }).join('');
     }
@@ -885,5 +885,20 @@ html { scroll-padding-top: 84px; }
   window.addEventListener('resize', function () { if (innerWidth > 760) set(false); });
 })();
 </script>
-<style>img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; }</style>
+<style>img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; }
+/* rating badges: 90+ gold, 80+ blue, 70+ green, below that gray (same on every page) */
+.rbadge.rg, .tp-badge.gold, .rtb.rg { background:#d9b53a; color:#171200; }
+.rbadge.rb, .tp-badge.blue, .rtb.rb { background:#3f7fd9; color:#fff; }
+.rbadge.rn, .tp-badge.green, .rtb.rn { background:#2f9e57; color:#fff; }
+.rbadge.rz, .tp-badge, .rtb.rz { background:var(--pill); color:var(--muted); }
+.tp-badge.gold { background:#d9b53a; color:#171200; } .tp-badge.blue { background:#3f7fd9; color:#fff; } .tp-badge.green { background:#2f9e57; color:#fff; }
+.rtb { display:inline-grid; place-items:center; min-width:36px; height:20px; padding:0 5px; border-radius:4px; font-weight:700; font-size:12px; }
+
+/* role selector box: same look everywhere */
+.tp .roles, .roles, .seg, .cp-roles { display:inline-flex; align-items:center; gap:2px; padding:2px; border:1px solid var(--line); border-radius:6px; background:var(--surface); width:auto; flex:none; }
+.tp .roles button, .roles button, .seg button, .cp-roles .rp { height:26px; min-width:32px; width:auto; padding:0 8px; border:0; border-radius:4px; background:transparent; color:var(--muted); display:inline-grid; grid-auto-flow:column; place-items:center; gap:6px; cursor:pointer; font-size:12px; font-weight:500; }
+.tp .roles button svg, .roles button svg, .seg button svg, .cp-roles .rp svg { width:15px; height:15px; }
+.tp .roles button:hover, .roles button:hover, .seg button:hover, .cp-roles .rp:hover { color:var(--fg); background:transparent; }
+.tp .roles button.on, .roles button.on, .seg button.on, .cp-roles .rp.on { background:color-mix(in srgb, var(--fg) 16%, var(--surface)); color:var(--fg); font-weight:700; }
+</style>
 <script>document.addEventListener('dragstart', function (e) { if (e.target && e.target.tagName === 'IMG') e.preventDefault(); });</script>

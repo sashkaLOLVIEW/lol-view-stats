@@ -198,6 +198,15 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 }
 @media (prefers-reduced-motion: reduce) { .toggle::after, .gbar i, .hp i { transition:none; } }
 </style>
+<style>
+/* rating badges: 90+ gold, 80+ blue, 70+ green, below that gray (same on every page) */
+.rbadge.rg, .tp-badge.gold, .rtb.rg { background:#d9b53a; color:#171200; }
+.rbadge.rb, .tp-badge.blue, .rtb.rb { background:#3f7fd9; color:#fff; }
+.rbadge.rn, .tp-badge.green, .rtb.rn { background:#2f9e57; color:#fff; }
+.rbadge.rz, .tp-badge, .rtb.rz { background:var(--pill); color:var(--muted); }
+.tp-badge.gold { background:#d9b53a; color:#171200; } .tp-badge.blue { background:#3f7fd9; color:#fff; } .tp-badge.green { background:#2f9e57; color:#fff; }
+.rtb { display:inline-grid; place-items:center; min-width:36px; height:20px; padding:0 5px; border-radius:4px; font-weight:700; font-size:12px; }
+</style>
 </head>
 <body>
 <div class="page">
@@ -401,7 +410,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
   }
   // team comparison, role by role: season stats and rating from the event data (static)
   var CROLES = ["Top", "Jungle", "Mid", "Bot", "Support"];
-  var CST = [["Rating", 1, 1, function (v) { return v.toFixed(1); }], ["KDA", 2, 1, function (v) { return v.toFixed(1); }], ["CS/M", 3, 1, function (v) { return v.toFixed(1); }], ["GD@15", 4, 1, function (v) { return (v > 0 ? "+" : "") + Math.round(v); }],
+  var CST = [["Rating", 1, 1, function (v) { return '<span class="rtb ' + (v >= 90 ? "rg" : v >= 80 ? "rb" : v >= 70 ? "rn" : "rz") + '">' + v.toFixed(1) + "</span>"; }], ["KDA", 2, 1, function (v) { return v.toFixed(1); }], ["CS/M", 3, 1, function (v) { return v.toFixed(1); }], ["GD@15", 4, 1, function (v) { return (v > 0 ? "+" : "") + Math.round(v); }],
              ["DPM", 5, 1, function (v) { return Math.round(v); }], ["KP%", 6, 1, function (v) { return Math.round(v) + "%"; }], ["Dmg share", 7, 1, function (v) { return Math.round(v) + "%"; }]];
   function face(code, r) { var f = PS.f[code + "|" + r]; return f ? '<img src="' + f + '" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;object-position:top;align-self:center;background:var(--pill)">' : ""; }
   function drawCmp(bt, rt) {
@@ -411,7 +420,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
     var avg = function (L) { var v = L.filter(Boolean).map(function (x) { return x[1]; }); return v.length ? v.reduce(function (a, b) { return a + b; }, 0) / v.length : null; };
     var aa = avg(A), ab = avg(B), cl = function (x, y) { return x == null || y == null || x === y ? ["", ""] : x > y ? ["lead", "trail"] : ["trail", "lead"]; };
     var h = '<h2>Team Comparison</h2><div class="cr"><div class="hd"><div class="pn"><b>' + esc(bt.code) + '</b><small>Average player rating</small></div><div class="rc" style="font-size:11px;font-weight:700;text-transform:uppercase">Rating</div><div class="pn r"><small>Average player rating</small><b>' + esc(rt.code) + '</b></div></div>' +
-      '<div class="ct"><div class="cl ' + cl(aa, ab)[0] + '">' + (aa == null ? "-" : aa.toFixed(1)) + '</div><div class="cm">Team average</div><div class="cv ' + cl(aa, ab)[1] + '">' + (ab == null ? "-" : ab.toFixed(1)) + '</div></div></div>';
+      '<div class="ct"><div class="cl ' + cl(aa, ab)[0] + '">' + (aa == null ? "-" : CST[0][3](aa)) + '</div><div class="cm">Team average</div><div class="cv ' + cl(aa, ab)[1] + '">' + (ab == null ? "-" : CST[0][3](ab)) + '</div></div></div>';
     CROLES.forEach(function (r, i) {
       var a = A[i], b = B[i]; if (!a && !b) return;
       var rows = CST.map(function (s) {

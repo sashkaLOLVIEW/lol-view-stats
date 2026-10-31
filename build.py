@@ -689,7 +689,8 @@ def main(csv):
     # players
     s = rd("site/players.html")
     for name, val in (("WD", WD), ("FACES", FACES), ("FACESF", FACES)): s = jreplace(s, name, val)
-    s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "players.html", stamp(s))
+    _sd = build_search(s, WD, CH); s = jreplace(s, "TN", {t[0]: t[1] for t in _sd["t"]})   # team code -> full name (alphabetical team grouping)
+    s = jreplace(s, "SD", _sd); wr(out / "players.html", stamp(s))
     # data pages
     for fn, val in (("game", GD), ("player", PD), ("team", {k: v for k, v in TD.items() if k != "icons"}), ("champion", CD)):
         s = rd("site/%s.html" % fn); s = jreplace(s, "D", val)

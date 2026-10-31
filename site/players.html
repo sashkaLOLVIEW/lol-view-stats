@@ -165,6 +165,7 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 .tbl th.sortable { cursor:pointer; user-select:none; } .tbl th.sortable:hover { color:var(--fg); }
 .tbl tbody tr[data-h] { cursor:pointer; } .tbl tbody tr[data-h]:hover td { background:var(--stripe, var(--rowalt)); }
 .tbl tbody tr[data-h]:hover .c1, .tbl tbody tr[data-h]:hover .c2 { background:var(--stripe, var(--rowalt)); }
+.tbl tr.tg td { height:34px; text-align:left; background:var(--hdr); border-top:1px solid var(--line); padding-left:14px; } .tbl tr.tg a { display:flex; align-items:center; gap:8px; } .tbl tr.tg b { color:var(--fg); font-size:12.5px; }
 .tbl td.sc { color:var(--fg); font-weight:600; }
 .tbl .pos { color:var(--pos); } .tbl .neg { color:var(--neg); }
 .tbl a { color:inherit; text-decoration:none; } .tbl a.nm { color:var(--fg); font-weight:600; } .tbl a.nm:hover, .tbl a.tm:hover span { text-decoration:underline; }
@@ -208,6 +209,22 @@ html { scroll-padding-top: 84px; }
 .topbar::after { content: ""; position: absolute; z-index: -1; left: 50%; width: 100vw; transform: translateX(-50%); top: 100%; height: 40px; pointer-events: none; background: linear-gradient(to bottom, var(--bg), color-mix(in srgb, var(--bg) 0%, transparent)); }
 </style>
 
+<style>
+/* rating badges: 90+ gold, 80+ blue, 70+ green, below that gray (same on every page) */
+.rbadge.rg, .tp-badge.gold, .rtb.rg { background:#d9b53a; color:#171200; }
+.rbadge.rb, .tp-badge.blue, .rtb.rb { background:#3f7fd9; color:#fff; }
+.rbadge.rn, .tp-badge.green, .rtb.rn { background:#2f9e57; color:#fff; }
+.rbadge.rz, .tp-badge, .rtb.rz { background:var(--pill); color:var(--muted); }
+.tp-badge.gold { background:#d9b53a; color:#171200; } .tp-badge.blue { background:#3f7fd9; color:#fff; } .tp-badge.green { background:#2f9e57; color:#fff; }
+.rtb { display:inline-grid; place-items:center; min-width:36px; height:20px; padding:0 5px; border-radius:4px; font-weight:700; font-size:12px; }
+
+/* role selector box: same look everywhere */
+.tp .roles, .roles, .seg, .cp-roles { display:inline-flex; align-items:center; gap:2px; padding:2px; border:1px solid var(--line); border-radius:6px; background:var(--surface); width:auto; flex:none; }
+.tp .roles button, .roles button, .seg button, .cp-roles .rp { height:26px; min-width:32px; width:auto; padding:0 8px; border:0; border-radius:4px; background:transparent; color:var(--muted); display:inline-grid; grid-auto-flow:column; place-items:center; gap:6px; cursor:pointer; font-size:12px; font-weight:500; }
+.tp .roles button svg, .roles button svg, .seg button svg, .cp-roles .rp svg { width:15px; height:15px; }
+.tp .roles button:hover, .roles button:hover, .seg button:hover, .cp-roles .rp:hover { color:var(--fg); background:transparent; }
+.tp .roles button.on, .roles button.on, .seg button.on, .cp-roles .rp.on { background:color-mix(in srgb, var(--fg) 16%, var(--surface)); color:var(--fg); font-weight:700; }
+</style>
 </head>
 <body>
 <div class="page">
@@ -298,7 +315,7 @@ html { scroll-padding-top: 84px; }
       $('tp-cards').innerHTML = cards.map(function (c, i) {
         var face = FACESF[c.p] ? '<span class="tp-portrait has"><img src="' + FACESF[c.p] + '" alt=""></span>' : '<span class="tp-portrait"></span>';
         return '<article class="tp-card"><div class="tp-card-hd">' + ic[KEYS[c.role]].replace('width="16" height="16"', 'width="12" height="12"') + c.role + (sel === 'All' ? '' : ' #' + (i + 1)) + '</div>' +
-          '<div class="tp-who"><div class="tp-who-l"><div class="tp-pname"><span class="tp-tlogo" style="border:0">' + logo(c.t, 20) + '</span><a href="' + pl(c.p) + '" style="color:var(--fg)"><b>' + c.p + '</b></a></div><div class="tp-rating">Rating <span class="tp-badge' + (c.rt >= 88 ? ' gold' : c.rt >= 80 ? ' blue' : '') + '">' + c.rt + '</span></div></div>' + face + '</div>' +
+          '<div class="tp-who"><div class="tp-who-l"><div class="tp-pname"><span class="tp-tlogo" style="border:0">' + logo(c.t, 20) + '</span><a href="' + pl(c.p) + '" style="color:var(--fg)"><b>' + c.p + '</b></a></div><div class="tp-rating">Rating <span class="tp-badge' + (c.rt >= 90 ? ' gold' : c.rt >= 80 ? ' blue' : c.rt >= 70 ? ' green' : '') + '">' + c.rt + '</span></div></div>' + face + '</div>' +
           '<div class="tp-stats">' + stats.map(function (t, k) { return '<div class="tp-srow"><span>' + t + '</span><span>' + c.v[k] + '<em class="' + (c.rk[k] <= 3 ? 'r' + c.rk[k] : '') + '">' + c.rk[k] + '</em></span></div>'; }).join('') + '</div></article>';
       }).join('');
     }
@@ -319,12 +336,15 @@ html { scroll-padding-top: 84px; }
 
 
   /* ---- Statistics table: role filter, sortable columns, every cell links somewhere ---- */
-  var P = WD.players, TN = {};
-  $("cnt").textContent = "+ " + P.length + " players";
+  var TN = {};
+  var P = WD.players;
+  $("cnt").textContent = P.length + " players";
   var RK = ["all", "top", "jungle", "mid", "bot", "support"], RL = ["All roles", "Top", "Jungle", "Mid", "Bot", "Support"], RN = { Top: "top", Jungle: "jungle", Mid: "mid", Bot: "bot", Support: "support" };
   var role = "all", sortK = "rt", sortDir = -1;
-  $("frow").innerHTML = '<div class="seg icons" id="rseg">' + RK.map(function (k, i) { return '<button type="button" data-r="' + k + '" aria-label="' + RL[i] + '" title="' + RL[i] + '"' + (i === 0 ? ' class="on"' : '') + '>' + (k === "all" ? "All" : icons[k]) + '</button>'; }).join("") + '</div>';
-  $("rseg").querySelector('button[data-r="all"]').style.cssText = "min-width:44px;padding:0 12px";
+  $("frow").innerHTML = '<div class="seg icons" id="rseg">' + RK.map(function (k, i) { return '<button type="button" data-r="' + k + '" aria-label="' + RL[i] + '" title="' + RL[i] + '"' + (i === 0 ? ' class="on"' : '') + '>' + icons[k] + '</button>'; }).join("") + '</div>' +
+    '<button class="dd" id="grp" type="button" title="Show every team\'s five players together">' + '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="m7 1 5.500 3L7 7 1.500 4ZM1.500 7 7 10l5.500-3M1.500 10 7 13l5.500-3"/></svg>Team</button>';
+  var group = false, TNAME = TN;
+  $("grp").addEventListener("click", function () { group = !group; $("grp").classList.toggle("on", group); draw(); });
   $("rseg").addEventListener("click", function (e) {
     var b = e.target.closest("button"); if (!b) return; role = b.getAttribute("data-r");
     Array.prototype.forEach.call($("rseg").children, function (x) { x.classList.toggle("on", x === b); }); draw();
@@ -334,7 +354,7 @@ html { scroll-padding-top: 84px; }
   var COLS = [
     ["g", "Games", "Games played", function (r) { return r.g; }, -1],
     ["wp", "Win%", "Win rate", function (r) { return r.wp.toFixed(1) + "%"; }, -1],
-    ["rt", "Rating", "Player rating", function (r) { return '<span class="rbadge ' + (r.rt >= 90 ? "r1" : r.rt >= 75 ? "r2" : r.rt >= 60 ? "r3" : "") + '">' + r.rt.toFixed(1) + "</span>"; }, -1],
+    ["rt", "Rating", "Player rating", function (r) { return '<span class="rbadge ' + (r.rt >= 90 ? "rg" : r.rt >= 80 ? "rb" : r.rt >= 70 ? "rn" : "rz") + '">' + r.rt.toFixed(1) + "</span>"; }, -1],
     ["kda", "KDA", "Kills + assists per death", function (r) { return r.kda.toFixed(1); }, -1],
     ["k", "K", "Kills per game", function (r) { return r.k.toFixed(1); }, -1],
     ["d", "D", "Deaths per game", function (r) { return r.d.toFixed(1); }, 1],
@@ -349,21 +369,27 @@ html { scroll-padding-top: 84px; }
     ["xpd", "XPD@15", "XP difference at 15 minutes", function (r) { return '<span class="' + (r.xpd > 0 ? "pos" : r.xpd < 0 ? "neg" : "") + '">' + sg(r.xpd) + "</span>"; }, -1]
   ];
   function draw() {
-    var rows = P.filter(function (r) { return role === "all" || RN[r.r] === role; }).slice().sort(function (a, b) { return (a[sortK] - b[sortK]) * sortDir || b.rt - a.rt; });
+    var RO = { Top: 0, Jungle: 1, Mid: 2, Bot: 3, Support: 4 };
+    var rows = P.filter(function (r) { return role === "all" || RN[r.r] === role; }).slice();
+    if (group) rows.sort(function (a, b) { return (TNAME[a.t] || a.t).localeCompare(TNAME[b.t] || b.t) || RO[a.r] - RO[b.r]; });
+    else rows.sort(function (a, b) { return (a[sortK] - b[sortK]) * sortDir || b.rt - a.rt; });
     var head = '<thead><tr><th class="c1">#</th><th class="c2" style="text-align:left">Player</th><th>Team</th>' + COLS.map(function (c) {
-      var on = c[0] === sortK; return '<th class="sortable' + (on ? " sorted" : "") + '" data-k="' + c[0] + '" title="' + c[2] + '">' + c[1] + (on ? (sortDir < 0 ? " ↓" : " ↑") : "") + "</th>";
+      var on = !group && c[0] === sortK; return '<th class="sortable' + (on ? " sorted" : "") + '" data-k="' + c[0] + '" title="' + c[2] + '">' + c[1] + (on ? (sortDir < 0 ? " ↓" : " ↑") : "") + "</th>";
     }).join("") + "</tr></thead>";
+    var prev = null, n = 0, ncol = COLS.length + 3;
     var body = "<tbody>" + rows.map(function (r, i) {
-      var face = FACES[r.p] ? '<img class="fc" src="' + FACES[r.p] + '" alt="">' : '<span class="fc"></span>';
-      return '<tr data-h="' + pl(r.p) + '"><td class="c1">' + (i + 1) + '</td><td class="c2"><div class="pcell"><a class="rl" href="' + pl(r.p) + '" tabindex="-1">' + face + '</a><span class="ri" title="' + r.r + '">' + icons[RN[r.r]] + '</span><a class="nm" href="' + pl(r.p) + '" style="font-weight:inherit">' + r.p + "</a></div></td>" +
-        '<td><a class="tm" href="team.html#' + encodeURIComponent(r.t) + '">' + logo(r.t, 18) + "<span>" + r.t + "</span></a></td>" +
+      var hdr = "";
+      if (group && r.t !== prev) { n = 0; hdr = '<tr class="tg"><td colspan="' + ncol + '"><a href="team.html#' + encodeURIComponent(r.t) + '">' + logo(r.t, 20) + "<b>" + (TNAME[r.t] || r.t) + "</b></a></td></tr>"; }
+      prev = r.t; n++;
+      return hdr + '<tr data-h="' + pl(r.p) + '"><td class="c1">' + (group ? n : i + 1) + '</td><td class="c2"><div class="pcell"><span class="ri" title="' + r.r + '">' + icons[RN[r.r]] + '</span><a class="nm" href="' + pl(r.p) + '" style="font-weight:inherit">' + r.p + "</a></div></td>" +
+        '<td><a class="tm" href="team.html#' + encodeURIComponent(r.t) + '" title="' + (TNAME[r.t] || r.t) + '">' + logo(r.t, 20) + "</a></td>" +
         COLS.map(function (c) { return "<td" + (c[0] === sortK ? ' class="sc"' : "") + ">" + c[3](r) + "</td>"; }).join("") + "</tr>";
     }).join("") + "</tbody>";
     $("tbl").innerHTML = head + body;
   }
   $("tbl").addEventListener("click", function (e) {
     var th = e.target.closest("th.sortable");
-    if (th) { var k = th.getAttribute("data-k"); if (k === sortK) sortDir = -sortDir; else { sortK = k; sortDir = COLS.filter(function (c) { return c[0] === k; })[0][4]; } draw(); return; }
+    if (th) { var k = th.getAttribute("data-k"); if (group) { group = false; $("grp").classList.remove("on"); } if (k === sortK) sortDir = -sortDir; else { sortK = k; sortDir = COLS.filter(function (c) { return c[0] === k; })[0][4]; } draw(); return; }
     if (e.target.closest("a")) return;
     var tr = e.target.closest("tr[data-h]"); if (tr) location.href = tr.getAttribute("data-h");
   });

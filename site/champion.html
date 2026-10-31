@@ -294,6 +294,14 @@ html { scroll-padding-top: 84px; }
 .topbar::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: var(--bg); }
 .topbar::after { content: ""; position: absolute; z-index: -1; left: 50%; width: 100vw; transform: translateX(-50%); top: 100%; height: 40px; pointer-events: none; background: linear-gradient(to bottom, var(--bg), color-mix(in srgb, var(--bg) 0%, transparent)); }
 </style>
+<style>
+/* role selector box: same look everywhere */
+.tp .roles, .roles, .seg, .cp-roles { display:inline-flex; align-items:center; gap:2px; padding:2px; border:1px solid var(--line); border-radius:6px; background:var(--surface); width:auto; flex:none; }
+.tp .roles button, .roles button, .seg button, .cp-roles .rp { height:26px; min-width:32px; width:auto; padding:0 8px; border:0; border-radius:4px; background:transparent; color:var(--muted); display:inline-grid; grid-auto-flow:column; place-items:center; gap:6px; cursor:pointer; font-size:12px; font-weight:500; }
+.tp .roles button svg, .roles button svg, .seg button svg, .cp-roles .rp svg { width:15px; height:15px; }
+.tp .roles button:hover, .roles button:hover, .seg button:hover, .cp-roles .rp:hover { color:var(--fg); background:transparent; }
+.tp .roles button.on, .roles button.on, .seg button.on, .cp-roles .rp.on { background:color-mix(in srgb, var(--fg) 16%, var(--surface)); color:var(--fg); font-weight:700; }
+</style>
 </head>
 <body>
 <div class="page">
