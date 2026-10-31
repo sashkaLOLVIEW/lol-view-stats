@@ -498,6 +498,10 @@ def attach_items(w, GD, PD, CD):
     ro = [p for g in GD["games"] if g.get("pct") for t in g["teams"] for p in t["players"]]
     if not M and not ro: return
     raw = {k: v[0] for k, v in M.items()}
+    sup_ = [(k, v[0]) for k, v in M.items() if k[2] == "sup" or str(k[2]).lower().startswith("sup")]
+    print("  support players (raw item ids from Riot):", len(sup_))
+    for k, v in sup_[:8]: print("    ", k, v, "| held back by tidy_items:", [i for i in v if i in SUPPORT_ITEMS])
+    print("  position keys seen:", sorted({str(k[2]) for k in M})[:8])
     icons = item_assets({i for v in raw.values() for i in v} | {i for v in M.values() for i in v[3]} | {i for p in ro for i in p["it"] if i})
     trset = TRINKETS | {int(i) for i, x in icons.items() if len(x) > 2 and x[2]}
     IT = {k: tidy_items(v, trset) for k, v in raw.items()}
