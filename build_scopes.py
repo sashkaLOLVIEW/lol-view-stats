@@ -67,7 +67,7 @@ def build(csv, out_dir, code_of, icons_fn):
                     t=[tidx[x] for x in p.teamname], c=[cidx.get(x, -1) if isinstance(x, str) else -1 for x in p.champion], w=_clean(p.result),
                     k=_clean(p.kills), d=_clean(p.deaths), a=_clean(p.assists), tk=_clean([tk.get((g, s)) for g, s in zip(p.gameid, p.side)]),
                     cs=_clean(p["total cs"]), dmg=_clean(p.damagetochampions), gold=_clean(p.totalgold), dpm=_clean(p.dpm, 1), cspm=_clean(p.cspm, 2), gpm=_clean(p["earned gpm"], 1),
-                    ds=_clean(p.damageshare, 4), gd=_clean(p.golddiffat15), csd=_clean(p.csdiffat15), xpd=_clean(p.xpdiffat15), vs=_clean(p.vspm, 2), z=_clean(zz, 3))
+                    ds=_clean(p.damageshare, 4), gd=_clean(p.golddiffat15), csd=_clean(p.csdiffat15), xpd=_clean(p.xpdiffat15), vs=_clean(p.vspm, 2), z=_clean(zz, 3), gs=_clean(p.earnedgoldshare, 4), wpm=_clean(p.wpm, 2), wcpm=_clean(p.wcpm, 2), dtm=_clean(p.damagetakenperminute, 0))
         t = tm.copy()
         def col(c, nd=None): return _clean(t[c], nd) if c in t else [None] * len(t)
         teamsb = dict(g=[gi[x] for x in t.gameid], s=[0 if x == "Blue" else 1 for x in t.side], t=[tidx[x] for x in t.teamname], w=col("result"), k=col("teamkills"), d=col("teamdeaths"),

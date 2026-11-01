@@ -89,6 +89,90 @@
   }
   function wd(ds) { return champs(ds, players(ds)); }
 
+
+  /* ---------- profile data (player.html / champion.html / team.html shapes) ---------- */
+  var ROLEPOS = ROLES;
+  var D2 = function (n) { return n == null ? null : n; };
+  function base(ds) {
+    var R = ds.rows, G = ds.games, rows = [], idx = {};
+    for (var i = 0; i < R.n; i++) {
+      var gm = G[R.g[i]], mine = R.s[i] === 0 ? gm.bt : gm.rt, opp = R.s[i] === 0 ? gm.rt : gm.bt;
+      var o = { player: meta.players[R.p[i]], team: meta.teams[R.t[i]][1], opp: opp >= 0 ? meta.teams[opp][1] : '?', role: ROLES[R.pos[i]], champ: R.c[i] >= 0 ? meta.champs[R.c[i]] : '?', win: R.w[i], k: R.k[i], d: R.d[i], a: R.a[i],
+        cs: R.cs[i], gl: gm.len / 60, dmg: R.dmg[i], gold: R.gold[i], tk: R.tk[i], ds: R.ds[i], gs: R.gs[i], csd: R.csd[i], gd: R.gd[i], xpd: R.xpd[i], vs: R.vs[i] || 0, wpm: R.wpm[i] || 0, wcpm: R.wcpm[i] || 0, dtm: R.dtm[i] || 0,
+        cspm: R.cspm[i], date: gm.d.slice(0, 10), gid: gm.id, side: R.s[i] === 0 ? 'Blue' : 'Red', pt: gm.pt >= 0 ? meta.patches[gm.pt] : null, lg: gm.lg, sp: gm.sp, ev: gm.lg, len: gm.len };
+      o.ic = o.champ; rows.push(o); idx[o.gid + '|' + o.role + '|' + o.team] = o;
+    }
+    rows.forEach(function (o) { var q = idx[o.gid + '|' + o.role + '|' + o.opp]; o.oc = q ? q.champ : '?'; o.op = q ? q.player : o.opp; });
+    return rows;
+  }
+  function iconsFor(names, ic) { var o = {}; names.forEach(function (n) { if (ic[n]) o[n] = ic[n]; }); return o; }
+  function newest(a) { return a.slice().sort(function (x, y) { return x.date < y.date ? 1 : x.date > y.date ? -1 : 0; }); }
+  function mode(a) { var c = {}, b = null; a.forEach(function (x) { c[x] = (c[x] || 0) + 1; if (!b || c[x] > c[b]) b = x; }); return b; }
+  function profPlayers(ds, ic) {
+    var rows = base(ds), by = {}; rows.forEach(function (o) { (by[o.player] = by[o.player] || []).push(o); });
+    var P = {}, used = {}, champs = {};
+    Object.keys(by).forEach(function (n) {
+      var g = newest(by[n]); P[n] = { name: n, team: g[0].team, role: mode(g.map(function (x) { return x.role; })), region: null, face: null, bd: null, contract: null, games: g };
+      g.forEach(function (x) { champs[x.champ] = 1; });
+    });
+    return { players: P, icons: iconsFor(Object.keys(champs), ic), logos: {} };
+  }
+  function profChamps(ds, ic) {
+    var rows = base(ds), T = ds.teams, ch = {}, avgs = {}, tkk = {};
+    rows.forEach(function (o) {
+      var r = { role: o.role, player: o.player, team: o.team, opp: o.opp, win: o.win, k: o.k, d: o.d, a: o.a, cspm: o.cspm, dmg: o.ds, gold: o.gs, gd: o.gd, csd: o.csd, xpd: o.xpd, kp: o.tk ? +((o.k + o.a) / o.tk).toFixed(4) : null,
+        oc: o.oc, oi: o.oc, op: o.op, game: o.gid, side: o.side, len: o.len, date: o.date, pt: o.pt, lg: o.lg };
+      (ch[o.champ] = ch[o.champ] || { rows: [], bans: [] }).rows.push(r); (avgs[o.role] = avgs[o.role] || []).push(o);
+    });
+    var G = ds.games;
+    for (var i = 0; i < T.n; i++) { var gm = G[T.g[i]], me = meta.teams[T.t[i]][1], opp = T.s[i] === 0 ? gm.rt : gm.bt;
+      T.bans[i].forEach(function (b, n) { if (b >= 0) (ch[meta.champs[b]] = ch[meta.champs[b]] || { rows: [], bans: [] }).bans.push({ by: me, vs: opp >= 0 ? meta.teams[opp][1] : '?', ph: n < 3 ? 1 : 2, game: gm.id, win: T.w[i] }); }); }
+    var avg = {}; Object.keys(avgs).forEach(function (r) {
+      var x = avgs[r], s = function (f) { return x.reduce(function (a, o) { return a + (o[f] || 0); }, 0); }, m = function (f) { var v = x.filter(function (o) { return o[f] != null; }); return v.length ? v.reduce(function (a, o) { return a + o[f]; }, 0) / v.length : 0; };
+      avg[r] = { kda: (s('k') + s('a')) / Math.max(1, s('d')), cspm: m('cspm'), dmg: m('ds'), gold: m('gs'), kp: x.reduce(function (a, o) { return a + (o.tk ? (o.k + o.a) / o.tk : 0); }, 0) / x.length, gd: m('gd'), csd: m('csd'), xpd: m('xpd') };
+    });
+    var out = {}; Object.keys(ch).forEach(function (n) { out[n] = { ic: ic[n] ? n : null, rows: ch[n].rows, bans: ch[n].bans }; });
+    return { champs: out, avg: avg, icons: iconsFor(Object.keys(out), ic), games: G.length, logos: {} };
+  }
+  function profTeams(ds) {
+    var T = ds.teams, R = ds.rows, G = ds.games, teams = {}, byGame = {};
+    for (var i = 0; i < R.n; i++) { var k = R.g[i] + '|' + R.s[i]; (byGame[k] = byGame[k] || []).push(i); }
+    var pl = base(ds), plBy = {}; pl.forEach(function (o) { (plBy[o.player] = plBy[o.player] || []).push(o); });
+    var players = {};
+    Object.keys(plBy).forEach(function (n) { var g = newest(plBy[n]); players[n] = { name: n, team: g[0].team, role: mode(g.map(function (x) { return x.role; })), face: null, games: g }; });
+    for (i = 0; i < T.n; i++) {
+      var gm = G[T.g[i]], t = meta.teams[T.t[i]], opp = T.s[i] === 0 ? gm.rt : gm.bt, ix = byGame[T.g[i] + '|' + T.s[i]] || [];
+      var sum = function (c) { return ix.reduce(function (a, j) { return a + (R[c][j] || 0); }, 0); };
+      var row = { gid: gm.id, opp: opp >= 0 ? meta.teams[opp][1] : '?', win: T.w[i], gl: gm.len, date: gm.d.slice(0, 10), k: sum('k'), d: sum('d'), a: sum('a'), fb: T.fb[i] || 0, ft: T.ft[i] || 0, dr: T.dr[i] || 0, ba: T.ba[i] || 0,
+        tw: T.tw[i] || 0, gr: T.gr[i] || 0, he: T.he[i] || 0, gold: T.gold[i] || 0, dmg: sum('dmg'), vs: sum('vs'), cs: sum('cs'), gd: sum('gd'), csd: sum('csd'), xpd: sum('xpd'), lg: gm.lg };
+      (teams[t[1]] = teams[t[1]] || { code: t[1], name: t[0], region: null, games: [], players: [] }).games.push(row);
+    }
+    Object.keys(players).forEach(function (n) { var p = players[n], seen = {}; p.games.forEach(function (g) { var t = teams[g.team]; if (t && !seen[g.team]) { seen[g.team] = 1; if (t.players.indexOf(n) < 0) t.players.push(n); } }); });
+    Object.keys(teams).forEach(function (c) { teams[c].region = mode(teams[c].games.map(function (g) { return g.lg; })); teams[c].games.sort(function (a, b) { return a.date < b.date ? -1 : 1; }); });
+    return { teams: teams, players: players, logos: {} };
+  }
+  function profile(kind, ds) { return Promise.all([LVF_icons(), LVF_logos()]).then(function (v) { var d = kind === 'player' ? profPlayers(ds, v[0]) : kind === 'champion' ? profChamps(ds, v[0]) : profTeams(ds); d.logos = v[1]; return d; }); }
+  var _lg = null; function LVF_logos() { return (_lg = _lg || jget('data/logos.json').catch(function () { return {}; })); }
+  var _ic = null; function LVF_icons() { return (_ic = _ic || jget('data/champs.json').catch(function () { return {}; })); }
+
+
+  /* series list for results.html: [winner, "2:1", loser, time, date, first game id, ms, league] newest first; games of the same pair < 12h apart form one series */
+  function results(ds) {
+    var G = ds.games.map(function (g, i) { return { g: g, i: i, t: Date.parse(g.d.replace(' ', 'T') + ':00Z') }; }).filter(function (x) { return x.g.bt >= 0 && x.g.rt >= 0 && x.g.cp !== 0; }).sort(function (a, b) { return a.t - b.t; });
+    var ser = [], last = {};
+    G.forEach(function (x) {
+      var a = x.g.bt, b = x.g.rt, key = Math.min(a, b) + '|' + Math.max(a, b), s = last[key];
+      if (s && x.t - s.last < 12 * 3600e3) { s.games.push(x); s.last = x.t; } else { s = { key: key, games: [x], last: x.t }; last[key] = s; ser.push(s); }
+    });
+    var out = ser.map(function (s) {
+      var w = {}; s.games.forEach(function (x) { var win = x.g.bw === 1 ? x.g.bt : x.g.rt; w[win] = (w[win] || 0) + 1; });
+      var ids = Object.keys(w).map(Number).sort(function (p, q) { return w[q] - w[p]; }), win = ids[0], lose = +s.key.split('|').filter(function (v) { return +v !== win; })[0];
+      var lastG = s.games[s.games.length - 1], t = new Date(lastG.t), fmt = function (o) { return new Intl.DateTimeFormat('en-GB', Object.assign({ timeZone: 'Europe/London' }, o)).format(t); };
+      return [meta.teams[win][1], w[win] + ':' + (w[lose] || 0), meta.teams[lose][1], fmt({ hour: '2-digit', minute: '2-digit' }), fmt({ month: 'short', day: 'numeric' }), s.games[0].g.id, lastG.t, lastG.g.lg];
+    });
+    return out.sort(function (a, b) { return b[6] - a[6]; });
+  }
+
   /* ---------- UI ---------- */
   function css() {
     var s = document.createElement('style');
@@ -151,6 +235,6 @@
     }).catch(function () { bar.style.display = 'none'; });
   }
   window.LVF = { onChange: function (fn) { handlers.push(fn); if (bar && meta) fn(cur, S); }, state: function () { return S; }, meta: function () { return meta; }, wd: wd, players: players, isDefault: isDefault, lname: lname,
-    loadMeta: loadMeta, icons: function () { return jget('data/champs.json'); } };
+    loadMeta: loadMeta, profile: profile, results: results, leagueName: lname, icons: function () { return jget('data/champs.json'); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

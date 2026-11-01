@@ -50,7 +50,11 @@ ICON_ALIASES = {"renataglasc": "renataglaasc", "monkeyking": "wukong"}   # OE / 
 def rd(fn): return open(fn, encoding="utf-8").read()
 WHITE_LOGOS = ["DK", "G2", "GX", "KRX", "PAIN", "SHG", "SK", "SR", "TL", "TLAW", "TSW", "VKS"]   # logos drawn in white: inverted in light mode, same list on every page
 
+SD_EXT = ("\n  if (window.LVF) LVF.loadMeta().then(function (m) { var tc = {}; SD.t.forEach(function (t) { tc[t[0]] = 1; }); m.teams.forEach(function (t) { if (!tc[t[1]]) SD.t.push([t[1], t[0]]); });"
+          " var pn = {}; SD.p.forEach(function (p) { pn[p[0]] = 1; }); m.players.forEach(function (n) { if (!pn[n]) SD.p.push([n, '', '']); }); });\n")
+
 def wr(fn, s):
+    if "SD.t.forEach(function (t) { tc" not in s: s = re.sub(r"(\n  var SD = \{.*?\};)\n", lambda m: m.group(1) + SD_EXT, s, count=1)
     s = re.sub(r"var LW = \{[^}]*\}", lambda m: "var LW = " + json.dumps({k: 1 for k in WHITE_LOGOS}), s)
     Path(fn).parent.mkdir(parents=True, exist_ok=True); open(fn, "w", encoding="utf-8").write(s)
 
@@ -808,6 +812,7 @@ def main(csv):
             k = champ_key(c); _ic[c] = champ_icon(k, 68, 80) if k else None
         return _ic[c]
     build_scopes.build(csv, out / "data", lambda n: CODE.get(NAME_FIX.get(n, n)) or re.sub(r"[^A-Z0-9]", "", "".join(x[0] for x in n.split()).upper())[:4] or n[:3].upper(), _icon)
+    wr(out / "data" / "logos.json", json.dumps(logos_all))
     if (ROOT / "site" / "filters.js").exists(): wr(out / "filters.js", rd("site/filters.js"))
 
     print("done - %d pages written to dist/ (data through %s)" % (len(list(out.glob("*.html"))), date_s))
