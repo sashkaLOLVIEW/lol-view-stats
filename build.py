@@ -801,6 +801,14 @@ def main(csv):
     wr(out / "live.html", '<!doctype html><meta charset="utf-8"><title>Match</title><script>var h=location.hash.replace(/^#live\\//,"#");location.replace("match.html"+h)</script>')   # old links   # season stats for the live page's role-by-role team comparison   # live game page: polls Riot's feed in the browser, no build-time data
     s = rd("site/bootcamp.html"); s = jreplace(s, "BC", build_bootcamp(WD, logos_all, s)); s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "bootcamp.html", stamp(s))
     wr(out / ".nojekyll", "")
+    import build_scopes
+    _ic = {}
+    def _icon(c):
+        if c not in _ic:
+            k = champ_key(c); _ic[c] = champ_icon(k, 68, 80) if k else None
+        return _ic[c]
+    build_scopes.build(csv, out / "data", lambda n: CODE.get(NAME_FIX.get(n, n)) or re.sub(r"[^A-Z0-9]", "", "".join(x[0] for x in n.split()).upper())[:4] or n[:3].upper(), _icon)
+    if (ROOT / "site" / "filters.js").exists(): wr(out / "filters.js", rd("site/filters.js"))
 
     print("done - %d pages written to dist/ (data through %s)" % (len(list(out.glob("*.html"))), date_s))
 

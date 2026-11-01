@@ -440,6 +440,7 @@ html { scroll-padding-top: 84px; }
 </div>
 
 
+<script src="filters.js"></script>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -499,6 +500,16 @@ html { scroll-padding-top: 84px; }
       });
     });
   })();
+
+  var WD0 = WD, CH0 = CHAMPS, iconsP = null;
+  function setScope(ds) {
+    WD = ds ? LVF.wd(ds) : WD0;
+    baseOrder = champRole === 'All' ? WD.champsAll.slice() : (WD.cbr[champRole] || []).slice(); renderBoard();
+  }
+  if (window.LVF) LVF.onChange(function (ds) {
+    if (!ds) { CHAMPS = CH0; setScope(null); return; }
+    (iconsP = iconsP || LVF.icons().catch(function () { return {}; })).then(function (ic) { CHAMPS = Object.assign({}, CH0, ic); setScope(ds); });
+  });
 
   // Theme toggle (remembers choice when storage is available)
   var root = document.documentElement, btn = $('theme');
