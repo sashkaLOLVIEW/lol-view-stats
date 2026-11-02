@@ -501,7 +501,7 @@ html { scroll-padding-top: 84px; }
         + '<div class="gs"><div class="c"><div class="top"><b>' + g.k + '</b><i>/</i><b>' + g.d + '</b><i>/</i><b>' + g.a + '</b></div><div class="sub">' + ((g.k + g.a) / Math.max(1, g.d)).toFixed(2) + ' KDA</div></div>'
         + '<div class="c"><div class="top"><b>' + Math.round(g.cs) + '</b> CS</div><div class="sub">' + (g.cs / g.gl).toFixed(1) + ' CS/M</div></div>'
         + '<div class="c"><div class="top"><b>' + (kp == null ? '-' : kp + '%') + '</b></div><div class="sub">KP%</div></div></div>'
-        + '<div class="r">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '"><b style="font-size:11px;letter-spacing:.04em">' + LVF.lname(g.lg).replace(' 2026', '') + '</b></span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<div class="pv">' + (g.pt ? 'Patch ' + g.pt : '') + '</div></div>' + (g.lg ? '</div>' : '</a>'); }).join('');
+        + '<div class="r">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '">' + (LVF.evIcon(g.lg, 22) || '<b style="font-size:11px;letter-spacing:.04em">' + LVF.lname(g.lg).replace(' 2026', '') + '</b>') + '</span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<div class="pv">' + (g.pt ? 'Patch ' + g.pt : '') + '</div></div>' + (g.lg ? '</div>' : '</a>'); }).join('');
     $('radars').innerHTML = RAD.map(function (r) { return '<div class="rcard"><h3>' + r[0] + '</h3>' + radar(r[0], r[1], ag, P.role) + '</div>'; }).join('');
     (function () {
       var hs = $('hist'), cards = [].slice.call(hs.querySelectorAll('.gr')), shown = 10, bt = document.createElement('button');

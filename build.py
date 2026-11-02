@@ -817,7 +817,7 @@ def main(csv):
         return _ic[c]
     build_scopes.build(csv, out / "data", lambda n: CODE.get(NAME_FIX.get(n, n)) or re.sub(r"[^A-Z0-9]", "", "".join(x[0] for x in n.split()).upper())[:4] or n[:3].upper(), _icon, FILTER_LEAGUES, LEAGUE, TIER1_LEAGUES)
     wr(out / "data" / "logos.json", json.dumps(logos_all))
-    if (ROOT / "site" / "filters.js").exists(): wr(out / "filters.js", rd("site/filters.js"))
+    if (ROOT / "site" / "filters.js").exists(): wr(out / "filters.js", rd("site/filters.js").replace("/*EI*/{}/*EI*/", json.dumps(json.load(open(ROOT / "config" / "event_icons.json")))))
 
     print("done - %d pages written to dist/ (data through %s)" % (len(list(out.glob("*.html"))), date_s))
 

@@ -7,6 +7,8 @@
   var S = { league: 'WLDs', split: 'All', stage: 'All', year: 'All' };
   var meta = null, cache = {}, handlers = [], bar = null, busy = 0, cur = null;
   var $ = function (s, r) { return (r || document).querySelector(s); };
+  var EI = /*EI*/{}/*EI*/;
+  var evIcon = function (id, size, fb) { var e = EI[id]; if (!e) return fb || ''; var t = lname(id).replace(' 2026', ''); return '<img class="wi-l" src="' + e.l + '" width="' + size + '" height="' + size + '" alt="' + t + '"><img class="wi-d" src="' + e.d + '" width="' + size + '" height="' + size + '" alt="' + t + '">'; };
   var lname = function (id) { return id === 'ALL' ? 'All leagues' : (NAMES[id] || id) + (id === 'WLDs' ? ' 2026' : ''); };
 
   /* ---------- data ---------- */
@@ -286,6 +288,6 @@
   }
   function entity(kind, name) { if (ENT && ENT.kind === kind && ENT.name === name) { render((bar && bar.querySelector('.st') || {}).textContent); return; } return focus(kind, name); }
   window.LVF = { entity: entity, focus: focus, set: function (o) { if (Object.keys(o).every(function (k) { return S[k] === o[k]; })) return; Object.assign(S, o); if (bar && meta) return apply(); }, has: function (kind, n) { return loadMeta().then(function (m) { return kind === 'player' ? m.players.indexOf(n) >= 0 : kind === 'team' ? !!m.tname[n] : m.champs.indexOf(n) >= 0; }); }, onChange: function (fn) { handlers.push(fn); if (bar && meta) fn(cur, S); }, state: function () { return S; }, meta: function () { return meta; }, wd: wd, players: players, isDefault: isDefault, lname: lname,
-    loadMeta: loadMeta, profile: profile, results: results, leagueName: lname, icons: function () { return jget('data/champs.json'); } };
+    loadMeta: loadMeta, profile: profile, results: results, leagueName: lname, evIcon: evIcon, icons: function () { return jget('data/champs.json'); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
