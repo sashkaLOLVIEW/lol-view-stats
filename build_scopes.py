@@ -45,6 +45,7 @@ def build(csv, out_dir, code_of, icons_fn, leagues=None, current=None, team_leag
         tier = set(df[df.league.isin(team_leagues) & df.split.ne("")].teamname.dropna())   # a blank split = qualifier games that Oracle's Elixir tags with the league, played by outside teams
         gids = set(df[df.teamname.isin(tier)].gameid)
         df = df[df.gameid.isin(gids) & df.teamname.isin(tier)].copy()
+        df = df[~(df.league.isin(team_leagues) & df.split.eq(""))].copy()   # promotion / qualifier games tagged with the league but no split
     df["split"] = df["split"].fillna("")
     import shutil
     out_dir = Path(out_dir); shutil.rmtree(out_dir, ignore_errors=True); out_dir.mkdir(parents=True, exist_ok=True)
