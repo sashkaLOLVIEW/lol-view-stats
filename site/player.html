@@ -481,15 +481,18 @@ html { scroll-padding-top: 84px; }
   var h = ''; try { h = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
   show(D.players[h] ? h : (D.players.Chovy ? 'Chovy' : names[0]));
   var D0 = D;
+  var wanted = h;
+  function want() { var hh = wanted; if (window.LVF && hh && !D.players[hh]) LVF.has('player', hh).then(function (ok) { if (ok) LVF.set({league: 'ALL', split: 'All', stage: 'All', year: 'All'}); }); }
+  want();
   function setD(nd) {
     D = nd; names = Object.keys(D.players).sort(function (a, b) { return a.toLowerCase() < b.toLowerCase() ? -1 : 1; });
     AGG = {}; names.forEach(function (n) { AGG[n] = agg(D.players[n].games); });
-    var hh = ''; try { hh = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
+    var hh = wanted;
     if (D.players[hh]) show(hh);
-    else { $('hero').innerHTML = '<div style="padding:28px;color:var(--muted)">' + (hh || 'This player') + ' has no games in these filters.</div>'; $('stats').innerHTML = ''; $('tbody').innerHTML = ''; $('hist').innerHTML = ''; $('radars').innerHTML = ''; }
+    else { $('hero').innerHTML = '<div style="padding:28px;color:var(--muted)">' + (hh || 'This player') + ' has no games in these filters.</div>'; $('stats').innerHTML = ''; $('tbody').innerHTML = ''; $('hist').innerHTML = ''; $('radars').innerHTML = ''; want(); }
   }
   if (window.LVF) LVF.onChange(function (ds) { if (!ds) setD(D0); else LVF.profile('player', ds).then(setD); });
-  window.addEventListener('hashchange', function () { var hh = ''; try { hh = decodeURIComponent(location.hash.slice(1)); } catch (e) {} if (D.players[hh]) show(hh); });
+  window.addEventListener('hashchange', function () { var hh = ''; try { hh = decodeURIComponent(location.hash.slice(1)); } catch (e) {} wanted = hh; if (D.players[hh]) show(hh); else want(); });
   var root = document.documentElement, btn = $('theme');
   try { var saved = localStorage.getItem('theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
   btn.addEventListener('click', function () {

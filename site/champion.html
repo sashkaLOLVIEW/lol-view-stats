@@ -497,10 +497,12 @@ html { scroll-padding-top: 84px; }
   var start = names.filter(function (n) { return n.toLowerCase() === h.toLowerCase(); })[0] || names[0];
   render(start);
   var D0 = D;
+  function want(hh) { if (window.LVF && hh && !D.champs[hh]) LVF.has('champion', hh).then(function (ok) { if (ok) LVF.set({league: 'ALL', split: 'All', stage: 'All', year: 'All'}); }); }
+  var wanted = h; want(h);
   function setD(nd) {
-    D = nd; mkNames(); var hh = ''; try { hh = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
+    D = nd; mkNames(); var hh = wanted;
     var st = names.filter(function (n) { return n.toLowerCase() === hh.toLowerCase(); })[0];
-    if (st) render(st); else { $('hd').innerHTML = '<div style="padding:28px;color:var(--muted)">' + (hh || 'This champion') + ' was not played or banned with these filters.</div>'; $('stats').innerHTML = ''; $('games').innerHTML = ''; $('mu').innerHTML = ''; $('runes').innerHTML = ''; $('ibuild').innerHTML = ''; }
+    if (st) render(st); else { $('hd').innerHTML = '<div style="padding:28px;color:var(--muted)">' + (hh || 'This champion') + ' was not played or banned with these filters.</div>'; $('stats').innerHTML = ''; $('games').innerHTML = ''; $('mu').innerHTML = ''; $('runes').innerHTML = ''; $('ibuild').innerHTML = ''; want(hh); }
   }
   if (window.LVF) LVF.onChange(function (ds) { if (!ds) setD(D0); else LVF.profile('champion', ds).then(setD); });
   var root = document.documentElement, btn = $('theme');
@@ -510,7 +512,7 @@ html { scroll-padding-top: 84px; }
     var next = cur === 'dark' ? 'light' : 'dark'; root.setAttribute('data-theme', next);
     try { localStorage.setItem('theme', next); } catch (e) {}
   });
-  window.addEventListener('hashchange', function () { try { var n = decodeURIComponent(location.hash.slice(1)); if (D.champs[n]) render(n); } catch (e) {} });
+  window.addEventListener('hashchange', function () { try { var n = decodeURIComponent(location.hash.slice(1)); wanted = n; if (D.champs[n]) render(n); else want(n); } catch (e) {} });
 })();
 </script>
 </div>
