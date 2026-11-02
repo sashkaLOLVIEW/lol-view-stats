@@ -39,6 +39,7 @@ def build(csv, out_dir, code_of, icons_fn, leagues=None, current=None, team_leag
     df = pd.read_csv(csv, low_memory=False)
     df["date"] = pd.to_datetime(df["date"])
     df = df[df.gameid.notna()].copy()
+    df["split"] = df["split"].fillna("")
     if leagues: df = df[df.league.isin(leagues)].copy()
     if team_leagues:   # only teams (and their players) that play in these domestic leagues; their games at international events stay
         tier = set(df[df.league.isin(team_leagues) & df.split.ne("")].teamname.dropna())   # a blank split = qualifier games that Oracle's Elixir tags with the league, played by outside teams
