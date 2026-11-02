@@ -113,7 +113,7 @@ img.lwi { }
 .badge:hover::after, .badge:focus-visible::after { opacity: 1; }
 @media (max-width: 900px) { .badges { right: 0; } }
 .portrait img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
-.portrait .ph { width: 140px; height: 150px; background: var(--pill); border-radius: 8px 8px 0 0; }
+.portrait .ph { width: 140px; height: 150px; background: var(--pill); border-radius: 8px 8px 0 0; display: flex; align-items: center; justify-content: center; } .portrait .ph img { width: 72px; height: 72px; opacity: .45; }
 .who { padding-bottom: 14px; min-width: 0; }
 .who h1 { margin: 0; font-size: 30px; font-weight: 700; display: flex; align-items: center; gap: 10px; line-height: 1.1; }
 .who h1 svg { width: 22px; height: 22px; }
@@ -358,6 +358,7 @@ html { scroll-padding-top: 84px; }
         <div class="thd" id="thd"></div>
         <div class="tbl" id="tbody"></div>
       </div></div>
+      <div id="poolmore"></div>
       <div class="hist"><div class="hhd"><h2>Match History</h2><div class="cfd" id="cfd"></div></div><div id="hist"></div></div>
     </section>
   </div>
@@ -443,22 +444,33 @@ html { scroll-padding-top: 84px; }
       return sortAsc ? a - b : b - a || y.n - x.n;
     });
     $('thd').innerHTML = COLS.map(function (c) { return '<button type="button" data-k="' + c[1] + '" class="' + (c[1] === sortKey ? 'on' + (sortAsc ? ' asc' : '') : '') + '">' + c[0] + '<i></i></button>'; }).join('');
-    $('tbody').innerHTML = rows.map(function (r, i) {
+    var vis = rows.slice(0, poolShown);
+    $('tbody').innerHTML = vis.map(function (r, i) {
       var cells = [r.n, Math.round(r.wr) + '%', r.kda.toFixed(1), r.w, r.cspm.toFixed(1), r.kp.toFixed(1) + '%', Math.round(r.dpm) + ' (' + r.ds.toFixed(1) + '%)', Math.round(r.gpm) + ' (' + r.gs.toFixed(1) + '%)', sg(r.csd)];
       return '<div class="trow"><div class="cn"><span class="rk">' + (i + 1) + '</span>' + '<a class="cl" href="champion.html#' + encodeURIComponent(r.name) + '">' + (D.icons[r.ic] ? '<img src="' + D.icons[r.ic] + '" alt="">' : '') + r.name + '</a></div>' + cells.map(function (c) { return '<span class="c">' + c + '</span>'; }).join('') + '</div>';
     }).join('');
+    var pm = $('poolmore'); pm.innerHTML = '';
+    if (rows.length > 10) {
+      var pb = document.createElement('button'); pb.type = 'button';
+      pb.style.cssText = 'display:block;margin:12px auto 0;background:none;border:1px solid var(--line);border-radius:8px;color:var(--fg);font:inherit;font-size:12.5px;padding:8px 16px;cursor:pointer';
+      pb.textContent = poolShown < rows.length ? 'Show more +' : 'Show less';
+      pb.onclick = function () { poolShown = poolShown < rows.length ? Math.min(rows.length, poolShown + 10) : 10; drawTable(); };
+      pm.appendChild(pb);
+    }
   }
   $('thd').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return; var k = b.getAttribute('data-k');
     if (sortKey === k) sortAsc = !sortAsc; else { sortKey = k; sortAsc = k === 'name'; }
     drawTable();
   });
+  var poolShown = 10;
   function show(name) {
+    poolShown = 10;
     var P = D.players[name]; if (!P) return; if (cur !== name) champSel = ''; cur = name; var ag = AGG[name];
     if (window.LVF) LVF.entity('player', name);
     try { history.replaceState(null, '', '#' + encodeURIComponent(name)); } catch (e) {}
     function ageOf(bd) { var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(bd || ''); if (!m) return null; var n = new Date(), a = n.getFullYear() - +m[1]; if (n.getMonth() + 1 < +m[2] || (n.getMonth() + 1 === +m[2] && n.getDate() < +m[3])) a--; return a; }
-    $('hero').innerHTML = (D.logos[P.team] ? '<img class="bgl' + (LW[P.team] ? ' lwi' : '') + '" src="' + D.logos[P.team] + '" alt="">' : '') + '<div class="portrait">' + (P.face ? '<img src="' + P.face + '" alt="' + name + '">' : '<span class="ph"></span>') + '</div><div class="who"><h1>' + (RI[P.role] || '') + name + '</h1><div class="meta"><div>' + logo(P.team, 18) + '<a href="team.html#' + P.team + '"><b>' + tn(P.team) + '</b></a></div><div class="pinfo"><span class="sp"></span><span>Age: <b>' + (ageOf(P.bd) || '-') + '</b></span></div><div class="pinfo"><span class="sp"></span><span>Contract Expiry: <b>' + (P.contract || '-') + '</b></span></div></div></div>';
+    $('hero').innerHTML = (D.logos[P.team] ? '<img class="bgl' + (LW[P.team] ? ' lwi' : '') + '" src="' + D.logos[P.team] + '" alt="">' : '') + '<div class="portrait">' + (P.face ? '<img src="' + P.face + '" alt="' + name + '">' : '<span class="ph">' + (window.LVF ? LVF.evIcon('ALLCH', 72) : '') + '</span>') + '</div><div class="who"><h1>' + (RI[P.role] || '') + name + '</h1><div class="meta"><div>' + logo(P.team, 18) + '<a href="team.html#' + P.team + '"><b>' + tn(P.team) + '</b></a></div><div class="pinfo"><span class="sp"></span><span>Age: <b>' + (ageOf(P.bd) || '-') + '</b></span></div><div class="pinfo"><span class="sp"></span><span>Contract Expiry: <b>' + (P.contract || '-') + '</b></span></div></div></div>';
     var BI = { medal: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2h8l-2.5 6h-3z"/><circle cx="12" cy="15" r="6"/><path d="m12 12.5.9 1.8 2 .3-1.4 1.4.3 2-1.8-.9-1.8.9.3-2-1.4-1.4 2-.3z"/></svg>' };
     $('hero').insertAdjacentHTML('beforeend', (BD.awards[name] || []).length ? '<div class="badges">' + BD.awards[name].map(function (id) { var d = BD.defs[id]; return d ? '<span class="badge" tabindex="0" role="img" aria-label="' + d.name + '" data-tip="' + d.name + '">' + (BI[d.icon] || BI.medal) + '</span>' : ''; }).join('') + '</div>' : '');
     var st = [['WR %', Math.round(ag.w / ag.n * 100) + '%'], ['KDA', ag.kda.toFixed(1)], ['CS/M', ag.cspm.toFixed(1)], ['KP %', ag.kp.toFixed(1) + '%'], ['DMG/M (%)', Math.round(ag.dpm) + ' (' + ag.ds.toFixed(1) + '%)'], ['GOLD/M (%)', Math.round(ag.gpm) + ' (' + ag.gs.toFixed(1) + '%)']];
@@ -546,7 +558,8 @@ html { scroll-padding-top: 84px; }
   function want() { var hh = wanted; if (window.LVF && hh && !D.players[hh]) LVF.has('player', hh).then(function (ok) { if (ok) LVF.focus('player', hh); }); }
   want();
   function setD(nd) {
-    D = nd; names = Object.keys(D.players).sort(function (a, b) { return a.toLowerCase() < b.toLowerCase() ? -1 : 1; });
+    D = nd; if (nd !== D0) Object.keys(nd.players).forEach(function (n) { var o = D0.players[n]; if (o && o.face && !nd.players[n].face) nd.players[n].face = o.face; });
+    names = Object.keys(D.players).sort(function (a, b) { return a.toLowerCase() < b.toLowerCase() ? -1 : 1; });
     AGG = {}; names.forEach(function (n) { AGG[n] = agg(D.players[n].games); });
     var hh = wanted;
     if (D.players[hh]) show(hh);
