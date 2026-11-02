@@ -35,7 +35,7 @@ def match_z(df):
     return {(g, n): v for g, n, v in zip(p.gameid, p[k], p.z_obs) if pd.notna(v)}
 
 
-def build(csv, out_dir, code_of, icons_fn, leagues=None):
+def build(csv, out_dir, code_of, icons_fn, leagues=None, current=None):
     df = pd.read_csv(csv, low_memory=False)
     df["date"] = pd.to_datetime(df["date"])
     df = df[df.gameid.notna()].copy()
@@ -51,7 +51,7 @@ def build(csv, out_dir, code_of, icons_fn, leagues=None):
     teams = sorted(df.teamname.dropna().unique(), key=str.lower); tidx = {n: i for i, n in enumerate(teams)}
     champs = sorted(set(pl.champion.dropna()) | {b for c in ("ban1", "ban2", "ban3", "ban4", "ban5") for b in df[c].dropna()}, key=str.lower); cidx = {n: i for i, n in enumerate(champs)}
     patches = sorted({"%.2f" % x for x in df.patch.dropna()}, key=float); pt_idx = {n: i for i, n in enumerate(patches)}
-    meta = dict(leagues={}, players=players, teams=[[t, code_of(t)] for t in teams], champs=champs, patches=patches, built=str(df.date.max())[:10])
+    meta = dict(current=current, leagues={}, players=players, teams=[[t, code_of(t)] for t in teams], champs=champs, patches=patches, built=str(df.date.max())[:10])
 
     pix, tix = {}, {}
     for lg, d in df.groupby("league"):
@@ -77,17 +77,19 @@ def build(csv, out_dir, code_of, icons_fn, leagues=None):
                       tw=col("towers"), dr=col("dragons"), ba=col("barons"), he=col("heralds"), gr=col("void_grubs"), fb=col("firstblood"), ft=col("firsttower"), gold=col("totalgold"),
                       bans=[[cidx.get(x, -1) if isinstance(x, str) else -1 for x in r] for r in t[["ban1", "ban2", "ban3", "ban4", "ban5"]].itertuples(index=False)])
         spn = [splits[i] for i in games["sp"]]
-        gk = [(games["y"][i], spn[i], 1 << int(bool(games["po"][i]))) for i in range(len(gids))]
+        gk = [(games["y"][i], spn[i], 1 << int(bool(games["po"][i])), games["d"][i][:10]) for i in range(len(gids))]
         ltup = {}
-        for y_, sp_, m_ in gk: ltup[(y_, sp_)] = ltup.get((y_, sp_), 0) | m_
+        for y_, sp_, m_, _d in gk: ltup[(y_, sp_)] = ltup.get((y_, sp_), 0) | m_
+        def acc(e, k, m_, d_):
+            o = e.get(k, [0, ""]); e[k] = [o[0] | m_, max(o[1], d_)]
         for i in range(len(rows["g"])):
-            y_, sp_, m_ = gk[rows["g"][i]]; e = pix.setdefault(players[rows["p"][i]], {}); e[(lg, y_, sp_)] = e.get((lg, y_, sp_), 0) | m_
+            y_, sp_, m_, d_ = gk[rows["g"][i]]; acc(pix.setdefault(players[rows["p"][i]], {}), (lg, y_, sp_), m_, d_)
         for i in range(len(teamsb["g"])):
-            y_, sp_, m_ = gk[teamsb["g"][i]]; e = tix.setdefault(teams[teamsb["t"][i]], {}); e[(lg, y_, sp_)] = e.get((lg, y_, sp_), 0) | m_
+            y_, sp_, m_, d_ = gk[teamsb["g"][i]]; acc(tix.setdefault(teams[teamsb["t"][i]], {}), (lg, y_, sp_), m_, d_)
         (out_dir / ("lg-%s.json" % re.sub(r"[^A-Za-z0-9_-]", "_", lg))).write_text(json.dumps(dict(games=games, rows=rows, teams=teamsb), separators=(",", ":")), encoding="utf-8")
         meta["leagues"][lg] = dict(tuples=[[y_, sp_, m_] for (y_, sp_), m_ in sorted(ltup.items())], n=len(gids), years=sorted(int(x) for x in set(d.year)), splits=splits, first=str(d.date.min())[:10], last=str(d.date.max())[:10])
-    meta["pix"] = {k: [[a, b, c, m] for (a, b, c), m in sorted(v.items())] for k, v in pix.items()}
-    meta["tix"] = {k: [[a, b, c, m] for (a, b, c), m in sorted(v.items())] for k, v in tix.items()}
+    meta["pix"] = {k: [[a, b, c, m[0], m[1]] for (a, b, c), m in sorted(v.items())] for k, v in pix.items()}
+    meta["tix"] = {k: [[a, b, c, m[0], m[1]] for (a, b, c), m in sorted(v.items())] for k, v in tix.items()}
     (out_dir / "meta.json").write_text(json.dumps(meta, separators=(",", ":")), encoding="utf-8")
     (out_dir / "champs.json").write_text(json.dumps({c: icons_fn(c) for c in champs if icons_fn(c)}, separators=(",", ":")), encoding="utf-8")
     print("  filter data: %d leagues, %d players, %d teams, %d champions -> %s" % (len(meta["leagues"]), len(players), len(teams), len(champs), out_dir))

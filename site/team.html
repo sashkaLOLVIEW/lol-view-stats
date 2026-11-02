@@ -349,7 +349,7 @@ html { scroll-padding-top: 84px; }
   show(D.teams[h] ? h : (D.teams.BLG ? 'BLG' : codes[0]));
   var D0 = D;
   var wanted = h;
-  function want() { var hh = wanted; if (window.LVF && hh && !D.teams[hh]) LVF.has('team', hh).then(function (ok) { if (ok) LVF.set({league: 'ALL', split: 'All', stage: 'All', year: 'All'}); }); }
+  function want() { var hh = wanted; if (window.LVF && hh && !D.teams[hh]) LVF.has('team', hh).then(function (ok) { if (ok) LVF.focus('team', hh); }); }
   want();
   window.addEventListener('hashchange', function () { var hh = ''; try { hh = decodeURIComponent(location.hash.slice(1)).toUpperCase(); } catch (e) {} wanted = hh; if (D.teams[hh]) show(hh); else want(); });
   function setD(nd) {

@@ -5,7 +5,6 @@
   var NAMES = { WLDs: 'Worlds', MSI: 'MSI', LCK: 'LCK', LPL: 'LPL', LEC: 'LEC', LCS: 'LCS', LCP: 'LCP', CBLOL: 'CBLOL', LCKC: 'LCK Challengers', LAS: 'LAS', LES: 'LES', LJL: 'LJL', LLA: 'LLA', PCS: 'PCS', VCS: 'VCS', TCL: 'TCL', LFL: 'LFL', NLC: 'NLC', PRM: 'Prime League', LIT: 'LIT', EM: 'EMEA Masters', EWC: 'Esports World Cup', FST: 'First Stand', CD: 'Circuit Demacia', NACL: 'NACL', AL: 'LPL Academy', LRN: 'LRN', LRS: 'LRS', WLRQ: 'Worlds Qualifiers', WSCI: 'Worlds Play-Ins', CCWS: 'CCWS', AC: 'Asia Cup', AM: 'Americas Cup', DCGI: 'DCGI', DCup: 'DCup', HC: 'Hitpoint Challengers', HLL: 'Hellenic Legends', HM: 'Hitpoint Masters', HW: 'HW', NL: 'NL', RL: 'Rift Legends', ROL: 'Roll', LPLOL: 'LPLOL', EBL: 'Esports Balkan League', KeSPA: 'KeSPA' };
   var MAJOR = ['WLDs', 'MSI', 'EWC', 'FST', 'LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'];
   var S = { league: 'WLDs', split: 'All', stage: 'All', year: 'All' };
-  try { var sv = JSON.parse(sessionStorage.getItem('lvf') || 'null'); if (sv) S = sv; } catch (e) {}
   var meta = null, cache = {}, handlers = [], bar = null, busy = 0, cur = null;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var lname = function (id) { return id === 'ALL' ? 'All leagues' : (NAMES[id] || id) + (id === 'WLDs' ? ' 2026' : ''); };
@@ -232,18 +231,17 @@
     var cur = S.league + '|' + S.split, tl = (o.tour.filter(function (t) { return t[0] === cur; })[0] || [0, ''])[1];
     var h = dd('year', yl, [['All', 'All years']].concat(o.years.map(function (y) { return [String(y), String(y)]; })), S.year, o.years.length <= 1) + dd('tour', tl, o.tour, cur, o.tour.length <= 1);
     if (o.stage) h += dd('stage', (o.stage.filter(function (x) { return x[0] === S.stage; })[0] || o.stage[0])[1], o.stage, S.stage, false);
-    bar.innerHTML = h + '<span class="st">' + (status || '') + '</span>' + (isDefault() ? '' : '<button type="button" class="rs" data-reset="1">Back to Worlds</button>');
+    bar.innerHTML = h + '<span class="st">' + (status || '') + '</span>' + (isDefault() ? '' : '<button type="button" class="rs" data-reset="1">' + (ENT ? 'Reset' : 'Back to Worlds') + '</button>');
     if (open) { var d = bar.querySelector('#' + open); if (d) d.classList.add('open'); }
   }
   function apply() {
     normalize(options());
-    try { sessionStorage.setItem('lvf', JSON.stringify(S)); } catch (e) {}
     var my = ++busy;
     if (isDefault()) { cur = null; render('Worlds 2026 · Main Stage'); handlers.forEach(function (h) { h(null, S); }); return Promise.resolve(); }
     render('Loading…');
     return dataset().then(function (ds) {
       if (my !== busy) return; cur = ds; cur.scope = S;
-      var n = ds.games.length; render(n.toLocaleString('en-US') + ' game' + (n === 1 ? '' : 's') + (n ? '' : ' - nothing matches these filters'));
+      var n = ds.games.length; render(ENT ? (n ? '' : 'Nothing matches these filters') : n.toLocaleString('en-US') + ' game' + (n === 1 ? '' : 's') + (n ? '' : ' - nothing matches these filters'));
       handlers.forEach(function (h) { h(ds, S); });
     }).catch(function (e) { render('Could not load data'); console.error(e); });
   }
@@ -259,9 +257,9 @@
     css(); bar = document.createElement('div'); bar.id = 'lvf';
     loadMeta().then(function () {
       if (!place()) return;
-      if (!meta.leagues[S.league] && S.league !== 'ALL') S.league = 'WLDs';
+      if (ENT) Object.assign(S, entityDefault());
       bar.addEventListener('click', function (e) {
-        if (e.target.closest('[data-reset]')) { S = { league: 'WLDs', split: 'All', stage: 'All', year: 'All' }; apply(); return; }
+        if (e.target.closest('[data-reset]')) { S = ENT ? entityDefault() : baseDefault(); apply(); return; }
         var m = e.target.closest('.fm button[data-k]');
         if (m) {
           if (m.dataset.k === 'tour') { var p = m.dataset.v.split('|'); S.league = p[0]; S.split = p[1]; S.stage = 'All'; } else S[m.dataset.k] = m.dataset.v;
@@ -274,8 +272,20 @@
       apply();
     }).catch(function () { bar.style.display = 'none'; });
   }
-  function entity(kind, name) { ENT = { kind: kind, name: name }; if (bar && meta) { var o = options(); if (normalize(o)) apply(); else render((bar.querySelector('.st') || {}).textContent); } }
-  window.LVF = { entity: entity, set: function (o) { if (Object.keys(o).every(function (k) { return S[k] === o[k]; })) return; Object.assign(S, o); if (bar && meta) return apply(); }, has: function (kind, n) { return loadMeta().then(function (m) { return kind === 'player' ? m.players.indexOf(n) >= 0 : kind === 'team' ? !!m.tname[n] : m.champs.indexOf(n) >= 0; }); }, onChange: function (fn) { handlers.push(fn); if (bar && meta) fn(cur, S); }, state: function () { return S; }, meta: function () { return meta; }, wd: wd, players: players, isDefault: isDefault, lname: lname,
+  /* default scope: the current event; for a player / team that is not in it, their most recent event */
+  function baseDefault() { return { league: 'WLDs', split: 'All', stage: 'All', year: 'All' }; }
+  function entityDefault() {
+    var T = ENT ? tuples() : [];
+    if (!ENT || !T.length || T.some(function (t) { return t[0] === meta.current; })) return baseDefault();
+    var p = T.slice().sort(function (a, b) { return a[4] < b[4] ? 1 : a[4] > b[4] ? -1 : 0; })[0];
+    return { league: p[0], split: p[2] || 'All', stage: 'All', year: String(p[1]) };
+  }
+  function focus(kind, name) {
+    var same = ENT && ENT.kind === kind && ENT.name === name; ENT = { kind: kind, name: name };
+    if (same || !bar || !meta) return; Object.assign(S, entityDefault()); return apply();
+  }
+  function entity(kind, name) { if (ENT && ENT.kind === kind && ENT.name === name) { render((bar && bar.querySelector('.st') || {}).textContent); return; } return focus(kind, name); }
+  window.LVF = { entity: entity, focus: focus, set: function (o) { if (Object.keys(o).every(function (k) { return S[k] === o[k]; })) return; Object.assign(S, o); if (bar && meta) return apply(); }, has: function (kind, n) { return loadMeta().then(function (m) { return kind === 'player' ? m.players.indexOf(n) >= 0 : kind === 'team' ? !!m.tname[n] : m.champs.indexOf(n) >= 0; }); }, onChange: function (fn) { handlers.push(fn); if (bar && meta) fn(cur, S); }, state: function () { return S; }, meta: function () { return meta; }, wd: wd, players: players, isDefault: isDefault, lname: lname,
     loadMeta: loadMeta, profile: profile, results: results, leagueName: lname, icons: function () { return jget('data/champs.json'); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

@@ -483,7 +483,7 @@ html { scroll-padding-top: 84px; }
   show(D.players[h] ? h : (D.players.Chovy ? 'Chovy' : names[0]));
   var D0 = D;
   var wanted = h;
-  function want() { var hh = wanted; if (window.LVF && hh && !D.players[hh]) LVF.has('player', hh).then(function (ok) { if (ok) LVF.set({league: 'ALL', split: 'All', stage: 'All', year: 'All'}); }); }
+  function want() { var hh = wanted; if (window.LVF && hh && !D.players[hh]) LVF.has('player', hh).then(function (ok) { if (ok) LVF.focus('player', hh); }); }
   want();
   function setD(nd) {
     D = nd; names = Object.keys(D.players).sort(function (a, b) { return a.toLowerCase() < b.toLowerCase() ? -1 : 1; });
