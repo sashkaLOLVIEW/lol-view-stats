@@ -100,7 +100,7 @@
       var gm = G[R.g[i]], mine = R.s[i] === 0 ? gm.bt : gm.rt, opp = R.s[i] === 0 ? gm.rt : gm.bt;
       var o = { player: meta.players[R.p[i]], team: meta.teams[R.t[i]][1], opp: opp >= 0 ? meta.teams[opp][1] : '?', role: ROLES[R.pos[i]], champ: R.c[i] >= 0 ? meta.champs[R.c[i]] : '?', win: R.w[i], k: R.k[i], d: R.d[i], a: R.a[i],
         cs: R.cs[i], gl: gm.len / 60, dmg: R.dmg[i], gold: R.gold[i], tk: R.tk[i], ds: R.ds[i], gs: R.gs[i], csd: R.csd[i], gd: R.gd[i], xpd: R.xpd[i], vs: R.vs[i] || 0, wpm: R.wpm[i] || 0, wcpm: R.wcpm[i] || 0, dtm: R.dtm[i] || 0,
-        cspm: R.cspm[i], date: gm.d.slice(0, 10), gid: gm.id, side: R.s[i] === 0 ? 'Blue' : 'Red', pt: gm.pt >= 0 ? meta.patches[gm.pt] : null, lg: gm.lg, sp: gm.sp, ev: gm.lg, len: gm.len, gn: gm.g, dt: gm.d };
+        cspm: R.cspm[i], date: gm.d.slice(0, 10), gid: gm.id, side: R.s[i] === 0 ? 'Blue' : 'Red', pt: gm.pt >= 0 ? meta.patches[gm.pt] : null, lg: gm.lg, sp: gm.sp, ev: gm.lg, len: gm.len, gn: gm.g, dt: gm.d, fbk: R.fb ? R.fb[i] : null };
       o.ic = o.champ; rows.push(o); idx[o.gid + '|' + o.role + '|' + o.team] = o;
     }
     rows.forEach(function (o) { var q = idx[o.gid + '|' + o.role + '|' + o.opp]; o.oc = q ? q.champ : '?'; o.op = q ? q.player : o.opp; });
