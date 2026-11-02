@@ -359,7 +359,7 @@ def build_teams(w, P):
             row = dict(gid=gid, opp=o, win=int(t.result), gl=float(t.gamelength), date=str(t.date)[:10], k=float(pl.kills.sum()), d=float(pl.deaths.sum()), a=float(pl.assists.sum()),
                        fb=num("firstblood"), ft=num("firsttower"), dr=num("dragons"), ba=num("barons"), tw=num("towers"), gr=num("void_grubs"), he=num("heralds"),
                        gold=float(t.totalgold), dmg=float(pl.damagetochampions.sum()), vs=float(pl.vspm.mean() * 5), cs=float(pl["total cs"].sum()),
-                       gd=float(pl.golddiffat15.sum()), csd=float(pl.csdiffat15.sum()), xpd=float(pl.xpdiffat15.sum()))
+                       gd=float(pl.golddiffat15.sum()), csd=float(pl.csdiffat15.sum()), xpd=float(pl.xpdiffat15.sum()), pt=("%.2f" % float(t.patch) if "patch" in t.index and pd.notna(t.patch) else None))
             out.setdefault(c, dict(code=c, name=t.teamname, region=REGION.get(c), games=[]))["games"].append(row)
     for c, v in out.items(): v["players"] = [n for n, p in P["players"].items() if p["team"] == c]
     players = {n: dict(name=n, team=p["team"], role=p["role"], face=p["face"], games=p["games"]) for n, p in P["players"].items()}
