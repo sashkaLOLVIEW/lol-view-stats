@@ -131,6 +131,18 @@ img.lwi { }
 .srow:last-child { border-bottom: 0; }
 .srow b { color: var(--fg); font-size: 13.5px; font-variant-numeric: tabular-nums; }
 .tabs { margin-bottom: 14px; }
+.hhd { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }.hhd h2 { margin: 0; }
+.cfd { position: relative; }
+.cfd .cb { display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; color: var(--fg); font: inherit; font-size: 12.5px; cursor: pointer; }
+.cfd .cb small { color: var(--muted); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; }
+.cfd .cb.sel { border-color: var(--fg); }
+.cfd .cb svg.cv { color: var(--muted); }
+.cfd img.ci { width: 20px; height: 20px; border-radius: 4px; display: block; flex: none; }
+.cfd .cm { display: none; position: absolute; left: 0; top: calc(100% + 6px); z-index: 70; min-width: 100%; width: max-content; max-height: 340px; overflow: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 4px; box-shadow: 0 12px 32px rgba(0,0,0,.35); }
+.cfd.open .cm { display: block; }
+.cfd .cm button { display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; background: none; border: 0; color: var(--fg); font: inherit; font-size: 12.5px; padding: 6px 10px; border-radius: 5px; cursor: pointer; white-space: nowrap; }
+.cfd .cm button:hover, .cfd .cm button.on { background: var(--surface-2); }
+.cfd .cm button span.n { margin-left: auto; padding-left: 14px; color: var(--muted); font-size: 11.5px; }
 .tbl { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
 .thd, .trow { display: grid; grid-template-columns: 220px repeat(9, minmax(0, 1fr)); align-items: center; }
 .thd { margin: 0 0 6px; padding-left: 15px; font-size: 9.5px; font-weight: 700; text-transform: uppercase; text-align: center; letter-spacing: .01em; white-space: nowrap; }
@@ -334,12 +346,11 @@ html { scroll-padding-top: 84px; }
   <div class="body">
     <aside class="side"><h2>Statistics</h2><div id="stats"></div></aside>
     <section>
-      <div class="tabs chips" id="tabs"><button class="chip on" type="button">Worlds 2026</button></div>
       <div class="scroll"><div>
         <div class="thd" id="thd"></div>
         <div class="tbl" id="tbody"></div>
       </div></div>
-      <div class="hist"><h2>Match History</h2><div id="hist"></div></div>
+      <div class="hist"><div class="hhd"><h2>Match History</h2><div class="cfd" id="cfd"></div></div><div id="hist"></div></div>
     </section>
   </div>
   <section class="perf">
@@ -409,7 +420,13 @@ html { scroll-padding-top: 84px; }
     });
     return out + '</svg>';
   }
-  var cur = null, sortKey = 'n', sortAsc = false, champRows = [];
+  var cur = null, sortKey = 'n', sortAsc = false, champRows = [], champSel = '';
+  $('cfd').addEventListener('click', function (e) {
+    var o = e.target.closest('.cm button');
+    if (o) { champSel = o.getAttribute('data-c'); $('cfd').classList.remove('open'); show(cur); return; }
+    if (e.target.closest('.cb')) $('cfd').classList.toggle('open');
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('#cfd')) $('cfd').classList.remove('open'); });
   var COLS = [['Champion', 'name'], ['Games', 'n'], ['Win Rate', 'wr'], ['KDA', 'kda'], ['Wins', 'w'], ['CS/M', 'cspm'], ['KP%', 'kp'], ['DMG/M (%)', 'dpm'], ['Gold/M (%)', 'gpm'], ['CSD @15', 'csd']];
   function drawTable() {
     var rows = champRows.slice().sort(function (x, y) {
@@ -429,7 +446,7 @@ html { scroll-padding-top: 84px; }
     drawTable();
   });
   function show(name) {
-    var P = D.players[name]; if (!P) return; cur = name; var ag = AGG[name];
+    var P = D.players[name]; if (!P) return; if (cur !== name) champSel = ''; cur = name; var ag = AGG[name];
     if (window.LVF) LVF.entity('player', name);
     try { history.replaceState(null, '', '#' + encodeURIComponent(name)); } catch (e) {}
     function ageOf(bd) { var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(bd || ''); if (!m) return null; var n = new Date(), a = n.getFullYear() - +m[1]; if (n.getMonth() + 1 < +m[2] || (n.getMonth() + 1 === +m[2] && n.getDate() < +m[3])) a--; return a; }
@@ -468,7 +485,15 @@ html { scroll-padding-top: 84px; }
       for (k = 6; k < (it.length > 7 ? 8 : 7); k++) tc += im(k);
       return '<div class="its">' + pre + '<div class="ig">' + g + '</div><div class="tc">' + tc + '</div></div>'; };
     var gicon = function (k, c, cl) { return D.icons[k] ? '<img class="' + cl + '" src="' + D.icons[k] + '" alt="' + c + '">' : ''; };
-    $('hist').innerHTML = P.games.map(function (g) {
+    var chs = {}; P.games.forEach(function (g) { (chs[g.champ] = chs[g.champ] || { n: 0, ic: g.ic }).n++; });
+    var chn = Object.keys(chs).sort(function (a, b) { return chs[b].n - chs[a].n || (a < b ? -1 : 1); });
+    if (champSel && !chs[champSel]) champSel = '';
+    var cimg = function (c) { return D.icons[chs[c].ic] ? '<img class="ci" src="' + D.icons[chs[c].ic] + '" alt="">' : ''; };
+    $('cfd').hidden = chn.length < 2; if (champSel && chn.length < 2) champSel = '';
+    $('cfd').innerHTML = '<button type="button" class="cb' + (champSel ? ' sel' : '') + '"><small>Champion</small>' + (champSel ? cimg(champSel) + champSel : 'All champions') + '<svg class="cv" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></button><div class="cm"><button type="button" data-c=""' + (champSel ? '' : ' class="on"') + '>All champions<span class="n">' + P.games.length + '</span></button>' +
+      chn.map(function (c) { return '<button type="button" data-c="' + c.replace(/"/g, '&quot;') + '"' + (c === champSel ? ' class="on"' : '') + '>' + cimg(c) + c + '<span class="n">' + chs[c].n + '</span></button>'; }).join('') + '</div>';
+    var HG = P.games.filter(function (g) { return !champSel || g.champ === champSel; });
+    $('hist').innerHTML = HG.map(function (g) {
       var o = OG[g.gid + '|' + g.role + '|' + g.opp], len = Math.round(g.gl * 60), mm = Math.floor(len / 60), ss = ('0' + (len % 60)).slice(-2), kp = g.tk ? Math.round((g.k + g.a) / g.tk * 100) : null;
       var dm = /^\d{4}-(\d{2})-(\d{2})/.exec(g.date || ''), dt = dm ? new Date(2026, +dm[1] - 1, +dm[2]).toLocaleDateString('en-GB', {day: 'numeric', month: 'short'}) : '';
       return (g.lg ? '<div class="gr gm">' : '<a class="gr gm" href="' + U.game + '#' + g.gid + '">') + '<div class="rl"><span class="res ' + (g.win ? 'w' : 'l') + '">' + (g.win ? 'VICTORY' : 'DEFEAT') + '</span><div class="gt">' + mm + ':' + ss + '</div></div>'
@@ -499,7 +524,7 @@ html { scroll-padding-top: 84px; }
     AGG = {}; names.forEach(function (n) { AGG[n] = agg(D.players[n].games); });
     var hh = wanted;
     if (D.players[hh]) show(hh);
-    else { $('hero').innerHTML = '<div style="padding:28px;color:var(--muted)">' + (hh || 'This player') + ' has no games in these filters.</div>'; $('stats').innerHTML = ''; $('tbody').innerHTML = ''; $('hist').innerHTML = ''; $('radars').innerHTML = ''; want(); }
+    else { $('hero').innerHTML = '<div style="padding:28px;color:var(--muted)">' + (hh || 'This player') + ' has no games in these filters.</div>'; $('stats').innerHTML = ''; $('tbody').innerHTML = ''; $('hist').innerHTML = ''; $('cfd').innerHTML = ''; $('radars').innerHTML = ''; want(); }
   }
   if (window.LVF) LVF.onChange(function (ds) { if (!ds) setD(D0); else LVF.profile('player', ds).then(setD); });
   window.addEventListener('hashchange', function () { var hh = ''; try { hh = decodeURIComponent(location.hash.slice(1)); } catch (e) {} wanted = hh; if (D.players[hh]) show(hh); else want(); });
