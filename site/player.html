@@ -131,7 +131,9 @@ img.lwi { }
 .srow:last-child { border-bottom: 0; }
 .srow b { color: var(--fg); font-size: 13.5px; font-variant-numeric: tabular-nums; }
 .tabs { margin-bottom: 14px; }
-.hhd { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }.hhd h2 { margin: 0; }
+/* Age / contract lines hidden for now - remove this rule to show them again */
+.pinfo { display: none !important; }
+.hhd { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; } .hhd .cfd { margin-left: auto; }.hhd h2 { margin: 0; }
 .cfd { position: relative; }
 .cfd .cb { display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; color: var(--fg); font: inherit; font-size: 12.5px; cursor: pointer; }
 .cfd .cb small { color: var(--muted); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; }
