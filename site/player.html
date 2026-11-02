@@ -193,8 +193,8 @@ img.lwi { }
 .gr.gm { grid-template-columns: 56px 1fr auto auto; column-gap: 18px; }
 .gr .rl { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
 .gr .rl .gt { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.gr .gs { display: flex; align-items: center; gap: 14px; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.gr .gs .c { text-align: center; min-width: 46px; }
+.gr .gs { display: grid; grid-template-columns: 92px 76px 56px 64px 64px; justify-content: start; align-items: center; column-gap: 26px; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.gr .gs .c { text-align: center; min-width: 0; }
 .gr .gs .top { font-size: 14px; color: var(--fg); } .gr .gs .top b { font-weight: 700; }
 .gr .gs .sub { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
 .gr .gs .top { letter-spacing: -.02em; } .gr .gs .top i { font-style: normal; color: var(--dim); margin: 0 1px; }
@@ -202,12 +202,12 @@ a.gr.gm { color: inherit; text-decoration: none; transition: border-color .15s; 
 .gr .r { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 56px; }
 .gr .r .pv { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .gr .r .ev { display: block; line-height: 0; } .gr .r .ev img { width: 22px; height: 22px; border-radius: 0; }
-.wi-l { display: none; } .wi-d { display: block; }
+img.wi-l { display: none; } img.wi-d { display: block; }
 .gr.gm { grid-template-columns: 56px 270px auto 1fr; column-gap: 24px; }
 .gr .ld .its { margin-top: 8px; }
 .gl, #hist, #games { display: flex; flex-direction: column; gap: 12px; }
 .gl, #hist { container-type: inline-size; }
-@container (max-width: 900px) { .gr.gm { column-gap: 18px; grid-template-columns: 56px 250px auto 1fr; } .gr .gs .c:last-child { display: none; } }
+@container (max-width: 1000px) { .gr.gm { column-gap: 18px; grid-template-columns: 56px 250px auto 1fr; } .gr .gs { grid-template-columns: 92px 76px 56px; column-gap: 20px; } .gr .gs .c:nth-child(n+4) { display: none; } }
 @container (max-width: 700px) { .gr.gm { grid-template-columns: 56px minmax(0, 1fr) auto auto; column-gap: 14px; } }
 .gl, #hist { margin-top: 18px; }
 .gr .r { justify-self: end; }
@@ -219,7 +219,7 @@ a.gr.gm { color: inherit; text-decoration: none; transition: border-color .15s; 
 .gr .its .ig i { display: block; background: var(--pill); border: 1px solid var(--dim); box-sizing: border-box; }
 .gr .its .tc { display: flex; align-items: center; gap: 3px; margin-left: 4px; }
 .gr .its .tc .trw, .gr .its .tc i { width: 18px; height: 18px; margin: 0; align-self: auto; border-radius: 4px; }
-@media (max-width: 640px) { .gr.gm { grid-template-columns: 52px minmax(0, 1fr) auto; } .gr.gm .r, .gr.gm .ld { display: none; } .gr .gs .c:last-child { display: none; } }
+@media (max-width: 640px) { .gr.gm { grid-template-columns: 52px minmax(0, 1fr) auto; } .gr.gm .r, .gr.gm .ld { display: none; } .gr .gs .c:nth-child(n+3) { display: none; } .gr .gs { grid-template-columns: 92px 76px; } }
 
 .gr.gm .rl .res { background: none; padding: 0; height: auto; line-height: 1.2; font-size: 12px; font-weight: 800; letter-spacing: .06em; color: var(--muted); }
 .gr.gm .rl .res.w { background: none; color: var(--green); } .gr.gm .rl .res.l { background: none; color: var(--red); }
@@ -347,6 +347,7 @@ html { scroll-padding-top: 84px; }
   <div class="body">
     <aside class="side"><h2>Statistics</h2><div id="stats"></div></aside>
     <section>
+      <div class="hhd poolhd"><h2>Champion pool</h2></div>
       <div class="scroll"><div>
         <div class="thd" id="thd"></div>
         <div class="tbl" id="tbody"></div>
@@ -501,7 +502,9 @@ html { scroll-padding-top: 84px; }
         + '<div><div class="t"><span class="pt">' + gicon(g.ic, g.champ, 'cm') + '<span>' + g.champ + '</span></span> <span class="vs">vs ' + logo(g.opp, 16) + ' ' + (o ? o.n : g.opp) + (o ? ' ' + gicon(o.g.ic, o.g.champ, 'cm') : '') + '</span></div>' + '<div class="ld">' + itrow(g.it, rnrow(g)) + '</div></div>'
         + '<div class="gs"><div class="c"><div class="top"><b>' + g.k + '</b><i>/</i><b>' + g.d + '</b><i>/</i><b>' + g.a + '</b></div><div class="sub">' + ((g.k + g.a) / Math.max(1, g.d)).toFixed(2) + ' KDA</div></div>'
         + '<div class="c"><div class="top"><b>' + Math.round(g.cs) + '</b> CS</div><div class="sub">' + (g.cs / g.gl).toFixed(1) + ' CS/M</div></div>'
-        + '<div class="c"><div class="top"><b>' + (kp == null ? '-' : kp + '%') + '</b></div><div class="sub">KP%</div></div></div>'
+        + '<div class="c"><div class="top"><b>' + (kp == null ? '-' : kp + '%') + '</b></div><div class="sub">KP%</div></div>'
+        + '<div class="c"><div class="top"><b>' + (g.ds == null ? '-' : (g.ds * 100).toFixed(1) + '%') + '</b></div><div class="sub">DMG%</div></div>'
+        + '<div class="c"><div class="top"><b>' + (g.gd == null ? '-' : (g.gd > 0 ? '+' : '') + Math.round(g.gd)) + '</b></div><div class="sub">GD@15</div></div></div>'
         + '<div class="r">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '">' + (LVF.evIcon(g.lg, 22) || '<b style="font-size:11px;letter-spacing:.04em">' + LVF.lname(g.lg).replace(' 2026', '') + '</b>') + '</span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<div class="pv">' + (g.pt ? 'Patch ' + g.pt : '') + '</div></div>' + (g.lg ? '</div>' : '</a>'); }).join('');
     $('radars').innerHTML = RAD.map(function (r) { return '<div class="rcard"><h3>' + r[0] + '</h3>' + radar(r[0], r[1], ag, P.role) + '</div>'; }).join('');
     (function () {
