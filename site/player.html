@@ -451,11 +451,10 @@ html { scroll-padding-top: 84px; }
     }).join('');
     var pm = $('poolmore'); pm.innerHTML = '';
     if (rows.length > 10) {
-      var pb = document.createElement('button'); pb.type = 'button';
-      pb.style.cssText = 'display:block;margin:12px auto 0;background:none;border:1px solid var(--line);border-radius:8px;color:var(--fg);font:inherit;font-size:12.5px;padding:8px 16px;cursor:pointer';
-      pb.textContent = poolShown < rows.length ? 'Show more +' : 'Show less';
-      pb.onclick = function () { poolShown = poolShown < rows.length ? Math.min(rows.length, poolShown + 10) : 10; drawTable(); };
-      pm.appendChild(pb);
+      pm.style.cssText = 'display:flex;justify-content:center;gap:10px;margin-top:12px';
+      var mk = function (t, fn) { var x = document.createElement('button'); x.type = 'button'; x.textContent = t; x.style.cssText = 'background:none;border:1px solid var(--line);border-radius:8px;color:var(--fg);font:inherit;font-size:12.5px;padding:8px 16px;cursor:pointer'; x.onclick = fn; pm.appendChild(x); };
+      if (poolShown < rows.length) mk('Show more +', function () { poolShown = Math.min(rows.length, poolShown + 10); drawTable(); });
+      if (poolShown > 10) mk('Reset', function () { poolShown = 10; drawTable(); });
     }
   }
   $('thd').addEventListener('click', function (e) {
@@ -544,10 +543,11 @@ html { scroll-padding-top: 84px; }
     (function () {
       var hs = $('hist'), cards = [].slice.call(hs.querySelectorAll('.gr')), shown = 10, bt = document.createElement('button');
       if (cards.length <= 10) return;
-      bt.type = 'button'; bt.style.cssText = 'display:block;margin:12px auto 0;background:none;border:1px solid var(--line);border-radius:8px;color:var(--fg);font:inherit;font-size:12.5px;padding:8px 16px;cursor:pointer';
-      var ap = function () { cards.forEach(function (c, i) { c.style.display = i < shown ? '' : 'none'; }); [].slice.call(hs.querySelectorAll('.ser')).forEach(function (w) { w.style.display = [].some.call(w.querySelectorAll('.gr'), function (c) { return c.style.display !== 'none'; }) ? '' : 'none'; }); bt.textContent = shown < cards.length ? 'Show more +' : 'Show less'; };
-      bt.onclick = function () { shown = shown < cards.length ? Math.min(cards.length, shown + 10) : 10; ap(); };
-      hs.appendChild(bt); ap();
+      var wrap = document.createElement('div'); wrap.style.cssText = 'display:flex;justify-content:center;gap:10px;margin-top:12px';
+      var mk = function (fn) { var x = document.createElement('button'); x.type = 'button'; x.style.cssText = 'background:none;border:1px solid var(--line);border-radius:8px;color:var(--fg);font:inherit;font-size:12.5px;padding:8px 16px;cursor:pointer'; x.onclick = fn; wrap.appendChild(x); return x; };
+      var more = mk(function () { shown = Math.min(cards.length, shown + 10); ap(); }), rst = mk(function () { shown = 10; ap(); }); more.textContent = 'Show more +'; rst.textContent = 'Reset';
+      var ap = function () { cards.forEach(function (c, i) { c.style.display = i < shown ? '' : 'none'; }); [].slice.call(hs.querySelectorAll('.ser')).forEach(function (w) { w.style.display = [].some.call(w.querySelectorAll('.gr'), function (c) { return c.style.display !== 'none'; }) ? '' : 'none'; }); more.style.display = shown < cards.length ? '' : 'none'; rst.style.display = shown > 10 ? '' : 'none'; };
+      hs.appendChild(wrap); ap();
     })();
     document.title = name + ' · Player Profile';
   }
