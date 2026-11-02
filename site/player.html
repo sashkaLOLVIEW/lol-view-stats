@@ -423,6 +423,7 @@ html { scroll-padding-top: 84px; }
   });
   function show(name) {
     var P = D.players[name]; if (!P) return; cur = name; var ag = AGG[name];
+    if (window.LVF) LVF.entity('player', name);
     try { history.replaceState(null, '', '#' + encodeURIComponent(name)); } catch (e) {}
     function ageOf(bd) { var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(bd || ''); if (!m) return null; var n = new Date(), a = n.getFullYear() - +m[1]; if (n.getMonth() + 1 < +m[2] || (n.getMonth() + 1 === +m[2] && n.getDate() < +m[3])) a--; return a; }
     $('hero').innerHTML = (D.logos[P.team] ? '<img class="bgl' + (LW[P.team] ? ' lwi' : '') + '" src="' + D.logos[P.team] + '" alt="">' : '') + '<div class="portrait">' + (P.face ? '<img src="' + P.face + '" alt="' + name + '">' : '<span class="ph"></span>') + '</div><div class="who"><h1>' + (RI[P.role] || '') + name + '</h1><div class="meta"><div>' + logo(P.team, 18) + '<a href="team.html#' + P.team + '"><b>' + tn(P.team) + '</b></a></div><div class="pinfo"><span class="sp"></span><span>Age: <b>' + (ageOf(P.bd) || '-') + '</b></span></div><div class="pinfo"><span class="sp"></span><span>Contract Expiry: <b>' + (P.contract || '-') + '</b></span></div></div></div>';

@@ -174,40 +174,69 @@
   }
 
   /* ---------- UI ---------- */
+  var ENT = null;   // {kind, name}: on a player / team page only what that player or team took part in is offered
+  var PLACE = { 'player.html': ['after', '#hero'], 'team.html': ['prepend', '.tbody > .main'], 'champion.html': ['after', '.gh'], 'players.html': ['after', '.tp .tp-head'], 'index.html': ['after', '.tp .tp-head'], '': ['after', '.tp .tp-head'],
+    'champions.html': ['after', '#champions > h2, #champions > :first-child'], 'results.html': ['after', 'h2.sec'] };
   function css() {
     var s = document.createElement('style');
-    s.textContent = '#lvf{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:24px !important;margin-bottom:-28px;position:relative;z-index:60}' +
+    s.textContent = '#lvf{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0;position:relative;z-index:60}' +
       '#lvf .fd{position:relative}#lvf .fb{display:flex;align-items:center;gap:8px;height:32px;padding:0 12px;background:var(--surface);border:1px solid var(--line);border-radius:8px;color:var(--fg);font:inherit;font-size:12.5px;cursor:pointer}' +
-      '#lvf .fb small{color:var(--muted);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}#lvf .fb svg{color:var(--muted)}#lvf .fb.sel{border-color:var(--fg)}' +
+      '#lvf .fb small{color:var(--muted);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}#lvf .fb svg{color:var(--muted)}#lvf .fb.sel{border-color:var(--fg)}#lvf .fb.one{cursor:default}#lvf .fb.one svg{display:none}' +
       '#lvf .fm{display:none;position:absolute;left:0;top:calc(100% + 6px);min-width:100%;width:max-content;max-width:300px;max-height:340px;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:4px;box-shadow:0 12px 32px rgba(0,0,0,.35)}' +
       '#lvf .fd.open .fm{display:block}#lvf .fm button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--fg);font:inherit;font-size:12.5px;padding:7px 10px;border-radius:5px;cursor:pointer;white-space:nowrap}' +
+      '#lvf .fm button.sub{padding-left:22px;color:var(--muted)}#lvf .fm button.sub.on{color:var(--fg)}' +
       '#lvf .fm button:hover,#lvf .fm button.on{background:var(--surface-2)}#lvf .fm .gh{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);padding:8px 10px 4px}' +
       '#lvf .st{color:var(--muted);font-size:12px;margin-left:4px}#lvf .rs{background:none;border:0;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;text-decoration:underline;padding:0}';
     document.head.appendChild(s);
   }
   var chev = '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg>';
-  function options() {
-    var lgs = Object.keys(meta.leagues), maj = MAJOR.filter(function (x) { return meta.leagues[x]; }), rest = lgs.filter(function (x) { return MAJOR.indexOf(x) < 0; }).sort(function (a, b) { return lname(a).localeCompare(lname(b)); });
-    var splits = {}; (S.league === 'ALL' ? lgs : [S.league]).forEach(function (l) { (meta.leagues[l] ? meta.leagues[l].splits : []).forEach(function (s) { if (s) splits[s] = 1; }); });
-    var years = {}; (S.league === 'ALL' ? lgs : [S.league]).forEach(function (l) { meta.leagues[l] && meta.leagues[l].years.forEach(function (y) { years[y] = 1; }); });
-    return {
-      league: [['h', 'Featured']].concat(maj.map(function (x) { return [x, lname(x)]; }), [['ALL', 'All leagues'], ['h', 'Other leagues']], rest.map(function (x) { return [x, lname(x)]; })),
-      split: [['All', 'All splits']].concat(Object.keys(splits).sort().map(function (x) { return [x, x]; })),
-      stage: [['All', 'All stages'], ['Regular', 'Regular season'], ['Playoffs', 'Playoffs']],
-      year: [['All', 'All years']].concat(Object.keys(years).sort().reverse().map(function (x) { return [x, x]; }))
-    };
+  /* every [league, year, split, stageMask] that exists for the current page (whole site, or the player / team being viewed) */
+  function tuples() {
+    if (ENT) { var k = ENT.kind === 'player' ? meta.pix[ENT.name] : meta.tix[meta.tname[ENT.name] || ENT.name]; if (k) return k; }
+    var o = []; Object.keys(meta.leagues).forEach(function (l) { meta.leagues[l].tuples.forEach(function (t) { o.push([l, t[0], t[1], t[2]]); }); }); return o;
   }
-  var LBL = { league: 'League', split: 'Split', stage: 'Stage', year: 'Year' };
+  function options() {
+    var T = tuples(), ys = {}; T.forEach(function (t) { ys[t[1]] = 1; });
+    var years = Object.keys(ys).sort().reverse().map(Number);
+    var Ty = T.filter(function (t) { return S.year === 'All' || t[1] === +S.year; });
+    var lgs = {}, spl = {}; Ty.forEach(function (t) { lgs[t[0]] = 1; if (t[2]) (spl[t[0]] = spl[t[0]] || {})[t[2]] = 1; });
+    var ids = Object.keys(lgs), maj = MAJOR.filter(function (x) { return lgs[x]; }), rest = ids.filter(function (x) { return MAJOR.indexOf(x) < 0; }).sort(function (a, b) { return lname(a).localeCompare(lname(b)); });
+    var tour = [];
+    if (ids.length > 1) tour.push(['ALL|All', 'All tournaments']);
+    var add = function (l) { var sp = Object.keys(spl[l] || {}).sort(); tour.push([l + '|All', lname(l) + (sp.length > 1 ? ' (all splits)' : '')]); if (sp.length > 1) sp.forEach(function (x) { tour.push([l + '|' + x, lname(l) + ' · ' + x, 1]); }); };
+    maj.concat(rest).forEach(add);
+    var Tt = Ty.filter(function (t) { return (S.league === 'ALL' || t[0] === S.league) && (S.split === 'All' || t[2] === S.split); }), mask = 0; Tt.forEach(function (t) { mask |= t[3]; });
+    var stage = mask === 3 ? [['All', 'All stages'], ['Regular', 'Regular season'], ['Playoffs', 'Playoffs']] : null;
+    return { years: years, tour: tour, stage: stage, ids: ids };
+  }
+  /* keep the selection inside what is offered; returns true when something had to change */
+  function normalize(o) {
+    var c = false, set = function (k, v) { if (S[k] !== v) { S[k] = v; c = true; } };
+    if (S.year !== 'All' && o.years.indexOf(+S.year) < 0) set('year', 'All');
+    var cur = S.league + '|' + S.split;
+    if (!o.tour.some(function (t) { return t[0] === cur; })) {
+      var first = o.tour.filter(function (t) { return !t[2]; })[0]; if (first) { var p = first[0].split('|'); set('league', p[0]); set('split', p[1]); }
+    }
+    if (S.stage !== 'All' && !(o.stage && o.stage.some(function (x) { return x[0] === S.stage; }))) set('stage', 'All');
+    return c;
+  }
+  function dd(k, label, items, curv, one) {
+    return '<div class="fd" id="fd-' + k + '"><button type="button" class="fb' + (one ? ' one' : '') + '"><small>' + LBL[k] + '</small>' + label + chev + '</button>' + (one ? '' : '<div class="fm">' +
+      items.map(function (x) { return '<button type="button" data-k="' + k + '" data-v="' + x[0] + '"' + ((x[0] === curv ? ' class="on' + (x[2] ? ' sub' : '') + '"' : (x[2] ? ' class="sub"' : ''))) + '>' + x[1] + '</button>'; }).join('') + '</div>') + '</div>';
+  }
+  var LBL = { year: 'Year', tour: 'Tournament', stage: 'Stage' };
   function render(status) {
     if (!bar) return;
     var o = options(), open = (bar.querySelector('.fd.open') || {}).id;
-    bar.innerHTML = ['league', 'split', 'stage', 'year'].map(function (k) {
-      var cur = o[k].filter(function (x) { return x[0] === S[k]; })[0], label = cur ? cur[1] : S[k];
-      return '<div class="fd' + (open === 'fd-' + k ? ' open' : '') + '" id="fd-' + k + '"><button type="button" class="fb' + (k !== 'league' && S[k] !== 'All' ? ' sel' : '') + '"><small>' + LBL[k] + '</small>' + label + chev + '</button><div class="fm">' +
-        o[k].map(function (x) { return x[0] === 'h' ? '<div class="gh">' + x[1] + '</div>' : '<button type="button" data-k="' + k + '" data-v="' + x[0] + '"' + (x[0] === S[k] ? ' class="on"' : '') + '>' + x[1] + '</button>'; }).join('') + '</div></div>';
-    }).join('') + '<span class="st">' + (status || '') + '</span>' + (isDefault() ? '' : '<button type="button" class="rs" data-reset="1">Back to Worlds</button>');
+    var yl = S.year === 'All' ? (o.years.length === 1 ? String(o.years[0]) : 'All years') : S.year;
+    var cur = S.league + '|' + S.split, tl = (o.tour.filter(function (t) { return t[0] === cur; })[0] || [0, ''])[1];
+    var h = dd('year', yl, [['All', 'All years']].concat(o.years.map(function (y) { return [String(y), String(y)]; })), S.year, o.years.length <= 1) + dd('tour', tl, o.tour, cur, o.tour.length <= 1);
+    if (o.stage) h += dd('stage', (o.stage.filter(function (x) { return x[0] === S.stage; })[0] || o.stage[0])[1], o.stage, S.stage, false);
+    bar.innerHTML = h + '<span class="st">' + (status || '') + '</span>' + (isDefault() ? '' : '<button type="button" class="rs" data-reset="1">Back to Worlds</button>');
+    if (open) { var d = bar.querySelector('#' + open); if (d) d.classList.add('open'); }
   }
   function apply() {
+    normalize(options());
     try { sessionStorage.setItem('lvf', JSON.stringify(S)); } catch (e) {}
     var my = ++busy;
     if (isDefault()) { cur = null; render('Worlds 2026 · Main Stage'); handlers.forEach(function (h) { h(null, S); }); return Promise.resolve(); }
@@ -218,23 +247,35 @@
       handlers.forEach(function (h) { h(ds, S); });
     }).catch(function (e) { render('Could not load data'); console.error(e); });
   }
+  function place() {
+    var pg = location.pathname.split('/').pop(), r = PLACE[pg] || PLACE['index.html'], el = $(r[1]);
+    if (!el) { el = $('.page > .topbar'); r = ['after', '']; }
+    if (!el) return false;
+    if (r[0] === 'prepend') el.insertBefore(bar, el.firstChild); else el.parentNode.insertBefore(bar, el.nextSibling);
+    return true;
+  }
   function init() {
-    var top = $('.page > .topbar'); if (!top) return;
-    css(); bar = document.createElement('div'); bar.id = 'lvf'; top.parentNode.insertBefore(bar, top.nextSibling);
+    if (!$('.page > .topbar')) return;
+    css(); bar = document.createElement('div'); bar.id = 'lvf';
     loadMeta().then(function () {
+      if (!place()) return;
       if (!meta.leagues[S.league] && S.league !== 'ALL') S.league = 'WLDs';
       bar.addEventListener('click', function (e) {
         if (e.target.closest('[data-reset]')) { S = { league: 'WLDs', split: 'All', stage: 'All', year: 'All' }; apply(); return; }
         var m = e.target.closest('.fm button[data-k]');
-        if (m) { S[m.dataset.k] = m.dataset.v; if (m.dataset.k === 'league') { S.split = 'All'; S.year = 'All'; } apply(); return; }
-        var b = e.target.closest('.fb'); var d = b && b.parentNode, was = d && d.classList.contains('open');
-        Array.prototype.forEach.call(bar.querySelectorAll('.fd'), function (x) { x.classList.remove('open'); }); if (d && !was) d.classList.add('open');
+        if (m) {
+          if (m.dataset.k === 'tour') { var p = m.dataset.v.split('|'); S.league = p[0]; S.split = p[1]; S.stage = 'All'; } else S[m.dataset.k] = m.dataset.v;
+          apply(); return;
+        }
+        var b = e.target.closest('.fb'); if (!b || b.classList.contains('one')) return; var d = b.parentNode, was = d.classList.contains('open');
+        Array.prototype.forEach.call(bar.querySelectorAll('.fd'), function (x) { x.classList.remove('open'); }); if (!was) d.classList.add('open');
       });
       document.addEventListener('click', function (e) { if (!e.target.closest('#lvf')) Array.prototype.forEach.call(bar.querySelectorAll('.fd'), function (x) { x.classList.remove('open'); }); });
       apply();
     }).catch(function () { bar.style.display = 'none'; });
   }
-  window.LVF = { set: function (o) { if (Object.keys(o).every(function (k) { return S[k] === o[k]; })) return; Object.assign(S, o); if (bar && meta) return apply(); }, has: function (kind, n) { return loadMeta().then(function (m) { return kind === 'player' ? m.players.indexOf(n) >= 0 : kind === 'team' ? !!m.tname[n] : m.champs.indexOf(n) >= 0; }); }, onChange: function (fn) { handlers.push(fn); if (bar && meta) fn(cur, S); }, state: function () { return S; }, meta: function () { return meta; }, wd: wd, players: players, isDefault: isDefault, lname: lname,
+  function entity(kind, name) { ENT = { kind: kind, name: name }; if (bar && meta) { var o = options(); if (normalize(o)) apply(); else render((bar.querySelector('.st') || {}).textContent); } }
+  window.LVF = { entity: entity, set: function (o) { if (Object.keys(o).every(function (k) { return S[k] === o[k]; })) return; Object.assign(S, o); if (bar && meta) return apply(); }, has: function (kind, n) { return loadMeta().then(function (m) { return kind === 'player' ? m.players.indexOf(n) >= 0 : kind === 'team' ? !!m.tname[n] : m.champs.indexOf(n) >= 0; }); }, onChange: function (fn) { handlers.push(fn); if (bar && meta) fn(cur, S); }, state: function () { return S; }, meta: function () { return meta; }, wd: wd, players: players, isDefault: isDefault, lname: lname,
     loadMeta: loadMeta, profile: profile, results: results, leagueName: lname, icons: function () { return jget('data/champs.json'); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

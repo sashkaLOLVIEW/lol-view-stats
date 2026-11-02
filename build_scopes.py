@@ -53,6 +53,7 @@ def build(csv, out_dir, code_of, icons_fn, leagues=None):
     patches = sorted({"%.2f" % x for x in df.patch.dropna()}, key=float); pt_idx = {n: i for i, n in enumerate(patches)}
     meta = dict(leagues={}, players=players, teams=[[t, code_of(t)] for t in teams], champs=champs, patches=patches, built=str(df.date.max())[:10])
 
+    pix, tix = {}, {}
     for lg, d in df.groupby("league"):
         d = d.sort_values(["date", "gameid"]); gids = list(dict.fromkeys(d.gameid)); gi = {g: i for i, g in enumerate(gids)}
         splits = sorted(set(d.split)); si = {s: i for i, s in enumerate(splits)}
@@ -75,8 +76,18 @@ def build(csv, out_dir, code_of, icons_fn, leagues=None):
         teamsb = dict(g=[gi[x] for x in t.gameid], s=[0 if x == "Blue" else 1 for x in t.side], t=[tidx[x] for x in t.teamname], w=col("result"), k=col("teamkills"), d=col("teamdeaths"),
                       tw=col("towers"), dr=col("dragons"), ba=col("barons"), he=col("heralds"), gr=col("void_grubs"), fb=col("firstblood"), ft=col("firsttower"), gold=col("totalgold"),
                       bans=[[cidx.get(x, -1) if isinstance(x, str) else -1 for x in r] for r in t[["ban1", "ban2", "ban3", "ban4", "ban5"]].itertuples(index=False)])
+        spn = [splits[i] for i in games["sp"]]
+        gk = [(games["y"][i], spn[i], 1 << int(bool(games["po"][i]))) for i in range(len(gids))]
+        ltup = {}
+        for y_, sp_, m_ in gk: ltup[(y_, sp_)] = ltup.get((y_, sp_), 0) | m_
+        for i in range(len(rows["g"])):
+            y_, sp_, m_ = gk[rows["g"][i]]; e = pix.setdefault(players[rows["p"][i]], {}); e[(lg, y_, sp_)] = e.get((lg, y_, sp_), 0) | m_
+        for i in range(len(teamsb["g"])):
+            y_, sp_, m_ = gk[teamsb["g"][i]]; e = tix.setdefault(teams[teamsb["t"][i]], {}); e[(lg, y_, sp_)] = e.get((lg, y_, sp_), 0) | m_
         (out_dir / ("lg-%s.json" % re.sub(r"[^A-Za-z0-9_-]", "_", lg))).write_text(json.dumps(dict(games=games, rows=rows, teams=teamsb), separators=(",", ":")), encoding="utf-8")
-        meta["leagues"][lg] = dict(n=len(gids), years=sorted(int(x) for x in set(d.year)), splits=splits, first=str(d.date.min())[:10], last=str(d.date.max())[:10])
+        meta["leagues"][lg] = dict(tuples=[[y_, sp_, m_] for (y_, sp_), m_ in sorted(ltup.items())], n=len(gids), years=sorted(int(x) for x in set(d.year)), splits=splits, first=str(d.date.min())[:10], last=str(d.date.max())[:10])
+    meta["pix"] = {k: [[a, b, c, m] for (a, b, c), m in sorted(v.items())] for k, v in pix.items()}
+    meta["tix"] = {k: [[a, b, c, m] for (a, b, c), m in sorted(v.items())] for k, v in tix.items()}
     (out_dir / "meta.json").write_text(json.dumps(meta, separators=(",", ":")), encoding="utf-8")
     (out_dir / "champs.json").write_text(json.dumps({c: icons_fn(c) for c in champs if icons_fn(c)}, separators=(",", ":")), encoding="utf-8")
     print("  filter data: %d leagues, %d players, %d teams, %d champions -> %s" % (len(meta["leagues"]), len(players), len(teams), len(champs), out_dir))
