@@ -133,6 +133,10 @@ img.lwi { }
 .tabs { margin-bottom: 14px; }
 /* Age / contract lines hidden for now - remove this rule to show them again */
 .pinfo { display: none !important; }
+.ser { position: relative; display: flex; flex-direction: column; gap: 12px; }
+.ser .sb { position: absolute; top: 8px; bottom: 8px; right: 128px; width: 22px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 11px; background: var(--surface-2); color: var(--muted); font-size: 10.5px; font-weight: 700; letter-spacing: .04em; writing-mode: vertical-rl; text-orientation: upright; pointer-events: none; }
+@container (max-width: 1000px) { .ser .sb { display: none; } }
+
 .hhd { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; } .hhd .cfd { margin-left: auto; }.hhd h2 { margin: 0; }
 .cfd { position: relative; }
 .cfd .cb { display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; color: var(--fg); font: inherit; font-size: 12.5px; cursor: pointer; }
@@ -496,8 +500,16 @@ html { scroll-padding-top: 84px; }
     $('cfd').hidden = chn.length < 2; if (champSel && chn.length < 2) champSel = '';
     $('cfd').innerHTML = '<button type="button" class="cb' + (champSel ? ' sel' : '') + '"><small>Champion</small>' + (champSel ? cimg(champSel) + champSel : LVF.evIcon('ALLCH', 16) + 'All') + '<svg class="cv" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></button><div class="cm"><button type="button" data-c=""' + (champSel ? '' : ' class="on"') + '>' + LVF.evIcon('ALLCH', 16) + 'All<span class="n">' + P.games.length + '</span></button>' +
       chn.map(function (c) { return '<button type="button" data-c="' + c.replace(/"/g, '&quot;') + '"' + (c === champSel ? ' class="on"' : '') + '>' + cimg(c) + c + '<span class="n">' + chs[c].n + '</span></button>'; }).join('') + '</div>';
-    var HG = P.games.filter(function (g) { return !champSel || g.champ === champSel; });
-    $('hist').innerHTML = HG.map(function (g) {
+    var ky = function (g) { return g.dt || g.date || ''; };
+    var chrono = P.games.slice().sort(function (a, b) { return ky(a) < ky(b) ? -1 : ky(a) > ky(b) ? 1 : (a.gn || 0) - (b.gn || 0); }), SER = [], pv = null;
+    chrono.forEach(function (g) {
+      var gap = pv ? (Date.parse(ky(g).slice(0, 10)) - Date.parse(ky(pv).slice(0, 10))) / 864e5 : 0;
+      if (!pv || g.opp !== pv.opp || gap > 1 || (g.gn && pv.gn && g.gn <= pv.gn)) SER.push({ w: 0, l: 0 });
+      var sr = SER[SER.length - 1]; g._sid = SER.length - 1; g.win ? sr.w++ : sr.l++; pv = g;
+    });
+    SER.forEach(function (sr) { sr.bo = Math.max(sr.w, sr.l) >= 3 ? 5 : sr.w === sr.l && sr.w === 1 ? 2 : sr.w + sr.l > 1 ? 3 : 1; });
+    var HG = chrono.filter(function (g) { return !champSel || g.champ === champSel; }).reverse();
+    var HR = HG.map(function (g) {
       var o = OG[g.gid + '|' + g.role + '|' + g.opp], len = Math.round(g.gl * 60), mm = Math.floor(len / 60), ss = ('0' + (len % 60)).slice(-2), kp = g.tk ? Math.round((g.k + g.a) / g.tk * 100) : null;
       var dm = /^\d{4}-(\d{2})-(\d{2})/.exec(g.date || ''), dt = dm ? new Date(2026, +dm[1] - 1, +dm[2]).toLocaleDateString('en-GB', {day: 'numeric', month: 'short'}) : '';
       return (g.lg ? '<div class="gr gm">' : '<a class="gr gm" href="' + U.game + '#' + g.gid + '">') + '<div class="rl"><span class="res ' + (g.win ? 'w' : 'l') + '">' + (g.win ? 'VICTORY' : 'DEFEAT') + '</span><div class="gt">' + mm + ':' + ss + '</div></div>'
@@ -507,13 +519,21 @@ html { scroll-padding-top: 84px; }
         + '<div class="c"><div class="top"><b>' + (kp == null ? '-' : kp + '%') + '</b></div><div class="sub">KP%</div></div>'
         + '<div class="c"><div class="top"><b>' + (g.ds == null ? '-' : (g.ds * 100).toFixed(1) + '%') + '</b></div><div class="sub">DMG%</div></div>'
         + '<div class="c"><div class="top"><b>' + (g.gd == null ? '-' : (g.gd > 0 ? '+' : '') + Math.round(g.gd)) + '</b></div><div class="sub">GD@15</div></div></div>'
-        + '<div class="r">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '">' + (LVF.evIcon(g.lg, 22) || '<b style="font-size:11px;letter-spacing:.04em">' + LVF.lname(g.lg).replace(' 2026', '') + '</b>') + '</span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<div class="pv">' + (g.pt ? 'Patch ' + g.pt : '') + '</div></div>' + (g.lg ? '</div>' : '</a>'); }).join('');
+        + '<div class="r">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '">' + (LVF.evIcon(g.lg, 22) || '<b style="font-size:11px;letter-spacing:.04em">' + LVF.lname(g.lg).replace(' 2026', '') + '</b>') + '</span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<div class="pv">' + (g.pt ? 'Patch ' + g.pt : '') + '</div></div>' + (g.lg ? '</div>' : '</a>'); });
+    var hh = '', hi = 0;
+    while (hi < HG.length) {
+      var sid = HG[hi]._sid, hj = hi; while (hj < HG.length && HG[hj]._sid === sid) hj++;
+      var inner = HR.slice(hi, hj).join('');
+      hh += SER[sid].bo > 1 ? '<div class="ser">' + inner + '<span class="sb" title="Best of ' + SER[sid].bo + '">' + 'BO' + SER[sid].bo + '</span></div>' : inner;
+      hi = hj;
+    }
+    $('hist').innerHTML = hh;
     $('radars').innerHTML = RAD.map(function (r) { return '<div class="rcard"><h3>' + r[0] + '</h3>' + radar(r[0], r[1], ag, P.role) + '</div>'; }).join('');
     (function () {
       var hs = $('hist'), cards = [].slice.call(hs.querySelectorAll('.gr')), shown = 10, bt = document.createElement('button');
       if (cards.length <= 10) return;
       bt.type = 'button'; bt.style.cssText = 'display:block;margin:12px auto 0;background:none;border:1px solid var(--line);border-radius:8px;color:var(--fg);font:inherit;font-size:12.5px;padding:8px 16px;cursor:pointer';
-      var ap = function () { cards.forEach(function (c, i) { c.style.display = i < shown ? '' : 'none'; }); bt.textContent = shown < cards.length ? 'Show more +' : 'Show less'; };
+      var ap = function () { cards.forEach(function (c, i) { c.style.display = i < shown ? '' : 'none'; }); [].slice.call(hs.querySelectorAll('.ser')).forEach(function (w) { w.style.display = [].some.call(w.querySelectorAll('.gr'), function (c) { return c.style.display !== 'none'; }) ? '' : 'none'; }); bt.textContent = shown < cards.length ? 'Show more +' : 'Show less'; };
       bt.onclick = function () { shown = shown < cards.length ? Math.min(cards.length, shown + 10) : 10; ap(); };
       hs.appendChild(bt); ap();
     })();
