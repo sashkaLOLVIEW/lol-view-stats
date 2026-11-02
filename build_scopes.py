@@ -35,11 +35,15 @@ def match_z(df):
     return {(g, n): v for g, n, v in zip(p.gameid, p[k], p.z_obs) if pd.notna(v)}
 
 
-def build(csv, out_dir, code_of, icons_fn, leagues=None, current=None):
+def build(csv, out_dir, code_of, icons_fn, leagues=None, current=None, team_leagues=None):
     df = pd.read_csv(csv, low_memory=False)
     df["date"] = pd.to_datetime(df["date"])
     df = df[df.gameid.notna()].copy()
     if leagues: df = df[df.league.isin(leagues)].copy()
+    if team_leagues:   # only teams (and their players) that play in these domestic leagues; their games at international events stay
+        tier = set(df[df.league.isin(team_leagues)].teamname.dropna())
+        gids = set(df[df.teamname.isin(tier)].gameid)
+        df = df[df.gameid.isin(gids) & df.teamname.isin(tier)].copy()
     df["split"] = df["split"].fillna("")
     import shutil
     out_dir = Path(out_dir); shutil.rmtree(out_dir, ignore_errors=True); out_dir.mkdir(parents=True, exist_ok=True)

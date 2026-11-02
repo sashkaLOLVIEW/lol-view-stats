@@ -812,7 +812,7 @@ def main(csv):
         if c not in _ic:
             k = champ_key(c); _ic[c] = champ_icon(k, 68, 80) if k else None
         return _ic[c]
-    build_scopes.build(csv, out / "data", lambda n: CODE.get(NAME_FIX.get(n, n)) or re.sub(r"[^A-Z0-9]", "", "".join(x[0] for x in n.split()).upper())[:4] or n[:3].upper(), _icon, FILTER_LEAGUES, LEAGUE)
+    build_scopes.build(csv, out / "data", lambda n: CODE.get(NAME_FIX.get(n, n)) or re.sub(r"[^A-Z0-9]", "", "".join(x[0] for x in n.split()).upper())[:4] or n[:3].upper(), _icon, FILTER_LEAGUES, LEAGUE, TIER1_LEAGUES)
     wr(out / "data" / "logos.json", json.dumps(logos_all))
     if (ROOT / "site" / "filters.js").exists(): wr(out / "filters.js", rd("site/filters.js"))
 
