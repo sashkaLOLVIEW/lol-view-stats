@@ -529,7 +529,7 @@ html { scroll-padding-top: 84px; }
         + '<div class="c"><div class="top"><b>' + Math.round(g.cs) + '</b> CS</div><div class="sub">' + (g.cs / g.gl).toFixed(1) + ' CS/M</div></div>'
         + '<div class="c"><div class="top"><b>' + (kp == null ? '-' : kp + '%') + '</b></div><div class="sub">KP%</div></div>'
         + '<div class="c"><div class="top"><b>' + (g.ds == null ? '-' : (g.ds * 100).toFixed(1) + '%') + '</b></div><div class="sub">DMG%</div></div>'
-        + '<div class="c"><div class="top"><b>' + (g.gd == null ? '-' : (g.gd > 0 ? '+' : '') + Math.round(g.gd)) + '</b></div><div class="sub">GD@15</div></div></div>'
+        + '<div class="c"><div class="top"><b>' + (!o || o.g.gold == null || g.gold == null ? '-' : (g.gold - o.g.gold > 0 ? '+' : g.gold - o.g.gold < 0 ? '\u2212' : '') + Math.abs(Math.round(g.gold - o.g.gold)).toLocaleString('en-US')) + '</b></div><div class="sub">Total GD</div></div></div>'
         + '<div class="r">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '">' + (LVF.evIcon(g.lg, 22) || '<b style="font-size:11px;letter-spacing:.04em">' + LVF.lname(g.lg).replace(' 2026', '') + '</b>') + '</span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<div class="pv">' + (g.pt ? 'Patch ' + g.pt : '') + '</div></div>' + '</a>'; });
     var hh = '', hi = 0;
     while (hi < HG.length) {
