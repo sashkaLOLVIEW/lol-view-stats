@@ -137,6 +137,7 @@ img.lwi { }
 .cfd .cb small { color: var(--muted); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; }
 .cfd .cb.sel { border-color: var(--fg); }
 .cfd .cb svg.cv { color: var(--muted); }
+.cfd img.wi-l, .cfd img.wi-d { width: 16px; height: 16px; flex: none; }
 .cfd img.ci { width: 20px; height: 20px; border-radius: 4px; display: block; flex: none; }
 .cfd .cm { display: none; position: absolute; left: 0; top: calc(100% + 6px); z-index: 70; min-width: 100%; width: max-content; max-height: 340px; overflow: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 4px; box-shadow: 0 12px 32px rgba(0,0,0,.35); }
 .cfd.open .cm { display: block; }
@@ -490,7 +491,7 @@ html { scroll-padding-top: 84px; }
     if (champSel && !chs[champSel]) champSel = '';
     var cimg = function (c) { return D.icons[chs[c].ic] ? '<img class="ci" src="' + D.icons[chs[c].ic] + '" alt="">' : ''; };
     $('cfd').hidden = chn.length < 2; if (champSel && chn.length < 2) champSel = '';
-    $('cfd').innerHTML = '<button type="button" class="cb' + (champSel ? ' sel' : '') + '"><small>Champion</small>' + (champSel ? cimg(champSel) + champSel : 'All champions') + '<svg class="cv" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></button><div class="cm"><button type="button" data-c=""' + (champSel ? '' : ' class="on"') + '>All champions<span class="n">' + P.games.length + '</span></button>' +
+    $('cfd').innerHTML = '<button type="button" class="cb' + (champSel ? ' sel' : '') + '"><small>Champion</small>' + (champSel ? cimg(champSel) + champSel : LVF.evIcon('ALLCH', 16) + 'All') + '<svg class="cv" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></button><div class="cm"><button type="button" data-c=""' + (champSel ? '' : ' class="on"') + '>' + LVF.evIcon('ALLCH', 16) + 'All<span class="n">' + P.games.length + '</span></button>' +
       chn.map(function (c) { return '<button type="button" data-c="' + c.replace(/"/g, '&quot;') + '"' + (c === champSel ? ' class="on"' : '') + '>' + cimg(c) + c + '<span class="n">' + chs[c].n + '</span></button>'; }).join('') + '</div>';
     var HG = P.games.filter(function (g) { return !champSel || g.champ === champSel; });
     $('hist').innerHTML = HG.map(function (g) {
