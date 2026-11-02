@@ -327,6 +327,7 @@ html { scroll-padding-top: 84px; }
   function pips(n) { if (!n) return '<span style="color:var(--dim)">&ndash;</span>'; var h = ''; for (var i = 0; i < n; i++) h += im('grubs', 'oi', 'Void Grub'); return h; }
   function drakes(a, soul) { var h = ''; a.forEach(function (d) { for (var i = 0; i < d[1]; i++) h += im(d[0], 'oi', d[0]); }); if (soul) h += '<span style="width:6px"></span>' + im(soul + '_soul', 'oi soul', soul + ' soul'); return h || '<span style="color:var(--dim)">&ndash;</span>'; }
   function soulFor(A, B) {
+    if (A.oe) return [null, null];
     var tot = function (t) { return t.drakes.reduce(function (s, d) { return s + d[1]; }, 0); };
     var ta = tot(A), tb = tot(B), best = null, bv = -1;
     A.drakes.forEach(function (d, i) { var v = d[1] + B.drakes[i][1]; var own = Math.max(d[1], B.drakes[i][1]); var sc = v * 10 + own; if (sc > bv) { bv = sc; best = d[0]; } });
@@ -400,8 +401,53 @@ html { scroll-padding-top: 84px; }
     var ser = []; D.games.forEach(function (x, j) { if (x.sid === g.sid) ser.push(j); });
     var box = $('games');
     box.innerHTML = ser.map(function (j, n) { return '<button class="chip' + (j === i ? ' on' : '') + '" type="button" aria-pressed="' + (j === i) + '" data-i="' + j + '">GAME ' + (n + 1) + '</button>'; }).join('');
-    $('mdet').innerHTML = '<span>' + (D.tournament || 'Worlds 2026') + '</span><span class="dot">&middot;</span><span>' + (stageOf(g.start) || g.date) + '</span>' + (g.bo ? '<span class="bo">BO' + g.bo + '</span>' : '');
+    $('mdet').innerHTML = '<span>' + (g.tour || D.tournament || 'Worlds 2026') + '</span><span class="dot">&middot;</span><span>' + (g.stage || stageOf(g.start) || g.date) + '</span>' + (g.bo ? '<span class="bo">BO' + g.bo + '</span>' : '');
     Array.prototype.forEach.call(box.querySelectorAll('button.chip'), function (b) { b.addEventListener('click', function () { render(+b.getAttribute('data-i')); }); });
+  }
+
+  // Games from other events (MSI, First Stand, domestic leagues) come from the Oracle's Elixir data files: game.html#<gameid>@<LEAGUE>
+  function loadOE(gid, lgc) {
+    var J = function (u) { return fetch(u).then(function (r) { if (!r.ok) throw new Error(u); return r.json(); }); };
+    var f = lgc.replace(/[^A-Za-z0-9_-]/g, '_');
+    return Promise.all([J('data/meta.json'), J('data/lg-' + f + '.json'), J('data/champs.json').catch(function () { return {}; }), J('data/logos.json').catch(function () { return {}; })]).then(function (r) {
+      var meta = r[0], L = r[1], G = L.games, R = L.rows, T = L.teams, ROLE = ['Top', 'Jungle', 'Mid', 'Bot', 'Support'];
+      Object.keys(r[2]).forEach(function (k) { D.icons[k] = r[2][k]; }); Object.keys(r[3]).forEach(function (k) { D.logos[k] = r[3][k]; });
+      var gi = G.id.indexOf(gid); if (gi < 0) throw new Error('game not found');
+      var tm = function (t) { return t >= 0 ? meta.teams[t] : ['?', '?']; };
+      var ts = function (i) { return Date.parse(G.d[i].replace(' ', 'T') + ':00Z'); };
+      // the series: same two teams, games within 12 hours of each other
+      var key = function (i) { var a = G.bt[i], b = G.rt[i]; return Math.min(a, b) + '|' + Math.max(a, b); };
+      var ids = G.id.map(function (_, i) { return i; }).filter(function (i) { return key(i) === key(gi); }).sort(function (a, b) { return ts(a) - ts(b); });
+      var at = ids.indexOf(gi), lo = at, hi2 = at;
+      while (lo > 0 && ts(ids[lo]) - ts(ids[lo - 1]) < 12 * 36e5) lo--;
+      while (hi2 < ids.length - 1 && ts(ids[hi2 + 1]) - ts(ids[hi2]) < 12 * 36e5) hi2++;
+      var ser = ids.slice(lo, hi2 + 1);
+      var tix = {}, rix = {};
+      T.g.forEach(function (g, j) { (tix[g] = tix[g] || {})[T.s[j]] = j; });
+      R.g.forEach(function (g, j) { ((rix[g] = rix[g] || {})[R.s[j]] = rix[g][R.s[j]] || []).push(j); });
+      var LGN = ({WLDs: 'Worlds', MSI: 'MSI', FST: 'First Stand', EWC: 'Esports World Cup'})[lgc] || lgc;
+      var maxW = 0, wins = {};
+      ser.forEach(function (i) { var w = G.bw[i] === 1 ? G.bt[i] : G.rt[i]; wins[w] = (wins[w] || 0) + 1; maxW = Math.max(maxW, wins[w]); });
+      var played = ser.length, bo = maxW >= 3 ? 5 : (played > 1 ? 3 : 1);
+      D.games = ser.map(function (i, n) {
+        var teams = [0, 1].map(function (sd) {
+          var tj = tix[i] ? tix[i][sd] : null, ps = (rix[i] && rix[i][sd]) || [], c = tm(tj != null ? T.t[tj] : (sd ? G.rt[i] : G.bt[i]));
+          var sum = function (k) { return ps.reduce(function (a, j) { return a + (R[k][j] || 0); }, 0); };
+          var pl = ps.slice().sort(function (a, b) { return R.pos[a] - R.pos[b]; }).map(function (j) { var ch = R.c[j] >= 0 ? meta.champs[R.c[j]] : ''; return { role: ROLE[R.pos[j]], name: meta.players[R.p[j]], champ: ch, ic: ch, k: R.k[j] || 0, d: R.d[j] || 0, a: R.a[j] || 0, dmg: R.dmg[j] || 0, cs: R.cs[j] || 0, gold: R.gold[j] || 0 }; });
+          while (pl.length < 5) pl.push({ role: ROLE[pl.length], name: '-', champ: '', ic: '', k: 0, d: 0, a: 0, dmg: 0, cs: 0, gold: 0 });
+          var g = function (k) { return tj != null ? (T[k][tj] || 0) : 0; };
+          return { code: c[1], name: c[0], side: sd ? 'Red' : 'Blue', win: g('w'), k: sum('k'), d: sum('d'), a: sum('a'), gold: g('gold') || sum('gold'), towers: g('tw'), inh: 0, fb: g('fb'), ft: g('ft'), grubs: g('gr'), heralds: g('he'), elders: 0, barons: g('ba'),
+            drakes: [['dragon', g('dr')]], oe: 1, bans: ((tj != null ? T.bans[tj] : []) || []).map(function (b) { var ch = b >= 0 ? meta.champs[b] : ''; return { c: ch, ic: ch }; }), players: pl, gd15: sum('gd') };
+        });
+        var len = Math.round(G.len[i]), gd15 = teams[0].gd15, endd = teams[0].gold - teams[1].gold, gold = [[0, 0]];
+        if (gd15 != null && len / 60 > 15) gold.push([15, gd15]);
+        gold.push([len / 60, endd]);
+        var dt = new Date(ts(i));
+        return { id: G.id[i], patch: G.pt[i] >= 0 ? meta.patches[G.pt[i]] : '', date: dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' }), start: G.d[i], len: len, teams: teams, gold: gold, n: n + 1, sid: 0, bo: bo,
+          tour: LGN + ' ' + G.y[i], stage: ['LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'].indexOf(lgc) >= 0 ? (G.po[i] ? 'Playoffs' : 'Regular season') : dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' }) };
+      });
+      var idx = ser.indexOf(gi); render(idx < 0 ? 0 : idx);
+    }).catch(function (e) { console.error(e); $('score').innerHTML = '<div style="padding:28px;color:var(--muted)">This game is not available.</div>'; });
   }
   var hs = ''; try { hs = decodeURIComponent(location.hash.slice(1)).toUpperCase().split('-'); } catch (e) {}
   var hi = 0; D.games.forEach(function (g, j) { var c = [g.teams[0].code, g.teams[1].code]; if (hs.length === 2 && c.indexOf(hs[0]) > -1 && c.indexOf(hs[1]) > -1) hi = j; });
@@ -409,7 +455,8 @@ html { scroll-padding-top: 84px; }
   D.games.forEach(function (g, j) { if (g.id === hraw) hi = j; });
   // One page per match: a game that belongs to a Riot match opens on the match page (match.html), everything else is shown here.
   var LV = location.hash.match(/^#riot\/(\d+)\/(\d+)/);
-  if (LV) location.replace('match.html#' + LV[1] + '/g/' + LV[2]);
+  if (hraw.lastIndexOf('@') > 0) loadOE(hraw.slice(0, hraw.lastIndexOf('@')), hraw.slice(hraw.lastIndexOf('@') + 1));
+  else if (LV) location.replace('match.html#' + LV[1] + '/g/' + LV[2]);
   else if (location.hash.length > 1 && D.games[hi] && D.games[hi].mid) location.replace('match.html#' + D.games[hi].mid + '/g/' + encodeURIComponent(D.games[hi].id));
   else render(hi);
   var root = document.documentElement, btn = $('theme');

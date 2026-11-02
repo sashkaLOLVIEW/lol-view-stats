@@ -523,14 +523,14 @@ html { scroll-padding-top: 84px; }
     var HR = HG.map(function (g) {
       var o = OG[g.gid + '|' + g.role + '|' + g.opp], len = Math.round(g.gl * 60), mm = Math.floor(len / 60), ss = ('0' + (len % 60)).slice(-2), kp = g.tk ? Math.round((g.k + g.a) / g.tk * 100) : null;
       var dm = /^\d{4}-(\d{2})-(\d{2})/.exec(g.date || ''), dt = dm ? new Date(2026, +dm[1] - 1, +dm[2]).toLocaleDateString('en-GB', {day: 'numeric', month: 'short'}) : '';
-      return (g.lg ? '<div class="gr gm">' : '<a class="gr gm" href="' + U.game + '#' + g.gid + '">') + '<div class="rl"><span class="res ' + (g.win ? 'w' : 'l') + '">' + (g.win ? 'VICTORY' : 'DEFEAT') + '</span><div class="gt">' + mm + ':' + ss + '</div></div>'
+      return '<a class="gr gm" href="' + (g.lg ? 'game.html#' + encodeURIComponent(g.gid) + '@' + g.lg : U.game + '#' + g.gid) + '">' + '<div class="rl"><span class="res ' + (g.win ? 'w' : 'l') + '">' + (g.win ? 'VICTORY' : 'DEFEAT') + '</span><div class="gt">' + mm + ':' + ss + '</div></div>'
         + '<div><div class="t"><span class="pt">' + gicon(g.ic, g.champ, 'cm') + '<span>' + g.champ + '</span></span> <span class="vs">vs ' + logo(g.opp, 16) + ' ' + (o ? o.n : g.opp) + (o ? ' ' + gicon(o.g.ic, o.g.champ, 'cm') : '') + '</span></div>' + '<div class="ld">' + itrow(g.it, rnrow(g)) + '</div></div>'
         + '<div class="gs"><div class="c"><div class="top"><b>' + g.k + '</b><i>/</i><b>' + g.d + '</b><i>/</i><b>' + g.a + '</b></div><div class="sub">' + ((g.k + g.a) / Math.max(1, g.d)).toFixed(2) + ' KDA</div></div>'
         + '<div class="c"><div class="top"><b>' + Math.round(g.cs) + '</b> CS</div><div class="sub">' + (g.cs / g.gl).toFixed(1) + ' CS/M</div></div>'
         + '<div class="c"><div class="top"><b>' + (kp == null ? '-' : kp + '%') + '</b></div><div class="sub">KP%</div></div>'
         + '<div class="c"><div class="top"><b>' + (g.ds == null ? '-' : (g.ds * 100).toFixed(1) + '%') + '</b></div><div class="sub">DMG%</div></div>'
         + '<div class="c"><div class="top"><b>' + (g.gd == null ? '-' : (g.gd > 0 ? '+' : '') + Math.round(g.gd)) + '</b></div><div class="sub">GD@15</div></div></div>'
-        + '<div class="r">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '">' + (LVF.evIcon(g.lg, 22) || '<b style="font-size:11px;letter-spacing:.04em">' + LVF.lname(g.lg).replace(' 2026', '') + '</b>') + '</span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<div class="pv">' + (g.pt ? 'Patch ' + g.pt : '') + '</div></div>' + (g.lg ? '</div>' : '</a>'); });
+        + '<div class="r">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '">' + (LVF.evIcon(g.lg, 22) || '<b style="font-size:11px;letter-spacing:.04em">' + LVF.lname(g.lg).replace(' 2026', '') + '</b>') + '</span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<div class="pv">' + (g.pt ? 'Patch ' + g.pt : '') + '</div></div>' + '</a>'; });
     var hh = '', hi = 0;
     while (hi < HG.length) {
       var sid = HG[hi]._sid, hj = hi; while (hj < HG.length && HG[hj]._sid === sid) hj++;

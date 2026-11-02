@@ -359,12 +359,12 @@ html { scroll-padding-top: 84px; }
     var ok = function (g) { var og = (D.teams[g.opp] ? D.teams[g.opp].games : []).filter(function (x) { return x.gid === g.gid; })[0]; return og ? og.k : 0; };
     $('hist').innerHTML = T.games.map(function (g) {
       var d = gde(g);
-      return (g.lg ? '<div class="hrow">' : '<a class="hrow" href="game.html#' + g.gid + '">') + '<span class="res' + (g.win ? ' w' : ' l') + '">' + (g.win ? 'WIN' : 'LOSS') + '</span>'
+      return '<a class="hrow" href="game.html#' + (g.lg ? encodeURIComponent(g.gid) + '@' + g.lg : g.gid) + '">' + '<span class="res' + (g.win ? ' w' : ' l') + '">' + (g.win ? 'WIN' : 'LOSS') + '</span>'
         + '<span class="op">' + logo(g.opp, 24) + '<b>' + g.opp + '</b><span>' + g.date + '</span></span>'
         + '<span class="m"><img class="mi" src="' + KI + '" alt="">' + Math.round(g.k) + '<span class="vs">vs</span>' + Math.round(ok(g)) + '</span>'
         + '<span class="m">' + CL + fmtT(g.gl) + '</span>'
         + '<span class="m gdv ' + (d > 0 ? 'up' : d < 0 ? 'dn' : '') + '"><img class="mi" src="' + GI + '" alt="">' + (d > 0 ? '+' : d < 0 ? '\u2212' : '') + Math.abs(d).toLocaleString('en-US') + '</span>'
-        + '<span class="rr">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '">' + (LVF.evIcon(g.lg, 22) || '<b style="font-size:11px">' + LVF.lname(g.lg).replace(' 2026', '') + '</b>') + '</span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<span class="pv">' + (g.pt ? 'Patch ' + g.pt : '') + '</span></span>' + (g.lg ? '</div>' : '</a>');
+        + '<span class="rr">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '">' + (LVF.evIcon(g.lg, 22) || '<b style="font-size:11px">' + LVF.lname(g.lg).replace(' 2026', '') + '</b>') + '</span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<span class="pv">' + (g.pt ? 'Patch ' + g.pt : '') + '</span></span>' + '</a>';
     }).join('');
     (function () {
       var hs = $('hist'), cards = [].slice.call(hs.querySelectorAll('.hrow')), shown = 12, bt = document.createElement('button');
