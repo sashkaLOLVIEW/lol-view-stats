@@ -175,6 +175,11 @@ h2 svg { flex: none; }
 .tp .rgb:hover, .tp .rgdd.open .rgb { border-color: var(--muted); }
 .tp .rgb .rgt { flex: 1; text-align: left; } .tp .rgb svg.cv { width: 9px; height: 9px; margin-left: auto; color: var(--muted); transition: transform .15s; } .tp .rgdd.open .rgb svg.cv { transform: rotate(180deg); }
 .tp .rgi { display: inline-grid; place-items: center; width: 18px; height: 18px; flex: none; } .tp .rgi svg, .tp .rgi img { display: block; width: 18px; height: 18px; object-fit: contain; }
+.tp .rgm button { white-space: nowrap; }
+.tp .rgi img.wi-l { display: none; } .tp .rgi img.wi-d { display: block; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .tp .rgi img.wi-l { display: block; } :root:not([data-theme="dark"]) .tp .rgi img.wi-d { display: none; } }
+:root[data-theme="light"] .tp .rgi img.wi-l { display: block; } :root[data-theme="light"] .tp .rgi img.wi-d { display: none; }
+:root[data-theme="dark"] .tp .rgi img.wi-l { display: none; } :root[data-theme="dark"] .tp .rgi img.wi-d { display: block; }
 .tp .rgi img.mi { filter: none; }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .tp .rgi img.mi { filter: brightness(.22); } }
 :root[data-theme="light"] .tp .rgi img.mi { filter: brightness(.22); } :root[data-theme="dark"] .tp .rgi img.mi { filter: none; }
@@ -321,6 +326,7 @@ img.wi-l { display: none; } img.wi-d { display: block; }
 .more svg { transition: transform .15s; } .more.open svg { transform: rotate(180deg); }
 @media (prefers-reduced-motion: reduce) { .more svg { transition: none; } }
 .crow .cp { position: sticky; left: 15px; z-index: 2; display: flex; align-items: center; align-self: stretch; background: inherit; }
+#lvf { display: none !important; }   /* the filter bar still drives the data; Top Performers picks the event in its own dropdown */
 .crow { --rb: var(--surface); } .crow:nth-child(even) { --rb: var(--stripe); }
 .crow .cp::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: -15px; right: -30px; background: linear-gradient(to right, var(--rb) 0, var(--rb) calc(100% - 30px), color-mix(in srgb, var(--rb) 0%, transparent) 100%); }
 .crow .rk { position: relative; z-index: 3; }
@@ -747,14 +753,9 @@ html { scroll-padding-top: 84px; }
   }
   renderBoard();
   var WD0 = WD, CH0 = CHAMPS, iconsP = null;
-  function setScope(ds) {
-    WD = ds ? LVF.wd(ds) : WD0; $('tp-rg').style.display = ds ? 'none' : '';
-    baseOrder = champRole === 'All' ? WD.champsAll.slice() : (WD.cbr[champRole] || []).slice(); renderBoard(); if (window.__rtI) window.__rtI();
-  }
-  if (window.LVF) LVF.onChange(function (ds) {
-    if (!ds) { CHAMPS = CH0; setScope(null); return; }
-    (iconsP = iconsP || LVF.icons().catch(function () { return {}; })).then(function (ic) { CHAMPS = Object.assign({}, CH0, ic); setScope(ds); });
-  });
+  var WDTP = WD0;   // data behind Top Performers (the event picked in its dropdown); the rest of the page stays on Worlds
+  function setScope(ds) { WDTP = ds ? LVF.wd(ds) : WD0; if (window.__rtI) window.__rtI(); }
+  if (window.LVF) LVF.onChange(function (ds) { setScope(ds); });
   $('more').addEventListener('click', function () { expanded = !expanded; renderBoard(); });
   $('roles').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
@@ -793,11 +794,11 @@ html { scroll-padding-top: 84px; }
     var cards = [['top', 'Top'], ['jungle', 'Jungle'], ['mid', 'Mid'], ['bot', 'Bot'], ['support', 'Support']];
     var ROLES = ['Top', 'Jungle', 'Mid', 'Bot', 'Support'], KEYS = { Top: 'top', Jungle: 'jungle', Mid: 'mid', Bot: 'bot', Support: 'support' };
     var sg = function (v) { return (v > 0 ? '+' : '') + Math.round(v).toLocaleString('en-US'); };
-    var RGL = ['Global', 'LCK', 'LPL', 'LEC', 'LCS', 'CBLOL', 'LCP'], region = 'Global', TRG = {};
+    var RGL = ['Global', 'MSI', 'FST', 'EWC', 'LCK', 'LPL', 'LEC', 'LCS', 'CBLOL', 'LCP'], INTL = { MSI: 'MSI', FST: 'First Stand', EWC: 'Esports World Cup' }, region = 'Global', TRG = {};
     rank.forEach(function (x) { TRG[x[2]] = x[1]; });
-    var rgIcon = function (g) { if (g === 'Global') return worlds(18); var r = RG[g]; return r ? '<img' + (r[1] ? ' class="mi"' : '') + ' src="' + r[0] + '" alt="">' : ''; }, rgName = function (g) { return g === 'Global' ? 'Worlds' : g; };
-    var inRegion = function (r) { return region === 'Global' || (window.LVF && !LVF.isDefault()) || TRG[r.t] === region; };
-    var byRoleAll = function (role) { return WD.players.filter(function (r) { return r.r === role; }).sort(function (a, b) { return b.rt - a.rt || b.kda - a.kda; }); };
+    var rgIcon = function (g) { if (g === 'Global') return worlds(18); if (INTL[g]) return (window.LVF && LVF.evIcon(g, 18)) || '<b style="font-size:10px;letter-spacing:.04em">' + g + '</b>'; var r = RG[g]; return r ? '<img' + (r[1] ? ' class="mi"' : '') + ' src="' + r[0] + '" alt="">' : ''; }, rgName = function (g) { return g === 'Global' ? 'Worlds' : INTL[g] || g; };
+    var inRegion = function (r) { return region === 'Global' || INTL[region] || TRG[r.t] === region; };
+    var byRoleAll = function (role) { return WDTP.players.filter(function (r) { return r.r === role; }).sort(function (a, b) { return b.rt - a.rt || b.kda - a.kda; }); };
     var byRole = function (role) { return byRoleAll(role).filter(inRegion); };
     var rankIn = function (list, key, v) { var n = 1; list.forEach(function (r) { if (r[key] > v + 1e-9) n++; }); return n; };
     var cardData = function (r, list) {
@@ -809,7 +810,7 @@ html { scroll-padding-top: 84px; }
       var cards = sel === 'All'
         ? ROLES.map(function (role) { var l = byRole(role); return l.length ? cardData(l[0], byRoleAll(role)) : null; }).filter(Boolean)
         : byRole(sel).slice(0, 5).map(function (r) { return cardData(r, byRoleAll(sel)); });
-      if (!cards.length) { $('tp-cards').innerHTML = '<div class="tp-empty">No players ' + (window.LVF && !LVF.isDefault() ? 'match these filters.' : 'from ' + (region === 'Global' ? 'Worlds' : region) + ' at this event yet.') + '</div>'; return; }
+      if (!cards.length) { $('tp-cards').innerHTML = '<div class="tp-empty">No players ' + (INTL[region] ? 'in ' + INTL[region] + ' yet.' : 'from ' + (region === 'Global' ? 'Worlds' : region) + ' at this event yet.') + '</div>'; return; }
       $('tp-cards').innerHTML = cards.map(function (c, i) {
         var face = FACESF[c.p] ? '<span class="tp-portrait has"><img src="' + FACESF[c.p] + '" alt=""></span>' : '<span class="tp-portrait"></span>';
         return '<article class="tp-card"><div class="tp-card-hd">' + ic[KEYS[c.role]].replace('width="16" height="16"', 'width="12" height="12"') + c.role + (sel === 'All' ? '' : ' #' + (i + 1)) + '</div>' +
@@ -828,7 +829,7 @@ html { scroll-padding-top: 84px; }
     $('tp-rg').addEventListener('click', function (e) {
       e.stopPropagation();
       var o = e.target.closest('button[data-g]');
-      if (o) { region = o.getAttribute('data-g'); $('tp-rg').classList.remove('open'); drawRg(); renderTop(curSel); return; }
+      if (o) { region = o.getAttribute('data-g'); $('tp-rg').classList.remove('open'); drawRg(); renderTop(curSel); if (window.LVF) LVF.loadMeta().then(function () { LVF.set({ league: INTL[region] ? region : 'WLDs', split: 'All', stage: 'All', year: 'All' }); }); return; }
       if (e.target.closest('.rgb')) { $('tp-rg').classList.toggle('open'); drawRg(); }
     });
     document.addEventListener('click', function () { if ($('tp-rg').classList.contains('open')) { $('tp-rg').classList.remove('open'); drawRg(); } });
