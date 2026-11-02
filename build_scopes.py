@@ -35,12 +35,14 @@ def match_z(df):
     return {(g, n): v for g, n, v in zip(p.gameid, p[k], p.z_obs) if pd.notna(v)}
 
 
-def build(csv, out_dir, code_of, icons_fn):
+def build(csv, out_dir, code_of, icons_fn, leagues=None):
     df = pd.read_csv(csv, low_memory=False)
     df["date"] = pd.to_datetime(df["date"])
     df = df[df.gameid.notna()].copy()
+    if leagues: df = df[df.league.isin(leagues)].copy()
     df["split"] = df["split"].fillna("")
-    out_dir = Path(out_dir); out_dir.mkdir(parents=True, exist_ok=True)
+    import shutil
+    out_dir = Path(out_dir); shutil.rmtree(out_dir, ignore_errors=True); out_dir.mkdir(parents=True, exist_ok=True)
     z = match_z(df)
     zkey = "playerid" if "playerid" in df else "playername"
 

@@ -35,6 +35,7 @@ CODE = {"Gen.G": "GEN", "Invictus Gaming": "IG", "Hanwha Life Esports": "HLE", "
         "Fnatic": "FNC", "GiantX": "GX", "Natus Vincere": "NAVI", "SK Gaming": "SK", "Shifters": "SHFT", "Team Heretics": "TH", "Team Vitality": "VIT",
         "EDward Gaming": "EDG", "JD Gaming": "JDG", "LGD Gaming": "LGD", "LNG Esports": "LNG", "Ninjas in Pyjamas": "NIP", "Oh My God": "OMG",
         "Team WE": "WE", "ThunderTalk Gaming": "TT", "Ultra Prime": "UP", "Weibo Gaming": "WBG"}
+FILTER_LEAGUES = ["LCK", "LPL", "LEC", "LCS", "LCP", "CBLOL", "MSI", "EWC", "FST", "WLDs", "WSCI", "WLRQ", "CCWS", "AC", "AM", "DCGI", "DCup"]   # leagues offered in the filter bar: tier 1 + international events
 TIER1_LEAGUES = ["LCK", "LPL", "LEC", "LCS", "LCP", "CBLOL"]   # which leagues count as tier 1 for the Power Rankings
 RANK_MIN_GAMES = 20          # a team needs this many games in those leagues this year to be ranked (58 teams on today's data)
 RANK_CHANGE_DAYS = 7         # the up/down arrows compare with the ranking this many days ago
@@ -811,7 +812,7 @@ def main(csv):
         if c not in _ic:
             k = champ_key(c); _ic[c] = champ_icon(k, 68, 80) if k else None
         return _ic[c]
-    build_scopes.build(csv, out / "data", lambda n: CODE.get(NAME_FIX.get(n, n)) or re.sub(r"[^A-Z0-9]", "", "".join(x[0] for x in n.split()).upper())[:4] or n[:3].upper(), _icon)
+    build_scopes.build(csv, out / "data", lambda n: CODE.get(NAME_FIX.get(n, n)) or re.sub(r"[^A-Z0-9]", "", "".join(x[0] for x in n.split()).upper())[:4] or n[:3].upper(), _icon, FILTER_LEAGUES)
     wr(out / "data" / "logos.json", json.dumps(logos_all))
     if (ROOT / "site" / "filters.js").exists(): wr(out / "filters.js", rd("site/filters.js"))
 
