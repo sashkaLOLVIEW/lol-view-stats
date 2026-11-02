@@ -747,6 +747,9 @@ def main(csv):
     # data pages
     for fn, val in (("game", GD), ("player", PD), ("team", {k: v for k, v in TD.items() if k != "icons"}), ("champion", CD)):
         s = rd("site/%s.html" % fn); s = jreplace(s, "D", val)
+        if fn == "player":
+            try: s = jreplace(s, "BD", {k: v for k, v in json.loads((ROOT / "config" / "badges.json").read_text(encoding="utf-8")).items() if k in ("defs", "awards")})
+            except Exception as e: print("  badges skipped:", e)
         s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / (fn + ".html"), stamp(s))
     wr(out / "live-map.json", json.dumps(RIOT_MAP))
     pc = {}   # player on a champion (season): [games, wins, kda, cs/min, dmg/min, kp%, dmg share%, gd@15]

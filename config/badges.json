@@ -1,0 +1,9 @@
+{
+  "_note": "Badges shown on player profiles (bottom right of the header). Add a definition under defs, then list its id for a player under awards. Career-game counts are not in the Oracle's Elixir file (it only covers 2026), so awards are listed by hand. Faker is a placeholder example.",
+  "defs": {
+    "games1000": {"name": "1,000+ career games", "icon": "medal"}
+  },
+  "awards": {
+    "Faker": ["games1000"]
+  }
+}
