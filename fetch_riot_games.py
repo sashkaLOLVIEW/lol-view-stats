@@ -12,7 +12,7 @@ from pathlib import Path
 import fetch_items as FI
 
 OUT = FI.ROOT / "data" / "riot_games.json"
-FORMAT = 1
+FORMAT = 2   # 2: gold sampled every minute
 BUDGET = 300      # seconds of feed requests per run
 get, iso, fmt, floor10 = FI.get, FI.iso, FI.fmt, FI.floor10
 FEED, GW = FI.FEED, FI.GW
@@ -29,13 +29,13 @@ def fetch_game(game, e, bo, mid=None, teams_by_id=None):
     det = get(FEED + "/details/" + gid, startingTime=fmt(floor10(tend - dt.timedelta(seconds=30))))
     dpl = {p["participantId"]: p for p in (det.get("frames") or [{}])[-1].get("participants") or []}
     series = []
-    m = 5
+    m = 1
     while t0 + dt.timedelta(minutes=m) < tend - dt.timedelta(seconds=30):
         try:
             f = (get(FEED + "/window/" + gid, startingTime=fmt(floor10(t0 + dt.timedelta(minutes=m)))).get("frames") or [None])[0]
             if f: series.append([m, f["blueTeam"]["totalGold"] - f["redTeam"]["totalGold"]])
         except Exception: pass
-        m += 5; time.sleep(0.12)
+        m += 1; time.sleep(0.08)
     byid = teams_by_id or {t["id"]: t for t in e["match"]["teams"] if t.get("id")}   # the schedule feed has no team ids; getEventDetails does
     teams = []
     for side in ("blue", "red"):

@@ -692,6 +692,9 @@ def main(csv):
     for g_ in GD["games"]:
         m_ = (_rg.get(_rev.get(g_["id"], g_["id"])) or {}).get("mid")
         if m_: g_["mid"] = m_    # Riot match id: lets the game page link to the series Overview and the other games on the live page
+        _rgm = _rg.get(_rev.get(g_["id"], g_["id"])) or {}
+        if len(_rgm.get("gold") or []) > 6 and _rgm.get("v") == 2 and g_["gold"] != _rgm["gold"]:
+            g_["gold"] = _rgm["gold"] + [g_["gold"][-1]]    # 1-minute Riot series, closed with the OE final diff
     RK, RKUPD, RKTS = build_rankings(csv); HAS = {c: 1 for c in TD['teams']}
 
     FACES = {p["name"]: p["face"] for p in PD["players"].values() if p["face"]}
