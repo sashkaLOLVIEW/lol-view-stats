@@ -100,7 +100,7 @@ def champ_icon(key, size, q):
 # ----------------------------------------------------------------------------------------------
 def load_event(csv):
     df = pd.read_csv(csv, low_memory=False)
-    df = df[(df.league == LEAGUE) & (df.date >= MAIN_START)].copy()
+    df = df[(df.league == LEAGUE) & (df.date >= MAIN_START) & (df.year == 2026)].copy()
     df["teamname"] = df["teamname"].replace(NAME_FIX)
     return df
 
@@ -517,8 +517,8 @@ def export_oe_items(csv, out_dir):
     norm = lambda x: ALIAS.get(re.sub(r"[^a-z]", "", str(x).lower()), re.sub(r"[^a-z]", "", str(x).lower()))
     byday = {}
     for r in recs: byday.setdefault(r["start"][:10], []).append(r)
-    df = pd.read_csv(csv, low_memory=False, usecols=["gameid", "league", "date", "game", "position", "side", "champion", "datacompleteness"])
-    df = df[(df.gameid.notna()) & (df.league != LEAGUE) & (df.position != "team")]
+    df = pd.read_csv(csv, low_memory=False, usecols=["gameid", "league", "year", "date", "game", "position", "side", "champion", "datacompleteness"])
+    df = df[(df.gameid.notna()) & (df.league != LEAGUE) & (df.position != "team") & (df.year == 2026)]
     df["date"] = pd.to_datetime(df["date"])
     POSL = ["top", "jng", "mid", "bot", "sup"]
     ids_i, ids_r, per, hit, tot = set(), [], {}, 0, 0
