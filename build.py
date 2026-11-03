@@ -445,7 +445,7 @@ def item_assets(ids):
     path = ROOT / "data" / "item_icons.json"
     try: cache = json.loads(path.read_text(encoding="utf-8"))
     except Exception: cache = {}
-    need = [str(i) for i in sorted(set(ids)) if str(i) not in cache or len(cache[str(i)]) < 4]
+    need = [str(i) for i in sorted(set(ids)) if str(i) not in cache or len(cache[str(i)]) < 5]
     if need:
         try:
             vers = requests.get("https://ddragon.leagueoflegends.com/api/versions.json", timeout=30).json()
@@ -454,11 +454,12 @@ def item_assets(ids):
                 meta = items.get(i) or {}; tags = meta.get("tags") or []; gold = meta.get("gold") or {}
                 tr = int("Trinket" in tags or int(i) in TRINKETS)
                 cm = int(bool(gold.get("purchasable")) and not meta.get("into") and (gold.get("total") or 0) >= 2000 and not ({"Boots", "Consumable", "Trinket", "Lane", "Jungle"} & set(tags)))
-                if i in cache: cache[i] = list(cache[i][:2]) + [tr, cm]; continue
+                sq = int("quest" in str(meta.get("description") or "").lower() or "SupportQuest" in tags)      # support quest item or one of its upgrades
+                if i in cache: cache[i] = list(cache[i][:2]) + [tr, cm, sq]; continue
                 try:
                     r = requests.get("https://ddragon.leagueoflegends.com/cdn/%s/img/item/%s.png" % (vers[0], i), timeout=30); r.raise_for_status()
                     im = Image.open(io.BytesIO(r.content)).convert("RGBA"); im.thumbnail((36, 36))
-                    cache[i] = [meta.get("name", "Item " + i), b64webp(im, 78), tr, cm]
+                    cache[i] = [meta.get("name", "Item " + i), b64webp(im, 78), tr, cm, sq]
                 except Exception as ex: print("  no icon for item", i, "(%s)" % ex)
             path.parent.mkdir(exist_ok=True); path.write_text(json.dumps(cache, ensure_ascii=False))
         except Exception as ex: print("  item icons unavailable:", ex)
@@ -466,12 +467,12 @@ def item_assets(ids):
 
 TRINKETS = {3330, 3340, 3363, 3364}
 SUPPORT_ITEMS = {3850, 3851, 3853, 3854, 3855, 3857, 3858, 3859, 3860, 3862, 3863, 3864, 3865, 3866, 3867, 3869, 3870, 3871, 3876, 3877}   # support quest items and their upgrades
-def tidy_items(it, trset=TRINKETS):
+def tidy_items(it, trset=TRINKETS, sqset=frozenset()):
     """7 entries: up to 6 distinct items in the player's own slot order (0 = empty), then the trinket (0 = none). A support item (if held) is added as an 8th entry instead of pushing out a regular item."""
     seen, main, tr, sup = set(), [], [], []
     for i in it:
         if i in seen: continue
-        seen.add(i); (tr if i in trset else sup if i in SUPPORT_ITEMS else main).append(i)
+        seen.add(i); (tr if i in trset else sup if (i in SUPPORT_ITEMS or i in sqset) else main).append(i)
     if sup and len(main) < 6 and False: pass
     main = main[:6]
     return main + [0] * (6 - len(main)) + [tr[0] if tr else 0] + ([sup[-1]] if sup else [])
@@ -521,6 +522,7 @@ def export_oe_items(csv, out_dir):
     df = df[(df.gameid.notna()) & (df.league != LEAGUE) & (df.position != "team") & (df.year == 2026)]
     df["date"] = pd.to_datetime(df["date"])
     POSL = ["top", "jng", "mid", "bot", "sup"]
+    _all = item_assets({i for r in recs for p in r["players"].values() for i in p["items"]}); SQ = frozenset(int(i) for i, x in _all.items() if len(x) > 4 and x[4])
     ids_i, ids_r, per, hit, tot = set(), [], {}, 0, 0
     raw = {}
     for gid, g in df.groupby("gameid"):
@@ -537,7 +539,7 @@ def export_oe_items(csv, out_dir):
             rp = r["players"].get(p.side.lower() + ":" + p.position)
             if not rp or p.position not in POSL: continue
             rn = rp.get("runes") or {}; pk = rn.get("perks") or []
-            it = tidy_items(rp["items"] + ([rp["tr0"]] if rp.get("tr0") and not any(i in TRINKETS for i in rp["items"]) else []))
+            it = tidy_items(rp["items"] + ([rp["tr0"]] if rp.get("tr0") and not any(i in TRINKETS for i in rp["items"]) else []), TRINKETS, SQ)
             pl["%d:%d" % (0 if p.side == "Blue" else 1, POSL.index(p.position))] = [it, [pk[0], rn.get("sub")] if pk and rn.get("sub") else None]
             ids_i.update(i for i in it if i); ids_r += [pk[0], rn.get("sub")] if pk and rn.get("sub") else []
         per.setdefault(lg, {})[gid] = {"p": pl, "g": r.get("gold") or []}
@@ -555,10 +557,15 @@ def attach_items(w, GD, PD, CD):
     sup_ = [(k, v[0]) for k, v in M.items() if k[2] == "sup" or str(k[2]).lower().startswith("sup")]
     print("  support players (raw item ids from Riot):", len(sup_))
     for k, v in sup_[:8]: print("    ", k, v, "| held back by tidy_items:", [i for i in v if i in SUPPORT_ITEMS])
+    _names = item_assets({i for _, v in sup_ for i in v})
+    from collections import Counter as _C2
+    print("  most common items on supports:", [(i, (_names.get(str(i)) or ['?'])[0], n) for i, n in _C2(i for _, v in sup_ for i in v).most_common(18)])
     print("  position keys seen:", sorted({str(k[2]) for k in M})[:8])
     icons = item_assets({i for v in raw.values() for i in v} | {i for v in M.values() for i in v[3]} | {i for p in ro for i in p["it"] if i})
     trset = TRINKETS | {int(i) for i, x in icons.items() if len(x) > 2 and x[2]}
-    IT = {k: tidy_items(v, trset) for k, v in raw.items()}
+    sqset = frozenset(int(i) for i, x in icons.items() if len(x) > 4 and x[4])
+    print("  support quest items found in the data:", sorted(sqset) or "none", "| names:", [icons[str(i)][0] for i in sorted(sqset)][:12])
+    IT = {k: tidy_items(v, trset, sqset) for k, v in raw.items()}
     RN = {k: v[1] for k, v in M.items() if v[1]}
     def fix_shards(pk):
         """Riot's feed lists a repeated stat shard only once (two adaptive force shards come as one), so such pages have 8 ids instead of 9. Put the repeat back."""
