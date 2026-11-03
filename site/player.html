@@ -204,8 +204,9 @@ img.lwi { }
 .gr .gs .top { font-size: 14px; color: var(--fg); } .gr .gs .top b { font-weight: 700; }
 .gr .gs .sub { font-size: 11.5px; color: var(--muted); margin-top: 2px; display: flex; align-items: center; justify-content: center; gap: 4px; }
 .gr.mhd { background: none; border: 1px solid transparent; height: 0; min-height: 0; padding: 0 14px; margin: 0 0 -14px; box-sizing: content-box; overflow: visible; pointer-events: none; }
-.gr.mhd .gs { position: relative; top: -41px; }
-.gr.mhd .gs .c { display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.hist .hhd { margin-bottom: 10px; } .hist #hist { margin-top: 4px; }
+.gr.mhd .gs { position: relative; top: -33px; }
+.gr.mhd .gs .c { display: flex; align-items: center; justify-content: center; font-size: 9.5px; font-weight: 700; letter-spacing: .01em; text-transform: uppercase; color: inherit; white-space: nowrap; }
 .gr.mhd .gs img { width: 14px; height: 14px; border-radius: 0; flex: none; object-fit: contain; }
 .gr .gs .sub img { width: 14px; height: 14px; border-radius: 0; flex: none; object-fit: contain; } .gr .gs .sub svg { flex: none; }
 .gr .gs .top { letter-spacing: -.02em; } .gr .gs .top i { font-style: normal; color: var(--dim); margin: 0 1px; }
@@ -544,7 +545,7 @@ html { scroll-padding-top: 84px; }
       hh += SER[sid].bo > 1 ? '<div class="ser">' + inner + '<span class="sb" title="Best of ' + SER[sid].bo + '">' + 'BO' + SER[sid].bo + '</span></div>' : inner;
       hi = hj;
     }
-    var mh = function (ik, t) { return '<div class="c">' + (ik === 'KP' ? KPI : LVF.evIcon(ik, 14)) + '<span>' + t + '</span></div>'; };
+    var mh = function (ik, t) { return '<div class="c">' + '<span>' + t + '</span></div>'; };
     $('hist').innerHTML = (hh ? '<div class="gr gm mhd"><div></div><div></div><div class="gs">' + mh('ICK', 'KDA') + mh('ICC', 'CS') + mh('KP', 'KP%') + mh('ICD', 'DMG%') + mh('ICG', 'Total GD') + '</div><div></div></div>' : '') + hh;
     $('radars').innerHTML = RAD.map(function (r) { return '<div class="rcard"><h3>' + r[0] + '</h3>' + radar(r[0], r[1], ag, P.role) + '</div>'; }).join('');
     (function () {
