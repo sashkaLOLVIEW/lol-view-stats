@@ -322,8 +322,8 @@ img.wi-l { display: none; } img.wi-d { display: block; }
 /* fixed top bar: solid page background behind the bar, gradient fading out from its bottom edge */
 html { scroll-padding-top: 84px; }
 .topbar { position: sticky; top: 0; z-index: 60; margin-top: -12px; padding-top: 12px; padding-bottom: 12px; margin-bottom: -12px; }
-.topbar::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: var(--bg); }
-.topbar::after { content: ""; position: absolute; z-index: -1; left: 50%; width: 100vw; transform: translateX(-50%); top: 100%; height: 40px; pointer-events: none; background: linear-gradient(to bottom, var(--bg), color-mix(in srgb, var(--bg) 0%, transparent)); }
+.topbar::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: color-mix(in srgb, var(--bg) 75%, transparent); }
+.topbar::after { content: ""; position: absolute; z-index: -1; left: 50%; width: 100vw; transform: translateX(-50%); top: 100%; height: 40px; pointer-events: none; background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 75%, transparent), color-mix(in srgb, var(--bg) 0%, transparent)); }
 #live-wrap[hidden] + .sec { margin-top: 0; }
 .smp { display: inline-block; height: 18px; line-height: 18px; padding: 0 7px; margin: 0 2px; border-radius: 4px; background: var(--pill); color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; vertical-align: 2px; }
 .res .score.vsx { font-size: 12px; font-weight: 700; letter-spacing: 0; }
