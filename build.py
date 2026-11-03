@@ -454,7 +454,7 @@ def item_assets(ids):
                 meta = items.get(i) or {}; tags = meta.get("tags") or []; gold = meta.get("gold") or {}
                 tr = int("Trinket" in tags or int(i) in TRINKETS)
                 cm = int(bool(gold.get("purchasable")) and not meta.get("into") and (gold.get("total") or 0) >= 2000 and not ({"Boots", "Consumable", "Trinket", "Lane", "Jungle"} & set(tags)))
-                sq = int("quest" in str(meta.get("description") or "").lower() or "SupportQuest" in tags)      # support quest item or one of its upgrades
+                sq = int("SupportQuest" in tags)      # support quest item or one of its upgrades (a text match on "quest" also caught the jungle pets, so tags only)
                 if i in cache: cache[i] = list(cache[i][:2]) + [tr, cm, sq]; continue
                 try:
                     r = requests.get("https://ddragon.leagueoflegends.com/cdn/%s/img/item/%s.png" % (vers[0], i), timeout=30); r.raise_for_status()
