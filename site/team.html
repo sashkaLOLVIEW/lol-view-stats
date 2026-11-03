@@ -135,6 +135,10 @@ img.wi-l { display: none; } img.wi-d { display: block; }
 .hrow .rr { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 72px; }
 .hrow .rr .pv { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; line-height: 1; }
 .hrow:hover { border-color: var(--muted); }
+.ser { position: relative; display: block; padding-right: 34px; }
+.ser .sb { position: absolute; top: 8px; bottom: 8px; right: 0; width: 22px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 5px; background: var(--surface-2); color: var(--muted); font-size: 10.5px; font-weight: 700; letter-spacing: .04em; writing-mode: vertical-rl; text-orientation: upright; pointer-events: none; }
+@media (max-width: 900px) { .ser .sb { display: none; } .ser { padding-right: 0; } }
+
 .hrow .res { font-size: 11px; font-weight: 700; letter-spacing: .04em; height: 20px; line-height: 20px; text-align: center; border-radius: 5px; background: var(--pill); color: var(--muted); }
 .hrow .res { background: none; font-weight: 800; letter-spacing: .06em; }
 .hrow .res.w { background: none; color: var(--green); }
@@ -358,7 +362,16 @@ html { scroll-padding-top: 84px; }
     var KI = "data:image/webp;base64,UklGRrgAAABXRUJQVlA4TKwAAAAvE8AEEAWDRpIUtX/T9XDwYCDCba1ta/KiG8SFLiU1h32yxn+yBbbJV2OpvxqXGdI9E5D+rmGigVFKIqYZMXCRiGks9WoRBxuJODgH08ONg4tGScQBLrLwALgorXBRkukBN/WMgYuSlS/0bmAzDRMlrQH+cgumnKVkbgMYrNO6zBGANiVBWLDyBeCQkgAIE60BgLN5EgBAGAGAvzwl3Q0LBuuUUtJtaNNQt/Bj", GI = "data:image/webp;base64,UklGRpYAAABXRUJQVlA4TIoAAAAvE8AEEAWDtpEcDX/S/rI3XwFEuK1tW1HezODaAZFr7LFD5lID8XRARhfE3gGxF+Du7nAnIPTXGDFlA1d3PQWahloTZleBQgPW5gW0j0gbN/aTHDhZFIqTMdCG+FRNfU5KRBMAe+jMAaAVWuqDDZ6eiFzUGHx4V0wGMNsIhEpyvJarn7mGPHnorwE=";
     var CL = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" class="mi2" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.5V8l2.4 1.6"/></svg>';
     var ok = function (g) { var og = (D.teams[g.opp] ? D.teams[g.opp].games : []).filter(function (x) { return x.gid === g.gid; })[0]; return og ? og.k : 0; };
-    $('hist').innerHTML = T.games.map(function (g) {
+    var kg = function (g) { return g.date + '|' + g.gid; };
+    var chr = T.games.slice().sort(function (a, b) { return kg(a) < kg(b) ? -1 : 1; }), SER = [], pv = null;
+    chr.forEach(function (g) {
+      var gap = pv ? (Date.parse(g.date) - Date.parse(pv.date)) / 864e5 : 0;
+      if (!pv || g.opp !== pv.opp || gap > 1) SER.push({ w: 0, l: 0, n: 0 });
+      var sr = SER[SER.length - 1]; g._sid = SER.length - 1; g.win ? sr.w++ : sr.l++; sr.n++; pv = g;
+    });
+    SER.forEach(function (sr) { sr.bo = Math.max(sr.w, sr.l) >= 3 ? 5 : sr.w === sr.l && sr.w === 1 ? 2 : sr.n > 1 ? 3 : 1; });
+    var HGT = chr.slice().reverse();
+    var HRT = HGT.map(function (g) {
       var d = gde(g);
       return '<a class="hrow" href="game.html#' + (g.lg ? encodeURIComponent(g.gid) + '@' + g.lg : g.gid) + '">' + '<span class="res' + (g.win ? ' w' : ' l') + '">' + (g.win ? 'WIN' : 'LOSS') + '</span>'
         + '<span class="op">' + logo(g.opp, 24) + '<b>' + g.opp + '</b><span>' + g.date + '</span></span>'
@@ -366,12 +379,20 @@ html { scroll-padding-top: 84px; }
         + '<span class="m">' + CL + fmtT(g.gl) + '</span>'
         + '<span class="m gdv ' + (d > 0 ? 'up' : d < 0 ? 'dn' : '') + '"><img class="mi" src="' + GI + '" alt="">' + (d > 0 ? '+' : d < 0 ? '\u2212' : '') + Math.abs(d).toLocaleString('en-US') + '</span>'
         + '<span class="rr">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '">' + (LVF.evIcon(g.lg, 22) || '<b style="font-size:11px">' + LVF.lname(g.lg).replace(' 2026', '') + '</b>') + '</span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<span class="pv">' + (g.pt ? 'Patch ' + g.pt : '') + '</span></span>' + '</a>';
-    }).join('');
+    });
+    var hh = '', hi = 0;
+    while (hi < HGT.length) {
+      var sid = HGT[hi]._sid, hj = hi; while (hj < HGT.length && HGT[hj]._sid === sid) hj++;
+      var inner = HRT.slice(hi, hj).join('');
+      hh += SER[sid].bo > 1 && hj - hi === SER[sid].n ? '<div class="ser">' + inner + '<span class="sb" title="Best of ' + SER[sid].bo + '">BO' + SER[sid].bo + '</span></div>' : inner;
+      hi = hj;
+    }
+    $('hist').innerHTML = hh;
     (function () {
       var hs = $('hist'), cards = [].slice.call(hs.querySelectorAll('.hrow')), shown = 12, bt = document.createElement('button');
       if (cards.length <= 12) return;
       bt.type = 'button'; bt.style.cssText = 'display:block;margin:12px auto 0;background:none;border:1px solid var(--line);border-radius:8px;color:var(--fg);font:inherit;font-size:12.5px;padding:8px 16px;cursor:pointer';
-      var ap = function () { cards.forEach(function (c, i) { c.style.display = i < shown ? '' : 'none'; }); bt.textContent = shown < cards.length ? 'Show more +' : 'Show less'; };
+      var ap = function () { cards.forEach(function (c, i) { c.style.display = i < shown ? '' : 'none'; }); [].slice.call(hs.querySelectorAll('.ser')).forEach(function (w) { w.style.display = [].some.call(w.querySelectorAll('.hrow'), function (c) { return c.style.display !== 'none'; }) ? '' : 'none'; }); bt.textContent = shown < cards.length ? 'Show more +' : 'Show less'; };
       bt.onclick = function () { shown = shown < cards.length ? Math.min(cards.length, shown + 12) : 12; ap(); };
       hs.appendChild(bt); ap();
     })();
