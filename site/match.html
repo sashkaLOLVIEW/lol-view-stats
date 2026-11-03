@@ -343,6 +343,7 @@ html { scroll-padding-top: 84px; }
 .mv .cell.l .items{flex-direction:row-reverse;}
 .mv .items span{width:24px; height:24px; border-radius:3px; background:var(--chip-bg); border:1px solid var(--line); overflow:hidden;}
 .mv .items img{display:block; width:100%; height:100%;}
+.mv .items span.sq{width:18px; height:18px; align-self:center;}
 .mv .runes{display:flex; flex-direction:column; gap:3px; flex:none;}
 .mv .runes span{width:20px; height:20px; border-radius:0; background:none; overflow:visible; display:block;}
 .mv .runes img{display:block; width:100%; height:100%; object-fit:contain;}
@@ -645,6 +646,7 @@ html { scroll-padding-top: 84px; }
     var mx = 0; A.players.concat(B.players).forEach(function (p) { mx = Math.max(mx, p.dmg); });
     var rnc = function (rn) { var m = D.runes; if (!m || !rn || !m[rn[0]] || !m[rn[1]]) return ''; return '<div class="rn"><img class="k" src="' + m[rn[0]][1] + '" alt="' + m[rn[0]][0] + '" title="' + m[rn[0]][0] + '"><img class="s" src="' + m[rn[1]][1] + '" alt="' + m[rn[1]][0] + '" title="' + m[rn[1]][0] + '"></div>'; };
     var TRK = {3340: 1, 3363: 1, 3364: 1};
+    var SUP = {3850: 1, 3851: 1, 3853: 1, 3854: 1, 3855: 1, 3857: 1, 3858: 1, 3859: 1, 3860: 1, 3862: 1, 3863: 1, 3864: 1, 3865: 1, 3866: 1, 3867: 1, 3869: 1, 3870: 1, 3871: 1, 3876: 1, 3877: 1};   // support quest items and their upgrades: shown in their own small slot after the trinket
     var itrow = function (it) { var m = D.items; if (!m || !it || !it.length) return ''; var o = '';
       for (var k = 0, kn = it.length > 7 ? 8 : 7; k < kn; k++) { var id = it[k], x = id ? m[id] : null; o += x ? (k >= 6 ? '<span class="trw"><img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '"></span>' : '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">') : '<i></i>'; }
       return '<div class="its">' + o + '</div>'; };
@@ -695,8 +697,8 @@ html { scroll-padding-top: 84px; }
         var players = pmd.map(function (pm, i) {
           var fp = ft.participants.filter(function (p) { return p.participantId === pm.participantId; })[0] || {}, dp = det.filter(function (p) { return p.participantId === pm.participantId; })[0] || {};
           ks += fp.kills || 0; ds += fp.deaths || 0; as += fp.assists || 0;
-          var seen = {}, it = [], tr = 0; (dp.items || []).forEach(function (id) { if (!id || seen[id]) return; seen[id] = 1; if (TRK[id]) tr = id; else it.push(id); });
-          it = it.slice(0, 6); while (it.length < 6) it.push(0); it.push(tr);
+          var seen = {}, it = [], tr = 0, sp = 0; (dp.items || []).forEach(function (id) { if (!id || seen[id]) return; seen[id] = 1; if (TRK[id]) tr = id; else if (SUP[id]) sp = id; else it.push(id); });
+          it = it.slice(0, 6); while (it.length < 6) it.push(0); it.push(tr); if (sp) it.push(sp);
           var pk = dp.perkMetadata || {}, nm = pm.summonerName, cut = tm.code + ' ';
           D.icons[pm.championId] = DDN + 'cdn/' + L.ver + '/img/champion/' + pm.championId + '.png';
           return { role: pm.role, name: nm.indexOf(cut) === 0 ? nm.slice(cut.length) : nm, champ: pm.championId, ic: pm.championId, k: fp.kills || 0, d: fp.deaths || 0, a: fp.assists || 0, dmg: dp.championDamageShare || 0, cs: fp.creepScore || 0, gold: fp.totalGold || 0, it: it, rn: pk.perks && pk.perks.length ? [pk.perks[0], pk.subStyleId] : null };
@@ -1231,14 +1233,17 @@ html { scroll-padding-top: 84px; }
     if (d.items && d.items.length) S.ik[pid] = d.items; else if (S.ik[pid]) d = Object.assign({}, d, { items: S.ik[pid] });
     if (d.perkMetadata && d.perkMetadata.perks && d.perkMetadata.perks.length) S.pk[pid] = d.perkMetadata; else if (S.pk[pid]) d = Object.assign({}, d, { perkMetadata: S.pk[pid] });
     var TRK = { 3340: 1, 3363: 1, 3364: 1, 3330: 1, 3341: 1 }, STK = { 2003: 1, 2010: 1, 2031: 1, 2033: 1, 2055: 1, 2138: 1, 2139: 1, 2140: 1 };
-    var items = [], trk = null, seen = {}, ih = "";
+    var SUPL = { 3850: 1, 3851: 1, 3853: 1, 3854: 1, 3855: 1, 3857: 1, 3858: 1, 3859: 1, 3860: 1, 3862: 1, 3863: 1, 3864: 1, 3865: 1, 3866: 1, 3867: 1, 3869: 1, 3870: 1, 3871: 1, 3876: 1, 3877: 1 };
+    var items = [], trk = null, sup = null, seen = {}, ih = "";
     (d.items || []).filter(Boolean).forEach(function (id) {
       if (TRK[id]) { trk = trk || id; return; }
+      if (SUPL[id]) { sup = id; return; }
       if (STK[id]) { if (seen[id]) return; seen[id] = 1; }   // stacked consumables take one slot
       items.push(id);
     });
     items = items.slice(0, 6); if (trk) items[6] = trk; else items.length = Math.min(items.length, 6);
     for (var k = 0; k < 7; k++) ih += "<span>" + (items[k] ? '<img src="' + DD + S.ver + "/img/item/" + items[k] + '.png" alt="" loading="lazy">' : "") + "</span>";
+    if (sup) ih += '<span class="sq"><img src="' + DD + S.ver + "/img/item/" + sup + '.png" alt="" loading="lazy"></span>';
     var pk = d.perkMetadata || {}, key = (pk.perks || [])[0];
     var kIcon = key && S.perkIcon[key], sIcon = pk.subStyleId && S.perkIcon["s" + pk.subStyleId];
     var rh = '<span>' + (kIcon ? '<img src="' + DD + "img/" + kIcon + '" alt="">' : "") + "</span><span>" + (sIcon ? '<img src="' + DD + "img/" + sIcon + '" alt="">' : "") + "</span>";
