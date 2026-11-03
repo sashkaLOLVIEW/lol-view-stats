@@ -8,7 +8,13 @@
   var meta = null, cache = {}, handlers = [], bar = null, busy = 0, cur = null;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var EI = /*EI*/{}/*EI*/;
-  var evIcon = function (id, size, fb) { var e = EI[id]; if (!e) return fb || ''; var t = lname(id).replace(' 2026', ''); return '<img class="wi-l" src="' + e.l + '" width="' + size + '" height="' + size + '" alt="' + t + '"><img class="wi-d" src="' + e.d + '" width="' + size + '" height="' + size + '" alt="' + t + '">'; };
+  var evIcon = function (id, size, fb) {
+    var e = EI[id]; if (!e) return fb || ''; var t = lname(id).replace(' 2026', ''), w = size, h = size;
+    if (e.ar > 1.3) { w = Math.round(size * 1.6); h = Math.round(w / e.ar * 10) / 10; }
+    var at = ' width="' + w + '" height="' + h + '" alt="' + t + '">';
+    return e.d ? '<img class="wi-l" src="' + e.l + '"' + at + '<img class="wi-d" src="' + e.d + '"' + at : '<img src="' + e.l + '"' + at;
+  };
+  var TROPHY = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v6a4 4 0 0 1-8 0z"/><path d="M8 6H4v1a4 4 0 0 0 4 4M16 6h4v1a4 4 0 0 1-4 4"/><path d="M12 14v4M8 20h8"/></svg>';
   var lname = function (id) { return id === 'ALL' ? 'All leagues' : (NAMES[id] || id) + (id === 'WLDs' ? ' 2026' : ''); };
 
   /* ---------- data ---------- */
@@ -176,7 +182,7 @@
 
   /* ---------- UI ---------- */
   var ENT = null;   // {kind, name}: on a player / team page only what that player or team took part in is offered
-  var PLACE = { 'player.html': ['after', '#hero'], 'team.html': ['prepend', '.tbody > .main'], 'champion.html': ['after', '.gh'], 'players.html': ['after', '.tp .tp-head'], 'index.html': ['after', '.tp .tp-head'], '': ['after', '.tp .tp-head'],
+  var PLACE = { 'player.html': ['prepend', '.body > section'], 'team.html': ['prepend', '.tbody > .main'], 'champion.html': ['after', '.gh'], 'players.html': ['after', '.tp .tp-head'], 'index.html': ['after', '.tp .tp-head'], '': ['after', '.tp .tp-head'],
     'champions.html': ['after', '#champions > h2, #champions > :first-child'], 'results.html': ['after', 'h2.sec'] };
   function css() {
     var s = document.createElement('style');
@@ -185,7 +191,7 @@
       '#lvf .fb small{color:var(--muted);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}#lvf .fb svg{color:var(--muted)}#lvf .fb.sel{border-color:var(--fg)}#lvf .fb.one{cursor:default}#lvf .fb.one svg{display:none}' +
       '#lvf .fm{display:none;position:absolute;left:0;top:calc(100% + 6px);min-width:100%;width:max-content;max-width:300px;max-height:340px;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:4px;box-shadow:0 12px 32px rgba(0,0,0,.35)}' +
       '#lvf .fd.open .fm{display:block}#lvf .fm button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--fg);font:inherit;font-size:12.5px;padding:7px 10px;border-radius:5px;cursor:pointer;white-space:nowrap}' +
-      '#lvf .fm button.sub{padding-left:22px;color:var(--muted)}#lvf .fm button.sub.on{color:var(--fg)}' +
+      '#lvf .fi{display:inline-grid;place-items:center;width:28px;height:18px;flex:none}#lvf .fi img{width:auto;height:auto;max-width:28px;max-height:18px}#lvf .fm button:has(.fi){display:flex;align-items:center;gap:8px}#lvf .fb .fi{margin-right:-2px}#lvf .fm button.sub{padding-left:46px;color:var(--muted)}#lvf .fm button.sub.on{color:var(--fg)}' +
       '#lvf .fm button:hover,#lvf .fm button.on{background:var(--surface-2)}#lvf .fm .gh{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);padding:8px 10px 4px}' +
       '#lvf .st{color:var(--muted);font-size:12px;margin-left:4px}#lvf .rs{background:none;border:0;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;text-decoration:underline;padding:0}';
     document.head.appendChild(s);
@@ -203,7 +209,7 @@
     var lgs = {}, spl = {}; Ty.forEach(function (t) { lgs[t[0]] = 1; if (t[2]) (spl[t[0]] = spl[t[0]] || {})[t[2]] = 1; });
     var ids = Object.keys(lgs), maj = MAJOR.filter(function (x) { return lgs[x]; }), rest = ids.filter(function (x) { return MAJOR.indexOf(x) < 0; }).sort(function (a, b) { return lname(a).localeCompare(lname(b)); });
     var tour = [];
-    if (ids.length > 1) tour.push(['ALL|All', 'All tournaments']);
+    if (ids.length > 1) tour.push(['ALL|All', 'All']);
     var add = function (l) { var sp = Object.keys(spl[l] || {}).sort(); tour.push([l + '|All', lname(l) + (sp.length > 1 ? ' (all splits)' : '')]); if (sp.length > 1) sp.forEach(function (x) { tour.push([l + '|' + x, lname(l) + ' · ' + x, 1]); }); };
     maj.concat(rest).forEach(add);
     var Tt = Ty.filter(function (t) { return (S.league === 'ALL' || t[0] === S.league) && (S.split === 'All' || t[2] === S.split); }), mask = 0; Tt.forEach(function (t) { mask |= t[3]; });
@@ -221,9 +227,16 @@
     if (S.stage !== 'All' && !(o.stage && o.stage.some(function (x) { return x[0] === S.stage; }))) set('stage', 'All');
     return c;
   }
+  function ico(k, x) {
+    if (k !== 'tour') return '';
+    var id = x[0].split('|')[0];
+    if (x[2]) return '';
+    return '<span class="fi">' + (id === 'ALL' ? TROPHY : evIcon(id, 18)) + '</span>';
+  }
   function dd(k, label, items, curv, one) {
-    return '<div class="fd" id="fd-' + k + '"><button type="button" class="fb' + (one ? ' one' : '') + '"><small>' + LBL[k] + '</small>' + label + chev + '</button>' + (one ? '' : '<div class="fm">' +
-      items.map(function (x) { return '<button type="button" data-k="' + k + '" data-v="' + x[0] + '"' + ((x[0] === curv ? ' class="on' + (x[2] ? ' sub' : '') + '"' : (x[2] ? ' class="sub"' : ''))) + '>' + x[1] + '</button>'; }).join('') + '</div>') + '</div>';
+    var cu = items.filter(function (x) { return x[0] === curv; })[0];
+    return '<div class="fd" id="fd-' + k + '"><button type="button" class="fb' + (one ? ' one' : '') + '">' + (cu ? ico(k, cu) : '') + label + chev + '</button>' + (one ? '' : '<div class="fm">' +
+      items.map(function (x) { return '<button type="button" data-k="' + k + '" data-v="' + x[0] + '"' + ((x[0] === curv ? ' class="on' + (x[2] ? ' sub' : '') + '"' : (x[2] ? ' class="sub"' : ''))) + '>' + ico(k, x) + x[1] + '</button>'; }).join('') + '</div>') + '</div>';
   }
   var LBL = { year: 'Year', tour: 'Tournament', stage: 'Stage' };
   function render(status) {

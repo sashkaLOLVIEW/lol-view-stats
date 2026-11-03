@@ -174,7 +174,7 @@ h2 svg { flex: none; }
 .tp .rgb { display: flex; align-items: center; gap: 8px; width: 132px; height: 32px; padding: 0 10px 0 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; color: var(--fg); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: border-color .15s; }
 .tp .rgb:hover, .tp .rgdd.open .rgb { border-color: var(--muted); }
 .tp .rgb .rgt { flex: 1; text-align: left; } .tp .rgb svg.cv { width: 9px; height: 9px; margin-left: auto; color: var(--muted); transition: transform .15s; } .tp .rgdd.open .rgb svg.cv { transform: rotate(180deg); }
-.tp .rgi { display: inline-grid; place-items: center; width: 18px; height: 18px; flex: none; } .tp .rgi svg, .tp .rgi img { display: block; width: 18px; height: 18px; object-fit: contain; }
+.tp .rgi { display: inline-grid; place-items: center; width: 28px; height: 18px; flex: none; } .tp .rgi svg, .tp .rgi img { display: block; max-width: 28px; max-height: 18px; width: auto; height: auto; object-fit: contain; } .tp .rgi svg { width: 18px; height: 18px; }
 .tp .rgm button { white-space: nowrap; } .tp .rgm { min-width: max-content; }
 .tp .rgi img.wi-l { display: none; } .tp .rgi img.wi-d { display: block; }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .tp .rgi img.wi-l { display: block; } :root:not([data-theme="dark"]) .tp .rgi img.wi-d { display: none; } }
