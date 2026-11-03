@@ -450,7 +450,7 @@ html { scroll-padding-top: 84px; }
   function render() {
     $('results').innerHTML = rank.map(function (r, i) { return [r, i + 1]; }).filter(function (x) { return cur === 'All' || x[0][1] === cur; }).map(function (x) {
       var r = x[0], n = x[1];
-      return '<div class="row"><span class="rk ' + (n < 4 ? 'r' + n : '') + '">' + n + '</span><div class="team"><span class="logo">' + lg(r[2]) + '</span><div class="grow">' + (hasTeam[r[2]] ? '<a class="name" href="team.html#' + r[2] + '">' + r[0] + '</a>' : '<span class="name">' + r[0] + '</span>') + '<div class="sub">' + r[1] + '</div></div></div><span class="rtg">' + r[4] + '</span>' + chgChip(r[3]) + '</div>';
+      return '<div class="row"><span class="rk ' + (n < 4 ? 'r' + n : '') + '">' + n + '</span><div class="team"><span class="logo">' + lg(r[2]) + '</span><div class="grow">' + (hasTeam[r[2]] ? '<a class="name" href="team.html#' + r[2] + '">' + r[0] + '</a>' : '<span class="name">' + r[0] + '</span>') + '<div class="sub">' + r[1] + '</div></div></div><span class="rtg"></span>' + chgChip(r[3]) + '</div>';
     }).join('') || '<div class="row" style="color:var(--muted);font-size:12px">No teams</div>';
   }
   render();
