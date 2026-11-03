@@ -606,7 +606,16 @@ def load_player_info():
             cur = info.setdefault(r["player"], {})
             if r.get("birthdate"): cur["bd"] = r["birthdate"].strip()
             if r.get("contract"): cur["contract"] = month_year(r["contract"])
+    p = ROOT / "config" / "player_country.csv"      # player,country  (country name or 2-letter code; wins over the automatic lookup)
+    if p.exists():
+        for r in pd.read_csv(p, dtype=str).fillna("").to_dict("records"):
+            if r.get("player") and r.get("country"): info.setdefault(r["player"], {})["cc"] = r["country"].strip()
     return info
+
+COUNTRY = {"south korea": "kr", "korea": "kr", "republic of korea": "kr", "china": "cn", "taiwan": "tw", "hong kong": "hk", "vietnam": "vn", "japan": "jp", "denmark": "dk", "sweden": "se", "norway": "no", "finland": "fi", "germany": "de", "france": "fr", "spain": "es", "portugal": "pt", "italy": "it", "poland": "pl", "netherlands": "nl", "belgium": "be", "united kingdom": "gb", "england": "gb", "ireland": "ie", "greece": "gr", "turkey": "tr", "romania": "ro", "bulgaria": "bg", "czech republic": "cz", "czechia": "cz", "slovenia": "si", "croatia": "hr", "serbia": "rs", "hungary": "hu", "austria": "at", "switzerland": "ch", "slovakia": "sk", "lithuania": "lt", "latvia": "lv", "estonia": "ee", "ukraine": "ua", "russia": "ru", "israel": "il", "united states": "us", "usa": "us", "canada": "ca", "brazil": "br", "argentina": "ar", "chile": "cl", "colombia": "co", "mexico": "mx", "peru": "pe", "uruguay": "uy", "venezuela": "ve", "australia": "au", "new zealand": "nz", "singapore": "sg", "malaysia": "my", "thailand": "th", "philippines": "ph", "indonesia": "id", "india": "in", "mongolia": "mn", "morocco": "ma", "tunisia": "tn", "egypt": "eg", "south africa": "za", "lebanon": "lb", "saudi arabia": "sa", "iceland": "is", "luxembourg": "lu", "macau": "mo", "puerto rico": "pr", "dominican republic": "do"}
+def iso2(v):
+    v = str(v or "").strip().lower()
+    return v if re.fullmatch(r"[a-z]{2}", v) else COUNTRY.get(v)
 
 # ----------------------------------------------------------------------------------------------
 # 4b. upcoming matches (from data/schedule.json, written by fetch_schedule.py)
@@ -751,6 +760,7 @@ def main(csv):
     for fn, val in (("game", GD), ("player", PD), ("team", {k: v for k, v in TD.items() if k != "icons"}), ("champion", CD)):
         s = rd("site/%s.html" % fn); s = jreplace(s, "D", val)
         if fn == "player":
+            s = jreplace(s, "CC", {n: iso2(v.get("cc")) for n, v in load_player_info().items() if iso2(v.get("cc"))})
             try: s = jreplace(s, "BD", {k: v for k, v in json.loads((ROOT / "config" / "badges.json").read_text(encoding="utf-8")).items() if k in ("defs", "awards")})
             except Exception as e: print("  badges skipped:", e)
         s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / (fn + ".html"), stamp(s))

@@ -117,6 +117,7 @@ img.lwi { }
 .who { padding-bottom: 14px; min-width: 0; }
 .who h1 { margin: 0; font-size: 30px; font-weight: 700; display: flex; align-items: center; gap: 10px; line-height: 1.1; }
 .who h1 svg { width: 22px; height: 22px; }
+.who h1 .flag { width: 26px; height: 19px; border-radius: 3px; object-fit: cover; box-shadow: 0 0 0 1px var(--line); }
 .meta { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; font-size: 13.5px; color: var(--muted); }
 .meta div { display: flex; align-items: center; gap: 14px; }
 .meta a:hover b { text-decoration: underline; }
@@ -562,6 +563,7 @@ html { scroll-padding-top: 84px; }
   }
   var h = ''; try { h = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
   show(D.players[h] ? h : (D.players.Chovy ? 'Chovy' : names[0]));
+  var CC = {};
   var D0 = D;
   var wanted = h;
   function want() { var hh = wanted; if (window.LVF && hh && !D.players[hh]) LVF.has('player', hh).then(function (ok) { if (ok) LVF.focus('player', hh); }); }

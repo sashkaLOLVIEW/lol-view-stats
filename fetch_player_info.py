@@ -47,7 +47,7 @@ def main():
     try: old = json.loads(OUT.read_text(encoding="utf-8"))
     except Exception: old = {}
     now = time.time()
-    todo = [p for p in players if now - (old.get(p[0]) or {}).get("ts", 0) > REFRESH_DAYS * 86400]
+    todo = [p for p in players if now - (old.get(p[0]) or {}).get("ts", 0) > REFRESH_DAYS * 86400 or "cc" not in (old.get(p[0]) or {})]
     print("%d players on the site, %d already looked up recently, %d to look up now" % (len(players), len(players) - len(todo), len(todo)))
     s = requests.Session(); s.headers["User-Agent"] = UA
     def get(**p):
@@ -59,9 +59,9 @@ def main():
     fl = get(action="cargofields", table="Players")
     cf = fl.get("cargofields") or {}
     fields = list(cf.keys()) if isinstance(cf, dict) else [f.get("fieldname", f) if isinstance(f, dict) else str(f) for f in cf]
-    f_bd = find_field(fields, "birth"); f_ct = find_field(fields, "contract")
-    print("using birthdate field:", f_bd, "| contract field:", f_ct)
-    want = [f for f in ("ID", "Team", "IsRetired", f_bd, f_ct) if f and f in fields]
+    f_bd = find_field(fields, "birth"); f_ct = find_field(fields, "contract"); f_cc = find_field(fields, "nationalityprimary", "country", "nationality")
+    print("using birthdate field:", f_bd, "| contract field:", f_ct, "| country field:", f_cc)
+    want = [f for f in ("ID", "Team", "IsRetired", f_bd, f_ct, f_cc) if f and f in fields]
     out = dict(old); blocked = False
     for i in range(0, len(todo), BATCH):
         chunk = todo[i:i + BATCH]
@@ -74,9 +74,10 @@ def main():
             t = row.get("title", row); by.setdefault((t.get("ID") or "").lower(), []).append(t)
         for name, team in chunk:
             r = pick(by.get(name.lower(), []), teams[team])
-            if not r: out[name] = dict(bd=None, contract=None, ts=now, nomatch=True); continue
+            if not r: out[name] = dict(bd=None, contract=None, cc=None, ts=now, nomatch=True); continue
             bd = (r.get(f_bd) or "").strip() if f_bd else ""; ct = month_year((r.get(f_ct) or "").strip()) if f_ct else None
-            out[name] = dict(bd=bd if re.match(r"\d{4}-\d{2}-\d{2}", bd) else None, contract=ct, ts=now)
+            cc = ((r.get(f_cc) or "").split(",")[0].strip() or None) if f_cc else None
+            out[name] = dict(bd=bd if re.match(r"\d{4}-\d{2}-\d{2}", bd) else None, contract=ct, cc=cc, ts=now)
         time.sleep(25)                                     # be gentle: the wiki limits bursts
     OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1))
     mine = {n: out.get(n) for n, _ in players}
