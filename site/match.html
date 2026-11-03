@@ -479,7 +479,13 @@ html { scroll-padding-top: 84px; }
 .mv .bhead,.mv .brow{grid-template-columns:minmax(0,1fr) 62px minmax(0,1fr);}
 .mv .opills{gap:8px; padding-right:6px;}
 .mv .opills.r{padding-left:6px;}}
-@media (max-width:640px){.mv .match{grid-template-columns:1fr; padding:14px;}
+@media (max-width:640px){.mv .match{grid-template-columns:1fr auto 1fr; gap:8px; padding:14px 0;}
+.mv .match .sc-team,.mv .match .sc-team.r{flex-direction:column; align-items:center; text-align:center; gap:6px;}
+.mv .match .sc-team img,.mv .match .sc-team .ph{width:48px; height:48px;}
+.mv .match .sc-team>div{display:flex; flex-direction:column; align-items:center;}
+.mv .match .sc-full{display:none;}
+.mv .match .sc-name{font-size:18px;}
+.mv .mscore{font-size:26px;}
 .mv .side,.mv .side.r{justify-content:center; text-align:left;}
 .mv .cell{padding:0 8px; gap:8px;}
 .mv .champ{width:36px; height:36px;}
