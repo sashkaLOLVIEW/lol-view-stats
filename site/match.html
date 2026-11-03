@@ -942,6 +942,12 @@ html { scroll-padding-top: 84px; }
     }
     return m.teams[side === "blue" ? 0 : 1];
   }
+  var WHITE_LOGO = /^(DK|G2|GX|KRX|PAIN|SHG|SK|SR|TL|TLAW|TSW|VKS)$/, NM = null;
+  function teamName(t) {
+    if (!NM) { NM = {}; try { (SD.t || []).forEach(function (r) { NM[r[0]] = r[1]; }); } catch (e) {} }
+    var n = NM[t && t.code] || (t && t.name) || "";
+    return n && n === n.toUpperCase() && /[A-Z]{4,}/.test(n) ? n.toLowerCase().replace(/(^|\s)\S/g, function (c) { return c.toUpperCase(); }) : n;
+  }
   function logoHtml(t) { return t && t.image ? '<img' + (/^(DK|G2|GX|KRX|PAIN|SHG|SK|SR|TL|TLAW|TSW|VKS)$/.test(t.code || "") ? ' class="lwi"' : '') + ' src="' + esc(t.image) + '" alt="">' : '<span class="ph">' + esc((t && t.code || "?").slice(0, 3)) + "</span>"; }
   function setNotice(kind, html) { var n = $("notice"); n.className = "notice" + (kind === "demo" ? " demo" : kind === "err" ? " err" : ""); n.innerHTML = html; }
   function seriesHeader() {
@@ -949,9 +955,9 @@ html { scroll-padding-top: 84px; }
     var inprog = (m.games || []).some(function (g) { return g.state === "inProgress"; });
     $("match").className = "match idle";
     var side = function (t, r) {
-      var lg = t.image ? '<img src="' + esc(t.image) + '" alt="" width="64" height="64" style="display:block;object-fit:contain;flex:none">' : '<span class="ph" style="width:64px;height:64px;flex:none">' + esc((t.code || "?").slice(0, 3)) + "</span>";
+      var lg = t.image ? '<img' + (WHITE_LOGO.test(t.code || "") ? ' class="lwi"' : '') + ' src="' + esc(t.image) + '" alt="" width="64" height="64" style="display:block;object-fit:contain;flex:none">' : '<span class="ph" style="width:64px;height:64px;flex:none">' + esc((t.code || "?").slice(0, 3)) + "</span>";
       var rk = TR[t.code];
-      return '<div class="sc-team' + (r ? " r" : "") + '">' + lg + '<div><a class="sc-name" style="display:block" href="team.html#' + esc(t.code) + '">' + esc(t.code) + '</a><div class="sc-full">' + esc(t.name) + "</div>" + (rk ? '<span class="tag rk" title="Power ranking">#' + rk + "</span>" : "") + "</div></div>";
+      return '<div class="sc-team' + (r ? " r" : "") + '">' + lg + '<div><a class="sc-name" style="display:block" href="team.html#' + esc(t.code) + '">' + esc(t.code) + '</a><div class="sc-full">' + esc(teamName(t)) + "</div>" + (rk ? '<span class="tag rk" title="Power ranking">#' + rk + "</span>" : "") + "</div></div>";
     };
     $("match").className = "match idle";
     $("match").innerHTML = side(tm[0], 0) +
@@ -1042,7 +1048,7 @@ html { scroll-padding-top: 84px; }
     var stateText = live ? 'Live' : paused ? "Paused" : f.gameState === "finished" ? "Game finished" : esc(f.gameState || "");
     var wins = function (t) { return t && t.result ? t.result.gameWins : 0; };
     var $m = $("match");
-    var liveSide = function (t, r) { var rk = TR[t.code]; return '<div class="sc-team' + (r ? " r" : "") + '">' + logoHtml(t) + '<div><a class="sc-name" style="display:block" href="team.html#' + esc(t.code) + '">' + esc(t.code) + '</a><div class="sc-full">' + esc(t.name) + "</div>" + (rk ? '<span class="tag rk" title="Power ranking">#' + rk + "</span>" : "") + "</div></div>"; };
+    var liveSide = function (t, r) { var rk = TR[t.code]; return '<div class="sc-team' + (r ? " r" : "") + '">' + logoHtml(t) + '<div><a class="sc-name" style="display:block" href="team.html#' + esc(t.code) + '">' + esc(t.code) + '</a><div class="sc-full">' + esc(teamName(t)) + "</div>" + (rk ? '<span class="tag rk" title="Power ranking">#' + rk + "</span>" : "") + "</div></div>"; };
     $m.className = "match" + (live ? "" : " idle");
     $m.innerHTML =
       liveSide(bt, 0) +
