@@ -525,7 +525,7 @@ html { scroll-padding-top: 84px; }
       if (!pv || g.opp !== pv.opp || gap > 1 || (g.gn && pv.gn && g.gn <= pv.gn)) SER.push({ w: 0, l: 0 });
       var sr = SER[SER.length - 1]; g._sid = SER.length - 1; g.win ? sr.w++ : sr.l++; pv = g;
     });
-    SER.forEach(function (sr) { sr.bo = Math.max(sr.w, sr.l) >= 3 ? 5 : sr.w === sr.l && sr.w === 1 ? 2 : sr.w + sr.l > 1 ? 3 : 1; });
+    SER.forEach(function (sr) { sr.n = sr.w + sr.l; sr.bo = Math.max(sr.w, sr.l) >= 3 ? 5 : sr.w === sr.l && sr.w === 1 ? 2 : sr.w + sr.l > 1 ? 3 : 1; });
     var KPI = '<svg class="kpi" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="6" cy="8" r="4"/><circle cx="10" cy="8" r="4"/></svg>';
     var HG = chrono.filter(function (g) { return !champSel || g.champ === champSel; }).reverse();
     var HR = HG.map(function (g) {
@@ -543,7 +543,7 @@ html { scroll-padding-top: 84px; }
     while (hi < HG.length) {
       var sid = HG[hi]._sid, hj = hi; while (hj < HG.length && HG[hj]._sid === sid) hj++;
       var inner = HR.slice(hi, hj).join('');
-      hh += SER[sid].bo > 1 ? '<div class="ser">' + inner + '<span class="sb" title="Best of ' + SER[sid].bo + '">' + 'BO' + SER[sid].bo + '</span></div>' : inner;
+      hh += SER[sid].bo > 1 && hj - hi === SER[sid].n ? '<div class="ser">' + inner + '<span class="sb" title="Best of ' + SER[sid].bo + '">' + 'BO' + SER[sid].bo + '</span></div>' : inner;
       hi = hj;
     }
     var mh = function (ik, t) { return '<div class="c">' + '<span>' + t + '</span></div>'; };
