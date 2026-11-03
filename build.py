@@ -445,7 +445,7 @@ def item_assets(ids):
     path = ROOT / "data" / "item_icons.json"
     try: cache = json.loads(path.read_text(encoding="utf-8"))
     except Exception: cache = {}
-    need = [str(i) for i in sorted(set(ids)) if str(i) not in cache or len(cache[str(i)]) < 5]
+    need = [str(i) for i in sorted(set(ids)) if str(i) not in cache or len(cache[str(i)]) < 6]
     if need:
         try:
             vers = requests.get("https://ddragon.leagueoflegends.com/api/versions.json", timeout=30).json()
@@ -455,11 +455,11 @@ def item_assets(ids):
                 tr = int("Trinket" in tags or int(i) in TRINKETS)
                 cm = int(bool(gold.get("purchasable")) and not meta.get("into") and (gold.get("total") or 0) >= 2000 and not ({"Boots", "Consumable", "Trinket", "Lane", "Jungle"} & set(tags)))
                 sq = int("SupportQuest" in tags)      # support quest item or one of its upgrades (a text match on "quest" also caught the jungle pets, so tags only)
-                if i in cache: cache[i] = list(cache[i][:2]) + [tr, cm, sq]; continue
+                if i in cache: cache[i] = list(cache[i][:2]) + [tr, cm, sq, 1]; continue
                 try:
                     r = requests.get("https://ddragon.leagueoflegends.com/cdn/%s/img/item/%s.png" % (vers[0], i), timeout=30); r.raise_for_status()
                     im = Image.open(io.BytesIO(r.content)).convert("RGBA"); im.thumbnail((36, 36))
-                    cache[i] = [meta.get("name", "Item " + i), b64webp(im, 78), tr, cm, sq]
+                    cache[i] = [meta.get("name", "Item " + i), b64webp(im, 78), tr, cm, sq, 1]
                 except Exception as ex: print("  no icon for item", i, "(%s)" % ex)
             path.parent.mkdir(exist_ok=True); path.write_text(json.dumps(cache, ensure_ascii=False))
         except Exception as ex: print("  item icons unavailable:", ex)
