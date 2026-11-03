@@ -126,12 +126,15 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .pn .fg { width: 20px; height: 15px; border-radius: 2px; margin-left: auto; flex: none; object-fit: cover; display: block; }
 .pn b { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hist { margin-top: 30px; }
-.hrow { display: grid; grid-template-columns: 76px minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) auto; align-items: center; gap: 12px; height: 62px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 16px; margin-top: 8px; font-size: 13px; }
+.hrow { display: grid; grid-template-columns: 76px minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr) auto; align-items: center; gap: 12px; height: 62px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 16px; margin-top: 8px; font-size: 13px; }
 img.wi-l { display: none; } img.wi-d { display: block; }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .wi-l { display: block; } :root:not([data-theme="dark"]) .wi-d { display: none; } }
 :root[data-theme="light"] .wi-l { display: block; } :root[data-theme="light"] .wi-d { display: none; }
 :root[data-theme="dark"] .wi-l { display: none; } :root[data-theme="dark"] .wi-d { display: block; }
-.hrow .ev { display: block; line-height: 0; } .hrow .ev img { width: 22px; height: 22px; }
+.hrow .ev { display: block; line-height: 0; } .hrow .ev img { width: auto; height: auto; max-width: 30px; max-height: 22px; }
+.hrow .rl { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.hrow .rl .res { height: auto; line-height: 1.2; font-size: 12px; }
+.hrow .rl .gt { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .hrow .rr { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 72px; }
 .hrow .rr .pv { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; line-height: 1; }
 .hrow:hover { border-color: var(--muted); }
@@ -182,7 +185,7 @@ img.wi-l { display: none; } img.wi-d { display: block; }
 .note { margin-top: 10px; font-size: 11px; color: var(--dim); line-height: 1.5; }
 .tbody > * { min-width: 0; }
 @media (max-width: 1080px) { .tbody { grid-template-columns: 1fr; row-gap: 28px; } .tbody::before { display: none; } .roster { grid-template-columns: repeat(3, minmax(0, 1fr)); } .radars { grid-template-columns: 1fr; } }
-@media (max-width: 640px) { .roster { grid-template-columns: repeat(2, minmax(0, 1fr)); } .nav { gap: 18px; padding: 0 16px; } .hrow { grid-template-columns: 46px minmax(0, 1fr) 64px 60px 66px; gap: 4px; padding: 0 8px; } .hrow .op > span { display: none; } .hrow .m { gap: 4px; font-size: 11px; } .hrow .m img, .hrow .m svg { width: 11px; height: 11px; } .hrow .op b { font-size: 12px; } .hrow .op { gap: 6px; } }
+@media (max-width: 640px) { .roster { grid-template-columns: repeat(2, minmax(0, 1fr)); } .nav { gap: 18px; padding: 0 16px; } .hrow { grid-template-columns: 62px minmax(0, 1fr) 64px 66px; gap: 4px; padding: 0 8px; } .hrow .op > span { display: none; } .hrow .m { gap: 4px; font-size: 11px; } .hrow .m img, .hrow .m svg { width: 11px; height: 11px; } .hrow .op b { font-size: 12px; } .hrow .op { gap: 6px; } }
 @media (prefers-reduced-motion: reduce) { .toggle::after { transition: none; } }
 .foot { margin-top: 56px; position: relative; }
 .foot-art { display: block; width: 164px; height: 107px; margin-bottom: -22px; position: relative; z-index: 0; object-fit: contain; object-position: left bottom; }
@@ -373,10 +376,9 @@ html { scroll-padding-top: 84px; }
     var HGT = chr.slice().reverse();
     var HRT = HGT.map(function (g) {
       var d = gde(g);
-      return '<a class="hrow" href="game.html#' + (g.lg ? encodeURIComponent(g.gid) + '@' + g.lg : g.gid) + '">' + '<span class="res' + (g.win ? ' w' : ' l') + '">' + (g.win ? 'WIN' : 'LOSS') + '</span>'
+      return '<a class="hrow" href="game.html#' + (g.lg ? encodeURIComponent(g.gid) + '@' + g.lg : g.gid) + '">' + '<span class="rl"><span class="res' + (g.win ? ' w' : ' l') + '">' + (g.win ? 'VICTORY' : 'DEFEAT') + '</span><span class="gt">' + fmtT(g.gl) + '</span></span>'
         + '<span class="op">' + logo(g.opp, 24) + '<b>' + g.opp + '</b><span>' + g.date + '</span></span>'
         + '<span class="m"><img class="mi" src="' + KI + '" alt="">' + Math.round(g.k) + '<span class="vs">vs</span>' + Math.round(ok(g)) + '</span>'
-        + '<span class="m">' + CL + fmtT(g.gl) + '</span>'
         + '<span class="m gdv ' + (d > 0 ? 'up' : d < 0 ? 'dn' : '') + '"><img class="mi" src="' + GI + '" alt="">' + (d > 0 ? '+' : d < 0 ? '\u2212' : '') + Math.abs(d).toLocaleString('en-US') + '</span>'
         + '<span class="rr">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '">' + (LVF.evIcon(g.lg, 22) || '<b style="font-size:11px">' + LVF.lname(g.lg).replace(' 2026', '') + '</b>') + '</span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<span class="pv">' + (g.pt ? 'Patch ' + g.pt : '') + '</span></span>' + '</a>';
     });

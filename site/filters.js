@@ -158,7 +158,33 @@
     Object.keys(teams).forEach(function (c) { teams[c].region = mode(teams[c].games.map(function (g) { return g.lg; })); teams[c].games.sort(function (a, b) { return a.date < b.date ? -1 : 1; }); });
     return { teams: teams, players: players, logos: {} };
   }
-  function profile(kind, ds) { return Promise.all([LVF_icons(), LVF_logos()]).then(function (v) { var d = kind === 'player' ? profPlayers(ds, v[0]) : kind === 'champion' ? profChamps(ds, v[0]) : profTeams(ds); d.logos = v[1]; return d; }); }
+  /* items, runes and 1-minute gold from the Riot feed for the games of the other leagues (dist/data/items-<LEAGUE>.json, written by build.py) */
+  var _it = {}, _ia = null;
+  function LVF_items(lg) { return (_it[lg] = _it[lg] || jget('data/items-' + lg.replace(/[^A-Za-z0-9_-]/g, '_') + '.json').catch(function () { return {}; })); }
+  function LVF_itemAssets() { return (_ia = _ia || jget('data/item-assets.json').catch(function () { return null; })); }
+  function withItems(d, rows) {
+    var lgs = {}; rows.forEach(function (r) { if (r.lg && r.lg !== 'WLDs') lgs[r.lg] = 1; });
+    var ks = Object.keys(lgs); if (!ks.length) return d;
+    return Promise.all(ks.map(LVF_items).concat([LVF_itemAssets()])).then(function (v) {
+      var AS = v[ks.length], X = {}; ks.forEach(function (k, i) { X[k] = v[i]; });
+      if (!AS) return d;
+      var any = false;
+      rows.forEach(function (r) {
+        var gid = r.gid || r.game, e = r.lg && X[r.lg] && X[r.lg][gid]; if (!e) return;
+        var x = e.p[(r.side === 'Blue' ? 0 : 1) + ':' + ROLES.indexOf(r.role)]; if (!x) return;
+        r.it = x[0]; r.rn = x[1]; any = true;
+      });
+      if (any) { d.items = AS.items; d.runes = AS.runes; }
+      return d;
+    });
+  }
+  function profile(kind, ds) {
+    return Promise.all([LVF_icons(), LVF_logos()]).then(function (v) {
+      var d = kind === 'player' ? profPlayers(ds, v[0]) : kind === 'champion' ? profChamps(ds, v[0]) : profTeams(ds); d.logos = v[1];
+      var rows = kind === 'player' ? [].concat.apply([], Object.keys(d.players).map(function (n) { return d.players[n].games; })) : kind === 'champion' ? [].concat.apply([], Object.keys(d.champs).map(function (c) { return d.champs[c].rows; })) : [];
+      return withItems(d, rows);
+    });
+  }
   var _lg = null; function LVF_logos() { return (_lg = _lg || jget('data/logos.json').catch(function () { return {}; })); }
   var _ic = null; function LVF_icons() { return (_ic = _ic || jget('data/champs.json').catch(function () { return {}; })); }
 
