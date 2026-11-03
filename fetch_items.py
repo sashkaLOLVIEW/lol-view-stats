@@ -11,13 +11,17 @@ import requests
 
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "data" / "items_cache.json"
+DONE = ROOT / "data" / "items_done.json"      # match ids whose games are all cached: not asked about again
 KEY = os.environ.get("LOLESPORTS_API_KEY", "").strip() or "0TvQnueqKa5mxJntVWt0w4LpLfEkrV1Ta8rQBb9Z"
 GW = "https://esports-api.lolesports.com/persisted/gw"
 FEED = "https://feed.lolesports.com/livestats/v1"
 H = {"x-api-key": KEY, "User-Agent": "lol-view-stats fan site"}
-LEAGUE_SLUG = "worlds"            # lolesports slug of the event shown on the site
-SINCE = "2026-10-22"              # ignore matches before this date (the Worlds main stage starts on 2026-10-23)
-MAX_PAGES = 6
+# lolesports slugs of the events the site covers (matched against each league's slug, case-insensitive). Worlds is the event on the home page;
+# the others only feed the post game pages of the filtered scopes. Order = priority when the time budget runs out (international events first).
+LEAGUES = [("worlds", "2026-10-22"), ("msi", "2026-01-01"), ("first_stand", "2026-01-01"), ("esports_world_cup", "2026-01-01"), ("ewc", "2026-01-01"),
+           ("lck", "2026-01-01"), ("lpl", "2026-01-01"), ("lec", "2026-01-01"), ("lcs", "2026-01-01"), ("lcp", "2026-01-01"), ("cblol-brazil", "2026-01-01"), ("cblol", "2026-01-01")]
+LEAGUE_SLUG = "worlds"
+MAX_PAGES = 30
 TRINKET_IDS = {3330, 3340, 3363, 3364}
 BUDGET = 480                      # seconds of feed requests per run
 FORMAT = 5                        # bump to refetch every older cache entry (v2 could carry a trinket copied from an earlier frame)
@@ -38,9 +42,7 @@ def late(t0):
     return floor10(min(t0 + dt.timedelta(hours=3), dt.datetime.now(dt.timezone.utc) - dt.timedelta(seconds=60)))
 def floor10(t): return t.replace(second=t.second - t.second % 10, microsecond=0)
 
-def finished_matches():
-    leagues = get(GW + "/getLeagues", hl="en-US")["data"]["leagues"]
-    lid = next(l["id"] for l in leagues if l.get("slug") == LEAGUE_SLUG)
+def finished_matches(lid, since):
     out, token = {}, None
     for _ in range(MAX_PAGES):
         p = dict(hl="en-US", leagueId=lid)
@@ -48,11 +50,11 @@ def finished_matches():
         sch = get(GW + "/getSchedule", **p)["data"]["schedule"]
         evs = sch.get("events") or []
         for e in evs:
-            if e.get("state") == "completed" and e.get("match") and (e.get("startTime") or "")[:10] >= SINCE:
+            if e.get("state") == "completed" and e.get("match") and (e.get("startTime") or "")[:10] >= since:
                 out[e["match"]["id"]] = e
         old = [e for e in evs if e.get("startTime")]
         token = (sch.get("pages") or {}).get("older")
-        if not token or (old and min(e["startTime"] for e in old)[:10] < SINCE): break
+        if not token or (old and min(e["startTime"] for e in old)[:10] < since): break
     return out
 
 def fetch_game(game, number, codes, bo=0):
@@ -68,14 +70,22 @@ def fetch_game(game, number, codes, bo=0):
     last = frames[-1]
     byid = {p["participantId"]: p for p in last["participants"]}
     # one snapshot a minute through the game: gives the order items were first seen (build order) and the last trinket a player held
-    samples = []
+    from concurrent.futures import ThreadPoolExecutor
+    mins = []
     m = 1
-    while t0 + dt.timedelta(minutes=m) < tend:
-        try:
-            d = (get(FEED + "/details/" + gid, startingTime=fmt(floor10(t0 + dt.timedelta(minutes=m)))).get("frames") or [{}])[0].get("participants") or []
-            samples.append({q["participantId"]: [i for i in (q.get("items") or []) if i] for q in d})
+    while t0 + dt.timedelta(minutes=m) < tend: mins.append(m); m += 1
+    def sample(m):
+        st = fmt(floor10(t0 + dt.timedelta(minutes=m))); d = None; gd = None
+        try: d = (get(FEED + "/details/" + gid, startingTime=st).get("frames") or [{}])[0].get("participants") or []
         except Exception: pass
-        m += 1; time.sleep(0.12)
+        try:
+            f = (get(FEED + "/window/" + gid, startingTime=st).get("frames") or [None])[0]
+            if f: gd = [m, f["blueTeam"]["totalGold"] - f["redTeam"]["totalGold"]]
+        except Exception: pass
+        return d, gd
+    with ThreadPoolExecutor(4) as ex: res = list(ex.map(sample, mins))
+    samples = [{q["participantId"]: [i for i in (q.get("items") or []) if i] for q in d} for d, _ in res if d is not None]
+    gold = [[0, 0]] + [g for _, g in res if g]
     def order_of(pid):
         seen, out = set(), []
         for s in samples:
@@ -98,28 +108,52 @@ def fetch_game(game, number, codes, bo=0):
             tr0 = None if any(i in TRINKET_IDS for i in items) else last_trinket(pm["participantId"])
             players[side + ":" + pos] = dict(name=pm.get("summonerName"), champ=pm.get("championId"), items=items, tr0=tr0, order=order_of(pm["participantId"]),
                                              runes=dict(style=perk.get("styleId"), sub=perk.get("subStyleId"), perks=perk.get("perks")))
-    return dict(id=gid, v=FORMAT, number=number, bo=bo, codes=sorted(codes), start=fmt(t0), patch=md.get("patchVersion"), players=players)
+    return dict(id=gid, v=FORMAT, number=number, bo=bo, codes=sorted(codes), start=fmt(t0), patch=md.get("patchVersion"), players=players, gold=gold)
+
+def pick_leagues():
+    """[(league id, slug, since)] for the slugs in LEAGUES that the schedule API knows, in priority order; logs the ones it does not."""
+    leagues = get(GW + "/getLeagues", hl="en-US")["data"]["leagues"]
+    by = {(l.get("slug") or "").lower(): l for l in leagues}
+    out, seen = [], set()
+    for slug, since in LEAGUES:
+        l = by.get(slug)
+        if l and l["id"] not in seen: seen.add(l["id"]); out.append((l["id"], l["slug"], since))
+    print("leagues used:", ", ".join(x[1] for x in out) or "-")
+    print("other leagues in the API (not used):", ", ".join(sorted(by.keys() - {x[1].lower() for x in out}))[:600])
+    return out
 
 def main():
     try: cache = json.loads(OUT.read_text(encoding="utf-8"))
     except Exception: cache = {}
-    ms = finished_matches(); new = bad = 0
-    print("finished matches:", len(ms), "| games already cached:", len(cache))
-    t_start = time.time(); skipped = 0
-    for mid, e in sorted(ms.items(), key=lambda x: x[1]["startTime"]):
-        codes = [t["code"].upper() for t in e["match"]["teams"]]
-        try: games = get(GW + "/getEventDetails", hl="en-US", id=mid)["data"]["event"]["match"]["games"]
-        except Exception as ex: print("  match", mid, "details failed:", ex); bad += 1; continue
-        bo = int(((e["match"].get("strategy") or {}).get("count")) or 0)
-        for g in games:
-            if g["id"] in cache and bo and not cache[g["id"]].get("bo"): cache[g["id"]]["bo"] = bo       # backfill best-of on older entries
-            old = cache.get(g["id"])
-            stale = bool(old) and old.get("v", 1) < FORMAT
-            if g.get("state") != "completed" or (old and not stale): continue
-            if time.time() - t_start > BUDGET: skipped += 1; continue          # keep the run short; the rest is picked up on the next run
-            try: cache[g["id"]] = fetch_game(g, g["number"], codes, bo); new += 1; OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(cache, ensure_ascii=False))
-            except Exception as ex: print("  game", g["id"], codes, "failed:", ex); bad += 1
-            time.sleep(0.3)
+    new = bad = 0; skipped = 0; t_start = time.time()
+    try: done = json.loads(DONE.read_text(encoding="utf-8"))
+    except Exception: done = {}
+    lgs = pick_leagues()
+    print("games already cached:", len(cache))
+    for lid, slug, since in lgs:
+        try: ms = finished_matches(lid, since)
+        except Exception as ex: print("  league", slug, "schedule failed:", ex); continue
+        print("  %s: %d finished matches" % (slug, len(ms)))
+        for mid, e in sorted(ms.items(), key=lambda x: x[1]["startTime"], reverse=True):
+            codes = [t["code"].upper() for t in e["match"]["teams"]]
+            if done.get(mid) == FORMAT: continue
+            if time.time() - t_start > BUDGET: skipped += 1; continue
+            try: games = get(GW + "/getEventDetails", hl="en-US", id=mid)["data"]["event"]["match"]["games"]
+            except Exception as ex: print("  match", mid, "details failed:", ex); bad += 1; continue
+            bo = int(((e["match"].get("strategy") or {}).get("count")) or 0); ok = True
+            for g in games:
+                if g["id"] in cache and bo and not cache[g["id"]].get("bo"): cache[g["id"]]["bo"] = bo       # backfill best-of on older entries
+                old = cache.get(g["id"])
+                stale = bool(old) and old.get("v", 1) < FORMAT
+                if g.get("state") != "completed": ok = False; continue
+                if old and not stale: continue
+                if time.time() - t_start > BUDGET: skipped += 1; ok = False; continue          # keep the run short; the rest is picked up on the next run
+                try:
+                    cache[g["id"]] = fetch_game(g, g["number"], codes, bo); cache[g["id"]]["lg"] = slug; new += 1
+                    OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(cache, ensure_ascii=False))
+                except Exception as ex: print("  game", g["id"], codes, "failed:", ex); bad += 1; ok = False
+                time.sleep(0.3)
+            if ok and games: done[mid] = FORMAT; DONE.write_text(json.dumps(done))
     OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(cache, ensure_ascii=False))
     print("items: %d games cached (%d new, %d failed)%s" % (len(cache), new, bad, (" | %d games left for the next run (time budget)" % skipped) if skipped else ""))
 

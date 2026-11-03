@@ -413,7 +413,7 @@ def map_items(w):
     """(oe gameid, side, position) -> list of item ids, by matching teams + game number + start time to the Riot games."""
     try: cache = json.loads((ROOT / "data" / "items_cache.json").read_text(encoding="utf-8"))
     except Exception: print("  no item cache - item builds are skipped"); return {}
-    recs = list(cache.values()); out = {}; matched = 0; total = 0; champ_bad = 0
+    recs = [r for r in cache.values() if r.get("lg", "worlds") == "worlds"]; out = {}; matched = 0; total = 0; champ_bad = 0
     ALIAS = {"monkeyking": "wukong", "renata": "renataglasc", "nunu": "nunuwillump"}
     def norm(s):
         n = re.sub(r"[^a-z]", "", str(s).lower()); return ALIAS.get(n, n)
@@ -505,6 +505,47 @@ def rune_assets(pairs):
             path.parent.mkdir(exist_ok=True); path.write_text(json.dumps(cache, ensure_ascii=False))
         except Exception as e: print("  rune icons unavailable:", e)
     return cache
+
+def export_oe_items(csv, out_dir):
+    """Items, runes and 1-minute gold from the Riot feed for games that exist only in Oracle's Elixir (everything but Worlds): dist/data/items-<LEAGUE>.json
+    {oe gameid: {"p": {"<side 0/1>:<position 0-4>": [8 item ids, [keystone, secondary], rune page]}, "g": [[minute, blue gold lead], ...]}} plus item-assets.json (icons)."""
+    try: cache = json.loads((ROOT / "data" / "items_cache.json").read_text(encoding="utf-8"))
+    except Exception: print("  no item cache - other-league items skipped"); return
+    recs = [r for r in cache.values() if r.get("lg") and r["lg"] != "worlds" and r.get("players")]
+    if not recs: print("  no other-league games in the item cache yet"); return
+    ALIAS = {"monkeyking": "wukong", "renata": "renataglasc", "nunu": "nunuwillump"}
+    norm = lambda x: ALIAS.get(re.sub(r"[^a-z]", "", str(x).lower()), re.sub(r"[^a-z]", "", str(x).lower()))
+    byday = {}
+    for r in recs: byday.setdefault(r["start"][:10], []).append(r)
+    df = pd.read_csv(csv, low_memory=False, usecols=["gameid", "league", "date", "game", "position", "side", "champion", "datacompleteness"])
+    df = df[(df.gameid.notna()) & (df.league != LEAGUE) & (df.position != "team")]
+    df["date"] = pd.to_datetime(df["date"])
+    POSL = ["top", "jng", "mid", "bot", "sup"]
+    ids_i, ids_r, per, hit, tot = set(), [], {}, 0, 0
+    raw = {}
+    for gid, g in df.groupby("gameid"):
+        if len(g) != 10: continue
+        tot += 1; t0 = g.date.min(); num = int(g.game.iloc[0]) if pd.notna(g.game.iloc[0]) else 0; mine = {norm(c) for c in g.champion}
+        cand = []
+        for dd in (t0 - pd.Timedelta(days=1), t0, t0 + pd.Timedelta(days=1)):
+            cand += byday.get(str(dd)[:10], [])
+        cand = [r for r in cand if int(r.get("number") or 0) == num and abs((pd.Timestamp(r["start"]).tz_localize(None) - t0).total_seconds()) < 4 * 3600
+                and len(mine & {norm(p["champ"]) for p in r["players"].values()}) >= 9]
+        if not cand: continue
+        r = cand[0]; hit += 1; lg = g.league.iloc[0]; pl = {}
+        for _, p in g.iterrows():
+            rp = r["players"].get(p.side.lower() + ":" + p.position)
+            if not rp or p.position not in POSL: continue
+            rn = rp.get("runes") or {}; pk = rn.get("perks") or []
+            it = tidy_items(rp["items"] + ([rp["tr0"]] if rp.get("tr0") and not any(i in TRINKETS for i in rp["items"]) else []))
+            pl["%d:%d" % (0 if p.side == "Blue" else 1, POSL.index(p.position))] = [it, [pk[0], rn.get("sub")] if pk and rn.get("sub") else None]
+            ids_i.update(i for i in it if i); ids_r += [pk[0], rn.get("sub")] if pk and rn.get("sub") else []
+        per.setdefault(lg, {})[gid] = {"p": pl, "g": r.get("gold") or []}
+    print("  other-league items: %d of %d OE games matched to Riot data" % (hit, tot))
+    if not per: return
+    icons = item_assets(ids_i); runes = rune_assets([ids_r])
+    for lg, d in per.items(): (out_dir / ("items-%s.json" % re.sub(r"[^A-Za-z0-9_-]", "_", lg))).write_text(json.dumps(d, separators=(",", ":")), encoding="utf-8")
+    (out_dir / "item-assets.json").write_text(json.dumps({"items": {str(i): icons[str(i)][:2] for i in ids_i if str(i) in icons}, "runes": {str(i): runes[str(i)] for i in set(ids_r) if str(i) in runes}}, separators=(",", ":")), encoding="utf-8")
 
 def attach_items(w, GD, PD, CD):
     M = map_items(w)
@@ -829,6 +870,7 @@ def main(csv):
             k = champ_key(c); _ic[c] = champ_icon(k, 68, 80) if k else None
         return _ic[c]
     build_scopes.build(csv, out / "data", lambda n: CODE.get(NAME_FIX.get(n, n)) or re.sub(r"[^A-Z0-9]", "", "".join(x[0] for x in n.split()).upper())[:4] or n[:3].upper(), _icon, FILTER_LEAGUES, LEAGUE, TIER1_LEAGUES)
+    export_oe_items(csv, out / "data")
     wr(out / "data" / "logos.json", json.dumps(logos_all))
     if (ROOT / "site" / "filters.js").exists(): wr(out / "filters.js", rd("site/filters.js").replace("/*EI*/{}/*EI*/", json.dumps(json.load(open(ROOT / "config" / "event_icons.json")))))
 

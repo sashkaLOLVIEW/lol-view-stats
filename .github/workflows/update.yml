@@ -33,6 +33,7 @@ jobs:
           path: |
             data/schedule.json
             data/items_cache.json
+            data/items_done.json
             data/item_icons.json
             data/riot_games.json
             data/bootcamp.json

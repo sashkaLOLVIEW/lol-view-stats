@@ -410,7 +410,9 @@ html { scroll-padding-top: 84px; }
   function loadOE(gid, lgc) {
     var J = function (u) { return fetch(u).then(function (r) { if (!r.ok) throw new Error(u); return r.json(); }); };
     var f = lgc.replace(/[^A-Za-z0-9_-]/g, '_');
-    return Promise.all([J('data/meta.json'), J('data/lg-' + f + '.json'), J('data/champs.json').catch(function () { return {}; }), J('data/logos.json').catch(function () { return {}; })]).then(function (r) {
+    return Promise.all([J('data/meta.json'), J('data/lg-' + f + '.json'), J('data/champs.json').catch(function () { return {}; }), J('data/logos.json').catch(function () { return {}; }), J('data/items-' + f + '.json').catch(function () { return {}; }), J('data/item-assets.json').catch(function () { return null; })]).then(function (r) {
+      var IX = r[4] || {}, AS = r[5];
+      if (AS && Object.keys(IX).length) { D.items = Object.assign(D.items || {}, AS.items); D.runes = Object.assign(D.runes || {}, AS.runes); }
       var meta = r[0], L = r[1], G = L.games, R = L.rows, T = L.teams, ROLE = ['Top', 'Jungle', 'Mid', 'Bot', 'Support'];
       Object.keys(r[2]).forEach(function (k) { D.icons[k] = r[2][k]; }); Object.keys(r[3]).forEach(function (k) { D.logos[k] = r[3][k]; });
       var gi = G.id.indexOf(gid); if (gi < 0) throw new Error('game not found');
@@ -434,14 +436,14 @@ html { scroll-padding-top: 84px; }
         var teams = [0, 1].map(function (sd) {
           var tj = tix[i] ? tix[i][sd] : null, ps = (rix[i] && rix[i][sd]) || [], c = tm(tj != null ? T.t[tj] : (sd ? G.rt[i] : G.bt[i]));
           var sum = function (k) { return ps.reduce(function (a, j) { return a + (R[k][j] || 0); }, 0); };
-          var pl = ps.slice().sort(function (a, b) { return R.pos[a] - R.pos[b]; }).map(function (j) { var ch = R.c[j] >= 0 ? meta.champs[R.c[j]] : ''; return { role: ROLE[R.pos[j]], name: meta.players[R.p[j]], champ: ch, ic: ch, k: R.k[j] || 0, d: R.d[j] || 0, a: R.a[j] || 0, dmg: R.dmg[j] || 0, cs: R.cs[j] || 0, gold: R.gold[j] || 0 }; });
+          var pl = ps.slice().sort(function (a, b) { return R.pos[a] - R.pos[b]; }).map(function (j) { var ch = R.c[j] >= 0 ? meta.champs[R.c[j]] : ''; return { role: ROLE[R.pos[j]], name: meta.players[R.p[j]], champ: ch, ic: ch, k: R.k[j] || 0, d: R.d[j] || 0, a: R.a[j] || 0, dmg: R.dmg[j] || 0, cs: R.cs[j] || 0, gold: R.gold[j] || 0, it: ((IX[G.id[i]] || {}).p || {})[R.s[j] + ':' + R.pos[j]] ? IX[G.id[i]].p[R.s[j] + ':' + R.pos[j]][0] : null, rn: ((IX[G.id[i]] || {}).p || {})[R.s[j] + ':' + R.pos[j]] ? IX[G.id[i]].p[R.s[j] + ':' + R.pos[j]][1] : null }; });
           while (pl.length < 5) pl.push({ role: ROLE[pl.length], name: '-', champ: '', ic: '', k: 0, d: 0, a: 0, dmg: 0, cs: 0, gold: 0 });
           var g = function (k) { return tj != null ? (T[k][tj] || 0) : 0; };
           return { code: c[1], name: c[0], side: sd ? 'Red' : 'Blue', win: g('w'), k: sum('k'), d: sum('d'), a: sum('a'), gold: g('gold') || sum('gold'), towers: g('tw'), inh: 0, fb: g('fb'), ft: g('ft'), grubs: g('gr'), heralds: g('he'), elders: 0, barons: g('ba'),
             drakes: [['dragon', g('dr')]], oe: 1, bans: ((tj != null ? T.bans[tj] : []) || []).map(function (b) { var ch = b >= 0 ? meta.champs[b] : ''; return { c: ch, ic: ch }; }), players: pl, gd15: sum('gd') };
         });
-        var len = Math.round(G.len[i]), gd15 = teams[0].gd15, endd = teams[0].gold - teams[1].gold, gold = [[0, 0]];
-        if (gd15 != null && len / 60 > 15) gold.push([15, gd15]);
+        var len = Math.round(G.len[i]), gd15 = teams[0].gd15, endd = teams[0].gold - teams[1].gold, gold = [[0, 0]], rg = (IX[G.id[i]] || {}).g;
+        if (rg && rg.length > 6) gold = rg.slice(); else if (gd15 != null && len / 60 > 15) gold.push([15, gd15]);
         gold.push([len / 60, endd]);
         var dt = new Date(ts(i));
         return { id: G.id[i], patch: G.pt[i] >= 0 ? meta.patches[G.pt[i]] : '', date: dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' }), start: G.d[i], len: len, teams: teams, gold: gold, n: n + 1, sid: 0, bo: bo,
