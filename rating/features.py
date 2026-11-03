@@ -3,7 +3,7 @@ import numpy as np, pandas as pd
 import config as C
 
 BASE = ["kp", "kill_share", "fb_involve", "gpm", "cspm", "gold_share", "gd15", "xpd15", "csd15", "gd10", "xpd10",
-        "dpm", "dmg_per_gold", "deaths_pm", "vspm", "wpm", "wcpm", "cwpm"]
+        "dpm", "dmg_per_gold", "deaths_pm", "vspm", "wpm", "wcpm", "cwpm", "apm"]
 
 def derive(p):
     p = p.copy()
@@ -19,6 +19,7 @@ def derive(p):
     p["dmg_per_gold"] = p["dpm"] / p["earned gpm"]
     p["deaths_pm"] = p["deaths"] / mins
     p["cwpm"] = p["controlwardsbought"] / mins
+    p["apm"] = p["assists"] / mins
     p["role"] = p["position"]
     return p
 
@@ -31,28 +32,38 @@ def zscores(p, group):
         p["z_" + f] = ((p[f] - mu) / sd.replace(0, np.nan)).clip(-C.Z_CLIP, C.Z_CLIP)
     return p
 
-def category_scores(p, weights=None, feats=None):
-    """Weighted mean of signed z-scores per category. Missing features are dropped and weights renormalised."""
-    feats = feats or C.FEATURES
-    p = p.copy()
+def _cats(p, feats):
+    out = {}
     for cat, fs in feats.items():
         num = 0; den = 0
-        for f, (w, s) in fs.items():
-            z = p["z_" + f] * s
+        for f, (w, sg) in fs.items():
+            z = p["z_" + f] * sg
             num = num + z.fillna(0) * w
             den = den + z.notna().astype(float) * w
-        p["cat_" + cat] = num / den.replace(0, np.nan)
+        out[cat] = num / den.replace(0, np.nan)
+    return out
+
+def category_scores(p, weights=None, feats=None):
+    """Weighted mean of signed z-scores per category. Missing features are dropped and weights renormalised.
+    With the default features, supports use their own feature set (config.FEATURES_SUP)."""
+    p = p.copy()
+    base = _cats(p, feats or C.FEATURES)
+    sup = _cats(p, C.FEATURES_SUP) if feats is None and "position" in p else None
+    for cat in base:
+        p["cat_" + cat] = np.where(p["position"].eq("sup"), sup[cat], base[cat]) if sup is not None else base[cat]
     return p
 
 def composite(p, group, weights=None, feats=None, win_within=None):
-    """Composite match score z_obs (standardised per group) and per-category contributions in z units."""
+    """Composite match score z_obs (standardised per group) and per-category contributions in z units. Supports use config.WEIGHTS_SUP
+    (when the default weights are in use)."""
     W = dict(weights or C.WEIGHTS)
     ww = win_within or C.WIN_WITHIN
     p = category_scores(p, feats=feats)
     cats = list(feats.keys() if feats else C.FEATURES.keys())
-    base_w = {c: W[c] for c in cats}
-    s = sum(base_w.values())
-    p["ae"] = sum(p["cat_" + c] * base_w[c] / s for c in cats)                # composite of categories A-E
+    is_sup = p["position"].eq("sup") if (feats is None and (weights is None or dict(weights) == C.WEIGHTS) and "position" in p) else pd.Series(False, index=p.index)
+    Wr = {c: np.where(is_sup, C.WEIGHTS_SUP[c], W[c]) for c in W}                  # per-row category weights
+    s = sum(Wr[c] for c in cats)
+    p["ae"] = sum(p["cat_" + c] * Wr[c] / s for c in cats)                # composite of categories A-E
     team_sum = p.groupby(["gameid", "teamname"])["ae"].transform("sum")
     team_n = p.groupby(["gameid", "teamname"])["ae"].transform("count")
     p["ae_rel"] = p["ae"] - (team_sum - p["ae"]) / (team_n - 1).replace(0, np.nan)   # vs the four teammates
@@ -61,11 +72,11 @@ def composite(p, group, weights=None, feats=None, win_within=None):
     p["z_res"] = (p["result"] - .5) / .5
     p["cat_winning"] = ww["relative_to_team"] * p["z_rel"].fillna(0) + ww["result"] * p["z_res"]
     allc = cats + ["winning"]
-    p["comp"] = sum(p["cat_" + c] * W[c] for c in allc)
+    p["comp"] = sum(p["cat_" + c] * Wr[c] for c in allc)
     g = p.groupby(group)["comp"]
     mu, sd = g.transform("mean"), g.transform("std")
     p["z_obs"] = (p["comp"] - mu) / sd
     for c in allc:
         cm = p.groupby(group)["cat_" + c].transform("mean")
-        p["ct_" + c] = W[c] * (p["cat_" + c] - cm) / sd
+        p["ct_" + c] = Wr[c] * (p["cat_" + c] - cm) / sd
     return p, allc

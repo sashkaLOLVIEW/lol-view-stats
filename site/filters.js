@@ -68,7 +68,7 @@
       var K = f('k'), D = f('d'), A = f('a'), sum = function (a) { return a.reduce(function (x, y) { return x + (y || 0); }, 0); };
       var z = f('z').filter(function (v) { return v != null; }), zr = z.length ? 50 + z.length / (z.length + 5) * (12 * mean(z)) : 50;
       out.push({ p: meta.players[R.p[ix[0]]], t: meta.teams[R.t[ix[0]]][1], r: ROLES[R.pos[ix[0]]], g: n, wp: 100 * sum(f('w')) / n, kda: (sum(K) + sum(A)) / Math.max(1, sum(D)),
-        k: sum(K) / n, d: sum(D) / n, a: sum(A) / n, dpm: mean(f('dpm')), cs: mean(f('cspm')), gd: mean(f('gd')), csd: mean(f('csd')), xpd: mean(f('xpd')), ds: mean(f('ds')) * 100, gpm: mean(f('gpm')),
+        k: sum(K) / n, d: sum(D) / n, a: sum(A) / n, dpm: mean(f('dpm')), cs: mean(f('cspm')), gd: mean(f('gd')), csd: mean(f('csd')), xpd: mean(f('xpd')), ds: mean(f('ds')) * 100, gpm: mean(f('gpm')), vs: mean(f('vs')),
         kp: +((sum(K) + sum(A)) / Math.max(1, sum(f('tk'))) * 100).toFixed(1), rt: Math.min(99.9, Math.max(1, 68 + 4 * (zr - 50))) });
     });
     return out;

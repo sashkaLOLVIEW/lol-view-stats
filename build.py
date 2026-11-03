@@ -124,7 +124,7 @@ def build_wd(w, rt):
         n = len(g); K = g.kills.sum(); D = g.deaths.sum(); A = g.assists.sum()
         rows.append(dict(p=name, t=need_code(tn), r=ROLE[pos], g=n, wp=float(g.result.mean() * 100), kda=float((K + A) / max(D, 1)), k=float(K / n), d=float(D / n), a=float(A / n),
                          dpm=float(g.dpm.mean()), cs=float(g.cspm.mean()), gd=float(g.golddiffat15.mean()), csd=float(g.csdiffat15.mean()), xpd=float(g.xpdiffat15.mean()),
-                         ds=float(g.damageshare.mean() * 100), gpm=float(g["earned gpm"].mean()), kp=round(float((K + A) / g.tkills.sum() * 100), 1)))
+                         ds=float(g.damageshare.mean() * 100), gpm=float(g["earned gpm"].mean()), vs=float(g.vspm.mean()), kp=round(float((K + A) / g.tkills.sum() * 100), 1)))
     for r in rows: r["rt"] = rt.get(r["p"], 50.0)
     P = sorted(rows, key=lambda r: (-r["kda"], -r["gd"]))
     rank = lambda role, key, v: 1 + sum(1 for r in rows if r["r"] == role and r[key] > v + 1e-9)

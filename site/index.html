@@ -791,7 +791,7 @@ html { scroll-padding-top: 84px; }
     };
     var roles = [['all', 'All roles'], ['top', 'Top'], ['jungle', 'Jungle'], ['mid', 'Mid'], ['bot', 'Bot'], ['support', 'Support']];
     $('tp-roles').innerHTML = roles.map(function (r, i) { return '<button type="button" aria-label="' + r[1] + '"' + (i === 0 ? ' class="on"' : '') + '>' + ic[r[0]] + '</button>'; }).join('');
-    var stats = ['KDA', 'CS/M', 'GD @15', 'CSD @15', 'XPD @15'];
+    var stats = ['KDA', 'CS/M', 'GD @15', 'CSD @15', 'XPD @15'], SUPSTATS = ['KDA', 'KP %', 'VS/M', 'GD @15', 'XPD @15'];
     var cards = [['top', 'Top'], ['jungle', 'Jungle'], ['mid', 'Mid'], ['bot', 'Bot'], ['support', 'Support']];
     var ROLES = ['Top', 'Jungle', 'Mid', 'Bot', 'Support'], KEYS = { Top: 'top', Jungle: 'jungle', Mid: 'mid', Bot: 'bot', Support: 'support' };
     var sg = function (v) { return (v > 0 ? '+' : '') + Math.round(v).toLocaleString('en-US'); };
@@ -803,6 +803,8 @@ html { scroll-padding-top: 84px; }
     var byRole = function (role) { return byRoleAll(role).filter(inRegion); };
     var rankIn = function (list, key, v) { var n = 1; list.forEach(function (r) { if (r[key] > v + 1e-9) n++; }); return n; };
     var cardData = function (r, list) {
+      if (r.r === 'Support') return { role: r.r, p: r.p, t: r.t, rt: r.rt.toFixed(1), s: SUPSTATS, v: [r.kda.toFixed(1), (r.kp || 0).toFixed(1) + '%', (r.vs || 0).toFixed(2), sg(r.gd), sg(r.xpd)],   // supports: involvement and vision, not CS
+        rk: ['kda', 'kp', 'vs', 'gd', 'xpd'].map(function (k) { return rankIn(list, k, r[k] || 0); }) };
       return { role: r.r, p: r.p, t: r.t, rt: r.rt.toFixed(1), v: [r.kda.toFixed(1), r.cs.toFixed(1), sg(r.gd), sg(r.csd), sg(r.xpd)],
         rk: ['kda', 'cs', 'gd', 'csd', 'xpd'].map(function (k) { return rankIn(list, k, r[k]); }) };
     };
@@ -816,7 +818,7 @@ html { scroll-padding-top: 84px; }
         var face = FACESF[c.p] ? '<span class="tp-portrait has"><img src="' + FACESF[c.p] + '" alt=""></span>' : '<span class="tp-portrait"></span>';
         return '<article class="tp-card"><div class="tp-card-hd">' + ic[KEYS[c.role]].replace('width="16" height="16"', 'width="12" height="12"') + c.role + (sel === 'All' ? '' : ' #' + (i + 1)) + '</div>' +
           '<div class="tp-who"><div class="tp-who-l"><div class="tp-pname"><span class="tp-tlogo" style="border:0">' + logo(c.t, 20) + '</span><a href="' + pl(c.p) + '" style="color:var(--fg)"><b>' + c.p + '</b></a></div><div class="tp-rating">Rating <span class="tp-badge' + (c.rt >= 90 ? ' gold' : c.rt >= 80 ? ' blue' : c.rt >= 70 ? ' green' : '') + '">' + c.rt + '</span></div></div>' + face + '</div>' +
-          '<div class="tp-stats">' + stats.map(function (t, k) { return '<div class="tp-srow"><span>' + t + '</span><span>' + c.v[k] + '<em class="' + (c.rk[k] <= 3 ? 'r' + c.rk[k] : '') + '">' + c.rk[k] + '</em></span></div>'; }).join('') + '</div></article>';
+          '<div class="tp-stats">' + (c.s || stats).map(function (t, k) { return '<div class="tp-srow"><span>' + t + '</span><span>' + c.v[k] + '<em class="' + (c.rk[k] <= 3 ? 'r' + c.rk[k] : '') + '">' + c.rk[k] + '</em></span></div>'; }).join('') + '</div></article>';
       }).join('');
     }
     var curSel = 'All';

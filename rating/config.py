@@ -35,6 +35,15 @@ FEATURES = {
     "damage_survival": {"dpm": (.40, +1), "dmg_per_gold": (.25, +1), "deaths_pm": (.35, -1)},
     "vision": {"vspm": (.50, +1), "wpm": (.20, +1), "wcpm": (.20, +1), "cwpm": (.10, +1)},
 }
+# --- supports are judged by different stats: CS, gold share and damage mostly measure the other roles, not the support's contribution ---
+WEIGHTS_SUP = {"combat": .30, "economy": .05, "objectives": .15, "damage_survival": .10, "vision": .30, "winning": .10}
+FEATURES_SUP = {
+    "combat": {"kp": (.50, +1), "apm": (.35, +1), "fb_involve": (.15, +1)},                       # kill participation and assists per minute, not kills
+    "economy": {"gpm": (1.0, +1)},
+    "objectives": {"gd10": (.25, +1), "xpd10": (.25, +1), "gd15": (.25, +1), "xpd15": (.25, +1)},  # lane influence; CS diff is meaningless for a support
+    "damage_survival": {"deaths_pm": (.75, -1), "dpm": (.25, +1)},
+    "vision": {"vspm": (.45, +1), "wpm": (.25, +1), "wcpm": (.20, +1), "cwpm": (.10, +1)},
+}
 WIN_WITHIN = {"relative_to_team": .75, "result": .25}   # composition of category F
 
 # --- scaling and shrinkage ----------------------------------------------------
