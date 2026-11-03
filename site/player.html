@@ -152,7 +152,8 @@ img.lwi { }
 .cfd .cm button:hover, .cfd .cm button.on { background: var(--surface-2); }
 .cfd .cm button span.n { margin-left: auto; padding-left: 14px; color: var(--muted); font-size: 11.5px; }
 .tbl { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: clip; }
-.thd, .trow { display: grid; grid-template-columns: 220px repeat(9, minmax(0, 1fr)); align-items: center; }
+.thd, .trow { display: grid; grid-template-columns: 32px 34px 154px repeat(9, minmax(0, 1fr)); align-items: center; }
+.thd .poolt { grid-column: 1 / 4; }
 .thd { margin: 0 0 6px; padding-left: 15px; font-size: 9.5px; font-weight: 700; text-transform: uppercase; text-align: center; letter-spacing: .01em; white-space: nowrap; }
 .thd button { background: none; border: 0; padding: 0; font: inherit; color: inherit; text-transform: inherit; letter-spacing: inherit; cursor: pointer; }
 .thd button:hover, .thd button.on { color: var(--fg); }
@@ -162,11 +163,14 @@ img.lwi { }
 .thd .poolt { margin: 0 0 0 -15px; text-align: left; font-size: 15px; font-weight: 600; text-transform: none; letter-spacing: normal; color: var(--fg); }
 .thd { margin-bottom: 12px; }   /* lines the label up with the champion icons (rank width 22 + gap 10) */
 .trow { height: 40px; padding-left: 15px; }
-.trow { background: var(--surface); } .trow .cn { position: sticky; left: 15px; z-index: 2; background: inherit; align-self: stretch; } .thd .poolt { position: sticky; left: 0; z-index: 2; background: var(--bg); }
+.trow { --rb: var(--surface); background: var(--rb); } .trow:nth-child(even) { --rb: var(--stripe); }
+.trow .cp { position: sticky; left: 15px; z-index: 2; display: flex; align-items: center; align-self: stretch; background: inherit; }
+.trow .cp::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: -15px; right: -30px; background: linear-gradient(to right, var(--rb) 0, var(--rb) calc(100% - 30px), color-mix(in srgb, var(--rb) 0%, transparent) 100%); opacity: 0; transition: opacity .12s; }
+.scroll.sc .trow .cp::before { opacity: 1; } .trow .rk { position: relative; z-index: 3; }
 .trow:nth-child(even) { background: var(--stripe); }
-.trow .cn { display: flex; align-items: center; gap: 10px; font-size: 13.5px; font-weight: 500; min-width: 0; }
-.trow .cn .rk { width: 22px; font-size: 12px; color: var(--muted); font-weight: 600; flex: none; }
-.trow .cn img { width: 24px; height: 24px; border-radius: 4px; display: block; flex: none; }
+.trow .cn { font-size: 13.5px; font-weight: 500; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.trow .rk { font-size: 12px; color: var(--muted); font-weight: 600; }
+.trow .cp img { width: 24px; height: 24px; border-radius: 4px; display: block; flex: none; }
 .trow .c { text-align: center; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .body > section { min-width: 0; }
 .body > section > #lvf { margin: 0 0 16px; }
@@ -458,7 +462,7 @@ html { scroll-padding-top: 84px; }
     var vis = rows.slice(0, poolShown);
     $('tbody').innerHTML = vis.map(function (r, i) {
       var cells = [r.n, Math.round(r.wr) + '%', r.kda.toFixed(1), r.w, r.cspm.toFixed(1), r.kp.toFixed(1) + '%', Math.round(r.dpm) + ' (' + r.ds.toFixed(1) + '%)', Math.round(r.gpm) + ' (' + r.gs.toFixed(1) + '%)', sg(r.csd)];
-      return '<div class="trow"><div class="cn"><span class="rk">' + (i + 1) + '</span>' + '<a class="cl" href="champion.html#' + encodeURIComponent(r.name) + '">' + (D.icons[r.ic] ? '<img src="' + D.icons[r.ic] + '" alt="">' : '') + r.name + '</a></div>' + cells.map(function (c) { return '<span class="c">' + c + '</span>'; }).join('') + '</div>';
+      return '<div class="trow"><span class="rk">' + (i + 1) + '</span><span class="cp">' + (D.icons[r.ic] ? '<img src="' + D.icons[r.ic] + '" alt="">' : '') + '</span><a class="cl cn" href="champion.html#' + encodeURIComponent(r.name) + '">' + r.name + '</a>' + cells.map(function (c) { return '<span class="c">' + c + '</span>'; }).join('') + '</div>';
     }).join('');
     var pm = $('poolmore'); pm.innerHTML = '';
     if (rows.length > 10) {
@@ -468,6 +472,7 @@ html { scroll-padding-top: 84px; }
       if (poolShown > 10) mk('Reset', function () { poolShown = 10; drawTable(); });
     }
   }
+  (function () { var w = document.querySelector('.scroll'); function t() { w.classList.toggle('sc', w.scrollLeft > 0); } w.addEventListener('scroll', t, { passive: true }); t(); })();
   $('thd').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return; var k = b.getAttribute('data-k');
     if (sortKey === k) sortAsc = !sortAsc; else { sortKey = k; sortAsc = k === 'name'; }

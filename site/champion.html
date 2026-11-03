@@ -268,7 +268,11 @@ h2 .li.hi { margin: 0; width: 18px; height: 18px; }
 .mt td { text-align: right; padding: 7px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
 .mt tr:last-child td { border-bottom: 0; }
 .mt th:first-child, .mt td:first-child { text-align: left; }
-.mt th:first-child, .mt td:first-child { position: sticky; left: 0; z-index: 2; background: var(--surface); padding-left: 12px; }
+.mt th:first-child, .mt td:first-child { position: sticky; left: 0; z-index: 2; background: var(--surface); padding: 7px 0 7px 12px; }
+.mt th:first-child { padding: 9px 0 9px 12px; } .mt td:nth-child(2), .mt th:nth-child(2) { text-align: left; }
+.mt td.ic::before, .mt th.ic::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 0; right: -26px; background: linear-gradient(to right, var(--surface) 0, var(--surface) calc(100% - 26px), color-mix(in srgb, var(--surface) 0%, transparent) 100%); opacity: 0; transition: opacity .12s; }
+.mtw.sc td.ic::before, .mtw.sc th.ic::before { opacity: 1; }
+.mt td.ic .mc { position: relative; } .mt td:nth-child(2) { padding-left: 8px; font-weight: 600; } .mt td:nth-child(2) a:hover { text-decoration: underline; }
 .mt td i { display: none; }
 .mt td.mw { color: var(--green); } .mt td.ml { color: var(--red); }
 .mt .mc { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
@@ -520,10 +524,11 @@ html { scroll-padding-top: 84px; }
     var mg = {}; R.forEach(function (r) { (mg[r.oc] = mg[r.oc] || {oc: r.oc, oi: r.oi, rs: []}).rs.push(r); });
     var ml = Object.keys(mg).map(function (k) { return mg[k]; }).sort(function (a, b) { return b.rs.length - a.rs.length || a.oc.localeCompare(b.oc); });
     var av2 = function (rs, f) { return rs.reduce(function (a, r) { return a + (r[f] || 0); }, 0) / rs.length; };
-    $('mu').innerHTML = pk ? '<div class="mtw"><table class="mt"><thead><tr><th>Versus</th><th>Games</th><th>Win%</th><th>KDA</th><th>CS/M</th><th>GD@15</th><th>CSD@15</th><th>XPD@15</th></tr></thead><tbody>' + ml.map(function (m) {
+    $('mu').innerHTML = pk ? '<div class="mtw"><table class="mt"><thead><tr><th class="ic"></th><th>Versus</th><th>Games</th><th>Win%</th><th>KDA</th><th>CS/M</th><th>GD@15</th><th>CSD@15</th><th>XPD@15</th></tr></thead><tbody>' + ml.map(function (m) {
       var rs = m.rs, wn = rs.filter(function (r) { return r.win; }).length, kk = rs.reduce(function (a, r) { return a + r.k + r.a; }, 0) / Math.max(1, rs.reduce(function (a, r) { return a + r.d; }, 0)), wr = Math.round(wn / rs.length * 100);
-      return '<tr><td><a class="mc" href="champion.html#' + encodeURIComponent(m.oc) + '">' + ci(m.oc, 28) + '<span>' + m.oc + '</span></a></td><td>' + rs.length + '</td><td class="' + (wr > 50 ? 'mw' : wr < 50 ? 'ml' : '') + '" title="' + wn + '-' + (rs.length - wn) + '">' + wr + '%</td><td>' + kk.toFixed(1) + '</td><td>' + av2(rs, 'cspm').toFixed(1) + '</td><td>' + sg(av2(rs, 'gd')) + '</td><td>' + sg(av2(rs, 'csd')) + '</td><td>' + sg(av2(rs, 'xpd')) + '</td></tr>'; }).join('') + '</tbody></table></div>' : '<div class="empty">Matchups appear once the champion has been played.</div>';
+      return '<tr><td class="ic"><a class="mc" href="champion.html#' + encodeURIComponent(m.oc) + '">' + ci(m.oc, 28) + '</a></td><td><a href="champion.html#' + encodeURIComponent(m.oc) + '">' + m.oc + '</a></td><td>' + rs.length + '</td><td class="' + (wr > 50 ? 'mw' : wr < 50 ? 'ml' : '') + '" title="' + wn + '-' + (rs.length - wn) + '">' + wr + '%</td><td>' + kk.toFixed(1) + '</td><td>' + av2(rs, 'cspm').toFixed(1) + '</td><td>' + sg(av2(rs, 'gd')) + '</td><td>' + sg(av2(rs, 'csd')) + '</td><td>' + sg(av2(rs, 'xpd')) + '</td></tr>'; }).join('') + '</tbody></table></div>' : '<div class="empty">Matchups appear once the champion has been played.</div>';
   }
+  (function () { var mu = document.getElementById('mu'); function t(e) { var w = e.target.closest ? e.target.closest('.mtw') : null; if (w) w.classList.toggle('sc', w.scrollLeft > 0); } mu.addEventListener('scroll', t, true); })();
   var h = ''; try { h = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
   var start = names.filter(function (n) { return n.toLowerCase() === h.toLowerCase(); })[0] || names[0];
   render(start);
