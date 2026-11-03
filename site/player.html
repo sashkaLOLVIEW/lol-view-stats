@@ -534,7 +534,7 @@ html { scroll-padding-top: 84px; }
       return '<a class="gr gm" href="' + (g.lg ? 'game.html#' + encodeURIComponent(g.gid) + '@' + g.lg : U.game + '#' + g.gid) + '">' + '<div class="rl"><span class="res ' + (g.win ? 'w' : 'l') + '">' + (g.win ? 'VICTORY' : 'DEFEAT') + '</span><div class="gt">' + mm + ':' + ss + '</div></div>'
         + '<div><div class="t"><span class="pt">' + gicon(g.ic, g.champ, 'cm') + '<span>' + g.champ + '</span></span> <span class="vs">vs ' + logo(g.opp, 16) + ' ' + (o ? o.n : g.opp) + (o ? ' ' + gicon(o.g.ic, o.g.champ, 'cm') : '') + '</span></div>' + '<div class="ld">' + itrow(g.it, rnrow(g)) + '</div></div>'
         + '<div class="gs"><div class="c"><div class="top"><b>' + g.k + '</b><i>/</i><b>' + g.d + '</b><i>/</i><b>' + g.a + '</b></div></div>'
-        + '<div class="c"><div class="top"><b>' + Math.round(g.cs) + '</b> CS</div></div>'
+        + '<div class="c"><div class="top"><b>' + Math.round(g.cs) + '</b></div></div>'
         + '<div class="c"><div class="top"><b>' + (kp == null ? '-' : kp + '%') + '</b></div></div>'
         + '<div class="c"><div class="top"><b>' + (g.ds == null ? '-' : (g.ds * 100).toFixed(1) + '%') + '</b></div></div>'
         + '<div class="c"><div class="top"><b>' + (!o || o.g.gold == null || g.gold == null ? '-' : (g.gold - o.g.gold > 0 ? '+' : g.gold - o.g.gold < 0 ? '\u2212' : '') + Math.abs(Math.round(g.gold - o.g.gold)).toLocaleString('en-US')) + '</b></div></div></div>'
