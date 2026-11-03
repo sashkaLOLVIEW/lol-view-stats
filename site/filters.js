@@ -180,7 +180,7 @@
     'champions.html': ['after', '#champions > h2, #champions > :first-child'], 'results.html': ['after', 'h2.sec'] };
   function css() {
     var s = document.createElement('style');
-    s.textContent = '#lvf{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0;position:relative;z-index:60}' +
+    s.textContent = '#lvf{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0;position:relative;z-index:50}' +
       '#lvf .fd{position:relative}#lvf .fb{display:flex;align-items:center;gap:8px;height:32px;padding:0 12px;background:var(--surface);border:1px solid var(--line);border-radius:8px;color:var(--fg);font:inherit;font-size:12.5px;cursor:pointer}' +
       '#lvf .fb small{color:var(--muted);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}#lvf .fb svg{color:var(--muted)}#lvf .fb.sel{border-color:var(--fg)}#lvf .fb.one{cursor:default}#lvf .fb.one svg{display:none}' +
       '#lvf .fm{display:none;position:absolute;left:0;top:calc(100% + 6px);min-width:100%;width:max-content;max-width:300px;max-height:340px;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:4px;box-shadow:0 12px 32px rgba(0,0,0,.35)}' +
