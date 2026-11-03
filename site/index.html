@@ -795,7 +795,7 @@ html { scroll-padding-top: 84px; }
     var cards = [['top', 'Top'], ['jungle', 'Jungle'], ['mid', 'Mid'], ['bot', 'Bot'], ['support', 'Support']];
     var ROLES = ['Top', 'Jungle', 'Mid', 'Bot', 'Support'], KEYS = { Top: 'top', Jungle: 'jungle', Mid: 'mid', Bot: 'bot', Support: 'support' };
     var sg = function (v) { return (v > 0 ? '+' : '') + Math.round(v).toLocaleString('en-US'); };
-    var RGL = ['Global', 'MSI', 'FST', 'EWC', 'LCK', 'LPL', 'LEC', 'LCS', 'CBLOL', 'LCP'], INTL = { MSI: 'MSI', FST: 'First Stand', EWC: 'Esports World Cup' }, region = 'Global', TRG = {};
+    var RGL = ['Global', 'MSI', 'FST', 'EWC', 'LCK', 'LPL', 'LEC', 'LCS', 'CBLOL', 'LCP'], INTL = { MSI: 'MSI', FST: 'First Stand', EWC: 'EWC' }, region = 'Global', TRG = {};
     rank.forEach(function (x) { TRG[x[2]] = x[1]; });
     var rgIcon = function (g) { if (g === 'Global') return worlds(18); if (INTL[g]) return (window.LVF && LVF.evIcon(g, 18)) || '<b style="font-size:10px;letter-spacing:.04em">' + g + '</b>'; var r = RG[g]; return r ? '<img' + (r[1] ? ' class="mi"' : '') + ' src="' + r[0] + '" alt="">' : ''; }, rgName = function (g) { return g === 'Global' ? 'Worlds' : INTL[g] || g; };
     var inRegion = function (r) { return true; };   // the data is already scoped to the picked league
