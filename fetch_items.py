@@ -21,6 +21,7 @@ H = {"x-api-key": KEY, "User-Agent": "lol-view-stats fan site"}
 LEAGUES = [("worlds", "2026-10-22"), ("msi", "2026-01-01"), ("first_stand", "2026-01-01"), ("esports_world_cup", "2026-01-01"), ("ewc", "2026-01-01"),
            ("lck", "2026-01-01"), ("lpl", "2026-01-01"), ("lec", "2026-01-01"), ("lcs", "2026-01-01"), ("lcp", "2026-01-01"), ("cblol-brazil", "2026-01-01"), ("cblol", "2026-01-01")]
 LEAGUE_SLUG = "worlds"
+SINCE = "2026-10-22"              # Worlds: ignore matches before this date (used by fetch_riot_games.py)
 MAX_PAGES = 30
 TRINKET_IDS = {3330, 3340, 3363, 3364}
 BUDGET = 480                      # seconds of feed requests per run
