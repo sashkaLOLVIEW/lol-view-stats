@@ -12,7 +12,7 @@ from pathlib import Path
 import fetch_items as FI
 
 OUT = FI.ROOT / "data" / "riot_games.json"
-FORMAT = 2   # 2: gold sampled every minute
+FORMAT = 3   # 3: objective events as well (2: gold sampled every minute)
 BUDGET = 300      # seconds of feed requests per run
 get, iso, fmt, floor10 = FI.get, FI.iso, FI.fmt, FI.floor10
 FEED, GW = FI.FEED, FI.GW
@@ -28,12 +28,12 @@ def fetch_game(game, e, bo, mid=None, teams_by_id=None):
     lf = fr[-1]; tend = iso(lf["rfc460Timestamp"]); length = int((tend - t0).total_seconds())
     det = get(FEED + "/details/" + gid, startingTime=fmt(floor10(tend - dt.timedelta(seconds=30))))
     dpl = {p["participantId"]: p for p in (det.get("frames") or [{}])[-1].get("participants") or []}
-    series = []
+    series = []; states = [(0, [[0, 0, 0, []], [0, 0, 0, []]])]
     m = 1
     while t0 + dt.timedelta(minutes=m) < tend - dt.timedelta(seconds=30):
         try:
             f = (get(FEED + "/window/" + gid, startingTime=fmt(floor10(t0 + dt.timedelta(minutes=m)))).get("frames") or [None])[0]
-            if f: series.append([m, f["blueTeam"]["totalGold"] - f["redTeam"]["totalGold"]])
+            if f: series.append([m, f["blueTeam"]["totalGold"] - f["redTeam"]["totalGold"]]); states.append((m, FI.team_state(f)))
         except Exception: pass
         m += 1; time.sleep(0.08)
     byid = teams_by_id or {t["id"]: t for t in e["match"]["teams"] if t.get("id")}   # the schedule feed has no team ids; getEventDetails does
@@ -57,7 +57,7 @@ def fetch_game(game, e, bo, mid=None, teams_by_id=None):
     series.append([round(length / 60, 1), teams[0]["gold"] - teams[1]["gold"]])
     # Riot's feed does not say who won; the team that took more inhibitors, then towers, then gold did (the nexus falls after an inhibitor)
     score = lambda t: t["inhib"] * 1e6 + t["towers"] * 1e4 + t["gold"]
-    return dict(id=gid, mid=mid, v=FORMAT, number=game["number"], bo=bo, start=fmt(t0), patch=md.get("patchVersion"), len=length, blue_win=score(teams[0]) >= score(teams[1]), teams=teams, gold=[[0, 0]] + series)
+    return dict(id=gid, mid=mid, v=FORMAT, number=game["number"], bo=bo, start=fmt(t0), patch=md.get("patchVersion"), len=length, blue_win=score(teams[0]) >= score(teams[1]), teams=teams, gold=[[0, 0]] + series, obj=FI.obj_events(states + [(round(length / 60, 2), FI.team_state(lf))]))
 
 def matches_with_games():
     """Matches of the event that have at least one finished game. Riot keeps a series 'inProgress' in the schedule for a while after

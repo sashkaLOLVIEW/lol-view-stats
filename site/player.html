@@ -564,16 +564,17 @@ html { scroll-padding-top: 84px; }
     document.title = name + ' · Player Profile';
   }
   var h = ''; try { h = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
-  show(D.players[h] ? h : (D.players.Chovy ? 'Chovy' : names[0]));
+  var dflt = D.players.Chovy ? 'Chovy' : names[0];
+  if (D.players[h]) show(h); else if (!h || !window.LVF) show(dflt);   // a player outside the embedded Worlds data: stay blank until their own profile is ready, never flash the default one
   var D0 = D;
   var wanted = h;
-  function want() { var hh = wanted; if (window.LVF && hh && !D.players[hh]) LVF.has('player', hh).then(function (ok) { if (ok) LVF.focus('player', hh); }); }
+  function want() { var hh = wanted; if (window.LVF && hh && !D.players[hh]) LVF.has('player', hh).then(function (ok) { if (ok) LVF.focus('player', hh); else if (!$('stats').innerHTML) show(dflt); }, function () { if (!$('stats').innerHTML) show(dflt); }); }
   want();
   function setD(nd) {
     D = nd; if (nd !== D0) Object.keys(nd.players).forEach(function (n) { var o = D0.players[n]; if (o && o.face && !nd.players[n].face) nd.players[n].face = o.face; });
     names = Object.keys(D.players).sort(function (a, b) { return a.toLowerCase() < b.toLowerCase() ? -1 : 1; });
     AGG = {}; names.forEach(function (n) { AGG[n] = agg(D.players[n].games); });
-    var hh = wanted;
+    var hh = wanted || (D.players.Chovy ? 'Chovy' : names[0]);
     if (D.players[hh]) show(hh);
     else { $('hero').innerHTML = '<div style="padding:28px;color:var(--muted)">' + (hh || 'This player') + ' has no games in these filters.</div>'; $('stats').innerHTML = ''; $('tbody').innerHTML = ''; $('hist').innerHTML = ''; $('cfd').innerHTML = ''; $('radars').innerHTML = ''; want(); }
   }

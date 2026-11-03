@@ -35,6 +35,30 @@ def get(url, **params):
         r.raise_for_status(); return r.json()
     raise RuntimeError("rate limited: " + url)
 
+def team_state(f):
+    """Objective counters of one /window frame: [[towers, inhibitors, barons, [dragon types...]] blue, red]."""
+    out = []
+    for side in ("blueTeam", "redTeam"):
+        t = f.get(side) or {}
+        out.append([int(t.get("towers") or 0), int(t.get("inhibitors") or 0), int(t.get("barons") or 0), [str(d).lower() for d in (t.get("dragons") or [])]])
+    return out
+
+def obj_events(states):
+    """[[minute, side 0/1, kind]] from consecutive (minute, team_state) samples; an event is placed in the middle of the interval it was seen in.
+    kind: turret, inhibitor, nashor (baron) or the dragon type (ocean, infernal, cloud, mountain, hextech, chemtech, elder)."""
+    ev, prev = [], None
+    for m, st in states:
+        if prev is not None:
+            pm, ps = prev
+            for sd in (0, 1):
+                a, b = ps[sd], st[sd]; mid = round((pm + m) / 2, 2)
+                for _ in range(max(0, b[0] - a[0])): ev.append([mid, sd, "turret"])
+                for _ in range(max(0, b[1] - a[1])): ev.append([mid, sd, "inhibitor"])
+                for _ in range(max(0, b[2] - a[2])): ev.append([mid, sd, "nashor"])
+                for d in b[3][len(a[3]):]: ev.append([mid, sd, d])
+        prev = (m, st)
+    return ev
+
 def iso(s): return dt.datetime.fromisoformat(s.replace("Z", "+00:00"))
 def fmt(t): return t.strftime("%Y-%m-%dT%H:%M:%S.000Z")
 def late(t0):
@@ -76,17 +100,19 @@ def fetch_game(game, number, codes, bo=0):
     m = 1
     while t0 + dt.timedelta(minutes=m) < tend: mins.append(m); m += 1
     def sample(m):
-        st = fmt(floor10(t0 + dt.timedelta(minutes=m))); d = None; gd = None
-        try: d = (get(FEED + "/details/" + gid, startingTime=st).get("frames") or [{}])[0].get("participants") or []
+        st0 = fmt(floor10(t0 + dt.timedelta(minutes=m))); d = None; gd = None; st = None
+        try: d = (get(FEED + "/details/" + gid, startingTime=st0).get("frames") or [{}])[0].get("participants") or []
         except Exception: pass
         try:
-            f = (get(FEED + "/window/" + gid, startingTime=st).get("frames") or [None])[0]
-            if f: gd = [m, f["blueTeam"]["totalGold"] - f["redTeam"]["totalGold"]]
+            f = (get(FEED + "/window/" + gid, startingTime=st0).get("frames") or [None])[0]
+            if f: gd = [m, f["blueTeam"]["totalGold"] - f["redTeam"]["totalGold"]]; st = team_state(f)
         except Exception: pass
-        return d, gd
+        return d, gd, st
     with ThreadPoolExecutor(4) as ex: res = list(ex.map(sample, mins))
-    samples = [{q["participantId"]: [i for i in (q.get("items") or []) if i] for q in d} for d, _ in res if d is not None]
-    gold = [[0, 0]] + [g for _, g in res if g]
+    samples = [{q["participantId"]: [i for i in (q.get("items") or []) if i] for q in d} for d, _, _ in res if d is not None]
+    gold = [[0, 0]] + [g for _, g, _ in res if g]
+    states = [(0, [[0, 0, 0, []], [0, 0, 0, []]])] + [(m_, st_) for m_, (_, _, st_) in zip(mins, res) if st_] + [(round((tend - t0).total_seconds() / 60, 2), team_state(fr[-1]))]
+    obj = obj_events(states)
     def order_of(pid):
         seen, out = set(), []
         for s in samples:
@@ -109,7 +135,7 @@ def fetch_game(game, number, codes, bo=0):
             tr0 = None if any(i in TRINKET_IDS for i in items) else last_trinket(pm["participantId"])
             players[side + ":" + pos] = dict(name=pm.get("summonerName"), champ=pm.get("championId"), items=items, tr0=tr0, order=order_of(pm["participantId"]),
                                              runes=dict(style=perk.get("styleId"), sub=perk.get("subStyleId"), perks=perk.get("perks")))
-    return dict(id=gid, v=FORMAT, number=number, bo=bo, codes=sorted(codes), start=fmt(t0), patch=md.get("patchVersion"), players=players, gold=gold)
+    return dict(id=gid, v=FORMAT, number=number, bo=bo, codes=sorted(codes), start=fmt(t0), patch=md.get("patchVersion"), players=players, gold=gold, obj=obj)
 
 def pick_leagues():
     """[(league id, slug, since)] for the slugs in LEAGUES that the schedule API knows, in priority order; logs the ones it does not."""
@@ -145,7 +171,7 @@ def main():
             for g in games:
                 if g["id"] in cache and bo and not cache[g["id"]].get("bo"): cache[g["id"]]["bo"] = bo       # backfill best-of on older entries
                 old = cache.get(g["id"])
-                stale = bool(old) and old.get("v", 1) < FORMAT
+                stale = bool(old) and (old.get("v", 1) < FORMAT or (old.get("lg") not in (None, "worlds") and "obj" not in old))
                 if g.get("state") != "completed": ok = False; continue
                 if old and not stale: continue
                 if time.time() - t_start > BUDGET: skipped += 1; ok = False; continue          # keep the run short; the rest is picked up on the next run

@@ -254,7 +254,7 @@ def riot_only_games(w, ic):
         if not ok or len(teams) != 2: print("  skipped incomplete Riot game", rid); continue
         RIOT_MAP[rid] = rid
         out.append(dict(id=rid, pct=1, bo=r.get("bo") or 0, patch=(".".join(str(r["patch"]).split(".")[:2]) if r.get("patch") else None),
-                        date=t0.tz_localize("UTC").tz_convert(TZ).strftime("%b %-d"), start=str(t0), len=r["len"], teams=teams, gold=r["gold"]))
+                        date=t0.tz_localize("UTC").tz_convert(TZ).strftime("%b %-d"), start=str(t0), len=r["len"], teams=teams, gold=r["gold"], obj=r.get("obj")))
     if out: print("  games from Riot's feed (not in Oracle's Elixir yet):", len(out))
     return out
 
@@ -542,7 +542,7 @@ def export_oe_items(csv, out_dir):
             it = tidy_items(rp["items"] + ([rp["tr0"]] if rp.get("tr0") and not any(i in TRINKETS for i in rp["items"]) else []), TRINKETS, SQ)
             pl["%d:%d" % (0 if p.side == "Blue" else 1, POSL.index(p.position))] = [it, [pk[0], rn.get("sub")] if pk and rn.get("sub") else None]
             ids_i.update(i for i in it if i); ids_r += [pk[0], rn.get("sub")] if pk and rn.get("sub") else []
-        per.setdefault(lg, {})[gid] = {"p": pl, "g": r.get("gold") or []}
+        per.setdefault(lg, {})[gid] = {"p": pl, "g": r.get("gold") or [], "o": r.get("obj") or []}
     print("  other-league items: %d of %d OE games matched to Riot data" % (hit, tot))
     if not per: return
     icons = item_assets(ids_i); runes = rune_assets([ids_r])
@@ -750,8 +750,9 @@ def main(csv):
         m_ = (_rg.get(_rev.get(g_["id"], g_["id"])) or {}).get("mid")
         if m_: g_["mid"] = m_    # Riot match id: lets the game page link to the series Overview and the other games on the live page
         _rgm = _rg.get(_rev.get(g_["id"], g_["id"])) or {}
-        if len(_rgm.get("gold") or []) > 6 and _rgm.get("v") == 2 and g_["gold"] != _rgm["gold"]:
+        if len(_rgm.get("gold") or []) > 6 and _rgm.get("v", 0) >= 2 and g_["gold"] != _rgm["gold"]:
             g_["gold"] = _rgm["gold"] + [g_["gold"][-1]]    # 1-minute Riot series, closed with the OE final diff
+        if _rgm.get("obj"): g_["obj"] = _rgm["obj"]       # objective times (for the icons under the gold graph)
     RK, RKUPD, RKTS = build_rankings(csv); HAS = {c: 1 for c in TD['teams']}
 
     FACES = {p["name"]: p["face"] for p in PD["players"].values() if p["face"]}
