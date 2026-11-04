@@ -541,8 +541,8 @@ def export_oe_items(csv, out_dir):
             if not rp or p.position not in POSL: continue
             rn = rp.get("runes") or {}; pk = rn.get("perks") or []
             it = tidy_items(rp["items"] + ([rp["tr0"]] if rp.get("tr0") and not any(i in TRINKETS for i in rp["items"]) else []), TRINKETS, SQ)
-            pl["%d:%d" % (0 if p.side == "Blue" else 1, POSL.index(p.position))] = [it, [pk[0], rn.get("sub")] if pk and rn.get("sub") else None, rp.get("ab") or "", list(rp.get("order") or [])]
-            ids_i.update(i for i in it if i); ids_r += [pk[0], rn.get("sub")] if pk and rn.get("sub") else []
+            pl["%d:%d" % (0 if p.side == "Blue" else 1, POSL.index(p.position))] = [it, [pk[0], rn.get("sub")] if pk and rn.get("sub") else None, rp.get("ab") or "", list(rp.get("order") or []), list(pk or [])]
+            ids_i.update(i for i in it if i); ids_r += ([pk[0], rn.get("sub")] + list(pk)) if pk and rn.get("sub") else []
         per.setdefault(lg, {})[gid] = {"p": pl, "g": r.get("gold") or [], "o": r.get("obj") or []}
     print("  other-league items: %d of %d OE games matched to Riot data" % (hit, tot))
     if not per: return
@@ -594,7 +594,7 @@ def attach_items(w, GD, PD, CD):
     for g in GD["games"]:
         for t in g["teams"]:
             for p in t["players"]:
-                k = (g["id"], t["side"], POS_OF_ROLE[p["role"]]); p["it"] = IT.get(k) or p.get("it"); p["rn"] = RN.get(k) or p.get("rn"); p["sk"] = (M.get(k) or ((),) * 5)[4] or None; p["bo"] = BO.get(k) or None
+                k = (g["id"], t["side"], POS_OF_ROLE[p["role"]]); p["it"] = IT.get(k) or p.get("it"); p["rn"] = RN.get(k) or p.get("rn"); p["pk"] = PK.get(k) or None; p["sk"] = (M.get(k) or ((),) * 5)[4] or None; p["bo"] = BO.get(k) or None
     for pl in PD["players"].values():
         for r in pl["games"]:
             k = (r["gid"], r["side"], POS_OF_ROLE[r["role"]]); r["it"] = IT.get(k); r["rn"] = RN.get(k)

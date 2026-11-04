@@ -439,7 +439,6 @@ html { scroll-padding-top: 84px; }
     radar.cov = (100 * vals.reduce(function (t, v, i) { return t + Math.max(.04, v / 100) * Math.max(.04, vals[(i + 1) % n] / 100); }, 0) / n).toFixed(0);
     var poly = vals.map(function (v, i) { return pt(i, R * Math.max(.04, v / 100)).map(function (x) { return x.toFixed(1); }).join(','); }).join(' ');
     out += '<polygon points="' + poly + '" fill="url(#' + gid + ')" stroke="var(--fg)" stroke-width="2.2" stroke-linejoin="round"/>';
-    vals.forEach(function (v, i) { var p = pt(i, R * Math.max(.04, v / 100)); out += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="4" fill="var(--surface)" stroke="var(--fg)" stroke-width="2.2"/>'; });
     axes.forEach(function (a, i) {
       var p = pt(i, R + 20), anc = p[0] < cx - 4 ? 'end' : p[0] > cx + 4 ? 'start' : 'middle', val = ag[a[1]] == null ? '-' : a[3](ag[a[1]]);
       var dy = p[1] < cy - 4 ? -6 : p[1] > cy + 4 ? 8 : 0;

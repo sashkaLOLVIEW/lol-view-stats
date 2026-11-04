@@ -321,7 +321,6 @@ html { scroll-padding-top: 84px; }
     var vals = axes.map(function (a) { return pct(a[1], ag[a[1]], a[2]); });
     radar.cov = (100 * vals.reduce(function (t, v, i) { return t + Math.max(.04, v / 100) * Math.max(.04, vals[(i + 1) % n] / 100); }, 0) / n).toFixed(0);
     out += '<polygon points="' + vals.map(function (v, i) { return pt(i, R * Math.max(.04, v / 100)).map(function (x) { return x.toFixed(1); }).join(','); }).join(' ') + '" fill="url(#' + gid + ')" stroke="var(--fg)" stroke-width="2.2" stroke-linejoin="round"/>';
-    vals.forEach(function (v, i) { var p = pt(i, R * Math.max(.04, v / 100)); out += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="4" fill="var(--surface)" stroke="var(--fg)" stroke-width="2.2"/>'; });
     axes.forEach(function (a, i) {
       var p = pt(i, R + 20), anc = p[0] < cx - 4 ? 'end' : p[0] > cx + 4 ? 'start' : 'middle', dy = p[1] < cy - 4 ? -6 : p[1] > cy + 4 ? 8 : 0;
       out += '<text class="rl" x="' + p[0].toFixed(1) + '" y="' + (p[1] + dy - 2).toFixed(1) + '" text-anchor="' + anc + '">' + a[0] + '</text><text class="rv" x="' + p[0].toFixed(1) + '" y="' + (p[1] + dy + 11).toFixed(1) + '" text-anchor="' + anc + '">' + a[3](ag[a[1]]) + '</text>';
