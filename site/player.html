@@ -296,6 +296,8 @@ img.wi-l { display: none; } img.wi-d { display: block; }
 .radars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 14px; }
 .rcard { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 12px 8px; }
 .rcard h3 { margin: 0 0 4px 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.rcard h3 { display: flex; align-items: center; gap: 8px; }
+.rcard h3 .cov { display: inline-flex; align-items: center; height: 18px; padding: 0 7px; border-radius: 5px; background: #fff; color: #3d3d3d; box-shadow: inset 0 0 0 1px #00000026; font-size: 10.5px; font-weight: 700; letter-spacing: .02em; text-transform: none; }
 .rcard svg { display: block; width: 100%; height: auto; }
 .rcard text { font-family: var(--font); }
 .rl { font-size: 9.5px; font-weight: 700; fill: var(--muted); text-transform: uppercase; }
@@ -434,6 +436,7 @@ html { scroll-padding-top: 84px; }
     [1, .75, .5, .25].forEach(function (f, k) { out += '<polygon points="' + axes.map(function (_, i) { return pt(i, R * f).map(function (v) { return v.toFixed(1); }).join(','); }).join(' ') + '" fill="' + (k % 2 === 0 ? 'var(--stripe, var(--surface-2))' : 'none') + '" stroke="var(--line)" stroke-width="1"' + (k ? ' stroke-dasharray="2 3"' : '') + ' stroke-linejoin="round"/>'; });
     axes.forEach(function (_, i) { var p = pt(i, R); out += '<line x1="' + cx + '" y1="' + cy + '" x2="' + p[0].toFixed(1) + '" y2="' + p[1].toFixed(1) + '" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 3"/>'; });
     var vals = axes.map(function (a) { return pct(role, a[1], ag[a[1]], a[2]); });
+    radar.cov = (100 * vals.reduce(function (t, v, i) { return t + Math.max(.04, v / 100) * Math.max(.04, vals[(i + 1) % n] / 100); }, 0) / n).toFixed(0);
     var poly = vals.map(function (v, i) { return pt(i, R * Math.max(.04, v / 100)).map(function (x) { return x.toFixed(1); }).join(','); }).join(' ');
     out += '<polygon points="' + poly + '" fill="url(#' + gid + ')" stroke="var(--fg)" stroke-width="2.2" stroke-linejoin="round"/>';
     vals.forEach(function (v, i) { var p = pt(i, R * Math.max(.04, v / 100)); out += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="4" fill="var(--surface)" stroke="var(--fg)" stroke-width="2.2"/>'; });
@@ -557,7 +560,7 @@ html { scroll-padding-top: 84px; }
     }
     var mh = function (ik, t) { return '<div class="c">' + '<span>' + t + '</span></div>'; };
     $('hist').innerHTML = (hh ? '<div class="gr gm mhd"><div></div><div></div><div class="gs">' + mh('ICK', 'KDA') + mh('ICC', 'CS') + mh('KP', 'KP%') + mh('ICD', 'DMG%') + mh('ICG', 'GD') + '</div><div></div></div>' : '') + hh;
-    $('radars').innerHTML = RAD.map(function (r) { return '<div class="rcard"><h3>' + r[0] + '</h3>' + radar(r[0], r[1], ag, P.role) + '</div>'; }).join('');
+    $('radars').innerHTML = RAD.map(function (r) { var sv = radar(r[0], r[1], ag, P.role); return '<div class="rcard"><h3>' + r[0] + '<span class="cov" title="Share of the chart area covered by the stats">' + radar.cov + '%</span></h3>' + sv + '</div>'; }).join('');
     (function () {
       var hs = $('hist'), cards = [].slice.call(hs.querySelectorAll('.gr:not(.mhd)')), shown = 10, bt = document.createElement('button');
       if (cards.length <= 10) return;
