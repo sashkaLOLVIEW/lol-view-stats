@@ -120,7 +120,7 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .pcard:hover .pn b { text-decoration: underline; }
 .pimg { height: 120px; display: flex; align-items: flex-end; justify-content: center; border-bottom: 1px solid var(--line); background: none; border-radius: 8px 8px 0 0; overflow: hidden; }
 .pimg img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
-.pimg .ph { width: 80px; height: 90px; background: var(--pill); border-radius: 8px 8px 0 0; }
+.pimg .ph { display: flex; align-items: center; justify-content: center; width: 80px; height: 90px; } .pimg .ph img { width: 48px; height: 48px; object-fit: contain; }
 .pn { display: flex; align-items: center; gap: 6px; height: 36px; border-bottom: 1px solid var(--divider); font-size: 13px; font-weight: 700; }
 .pn svg { width: 14px; height: 14px; flex: none; }
 .pn .fg { width: 20px; height: 15px; border-radius: 2px; margin-left: auto; flex: none; object-fit: cover; display: block; }
@@ -348,7 +348,7 @@ html { scroll-padding-top: 84px; }
       var P = D.players[n], gm = mine(n), g = pagg(gm);
       var st = [['KDA', f1(g.kda)], ['CS/M', f1(g.cspm)], ['KP %', f1(g.kp) + '%'], ['DMG %', f1(g.ds) + '%'], ['GOLD %', f1(g.gs) + '%'], ['CSD @15', sg(g.csd)], ['GOLD @15', sg(g.gd)], ['XP @15', sg(g.xpd)]];
       if (sub) st.unshift(['GAMES', gm.length]);
-      return '<a class="pcard" href="player.html#' + encodeURIComponent(n) + '"><div class="pimg">' + (P.face ? '<img src="' + P.face + '" alt="' + n + '">' : '<span class="ph"></span>') + '</div><div class="pn">' + (RI[P.role] || '') + '<b>' + n + '</b>' + (NAT[n] ? '<img class="fg" src="' + FL[NAT[n]] + '" alt="' + NAT[n].toUpperCase() + '">' : '') + '</div>' + st.map(function (s) { return '<div class="srow"><span>' + s[0] + '</span><b>' + s[1] + '</b></div>'; }).join('') + '</a>';
+      return '<a class="pcard" href="player.html#' + encodeURIComponent(n) + '"><div class="pimg">' + (P.face ? '<img src="' + P.face + '" alt="' + n + '">' : '<span class="ph">' + LVF.evIcon('ALLCH', 48) + '</span>') + '</div><div class="pn">' + (RI[P.role] || '') + '<b>' + n + '</b>' + (NAT[n] ? '<img class="fg" src="' + FL[NAT[n]] + '" alt="' + NAT[n].toUpperCase() + '">' : '') + '</div>' + st.map(function (s) { return '<div class="srow"><span>' + s[0] + '</span><b>' + s[1] + '</b></div>'; }).join('') + '</a>';
     };
     // starters: in each role the player with the most games for this team (latest game breaks ties); everyone else who played is a sub
     var last = function (n) { return mine(n).reduce(function (m, x) { return x.date > m ? x.date : m; }, ''); }, starters = {}, subs = [];

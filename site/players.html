@@ -79,6 +79,10 @@ h2 { margin:0; font-size:15px; font-weight:600; display:flex; align-items:center
 .tp-portrait { position: absolute; right: 8px; bottom: 0; width: 56px; height: 42px; border-radius: 4px 4px 0 0; background: var(--chip-bg); border: 1px dashed var(--line); border-bottom: 0; overflow: hidden; }
 .tp-portrait.has { border: 0; background: none; }
 .tp-portrait img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.tp-portrait.ph { display: flex; align-items: center; justify-content: center; border: 0; background: none; } .tp-portrait.ph img { width: auto; height: auto; max-width: 34px; max-height: 34px; }
+img.wi-l { display: none; } img.wi-d { display: block; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .wi-l { display: block; } :root:not([data-theme="dark"]) .wi-d { display: none; } }
+:root[data-theme="light"] .wi-l { display: block; } :root[data-theme="light"] .wi-d { display: none; }
 .tp-stats { padding: 6px 8px 6px; display: flex; flex-direction: column; }
 .tp-srow { display: flex; align-items: center; justify-content: space-between; height: 24px; font-size: 10px; font-weight: 500; color: var(--muted); text-transform: uppercase; }
 .tp-srow span:last-child { color: var(--fg); font-size: 12px; font-weight: 700; text-transform: none; font-variant-numeric: tabular-nums; }
@@ -355,7 +359,7 @@ html { scroll-padding-top: 84px; }
         ? ROLES.filter(function (role) { return byRole(role).length; }).map(function (role) { var l = byRole(role); return cardData(l[0], l); })
         : byRole(sel).slice(0, 5).map(function (r, i, arr) { var l = byRole(sel); return cardData(r, l); });
       $('tp-cards').innerHTML = cards.map(function (c, i) {
-        var face = FACESF[c.p] ? '<span class="tp-portrait has"><img src="' + FACESF[c.p] + '" alt=""></span>' : '<span class="tp-portrait"></span>';
+        var face = FACESF[c.p] ? '<span class="tp-portrait has"><img src="' + FACESF[c.p] + '" alt=""></span>' : '<span class="tp-portrait ph">' + LVF.evIcon('ALLCH', 32) + '</span>';
         return '<article class="tp-card"><div class="tp-card-hd">' + ic[KEYS[c.role]].replace('width="16" height="16"', 'width="12" height="12"') + c.role + (sel === 'All' ? '' : ' #' + (i + 1)) + '</div>' +
           '<div class="tp-who"><div class="tp-who-l"><div class="tp-pname"><span class="tp-tlogo" style="border:0">' + logo(c.t, 20) + '</span><a href="' + pl(c.p) + '" style="color:var(--fg)"><b>' + c.p + '</b></a></div><div class="tp-rating">Rating <span class="tp-badge' + (c.rt >= 90 ? ' gold' : c.rt >= 80 ? ' blue' : c.rt >= 70 ? ' green' : '') + '">' + c.rt + '</span></div></div>' + face + '</div>' +
           '<div class="tp-stats">' + stats.map(function (t, k) { return '<div class="tp-srow"><span>' + t + '</span><span>' + c.v[k] + '<em class="' + (c.rk[k] <= 3 ? 'r' + c.rk[k] : '') + '">' + c.rk[k] + '</em></span></div>'; }).join('') + '</div></article>';
