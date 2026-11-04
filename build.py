@@ -663,6 +663,13 @@ def load_player_info():
                 if pl_.get("cc") and not cur.get("cc"): cur["cc"] = pl_["cc"]
                 if pl_.get("contract") and not cur.get("contract"): cur["contract"] = month_year(pl_["contract"])
     except Exception: pass
+    try:                                            # published contract sheet (fetch_contracts.py): beats Leaguepedia, loses to the hand-typed CSV below
+        ct = json.loads((ROOT / "config" / "contracts_auto.json").read_text(encoding="utf-8")).get("players", {})
+        low = {k.lower(): k for k in info}
+        for name, v in ct.items():
+            key = low.get(name.lower(), name)
+            if v.get("contract"): info.setdefault(key, {})["contract"] = month_year(v["contract"])
+    except Exception: pass
     p = ROOT / "config" / "player_info.csv"
     if p.exists():
         for r in pd.read_csv(p, dtype=str).fillna("").to_dict("records"):

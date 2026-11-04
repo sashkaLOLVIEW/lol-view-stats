@@ -30,6 +30,8 @@ jobs:
         run: python fetch_data.py
       - name: Look up ages and contracts
         run: python fetch_player_info.py
+      - name: Download the contract spreadsheet
+        run: python fetch_contracts.py
       - name: Look up LPL rosters (players, subs, coaches)
         run: python fetch_lpl_rosters.py
       - name: Save results and rebuild the site
@@ -40,6 +42,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add config/player_info_auto.json
           [ -f config/lpl_roster_auto.json ] && git add config/lpl_roster_auto.json || true
+          [ -f config/contracts_auto.json ] && git add config/contracts_auto.json || true
           if git diff --cached --quiet; then echo "nothing new to save"; else
             git commit -m "Update player ages and contracts"
             git push
