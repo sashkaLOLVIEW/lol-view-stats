@@ -1,0 +1,310 @@
+{
+ "fetched": 1793835017.072675,
+ "source": "https://docs.google.com/spreadsheets/d/1Y7k5kQ2AegbuyiGwEPsa62e883FYVtHqr6UVut9RC4o/pub?gid=594163931&single=true&output=csv",
+ "players": {
+  "Cube": {
+   "contract": "2027-11-16",
+   "team": "Xi'an Team WE"
+  },
+  "About": {
+   "contract": "2027-11-16",
+   "team": "Xi'an Team WE"
+  },
+  "Karis": {
+   "contract": "2026-11-17",
+   "team": "Xi'an Team WE"
+  },
+  "Monki": {
+   "contract": "2026-11-17",
+   "team": "Xi'an Team WE"
+  },
+  "Dorian": {
+   "contract": "2028-11-21",
+   "team": "Xi'an Team WE"
+  },
+  "Erha": {
+   "contract": "2026-11-17",
+   "team": "Xi'an Team WE"
+  },
+  "Elk": {
+   "contract": "2026-11-17",
+   "team": "WeiboGaming"
+  },
+  "Xiaohu": {
+   "contract": "2026-11-17",
+   "team": "WeiboGaming"
+  },
+  "Zika": {
+   "contract": "2026-11-17",
+   "team": "WeiboGaming"
+  },
+  "jiejie": {
+   "contract": "2026-11-17",
+   "team": "WeiboGaming"
+  },
+  "Hang": {
+   "contract": "2027-11-16",
+   "team": "WeiboGaming"
+  },
+  "Liangchen": {
+   "contract": "2026-11-17",
+   "team": "Ultra Prime"
+  },
+  "climber": {
+   "contract": "2027-11-16",
+   "team": "Ultra Prime"
+  },
+  "Saber": {
+   "contract": "2027-11-16",
+   "team": "Ultra Prime"
+  },
+  "Xiaoxia": {
+   "contract": "2027-11-16",
+   "team": "Ultra Prime"
+  },
+  "Hena": {
+   "contract": "2026-11-17",
+   "team": "Ultra Prime"
+  },
+  "Keshi": {
+   "contract": "2026-09-30",
+   "team": "THUNDER TALK GAMING"
+  },
+  "Junhao": {
+   "contract": "2026-09-30",
+   "team": "THUNDER TALK GAMING"
+  },
+  "Ryan3": {
+   "contract": "2026-11-17",
+   "team": "THUNDER TALK GAMING"
+  },
+  "Feather": {
+   "contract": "2027-11-16",
+   "team": "THUNDER TALK GAMING"
+  },
+  "Heru": {
+   "contract": "2026-09-30",
+   "team": "THUNDER TALK GAMING"
+  },
+  "Ahn": {
+   "contract": "2026-07-01",
+   "team": "THUNDER TALK GAMING"
+  },
+  "369": {
+   "contract": "2026-11-17",
+   "team": "TOP ESPORTS"
+  },
+  "JackeyLove": {
+   "contract": "2026-11-17",
+   "team": "TOP ESPORTS"
+  },
+  "fengyue": {
+   "contract": "2028-11-21",
+   "team": "TOP ESPORTS"
+  },
+  "Creme": {
+   "contract": "2026-11-17",
+   "team": "TOP ESPORTS"
+  },
+  "Tian": {
+   "contract": "2028-11-21",
+   "team": "TOP ESPORTS"
+  },
+  "ZUIAN": {
+   "contract": "2027-11-16",
+   "team": "TOP ESPORTS"
+  },
+  "Juhan": {
+   "contract": "2026-11-17",
+   "team": "Oh My God"
+  },
+  "Hery": {
+   "contract": "2026-11-17",
+   "team": "Oh My God"
+  },
+  "Moham": {
+   "contract": "2025-11-18",
+   "team": "Oh My God"
+  },
+  "haichao": {
+   "contract": "2026-11-17",
+   "team": "Oh My God"
+  },
+  "Starry": {
+   "contract": "2026-11-17",
+   "team": "Oh My God"
+  },
+  "re0": {
+   "contract": "2027-11-16",
+   "team": "Oh My God"
+  },
+  "Zhuo": {
+   "contract": "2026-11-17",
+   "team": "Shenzhen NINJAS IN PYJAMAS"
+  },
+  "Guwon": {
+   "contract": "2026-11-17",
+   "team": "Shenzhen NINJAS IN PYJAMAS"
+  },
+  "Assum": {
+   "contract": "2026-11-17",
+   "team": "Shenzhen NINJAS IN PYJAMAS"
+  },
+  "Care": {
+   "contract": "2026-11-17",
+   "team": "Shenzhen NINJAS IN PYJAMAS"
+  },
+  "HOYA": {
+   "contract": "2026-11-17",
+   "team": "Shenzhen NINJAS IN PYJAMAS"
+  },
+  "MISSING": {
+   "contract": "2026-11-17",
+   "team": "Suzhou LNG Esports"
+  },
+  "1xn": {
+   "contract": "2026-11-17",
+   "team": "Suzhou LNG Esports"
+  },
+  "sheer": {
+   "contract": "2027-11-16",
+   "team": "Suzhou LNG Esports"
+  },
+  "BuLLDoG": {
+   "contract": "2027-11-16",
+   "team": "Suzhou LNG Esports"
+  },
+  "Croco": {
+   "contract": "2026-11-17",
+   "team": "Suzhou LNG Esports"
+  },
+  "Shaoye": {
+   "contract": "2026-11-17",
+   "team": "LGD GAMING"
+  },
+  "sasi": {
+   "contract": "2027-11-16",
+   "team": "LGD GAMING"
+  },
+  "Ycx": {
+   "contract": "2026-11-17",
+   "team": "LGD GAMING"
+  },
+  "Tangyuan": {
+   "contract": "2028-11-21",
+   "team": "LGD GAMING"
+  },
+  "Heng": {
+   "contract": "2026-11-17",
+   "team": "LGD GAMING"
+  },
+  "JunJia": {
+   "contract": "2026-11-17",
+   "team": "Beijing JDG Esports"
+  },
+  "Xiaoxu": {
+   "contract": "2026-11-17",
+   "team": "Beijing JDG Esports"
+  },
+  "HongQ": {
+   "contract": "2026-11-17",
+   "team": "Beijing JDG Esports"
+  },
+  "Vampire": {
+   "contract": "2027-11-16",
+   "team": "Beijing JDG Esports"
+  },
+  "GALA": {
+   "contract": "2026-11-17",
+   "team": "Beijing JDG Esports"
+  },
+  "Photic": {
+   "contract": "2026-11-17",
+   "team": "Invictus Gaming"
+  },
+  "Meiko": {
+   "contract": "2026-11-17",
+   "team": "Invictus Gaming"
+  },
+  "Rookie": {
+   "contract": "2027-11-16",
+   "team": "Invictus Gaming"
+  },
+  "Wei": {
+   "contract": "2026-11-17",
+   "team": "Invictus Gaming"
+  },
+  "Jwei": {
+   "contract": "2026-11-17",
+   "team": "Invictus Gaming"
+  },
+  "Renard": {
+   "contract": "2026-11-17",
+   "team": "Invictus Gaming"
+  },
+  "Soboro": {
+   "contract": "2027-11-16",
+   "team": "Invictus Gaming"
+  },
+  "Xiaohao": {
+   "contract": "2026-11-17",
+   "team": "EDWARD GAMING"
+  },
+  "Parukia": {
+   "contract": "2028-11-21",
+   "team": "EDWARD GAMING"
+  },
+  "Leave": {
+   "contract": "2027-11-16",
+   "team": "EDWARD GAMING"
+  },
+  "Angel": {
+   "contract": "2026-11-17",
+   "team": "EDWARD GAMING"
+  },
+  "Zdz": {
+   "contract": "2026-11-17",
+   "team": "EDWARD GAMING"
+  },
+  "Xun": {
+   "contract": "2027-11-16",
+   "team": "BILIBILI GAMING"
+  },
+  "knight": {
+   "contract": "2027-11-16",
+   "team": "BILIBILI GAMING"
+  },
+  "ON": {
+   "contract": "2027-11-16",
+   "team": "BILIBILI GAMING"
+  },
+  "Viper": {
+   "contract": "2027-11-16",
+   "team": "BILIBILI GAMING"
+  },
+  "Bin": {
+   "contract": "2026-11-17",
+   "team": "BILIBILI GAMING"
+  },
+  "Tarzan": {
+   "contract": "2027-11-16",
+   "team": "Anyone's Legend"
+  },
+  "Flandre": {
+   "contract": "2026-11-17",
+   "team": "Anyone's Legend"
+  },
+  "Kael": {
+   "contract": "2027-11-16",
+   "team": "Anyone's Legend"
+  },
+  "Shanks": {
+   "contract": "2026-11-17",
+   "team": "Anyone's Legend"
+  },
+  "Hope": {
+   "contract": "2027-11-16",
+   "team": "Anyone's Legend"
+  }
+ }
+}
