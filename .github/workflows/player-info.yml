@@ -30,13 +30,15 @@ jobs:
         run: python fetch_data.py
       - name: Look up ages and contracts
         run: python fetch_player_info.py
+      - name: Look up LPL rosters (players, subs, coaches)
+        run: python fetch_lpl_rosters.py
       - name: Save results and rebuild the site
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add config/player_info_auto.json
+          git add config/player_info_auto.json config/lpl_roster_auto.json
           if git diff --cached --quiet; then echo "nothing new to save"; else
             git commit -m "Update player ages and contracts"
             git push

@@ -654,6 +654,15 @@ def load_player_info():
     info = {}
     try: info = json.loads((ROOT / "config" / "player_info_auto.json").read_text(encoding="utf-8"))
     except Exception: print("  no automatic player info file")
+    try:                                            # Leaguepedia LPL rosters (fetch_lpl_rosters.py): fills gaps only
+        for team in json.loads((ROOT / "config" / "lpl_roster_auto.json").read_text(encoding="utf-8")).get("teams", {}).values():
+            for pl_ in team:
+                if pl_.get("kind") == "coach" or not pl_.get("id"): continue
+                cur = info.setdefault(pl_["id"], {})
+                if pl_.get("bd") and not cur.get("bd"): cur["bd"] = pl_["bd"]
+                if pl_.get("cc") and not cur.get("cc"): cur["cc"] = pl_["cc"]
+                if pl_.get("contract") and not cur.get("contract"): cur["contract"] = month_year(pl_["contract"])
+    except Exception: pass
     p = ROOT / "config" / "player_info.csv"
     if p.exists():
         for r in pd.read_csv(p, dtype=str).fillna("").to_dict("records"):
@@ -671,12 +680,19 @@ def load_coaches():
     """config/team_info.csv (TEAM, ROLE, PLAYER, D.O.B, Country, ...): rows whose ROLE contains 'coach' -> {team code: {name, cc, role}}. Head coach wins over other coaches."""
     out = {}
     p = ROOT / "config" / "team_info.csv"
-    if not p.exists(): return out
-    for r in pd.read_csv(p, dtype=str).fillna("").to_dict("records"):
+    for r in (pd.read_csv(p, dtype=str).fillna("").to_dict("records") if p.exists() else []):
         role, team, name = (r.get("ROLE") or "").strip(), (r.get("TEAM") or "").strip(), (r.get("PLAYER") or "").strip()
         if not (team and name and "coach" in role.lower()): continue
         if team in out and "head" not in role.lower(): continue
         out[team] = {"name": name, "cc": iso2(r.get("Country")), "role": "Head coach" if "head" in role.lower() else role}
+    try:                                            # Leaguepedia coaches fill teams the spreadsheet does not cover
+        for tname, ppl in json.loads((ROOT / "config" / "lpl_roster_auto.json").read_text(encoding="utf-8")).get("teams", {}).items():
+            code = CODE.get(tname)                  # LPL teams that are not at Worlds have no code and no team page
+            cs = [x for x in ppl if x.get("kind") == "coach" and x.get("id")]
+            if code and cs and code not in out:
+                c0 = next((x for x in cs if "head" in x["role"].lower()), cs[0])
+                out[code] = {"name": c0["id"], "cc": iso2(c0.get("cc")), "role": "Head coach" if "head" in c0["role"].lower() else (c0["role"] or "Coach")}
+    except Exception: pass
     return out
 
 COUNTRY = {"south korea": "kr", "korea": "kr", "republic of korea": "kr", "china": "cn", "taiwan": "tw", "hong kong": "hk", "vietnam": "vn", "japan": "jp", "denmark": "dk", "sweden": "se", "norway": "no", "finland": "fi", "germany": "de", "france": "fr", "spain": "es", "portugal": "pt", "italy": "it", "poland": "pl", "netherlands": "nl", "belgium": "be", "united kingdom": "gb", "england": "gb", "ireland": "ie", "greece": "gr", "turkey": "tr", "romania": "ro", "bulgaria": "bg", "czech republic": "cz", "czechia": "cz", "slovenia": "si", "croatia": "hr", "serbia": "rs", "hungary": "hu", "austria": "at", "switzerland": "ch", "slovakia": "sk", "lithuania": "lt", "latvia": "lv", "estonia": "ee", "ukraine": "ua", "russia": "ru", "israel": "il", "united states": "us", "usa": "us", "canada": "ca", "brazil": "br", "argentina": "ar", "chile": "cl", "colombia": "co", "mexico": "mx", "peru": "pe", "uruguay": "uy", "venezuela": "ve", "australia": "au", "new zealand": "nz", "singapore": "sg", "malaysia": "my", "thailand": "th", "philippines": "ph", "indonesia": "id", "india": "in", "mongolia": "mn", "morocco": "ma", "tunisia": "tn", "egypt": "eg", "south africa": "za", "lebanon": "lb", "saudi arabia": "sa", "iceland": "is", "luxembourg": "lu", "macau": "mo", "puerto rico": "pr", "dominican republic": "do"}
