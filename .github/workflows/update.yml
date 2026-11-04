@@ -34,6 +34,7 @@ jobs:
             data/schedule.json
             data/items_cache.json
             data/items_done.json
+            data/ov_cache
             data/item_icons.json
             data/riot_games.json
             data/bootcamp.json

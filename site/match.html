@@ -1102,9 +1102,19 @@ html { scroll-padding-top: 84px; }
     var cur = root.getAttribute("data-theme") || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"), nx = cur === "dark" ? "light" : "dark";
     root.setAttribute("data-theme", nx); try { localStorage.setItem("theme", nx); } catch (e) {}
   });
+  // the Overview is a snapshot of the stats before the series began (data/ov/<match id>.json, built by build.py); a series with no snapshot yet has not started, so the current stats are its pre-match stats
+  var snapDone = false;
+  function loadSnap() {
+    if (snapDone || !matchId) return Promise.resolve();
+    return fetch("data/ov/" + encodeURIComponent(matchId) + ".json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+      if (!j) return;
+      snapDone = true; PS.p = j.p; PS.t = j.t; PC = j.pc || {}; PM = j.pm || {}; PB = j.pb || {};
+      if (j.tr) TR = j.tr; if (j.pbi) Object.keys(j.pbi).forEach(function (k) { PBI[k] = j.pbi[k]; });
+    }).catch(function () {});
+  }
   function boot() {
     var r = readRoute(); matchId = r.mid; S.key = r.key;
-    loadMatch().then(function () { draw(); }).catch(noLive_or_retry);
+    loadMatch().then(loadSnap).then(function () { draw(); }).catch(noLive_or_retry);
     function noLive_or_retry(e) { noLive(e); setTimeout(boot, 10000); }
   }
   boot();

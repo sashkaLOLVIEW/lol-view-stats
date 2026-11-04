@@ -721,6 +721,86 @@ def build_bootcamp(WD, logos_all, tpl):
     print("  bootcamp: %d players, %d with a ranked soloQ account" % (len(players), sum(1 for x in players if any(a.get("tier") for a in x["acc"]))))
     return dict(updated=data.get("updated"), have=have, players=players, logos={t: logos_all[t] for t in {x["t"] for x in players} if t in logos_all}, ri=jget(tpl, "SD").get("r", {}))
 
+def champ_tables(PL, keep=None):
+    """Event stats of players on champions (pc), lane matchups (pm) and each team's best picks (pb), over every game or only those whose id is in keep."""
+    G_ = lambda pv: [x for x in pv["games"] if keep is None or x["gid"] in keep]
+    pc = {}   # player on a champion (season): [games, wins, kda, cs/min, dmg/min, kp%, dmg share%, gd@15]
+    for nm, pv in PL.items():
+        by = {}
+        for x in G_(pv): by.setdefault(re.sub(r"[^a-z]", "", x["champ"].lower()), []).append(x)
+        for ck, g in by.items():
+            n = len(g); gl = sum(x["gl"] for x in g); gd = [x["gd"] for x in g if x["gd"] is not None]
+            tk = sum(x["tk"] for x in g)
+            pc["%s|%s" % (re.sub(r"[^a-z0-9]", "", nm.lower()), ck)] = [n, sum(x["win"] for x in g), round((sum(x["k"] + x["a"] for x in g)) / max(1, sum(x["d"] for x in g)), 2),
+                round(sum(x["cs"] for x in g) / max(gl, 1), 2), round(sum(x["dmg"] for x in g) / max(gl, 1)), round(100 * sum(x["k"] + x["a"] for x in g) / max(tk, 1)),
+                round(100 * sum(x["ds"] for x in g) / n), round(sum(gd) / len(gd)) if gd else None]
+    pm = {}   # lane matchups at the event: "role|champion|opposing champion" -> [games, wins, avg gd@15, avg cs diff@15, avg xp diff@15]
+    idx = {(x["gid"], x["role"], x["team"]): x for pv in PL.values() for x in G_(pv)}
+    cl = lambda c: re.sub(r"[^a-z]", "", c.lower())
+    acc = {}
+    for pv in PL.values():
+        for x in G_(pv):
+            o = idx.get((x["gid"], x["role"], x["opp"]))
+            if not o: continue
+            e = acc.setdefault("%s|%s|%s" % (x["role"], cl(x["champ"]), cl(o["champ"])), dict(n=0, w=0, gd=[], cs=[], xp=[]))
+            e["n"] += 1; e["w"] += x["win"]
+            for k_, f_ in (("gd", "gd"), ("cs", "csd"), ("xp", "xpd")):
+                if x[f_] is not None: e[k_].append(x[f_])
+    for k_, e in acc.items():
+        av = lambda v: round(sum(v) / len(v)) if v else None
+        pm[k_] = [e["n"], e["w"], av(e["gd"]), av(e["cs"]), av(e["xp"])]
+    pb = {}   # each team's best champion per role at the event: "team|role" -> [champion, icon key, player, games, wins, kda, cs/min, dmg share %]
+    tr = {}
+    for pv in PL.values():
+        for x in G_(pv): tr.setdefault((x["team"], x["role"], x["champ"]), []).append(x)
+    cand = {}
+    for (t_, r_, c_), g in tr.items():
+        n = len(g); gl = sum(x["gl"] for x in g)
+        cand.setdefault("%s|%s" % (t_, r_), []).append([c_, g[0]["ic"], max(set(x["player"] for x in g), key=lambda p_: sum(1 for x in g if x["player"] == p_)), n, sum(x["win"] for x in g),
+                                                       round(sum(x["k"] + x["a"] for x in g) / max(1, sum(x["d"] for x in g)), 2), round(sum(x["cs"] for x in g) / max(gl, 1), 1), round(100 * sum(x["ds"] for x in g) / n)])
+    for k_, L in cand.items():
+        L = [c for c in L if c[4] > 0]   # a pick to watch needs at least one win
+        if not L: continue
+        pool = [c for c in L if c[3] >= 2] or L
+        pb[k_] = sorted(pool, key=lambda c: (-c[4] / c[3], -c[3], -c[5]))[0]
+    return pc, pm, pb
+
+def ov_snapshots(csv, w, GD, PD, TD, out, have=()):
+    """Pre-match snapshot of every series' Overview stats: ratings, season stats, picks, matchups and power-ranking positions using only games that started before the series did.
+    Written to data/ov/<riot match id>.json; finished results never change them. Cached in data/ov_cache by (match id, games before)."""
+    import shutil, tempfile
+    starts = {}
+    for g in GD["games"]:
+        if g.get("mid") and g.get("start"): starts[g["mid"]] = min(starts.get(g["mid"], g["start"]), g["start"])
+    if not starts: return
+    cache = ROOT / "data" / "ov_cache"; cache.mkdir(parents=True, exist_ok=True); od = out / "data" / "ov"; od.mkdir(parents=True, exist_ok=True)
+    wdt = pd.to_datetime(w.date); full = None; done = reused = 0
+    for mid, st in sorted(starts.items(), key=lambda kv: kv[1]):
+        cut = pd.Timestamp(st); keep = set(w.gameid[wdt < cut]); n = len(keep)
+        cf = cache / (mid + ".json")
+        try:
+            if cf.exists():
+                js = json.loads(cf.read_text(encoding="utf-8"))
+                if js.get("n") == n: (od / (mid + ".json")).write_text(cf.read_text(encoding="utf-8"), encoding="utf-8"); reused += 1; continue
+        except Exception: pass
+        if n == 0: continue
+        wc = w[w.gameid.isin(keep)]
+        if full is None: full = pd.read_csv(csv, low_memory=False); full["_d"] = pd.to_datetime(full.date)
+        tmp = tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False); tmp.close()
+        try:
+            full[full._d < cut].drop(columns="_d").to_csv(tmp.name, index=False)
+            try: rt = ratings(tmp.name)
+            except Exception as e: rt = {}; print("  ov ratings skipped:", mid, e)
+            try: rk = {r[2]: i + 1 for i, r in enumerate(build_rankings(tmp.name)[0])}
+            except Exception as e: rk = {}
+            wp = build_wd(wc, rt)["players"]
+        finally: os.unlink(tmp.name)
+        pc, pm, pb = champ_tables(PD["players"], keep)
+        tm = {c: team_season([x for x in v["games"] if x["gid"] in keep]) for c, v in TD["teams"].items() if any(x["gid"] in keep for x in v["games"])}
+        js = {"n": n, "p": {"%s|%s" % (p["t"], p["r"]): [p["p"], p["rt"], round(p["kda"], 2), round(p["cs"], 2), round(p["gd"]), round(p["dpm"]), round(p["kp"]), round(p["ds"]), p["g"]] for p in wp}, "t": tm, "pc": pc, "pm": pm, "pb": pb, "tr": rk, "pbi": {c[1]: champ_icon(c[1], 36, 72) for c in pb.values() if c[1] and c[1] not in have}}
+        txt = json.dumps(js, separators=(",", ":")); cf.write_text(txt, encoding="utf-8"); (od / (mid + ".json")).write_text(txt, encoding="utf-8"); done += 1
+    print("  overview snapshots: %d built, %d reused" % (done, reused))
+
 def main(csv):
     print("reading", csv)
     w = load_event(csv)
@@ -814,16 +894,6 @@ def main(csv):
             except Exception as e: print("  badges skipped:", e)
         s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / (fn + ".html"), stamp(s))
     wr(out / "live-map.json", json.dumps(RIOT_MAP))
-    pc = {}   # player on a champion (season): [games, wins, kda, cs/min, dmg/min, kp%, dmg share%, gd@15]
-    for nm, pv in PD["players"].items():
-        by = {}
-        for x in pv["games"]: by.setdefault(re.sub(r"[^a-z]", "", x["champ"].lower()), []).append(x)
-        for ck, g in by.items():
-            n = len(g); gl = sum(x["gl"] for x in g); gd = [x["gd"] for x in g if x["gd"] is not None]
-            tk = sum(x["tk"] for x in g)
-            pc["%s|%s" % (re.sub(r"[^a-z0-9]", "", nm.lower()), ck)] = [n, sum(x["win"] for x in g), round((sum(x["k"] + x["a"] for x in g)) / max(1, sum(x["d"] for x in g)), 2),
-                round(sum(x["cs"] for x in g) / max(gl, 1), 2), round(sum(x["dmg"] for x in g) / max(gl, 1)), round(100 * sum(x["k"] + x["a"] for x in g) / max(tk, 1)),
-                round(100 * sum(x["ds"] for x in g) / n), round(sum(gd) / len(gd)) if gd else None]
     pca = {}   # champion averages over every game at the event, same layout as pc
     byc = {}
     for nm, pv in PD["players"].items():
@@ -834,40 +904,14 @@ def main(csv):
         gl = sum(x["gl"] for x in g); gd = [x["gd"] for x in g if x["gd"] is not None]; tk = sum(x["tk"] for x in g)
         pca[ck] = [n, sum(x["win"] for x in g), round((sum(x["k"] + x["a"] for x in g)) / max(1, sum(x["d"] for x in g)), 2), round(sum(x["cs"] for x in g) / max(gl, 1), 2),
                    round(sum(x["dmg"] for x in g) / max(gl, 1)), round(100 * sum(x["k"] + x["a"] for x in g) / max(tk, 1)), round(100 * sum(x["ds"] for x in g) / n), round(sum(gd) / len(gd)) if gd else None]
-    pm = {}   # lane matchups at the event: "role|champion|opposing champion" -> [games, wins, avg gd@15, avg cs diff@15, avg xp diff@15]
-    idx = {(x["gid"], x["role"], x["team"]): x for pv in PD["players"].values() for x in pv["games"]}
-    cl = lambda c: re.sub(r"[^a-z]", "", c.lower())
-    acc = {}
-    for pv in PD["players"].values():
-        for x in pv["games"]:
-            o = idx.get((x["gid"], x["role"], x["opp"]))
-            if not o: continue
-            e = acc.setdefault("%s|%s|%s" % (x["role"], cl(x["champ"]), cl(o["champ"])), dict(n=0, w=0, gd=[], cs=[], xp=[]))
-            e["n"] += 1; e["w"] += x["win"]
-            for k_, f_ in (("gd", "gd"), ("cs", "csd"), ("xp", "xpd")):
-                if x[f_] is not None: e[k_].append(x[f_])
-    for k_, e in acc.items():
-        av = lambda v: round(sum(v) / len(v)) if v else None
-        pm[k_] = [e["n"], e["w"], av(e["gd"]), av(e["cs"]), av(e["xp"])]
-    pb = {}   # each team's best champion per role at the event: "team|role" -> [champion, icon key, player, games, wins, kda, cs/min, dmg share %]
-    tr = {}
-    for pv in PD["players"].values():
-        for x in pv["games"]: tr.setdefault((x["team"], x["role"], x["champ"]), []).append(x)
-    cand = {}
-    for (t_, r_, c_), g in tr.items():
-        n = len(g); gl = sum(x["gl"] for x in g)
-        cand.setdefault("%s|%s" % (t_, r_), []).append([c_, g[0]["ic"], max(set(x["player"] for x in g), key=lambda p_: sum(1 for x in g if x["player"] == p_)), n, sum(x["win"] for x in g),
-                                                       round(sum(x["k"] + x["a"] for x in g) / max(1, sum(x["d"] for x in g)), 2), round(sum(x["cs"] for x in g) / max(gl, 1), 1), round(100 * sum(x["ds"] for x in g) / n)])
-    for k_, L in cand.items():
-        L = [c for c in L if c[4] > 0]   # a pick to watch needs at least one win
-        if not L: continue
-        pool = [c for c in L if c[3] >= 2] or L
-        pb[k_] = sorted(pool, key=lambda c: (-c[4] / c[3], -c[3], -c[5]))[0]
+    pc, pm, pb = champ_tables(PD["players"])
     pbi = {c[1]: champ_icon(c[1], 36, 72) for c in pb.values() if c[1]}
     ps = {"ri": jget(rd("site/bootcamp.html"), "SD").get("r", {}), "p": {"%s|%s" % (p["t"], p["r"]): [p["p"], p["rt"], p["kda"], p["cs"], p["gd"], p["dpm"], p["kp"], p["ds"], p["g"]] for p in WD["players"]}, "f": {"%s|%s" % (p["t"], p["r"]): FACES[p["p"]] for p in WD["players"] if p["p"] in FACES}, "t": {c: team_season(v["games"]) for c, v in TD["teams"].items()}}
     s = rd("site/match.html")   # the one match page: game data (D), search, season stats (PS, PC) and the Riot->Oracle's Elixir game map
     for nm, val in (("D", GD), ("PS", ps), ("PC", pc), ("PM", pm), ("PB", pb), ("PBI", pbi), ("MAP0", RIOT_MAP), ("TR", {r[2]: i + 1 for i, r in enumerate(RK)})): s = jreplace(s, nm, val)
     wr(out / "match.html", stamp(jreplace(s, "SD", build_search(s, WD, CH))))
+    try: ov_snapshots(csv, w, GD, PD, TD, out, set(pbi))
+    except Exception as e: print("  overview snapshots skipped:", repr(e))
     wr(out / "live.html", '<!doctype html><meta charset="utf-8"><title>Match</title><script>var h=location.hash.replace(/^#live\\//,"#");location.replace("match.html"+h)</script>')   # old links   # season stats for the live page's role-by-role team comparison   # live game page: polls Riot's feed in the browser, no build-time data
     s = rd("site/bootcamp.html"); s = jreplace(s, "BC", build_bootcamp(WD, logos_all, s)); s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "bootcamp.html", stamp(s))
     wr(out / ".nojekyll", "")
