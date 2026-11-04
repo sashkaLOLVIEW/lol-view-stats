@@ -50,11 +50,12 @@ def main():
     print("%d LPL teams in the match data: %s" % (len(lpl), ", ".join(lpl)))
     if not lpl: print("no LPL teams found - nothing to do"); return
     s = requests.Session(); s.headers["User-Agent"] = UA
+    time.sleep(60)                                         # the previous workflow step just used the wiki; let its rate-limit window pass
     def get(**p):
         for attempt in range(5):
             r = s.get(API, params=dict(format="json", **p), timeout=60); r.raise_for_status(); j = r.json()
             if (j.get("error") or {}).get("code") != "ratelimited": return j
-            wait = 30 * (attempt + 1); print("  rate limited, waiting %ds" % wait); time.sleep(wait)
+            wait = 20 * (attempt + 1); print("  rate limited, waiting %ds" % wait); time.sleep(wait)
         raise RuntimeError("rate limited")
     cf = get(action="cargofields", table="Players").get("cargofields") or {}
     fields = list(cf.keys()) if isinstance(cf, dict) else [x.get("fieldname", x) if isinstance(x, dict) else str(x) for x in cf]
@@ -67,23 +68,29 @@ def main():
         if must in fields and must not in want: want.append(must)
     print("fields used (%d of %d, pictures skipped): %s" % (len(want), len(fields), ", ".join(want)))
     print("mapped:", {k: v for k, v in f.items()})
-    teams = {}
-    for i in range(0, len(lpl), BATCH):
-        chunk = lpl[i:i + BATCH]; names = ",".join("'" + n.replace("'", "\\'") + "'" for n in chunk); off = 0
-        while True:
-            j = get(action="cargoquery", tables="Players", fields=",".join(want), where="Team IN (%s)" % names, limit=500, offset=off)
-            if j.get("error"): print("wiki error:", json.dumps(j["error"])[:300]); break
-            rows = [r.get("title", r) for r in j.get("cargoquery", [])]
-            for raw in rows:
-                p = normalise(raw, f)
-                if p["retired"] and p["kind"] != "coach": continue
-                teams.setdefault((raw.get("Team") or "").strip(), []).append(p)
-            if len(rows) < 500: break
-            off += 500
-        time.sleep(20)
+    try: old = json.loads(OUT.read_text(encoding="utf-8")).get("teams", {})
+    except Exception: old = {}
+    teams = dict(old); done = []; stopped = False
+    def save():
+        out = {"fetched": time.time(), "fields": want, "teams": {t: sorted(v, key=lambda p: (p["kind"] != "starter", p["role"], p["id"])) for t, v in sorted(teams.items())}}
+        OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1)); return out
+    for team in lpl:                                       # one team per request; the file is saved after every team so a rate limit loses nothing
+        got, off = [], 0
+        try:
+            while True:
+                j = get(action="cargoquery", tables="Players", fields=",".join(want), where="Team='%s'" % team.replace("'", "\\'"), limit=500, offset=off)
+                if j.get("error"): print("wiki error for %s:" % team, json.dumps(j["error"])[:300]); break
+                rows = [r.get("title", r) for r in j.get("cargoquery", [])]
+                got += [normalise(r, f) for r in rows]
+                if len(rows) < 500: break
+                off += 500
+        except RuntimeError:
+            stopped = True; print("  still rate limited at %s - saving what we have; run the workflow again later for the rest" % team); break
+        got = [p for p in got if not (p["retired"] and p["kind"] != "coach")]
+        if got: teams[team] = got; done.append(team); save()
+        time.sleep(15)
     missing = [n for n in lpl if n not in teams]
-    out = {"fetched": time.time(), "fields": want, "teams": {t: sorted(v, key=lambda p: (p["kind"] != "starter", p["role"], p["id"])) for t, v in sorted(teams.items())}}
-    OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1))
+    out = save()
     for t, v in out["teams"].items():
         k = lambda kind: ", ".join(p["id"] for p in v if p["kind"] == kind) or "-"
         print("%s | starters: %s | subs: %s | coaches: %s" % (t, k("starter"), k("sub"), k("coach")))
