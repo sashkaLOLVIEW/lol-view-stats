@@ -560,7 +560,7 @@ html { scroll-padding-top: 84px; }
     }
     var mh = function (ik, t) { return '<div class="c">' + '<span>' + t + '</span></div>'; };
     $('hist').innerHTML = (hh ? '<div class="gr gm mhd"><div></div><div></div><div class="gs">' + mh('ICK', 'KDA') + mh('ICC', 'CS') + mh('KP', 'KP%') + mh('ICD', 'DMG%') + mh('ICG', 'GD') + '</div><div></div></div>' : '') + hh;
-    $('radars').innerHTML = RAD.map(function (r) { var sv = radar(r[0], r[1], ag, P.role); return '<div class="rcard"><h3>' + r[0] + '<span class="cov" title="Share of the chart area covered by the stats">' + radar.cov + '</span></h3>' + sv + '</div>'; }).join('');
+    $('radars').innerHTML = RAD.map(function (r) { var sv = radar(r[0], r[1], ag, P.role); return '<div class="rcard"><h3>' + r[0] + '<span class="cov" title="Share of the chart area covered by the stats">' + radar.cov + '/100</span></h3>' + sv + '</div>'; }).join('');
     (function () {
       var hs = $('hist'), cards = [].slice.call(hs.querySelectorAll('.gr:not(.mhd)')), shown = 10, bt = document.createElement('button');
       if (cards.length <= 10) return;
