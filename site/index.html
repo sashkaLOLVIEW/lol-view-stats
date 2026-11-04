@@ -715,7 +715,7 @@ html { scroll-padding-top: 84px; }
   // Recent results
   var rec = [["IG", "2:1", "LYON", "23:50", "Oct 28", "LOLTMNT02_486183"], ["T1", "2:0", "MKOI", "21:12", "Oct 28", "LOLTMNT02_486159"], ["TL", "2:0", "AL", "21:54", "Oct 26", "LOLTMNT02_482911"], ["LOS", "2:0", "TSW", "20:01", "Oct 26", "LOLTMNT02_483861"]];
   $('recent').innerHTML = rec.map(function (m) {
-    return '<a class="row match res" href="' + U.game + '#' + m[5] + '"><div class="lgw"><span class="lg">' + worlds(24) + '</span><span class="bo">' + (+m[1].split(':')[0] + +m[1].split(':')[1] > 1 ? 'BO3' : 'BO1') + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + logo(m[0], 32) + '<span class="score">' + m[1].split(':')[0] + ':<span class="lo">' + m[1].split(':')[1] + '</span></span>' + logo(m[2], 32) + '<span class="tag lo">' + m[2] + '</span></div><div class="when"><span>' + ld(m[6]) + '</span></div></a>';
+    return '<a class="row match res" href="' + U.game + '#' + m[5] + '"><div class="lgw"><span class="lg">' + worlds(24) + '</span><span class="bo">' + (+m[1].split(':')[0] >= 3 ? 'BO5' : +m[1].split(':')[0] + +m[1].split(':')[1] > 1 ? 'BO3' : 'BO1') + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + logo(m[0], 32) + '<span class="score">' + m[1].split(':')[0] + ':<span class="lo">' + m[1].split(':')[1] + '</span></span>' + logo(m[2], 32) + '<span class="tag lo">' + m[2] + '</span></div><div class="when"><span>' + ld(m[6]) + '</span></div></a>';
   }).join('');
 
   // Role filters
