@@ -203,6 +203,8 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .bans img { width: 26px; height: 26px; border-radius: 4px; display: block; box-sizing: border-box; border: 2px solid #fff; }
 .bans .sl { color: var(--dim); font-size: 18px; font-weight: 400; align-self: center; padding: 0 2px; }
 .bans-t { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.bans .bl { display: none; flex: none; align-items: center; margin-right: 4px; } .bans .bl img { width: 22px; height: 22px; border: 0; border-radius: 0; object-fit: contain; }
+@media (max-width: 640px) { .bans .bl { display: flex; } .bans-l, .bans-r { gap: 4px; } .bans { gap: 8px; } }
 .asof { margin-top: 14px; font-size: 11px; color: var(--dim); line-height: 1.5; }
 img.lw { }
 :root:not([data-theme="dark"]) img.lwi { filter: invert(1); }
@@ -709,7 +711,7 @@ html { scroll-padding-top: 84px; }
     }
     var dmid = ''; ['Top', 'Jungle', 'Mid', 'Bot', 'Support'].forEach(function (rn) { dmid += '<div class="dm-ic" title="' + rn + '">' + (RIC[rn] || '') + '</div>'; });
     $('dm').innerHTML = '<div class="dm-col">' + dl + '</div><div class="dm-mid">' + dmid + '</div><div class="dm-col">' + dr + '</div>';
-    var bn = function (t) { return t.bans.map(function (b, i) { return (i === 3 ? '<span class="sl">/</span>' : '') + (b.ic && D.icons[b.ic] ? '<img src="' + D.icons[b.ic] + '" alt="' + b.c + '">' : ''); }).join(''); };
+    var bn = function (t) { return '<span class="bl">' + logo(t.code, 22) + '</span>' + t.bans.map(function (b, i) { return (i === 3 ? '<span class="sl">/</span>' : '') + (b.ic && D.icons[b.ic] ? '<img src="' + D.icons[b.ic] + '" alt="' + b.c + '">' : ''); }).join(''); };
     $('bans').style.display = g.live || g.pct ? 'none' : '';
     $('bans').innerHTML = '<div class="bans-l">' + bn(A) + '</div><div class="bans-t">Bans</div><div class="bans-r">' + bn(B) + '</div>';
     // player detail card (blue top laner by default)
