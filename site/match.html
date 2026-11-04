@@ -506,6 +506,32 @@ html { scroll-padding-top: 84px; }
 #mdet:empty { display: none; }
 .mvnote { display: none; }
 
+/* player detail card under the scoreboard */
+.pdc { margin-top: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.pdc-pick { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+.pdc-side { display: flex; justify-content: center; gap: 6px; padding: 10px 8px; }
+.pdc-side + .pdc-side { border-left: 1px solid var(--line); }
+.pdc-pick button { position: relative; width: 38px; height: 38px; padding: 0; border: 1.5px solid transparent; border-radius: 8px; background: none; cursor: pointer; opacity: .55; overflow: hidden; transition: opacity .12s, border-color .12s; }
+.pdc-pick button:hover { opacity: .9; } .pdc-pick button.on { opacity: 1; border-color: var(--fg); }
+.pdc-pick button img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
+.pdc-b { padding: 20px 22px 22px; display: grid; grid-template-columns: minmax(180px, 240px) minmax(0, 1fr); column-gap: 32px; row-gap: 22px; }
+.pdc-who { display: flex; align-items: center; gap: 14px; min-width: 0; } .pdc-who > img { width: 64px; height: 64px; border-radius: 10px; flex: none; }
+.pdc-who .nm { font-size: 18px; font-weight: 700; line-height: 1.2; } .pdc-who .nm a { color: inherit; text-decoration: none; } .pdc-who .nm a:hover { text-decoration: underline; }
+.pdc-who .sb { margin-top: 3px; font-size: 12px; color: var(--muted); }
+.pdc-st { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.pdc-st > div { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; min-width: 0; }
+.pdc-st .l { font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); } .pdc-st .v { margin-top: 5px; font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.pdc-st .v.up { color: var(--green); } .pdc-st .v.dn { color: var(--red); }
+.pdc-sk { grid-column: 1 / -1; }
+.pdc-sk h3 { margin: 0 0 10px; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.pdc-sg { display: grid; grid-template-columns: 22px repeat(18, minmax(0, 1fr)); gap: 3px; align-items: center; max-width: 720px; }
+.pdc-sg .k { font-size: 12px; font-weight: 700; color: var(--muted); text-align: center; } .pdc-sg .h { font-size: 9.5px; color: var(--dim); text-align: center; font-variant-numeric: tabular-nums; }
+.pdc-sg .c { height: 22px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--line); }
+.pdc-sg .c.f { background: var(--fg); border-color: var(--fg); } .pdc-sg .c.f.r { background: var(--gold, var(--fg)); border-color: var(--gold, var(--fg)); }
+.pdc-bo { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; } .pdc-bo img { display: block; width: 36px; height: 36px; border-radius: 6px; border: 1px solid var(--line); } .pdc-bo .pgt { color: var(--dim); font-size: 14px; font-weight: 700; }
+.pdc-na { font-size: 12.5px; color: var(--muted); }
+.pdc-ord { margin-top: 10px; font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+@media (max-width: 760px) { .pdc-b { grid-template-columns: 1fr; } .pdc-st { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pdc-side { gap: 3px; padding: 8px 4px; } .pdc-pick button { width: 30px; height: 30px; border-radius: 6px; } .pdc-sg { gap: 2px; } .pdc-sg .c { height: 18px; } }
 </style>
 <style>
 .kofi { display: grid; place-items: center; width: 24px; height: 24px; flex: none; }
@@ -568,6 +594,7 @@ html { scroll-padding-top: 84px; }
       <h2 id="dmh">Scoreboard</h2>
       <div class="dm" id="dm"></div>
       <div class="bans" id="bans"></div>
+      <div class="pdc" id="pdc"></div>
     </section>
   </main>
   <footer class="foot">
@@ -684,6 +711,30 @@ html { scroll-padding-top: 84px; }
     var bn = function (t) { return t.bans.map(function (b, i) { return (i === 3 ? '<span class="sl">/</span>' : '') + (b.ic && D.icons[b.ic] ? '<img src="' + D.icons[b.ic] + '" alt="' + b.c + '">' : ''); }).join(''); };
     $('bans').style.display = g.live || g.pct ? 'none' : '';
     $('bans').innerHTML = '<div class="bans-l">' + bn(A) + '</div><div class="bans-t">Bans</div><div class="bans-r">' + bn(B) + '</div>';
+    // player detail card (blue top laner by default)
+    var pdSel = ['0', 0];
+    var fmtS = function (v) { return v == null ? '-' : (v > 0 ? '+' : v < 0 ? '\u2212' : '') + Math.abs(Math.round(v)).toLocaleString('en-US'); };
+    var drawPd = function () {
+      var T = [A, B], t = T[pdSel[0]], p = t.players[pdSel[1]]; if (!p) { $('pdc').innerHTML = ''; return; }
+      var tm = t.players.reduce(function (q, x) { return q + x.dmg; }, 0), mins = Math.max(1, g.len / 60), d = p.d15 || [], cls = function (v) { return v == null ? '' : v > 0 ? ' up' : v < 0 ? ' dn' : ''; };
+      var pick = T.map(function (tt, si) { return '<div class="pdc-side">' + tt.players.map(function (x, ri) { return '<button type="button" data-s="' + si + '" data-r="' + ri + '" class="' + (si == pdSel[0] && ri == pdSel[1] ? 'on' : '') + '" title="' + x.name + ' - ' + x.champ + '" aria-label="' + x.name + '">' + (x.ic && D.icons[x.ic] ? '<img src="' + D.icons[x.ic] + '" alt="">' : '') + '</button>'; }).join('') + '</div>'; }).join('');
+      var kda = p.d ? ((p.k + p.a) / p.d).toFixed(2) : 'Perfect';
+      var st = [['DMG %', tm ? (100 * p.dmg / tm).toFixed(1) + '%' : '-', ''], ['KDA', kda, ''], ['CS / min', (p.cs / mins).toFixed(1), ''], ['Gold', p.gold.toLocaleString('en-US'), ''],
+        ['GD @15', fmtS(d[0]), cls(d[0])], ['CSD @15', fmtS(d[1]), cls(d[1])], ['XPD @15', fmtS(d[2]), cls(d[2])], ['DMG / min', Math.round(p.dmg / mins).toLocaleString('en-US'), '']];
+      var sk = '';
+      if (p.sk && p.sk.length > 3) {
+        var seq = p.sk.split(''), rows = ['Q', 'W', 'E', 'R'], cells = '<span></span>'; for (var n = 1; n <= 18; n++) cells += '<span class="h">' + n + '</span>';
+        rows.forEach(function (k) { cells += '<span class="k">' + k + '</span>'; for (var n = 0; n < 18; n++) cells += '<span class="c' + (seq[n] === k ? ' f' + (k === 'R' ? ' r' : '') : '') + '"></span>'; });
+        var ord = [], cnt = {}; seq.forEach(function (k) { if (k === 'R') return; cnt[k] = (cnt[k] || 0) + 1; if (cnt[k] === 5) ord.push(k); });
+        sk = '<div class="pdc-sk"><h3>Skill order</h3><div class="pdc-sg">' + cells + '</div>' + (ord.length ? '<div class="pdc-ord">Max order: ' + ord.concat(['Q', 'W', 'E'].filter(function (k) { return ord.indexOf(k) < 0; })).join(' &gt; ') + '</div>' : '') + '</div>';
+      } else sk = '<div class="pdc-sk"><h3>Skill order</h3><div class="pdc-na">Not available for this game.</div></div>';
+      var bd = '';
+      if (p.bo && p.bo.length && D.items) bd = '<div class="pdc-sk"><h3>Build order</h3><div class="pdc-bo">' + p.bo.map(function (id) { var x = D.items[id]; return x ? '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : ''; }).filter(Boolean).join('<span class="pgt">&gt;</span>') + '</div></div>';
+      $('pdc').innerHTML = '<div class="pdc-pick">' + pick + '</div><div class="pdc-b"><div class="pdc-who">' + (p.ic && D.icons[p.ic] ? '<img src="' + D.icons[p.ic] + '" alt="">' : '') + '<div><div class="nm"><a href="' + U.profile + '#' + encodeURIComponent(p.name) + '">' + p.name + '</a></div><div class="sb">' + p.champ + ' \u00b7 ' + p.role + ' \u00b7 ' + t.code + '</div></div></div><div class="pdc-st">' + st.map(function (x) { return '<div><div class="l">' + x[0] + '</div><div class="v' + x[2] + '">' + x[1] + '</div></div>'; }).join('') + '</div>' + bd + sk + '</div>';
+    };
+    $('pdc').onclick = function (e) { var b = e.target.closest('button[data-s]'); if (!b) return; pdSel = [b.getAttribute('data-s'), +b.getAttribute('data-r')]; drawPd(); };
+    pdSel = ['0', 0]; drawPd();
+    $('pdc').style.display = g.live ? 'none' : '';
     $('mdet').innerHTML = '<span>' + (D.tournament || 'Worlds 2026') + '</span><span class="dot">&middot;</span><span>' + (stageOf(g.start) || g.date) + '</span>' + (g.bo ? '<span class="bo">BO' + g.bo + '</span>' : '');
   }
   function fromFeed(M, gid) {

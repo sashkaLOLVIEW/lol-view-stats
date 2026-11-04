@@ -274,7 +274,7 @@ html { scroll-padding-top: 84px; }
 .pdc-sg .k { font-size: 12px; font-weight: 700; color: var(--muted); text-align: center; } .pdc-sg .h { font-size: 9.5px; color: var(--dim); text-align: center; font-variant-numeric: tabular-nums; }
 .pdc-sg .c { height: 22px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--line); }
 .pdc-sg .c.f { background: var(--fg); border-color: var(--fg); } .pdc-sg .c.f.r { background: var(--gold, var(--fg)); border-color: var(--gold, var(--fg)); }
-.pdc-bo { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; } .pdc-bo img { display: block; width: 36px; height: 36px; border-radius: 6px; border: 1px solid var(--line); } .pdc-bo .gt { color: var(--dim); font-size: 14px; font-weight: 700; }
+.pdc-bo { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; } .pdc-bo img { display: block; width: 36px; height: 36px; border-radius: 6px; border: 1px solid var(--line); } .pdc-bo .pgt { color: var(--dim); font-size: 14px; font-weight: 700; }
 .pdc-na { font-size: 12.5px; color: var(--muted); }
 .pdc-ord { margin-top: 10px; font-size: 12px; color: var(--muted); letter-spacing: .02em; }
 @media (max-width: 760px) { .pdc-b { grid-template-columns: 1fr; } .pdc-st { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pdc-side { gap: 3px; padding: 8px 4px; } .pdc-pick button { width: 30px; height: 30px; border-radius: 6px; } .pdc-sg { gap: 2px; } .pdc-sg .c { height: 18px; } }
@@ -464,7 +464,7 @@ html { scroll-padding-top: 84px; }
         sk = '<div class="pdc-sk"><h3>Skill order</h3><div class="pdc-sg">' + cells + '</div>' + (ord.length ? '<div class="pdc-ord">Max order: ' + ord.concat(['Q', 'W', 'E'].filter(function (k) { return ord.indexOf(k) < 0; })).join(' &gt; ') + '</div>' : '') + '</div>';
       } else sk = '<div class="pdc-sk"><h3>Skill order</h3><div class="pdc-na">Not available for this game.</div></div>';
       var bd = '';
-      if (p.bo && p.bo.length && D.items) bd = '<div class="pdc-sk"><h3>Build order</h3><div class="pdc-bo">' + p.bo.map(function (id) { var x = D.items[id]; return x ? '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : ''; }).filter(Boolean).join('<span class="gt">&gt;</span>') + '</div></div>';
+      if (p.bo && p.bo.length && D.items) bd = '<div class="pdc-sk"><h3>Build order</h3><div class="pdc-bo">' + p.bo.map(function (id) { var x = D.items[id]; return x ? '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : ''; }).filter(Boolean).join('<span class="pgt">&gt;</span>') + '</div></div>';
       $('pdc').innerHTML = '<div class="pdc-pick">' + pick + '</div><div class="pdc-b"><div class="pdc-who">' + (p.ic && D.icons[p.ic] ? '<img src="' + D.icons[p.ic] + '" alt="">' : '') + '<div><div class="nm"><a href="' + U.profile + '#' + encodeURIComponent(p.name) + '">' + p.name + '</a></div><div class="sb">' + p.champ + ' \u00b7 ' + p.role + ' \u00b7 ' + t.code + '</div></div></div><div class="pdc-st">' + st.map(function (x) { return '<div><div class="l">' + x[0] + '</div><div class="v' + x[2] + '">' + x[1] + '</div></div>'; }).join('') + '</div>' + bd + sk + '</div>';
     };
     $('pdc').onclick = function (e) { var b = e.target.closest('button[data-s]'); if (!b) return; pdSel = [b.getAttribute('data-s'), +b.getAttribute('data-r')]; drawPd(); };
