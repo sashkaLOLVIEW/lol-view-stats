@@ -239,7 +239,7 @@ img.wi-l { display: none; } img.wi-d { display: block; }
 .gr .its .ig i { display: block; background: var(--pill); border: 1px solid var(--dim); box-sizing: border-box; }
 .gr .its .tc { display: flex; align-items: center; gap: 3px; margin-left: 4px; }
 .gr .its .tc .trw, .gr .its .tc i { width: 18px; height: 18px; margin: 0; align-self: auto; border-radius: 4px; }
-@media (max-width: 640px) { .gr.gm { grid-template-columns: 64px minmax(0, 1fr) auto; } .gr.gm .r, .gr.gm .ld, .gr.gm .gs { display: none; } .gr.mhd { display: none; } .gr.gm .t { flex-wrap: nowrap; gap: 8px; white-space: nowrap; overflow: hidden; } .hist .hhd, .hhd { margin-bottom: 18px; } }
+@media (max-width: 640px) { .gr.gm { grid-template-columns: 64px minmax(0, 1fr) 40px; } .gr.gm .ld, .gr.gm .gs, .gr.gm .r .pv, .gr.gm .pt > span { display: none; } .gr.gm .r { min-width: 0; } .gr.mhd { display: none; } .gr.gm .t { flex-wrap: nowrap; gap: 8px; white-space: nowrap; overflow: hidden; } .hist .hhd, .hhd { margin-bottom: 18px; } }
 
 .gr.gm .rl .res { background: none; padding: 0; height: auto; line-height: 1.2; font-size: 12px; font-weight: 800; letter-spacing: .06em; color: var(--muted); }
 .gr.gm .rl .res.w { background: none; color: var(--green); } .gr.gm .rl .res.l { background: none; color: var(--red); }
