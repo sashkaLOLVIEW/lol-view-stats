@@ -283,7 +283,7 @@ img.wi-l { display: none; } img.wi-d { display: block; }
 .stko-tabs .chip { height: 30px; padding: 0 14px; font-size: 12px; }
 .stko .stand-hd { margin-top: 16px; }
 .ko-wrap { margin-top: 24px; padding: 0 0 4px; overflow-x: auto; }
-.ko-b { position: relative; display: grid; grid-template-columns: repeat(5, minmax(150px, 210px)); justify-content: space-between; column-gap: 28px; min-width: 860px; }
+.ko-b { position: relative; display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); column-gap: 64px; min-width: 860px; }
 .ko-b > div { display: flex; flex-direction: column; }
 .ko-col { flex: 1; display: grid; grid-template-rows: repeat(2, auto); row-gap: 56px; }
 .ko-col > .ko-c { align-self: center; width: 100%; }
@@ -393,14 +393,14 @@ html { scroll-padding-top: 84px; }
 .rcard svg { display: block; width: 100%; height: auto; }
 .rcard text { font-family: var(--font); }
 
-.stko-row { display: grid; grid-template-columns: 316fr 316fr 336fr; column-gap: 32px; margin-top: 56px; }
+.stko-row { display: block; margin-top: 56px; }
 .stko-row .stko { margin-top: 0; min-width: 0; }
 .stko-row .stand-hd, .stko-row .srow2 { grid-template-columns: 28px minmax(0, 1fr) 54px 104px; column-gap: 8px; }
 .stko-row .stand-hd { padding: 0 12px; } .stko-row .srow2 { padding: 0 12px; }
 .stko-row .srow2 .tm { gap: 8px; }
 .stko-row .l5 { gap: 3px; } .stko-row .l5 i { width: 18px; height: 18px; line-height: 18px; font-size: 10px; }
-.fcol { position: relative; grid-column: 2 / 4; min-width: 0; }
-.fcol::before { content: ""; position: absolute; left: -16.5px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--line) 14%, var(--line) 86%, transparent); }
+.fcol { position: relative; min-width: 0; margin-top: 56px; }
+.fcol::before { display: none; content: ""; position: absolute; left: -16.5px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--line) 14%, var(--line) 86%, transparent); }
 .fcol .perf h2 { margin: 0 0 14px; }
 .subt { margin: 0 0 14px; font-size: 12px; color: var(--dim); line-height: 1.4; text-align: right; }
 .fcol { display: flex; flex-direction: column; }
@@ -504,11 +504,8 @@ html { scroll-padding-top: 84px; }
 
   <div class="stko-row">
   <section class="stko" id="standings">
-    <h2>Standings</h2>
-    <div id="pane-swiss">
-      <div class="stand-list" id="standings-list"></div>
-    </div>
-    <div id="pane-ko" hidden>
+    <h2>Knockout Bracket</h2>
+    <div id="pane-ko">
       <div class="ko-wrap" id="bracket"><div class="ko-b" id="ko-b"></div></div>
       <div class="ko-note"><span class="smp">Placeholder</span> Best of five. Slots fill in as teams qualify from the Swiss Stage.</div>
     </div>
@@ -795,7 +792,7 @@ html { scroll-padding-top: 84px; }
     var cards = [['top', 'Top'], ['jungle', 'Jungle'], ['mid', 'Mid'], ['bot', 'Bot'], ['support', 'Support']];
     var ROLES = ['Top', 'Jungle', 'Mid', 'Bot', 'Support'], KEYS = { Top: 'top', Jungle: 'jungle', Mid: 'mid', Bot: 'bot', Support: 'support' };
     var sg = function (v) { return (v > 0 ? '+' : '') + Math.round(v).toLocaleString('en-US'); };
-    var RGL = ['Global', 'MSI', 'FST', 'EWC', 'LCK', 'LPL', 'LEC', 'LCS', 'CBLOL', 'LCP'], INTL = { MSI: 'MSI', FST: 'First Stand', EWC: 'EWC' }, region = 'Global', TRG = {};
+    var RGL = ['Global', 'MSI', 'FST', 'EWC', 'LCK', 'LPL', 'LEC', 'LCS', 'CBLOL', 'LCP'], INTL = { MSI: 'MSI', FST: 'FST', EWC: 'EWC' }, region = 'Global', TRG = {};
     rank.forEach(function (x) { TRG[x[2]] = x[1]; });
     var rgIcon = function (g) { if (g === 'Global') return worlds(18); if (INTL[g]) return (window.LVF && LVF.evIcon(g, 18)) || '<b style="font-size:10px;letter-spacing:.04em">' + g + '</b>'; var r = RG[g]; return r ? '<img' + (r[1] ? ' class="mi"' : '') + ' src="' + r[0] + '" alt="">' : ''; }, rgName = function (g) { return g === 'Global' ? 'Worlds' : INTL[g] || g; };
     var inRegion = function (r) { return true; };   // the data is already scoped to the picked league
@@ -898,22 +895,6 @@ html { scroll-padding-top: 84px; }
   FCD = FCD;
   drawFC(); drawLead();
 
-  // Standings: Swiss Stage (series results, from Oracle's Elixir)
-  (function () {
-    var SW = {"AL": {"w": 0, "l": 3, "rounds": [{"res": "L", "opp": "KC", "sc": ""}, {"res": "L", "opp": "TES", "sc": ""}, {"res": "L", "opp": "TL", "sc": "0-2"}]}, "BLG": {"w": 2, "l": 1, "rounds": [{"res": "L", "opp": "MKOI", "sc": ""}, {"res": "W", "opp": "TL", "sc": ""}, {"res": "W", "opp": "KC", "sc": ""}]}, "CFO": {"w": 1, "l": 2, "rounds": [{"res": "W", "opp": "TL", "sc": ""}, {"res": "L", "opp": "MKOI", "sc": ""}, {"res": "L", "opp": "T1", "sc": ""}]}, "DK": {"w": 3, "l": 0, "rounds": [{"res": "W", "opp": "G2", "sc": ""}, {"res": "W", "opp": "T1", "sc": ""}, {"res": "W", "opp": "MKOI", "sc": "2-0"}]}, "G2": {"w": 1, "l": 2, "rounds": [{"res": "L", "opp": "DK", "sc": ""}, {"res": "W", "opp": "LOS", "sc": ""}, {"res": "L", "opp": "TES", "sc": ""}]}, "GEN": {"w": 3, "l": 0, "rounds": [{"res": "W", "opp": "IG", "sc": ""}, {"res": "W", "opp": "HLE", "sc": ""}, {"res": "W", "opp": "LYON", "sc": "2-1"}]}, "HLE": {"w": 1, "l": 2, "rounds": [{"res": "W", "opp": "TES", "sc": ""}, {"res": "L", "opp": "GEN", "sc": ""}, {"res": "L", "opp": "IG", "sc": ""}]}, "IG": {"w": 3, "l": 1, "rounds": [{"res": "L", "opp": "GEN", "sc": ""}, {"res": "W", "opp": "TSW", "sc": ""}, {"res": "W", "opp": "HLE", "sc": ""}, {"res": "W", "opp": "LYON", "sc": "2-1"}]}, "KC": {"w": 1, "l": 2, "rounds": [{"res": "W", "opp": "AL", "sc": ""}, {"res": "L", "opp": "LYON", "sc": ""}, {"res": "L", "opp": "BLG", "sc": ""}]}, "LOS": {"w": 1, "l": 2, "rounds": [{"res": "L", "opp": "T1", "sc": ""}, {"res": "L", "opp": "G2", "sc": ""}, {"res": "W", "opp": "TSW", "sc": "2-0"}]}, "LYON": {"w": 2, "l": 2, "rounds": [{"res": "W", "opp": "TSW", "sc": ""}, {"res": "W", "opp": "KC", "sc": ""}, {"res": "L", "opp": "GEN", "sc": "1-2"}, {"res": "L", "opp": "IG", "sc": "1-2"}]}, "MKOI": {"w": 2, "l": 2, "rounds": [{"res": "W", "opp": "BLG", "sc": ""}, {"res": "W", "opp": "CFO", "sc": ""}, {"res": "L", "opp": "DK", "sc": "0-2"}, {"res": "L", "opp": "T1", "sc": "0-2"}]}, "T1": {"w": 3, "l": 1, "rounds": [{"res": "W", "opp": "LOS", "sc": ""}, {"res": "L", "opp": "DK", "sc": ""}, {"res": "W", "opp": "CFO", "sc": ""}, {"res": "W", "opp": "MKOI", "sc": "2-0"}]}, "TES": {"w": 2, "l": 1, "rounds": [{"res": "L", "opp": "HLE", "sc": ""}, {"res": "W", "opp": "AL", "sc": ""}, {"res": "W", "opp": "G2", "sc": ""}]}, "TL": {"w": 1, "l": 2, "rounds": [{"res": "L", "opp": "CFO", "sc": ""}, {"res": "L", "opp": "BLG", "sc": ""}, {"res": "W", "opp": "AL", "sc": "2-0"}]}, "TSW": {"w": 0, "l": 3, "rounds": [{"res": "L", "opp": "LYON", "sc": ""}, {"res": "L", "opp": "IG", "sc": ""}, {"res": "L", "opp": "LOS", "sc": "0-2"}]}};
-    var NM = {"GEN": "Gen.G", "DK": "Dplus KIA", "MKOI": "Movistar KOI", "LYON": "LYON", "HLE": "Hanwha Life Esports", "T1": "T1", "KC": "Karmine Corp", "CFO": "CTBC Flying Oyster", "TES": "Top Esports", "IG": "Invictus Gaming", "BLG": "Bilibili Gaming", "G2": "G2 Esports", "AL": "Anyone's Legend", "TL": "Team Liquid Alienware", "TSW": "Team Secret Whales", "LOS": "LOS"};
-    var order = ["GEN", "DK", "MKOI", "LYON", "HLE", "T1", "KC", "CFO", "TES", "IG", "BLG", "G2", "AL", "TLAW", "TSW", "LOS"];
-    var rows = order.map(function (c) { return { c: c, w: SW[c].w, l: SW[c].l, r: SW[c].rounds }; });
-    rows.sort(function (a, b) { return b.w - a.w || a.l - b.l || order.indexOf(a.c) - order.indexOf(b.c); });
-    var sq = function (x) { return '<i class="' + (x ? x.toLowerCase() : 'e') + '">' + (x || '') + '</i>'; };
-    $('standings-list').innerHTML = rows.map(function (r, i) {
-      var res = r.r.filter(function (x) { return x.res === 'W' || x.res === 'L'; }).map(function (x) { return x.res; }).slice(-5), cells = '';
-      for (var k = 0; k < 5 - res.length; k++) cells += sq('');
-      res.forEach(function (x) { cells += sq(x); });
-      return '<div class="srow2"><span class="n">' + (i + 1) + '</span><div class="tm"><span class="logo">' + logo(r.c, 28) + '</span><a href="team.html#' + r.c + '"><span class="nm">' + r.c + '</span></a></div><div class="rec"><b class="' + (r.w === 3 ? 'w2' : r.l === 3 ? 'l2' : '') + '">' + r.w + '-' + r.l + '</b></div><div class="l5">' + cells + '</div></div>';
-    }).join('');
-  })();
-
   // Knockout bracket (null = team not confirmed yet)
   (function () {
     var KO = { qfL: [[null, null], [null, null]], sfL: [[null, null]], f: [[null, null]], sfR: [[null, null]], qfR: [[null, null], [null, null]] };
@@ -933,18 +914,6 @@ html { scroll-padding-top: 84px; }
     }
     window.koDraw = draw;
     draw(); window.addEventListener('resize', draw); if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
-  })();
-
-  // Swiss / Knockout toggle
-  (function () {
-    var tabs = document.querySelectorAll('.stko-tabs .chip'), sw = $('pane-swiss'), ko = $('pane-ko');
-    function show(t) {
-      Array.prototype.forEach.call(tabs, function (b) { var on = b.getAttribute('data-t') === t; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
-      sw.hidden = t !== 'swiss'; ko.hidden = t !== 'ko';
-      if (t === 'ko' && window.koDraw) window.koDraw();
-    }
-    Array.prototype.forEach.call(tabs, function (b) { b.addEventListener('click', function () { show(b.getAttribute('data-t')); }); });
-    if (/^#(bracket|knockout)/i.test(location.hash)) show('ko');
   })();
 
   // Theme toggle (remembers choice when storage is available)

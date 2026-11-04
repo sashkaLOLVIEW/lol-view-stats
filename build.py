@@ -864,7 +864,7 @@ def main(csv):
     out = ROOT / "dist"
     # index
     s = idx
-    for name, val in (("WD", WD), ("FACES", FACES), ("FACESF", FACES), ("CHAMPS", CH), ("SW", ST), ("FCD", FCD)): s = jreplace(s, name, val)
+    for name, val in (("WD", WD), ("FACES", FACES), ("FACESF", FACES), ("CHAMPS", CH), ("FCD", FCD)): s = jreplace(s, name, val)
     s = re.sub(r"  var rec = \[\[.*?\]\];\n", lambda m: "  var rec = " + json.dumps(rec, ensure_ascii=False) + ";\n", s, count=1, flags=re.S)
     s = jreplace(s, "rank", RK); s = jreplace(s, "rankUpd", RKUPD); s = jreplace(s, "hasTeam", HAS); s = jreplace(s, "rankTs", RKTS) if "var rankTs" in s else s
     s = jreplace(s, "UP", build_upcoming())
