@@ -275,7 +275,7 @@ html { scroll-padding-top: 84px; }
 .pdc-sg .c { height: 22px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--line); }
 .pdc-sg .c.f { background: var(--fg); border-color: var(--fg); } .pdc-sg .c.f.r { background: var(--gold, var(--fg)); border-color: var(--gold, var(--fg)); }
 .pdc-bo { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; } .pdc-bo img { display: block; width: 36px; height: 36px; border-radius: 6px; border: 1px solid var(--line); } .pdc-bo .pgt { color: var(--dim); font-size: 14px; font-weight: 700; }
-.pdc-rn { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; } .pdc-rn .g { display: flex; align-items: center; gap: 8px; } .pdc-rn img { display: block; border-radius: 50%; background: #1a1a1a; padding: 2px; box-sizing: content-box; } .pdc-rn .s img { padding: 1px; }
+.pdc-rn { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 12px; } .pdc-rn .g { display: flex; align-items: center; gap: 6px; } .pdc-rn .sl { color: var(--dim); font-size: 22px; font-weight: 300; line-height: 1; } .pdc-rn img { display: block; border-radius: 50%; background: #1a1a1a; padding: 2px; box-sizing: content-box; } .pdc-rn .s img { padding: 1px; box-shadow: 0 0 0 1.5px var(--fg-dim, #8a8a8a); background: #1a1a1a; } .pdc-rn .s { gap: 7px; margin-left: 4px; }
 .pdc-na { font-size: 12.5px; color: var(--muted); }
 .pdc-ord { margin-top: 10px; font-size: 12px; color: var(--muted); letter-spacing: .02em; }
 @media (max-width: 760px) { .pdc-b { grid-template-columns: 1fr; } .pdc-st { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pdc-side { gap: 3px; padding: 8px 4px; } .pdc-pick button { width: 30px; height: 30px; border-radius: 6px; } .pdc-sg { gap: 2px; } .pdc-sg .c { height: 18px; } }
@@ -460,7 +460,7 @@ html { scroll-padding-top: 84px; }
       var rb = '';
       if (p.pk && p.pk.length >= 9 && D.runes) {
         var ri = function (id, sz) { var x = D.runes[id]; return x ? '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '" style="width:' + sz + 'px;height:' + sz + 'px">' : ''; };
-        rb = '<div class="pdc-sk"><h3>Runes</h3><div class="pdc-rn"><div class="g">' + p.pk.slice(0, 4).map(function (id, i) { return ri(id, i ? 30 : 38); }).join('') + '</div><div class="g">' + p.pk.slice(4, 6).map(function (id) { return ri(id, 30); }).join('') + '</div><div class="g s">' + p.pk.slice(6, 9).map(function (id) { return ri(id, 22); }).join('') + '</div></div></div>';
+        rb = '<div class="pdc-sk"><h3>Runes</h3><div class="pdc-rn"><div class="g">' + p.pk.slice(0, 4).map(function (id, i) { return ri(id, i ? 28 : 50); }).join('') + '</div><span class="sl">/</span><div class="g">' + p.pk.slice(4, 6).map(function (id) { return ri(id, 28); }).join('') + '</div><div class="g s">' + p.pk.slice(6, 9).map(function (id) { return ri(id, 20); }).join('') + '</div></div></div>';
       }
       var sk = '';
       if (p.sk && p.sk.length > 3) {
