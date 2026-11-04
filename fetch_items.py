@@ -133,7 +133,7 @@ def fetch_game(game, number, codes, bo=0):
             perk = p.get("perkMetadata") or {}
             items = [i for i in (p.get("items") or []) if i]       # Riot lists stacked consumables once per charge; junglers sometimes sell the trinket, so none is a real state
             tr0 = None if any(i in TRINKET_IDS for i in items) else last_trinket(pm["participantId"])
-            players[side + ":" + pos] = dict(name=pm.get("summonerName"), champ=pm.get("championId"), items=items, tr0=tr0, order=order_of(pm["participantId"]),
+            players[side + ":" + pos] = dict(name=pm.get("summonerName"), champ=pm.get("championId"), items=items, tr0=tr0, order=order_of(pm["participantId"]), ab="".join(str(a)[:1].upper() for a in (p.get("abilities") or [])),
                                              runes=dict(style=perk.get("styleId"), sub=perk.get("subStyleId"), perks=perk.get("perks")))
     return dict(id=gid, v=FORMAT, number=number, bo=bo, codes=sorted(codes), start=fmt(t0), patch=md.get("patchVersion"), players=players, gold=gold, obj=obj)
 
@@ -171,7 +171,7 @@ def main():
             for g in games:
                 if g["id"] in cache and bo and not cache[g["id"]].get("bo"): cache[g["id"]]["bo"] = bo       # backfill best-of on older entries
                 old = cache.get(g["id"])
-                stale = bool(old) and (old.get("v", 1) < FORMAT or (old.get("lg") not in (None, "worlds") and "obj" not in old))
+                stale = bool(old) and (old.get("v", 1) < FORMAT or (old.get("lg") not in (None, "worlds") and "obj" not in old) or any("ab" not in pp for pp in (old.get("players") or {}).values()))   # "ab" = skill order, added later
                 if g.get("state") != "completed": ok = False; continue
                 if old and not stale: continue
                 if time.time() - t_start > BUDGET: skipped += 1; ok = False; continue          # keep the run short; the rest is picked up on the next run

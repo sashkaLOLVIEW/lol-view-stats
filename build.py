@@ -273,7 +273,8 @@ def build_game(w, logos_all):
             for pos in ORDER:
                 r = pl[pl.position == pos].iloc[0]
                 players.append(dict(role=ROLE[pos], name=r.playername, champ=r.champion, ic=ic(r.champion), k=int(r.kills), d=int(r.deaths), a=int(r.assists),
-                                    dmg=int(r.damagetochampions), cs=int(r["total cs"]), gold=int(r.totalgold)))
+                                    dmg=int(r.damagetochampions), cs=int(r["total cs"]), gold=int(r.totalgold),
+                                    d15=[(int(r[c]) if pd.notna(r[c]) else None) for c in ("golddiffat15", "csdiffat15", "xpdiffat15")]))
             d = lambda c: int(tr[c]) if pd.notna(tr[c]) else 0
             teams.append(dict(code=need_code(tr.teamname), name=tr.teamname, side=side, win=int(tr.result), k=int(pl.kills.sum()), d=int(pl.deaths.sum()), a=int(pl.assists.sum()),
                               gold=int(tr.totalgold), towers=d("towers"), inh=d("inhibitors"), fb=d("firstblood"), ft=d("firsttower"), grubs=d("void_grubs"), heralds=d("heralds"), elders=d("elders"), barons=d("barons"),
@@ -435,7 +436,7 @@ def map_items(w):
             if not rp: continue
             if norm(rp["champ"]) != norm(p.champion) and norm(rp["champ"]) not in norm(p.champion) and norm(p.champion) not in norm(rp["champ"]): champ_bad += 1; print("  champion differs:", gid, p.side, p.position, "riot=" + str(rp["champ"]), "oe=" + str(p.champion))
             rn = rp.get("runes") or {}; pk = rn.get("perks") or []
-            out[(gid, p.side, p.position)] = (rp["items"] + ([rp["tr0"]] if rp.get("tr0") and not any(i in TRINKETS for i in rp["items"]) else []), [pk[0], rn.get("sub")] if pk and rn.get("sub") else None, pk, rp.get("order") or [])
+            out[(gid, p.side, p.position)] = (rp["items"] + ([rp["tr0"]] if rp.get("tr0") and not any(i in TRINKETS for i in rp["items"]) else []), [pk[0], rn.get("sub")] if pk and rn.get("sub") else None, pk, rp.get("order") or [], rp.get("ab") or "")
     print("  items: %d of %d games matched to Riot data%s" % (matched, total, ("; %d champion name differences (check aliases)" % champ_bad) if champ_bad else ""))
     return out
 
@@ -540,7 +541,7 @@ def export_oe_items(csv, out_dir):
             if not rp or p.position not in POSL: continue
             rn = rp.get("runes") or {}; pk = rn.get("perks") or []
             it = tidy_items(rp["items"] + ([rp["tr0"]] if rp.get("tr0") and not any(i in TRINKETS for i in rp["items"]) else []), TRINKETS, SQ)
-            pl["%d:%d" % (0 if p.side == "Blue" else 1, POSL.index(p.position))] = [it, [pk[0], rn.get("sub")] if pk and rn.get("sub") else None]
+            pl["%d:%d" % (0 if p.side == "Blue" else 1, POSL.index(p.position))] = [it, [pk[0], rn.get("sub")] if pk and rn.get("sub") else None, rp.get("ab") or ""]
             ids_i.update(i for i in it if i); ids_r += [pk[0], rn.get("sub")] if pk and rn.get("sub") else []
         per.setdefault(lg, {})[gid] = {"p": pl, "g": r.get("gold") or [], "o": r.get("obj") or []}
     print("  other-league items: %d of %d OE games matched to Riot data" % (hit, tot))
@@ -587,7 +588,7 @@ def attach_items(w, GD, PD, CD):
     for g in GD["games"]:
         for t in g["teams"]:
             for p in t["players"]:
-                k = (g["id"], t["side"], POS_OF_ROLE[p["role"]]); p["it"] = IT.get(k) or p.get("it"); p["rn"] = RN.get(k) or p.get("rn")
+                k = (g["id"], t["side"], POS_OF_ROLE[p["role"]]); p["it"] = IT.get(k) or p.get("it"); p["rn"] = RN.get(k) or p.get("rn"); p["sk"] = (M.get(k) or ((),) * 5)[4] or None
     for pl in PD["players"].values():
         for r in pl["games"]:
             k = (r["gid"], r["side"], POS_OF_ROLE[r["role"]]); r["it"] = IT.get(k); r["rn"] = RN.get(k)
