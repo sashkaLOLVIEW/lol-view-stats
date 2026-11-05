@@ -351,6 +351,10 @@ html { scroll-padding-top: 84px; }
 .mv .dp.r .dh{text-align:right;}
 .mv .dchip{height:28px; padding:0 10px; display:inline-flex; align-items:center; border:1px solid var(--line); border-radius:6px; background:var(--chip-bg); font-size:12px; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums;}
 .mv .dchip b{font-weight:600; margin-left:4px;}
+.mv .dsk{flex-basis:100%; display:flex; flex-wrap:wrap; gap:3px;}
+.mv .dp.r .dsk{justify-content:flex-end;}
+.mv .dsk i{width:18px; height:18px; display:grid; place-items:center; border:1px solid var(--line); border-radius:3px; background:var(--chip-bg); font:700 10px/1 inherit; font-style:normal; color:var(--muted);}
+.mv .dsk i.R{color:var(--fg); border-color:var(--muted);}
 .mv .items{display:flex; gap:3px; flex:none;}
 .mv .cell.l .items{flex-direction:row-reverse;}
 .mv .items span{width:24px; height:24px; border-radius:4px; background:var(--chip-bg); border:1px solid var(--line); overflow:hidden;}
@@ -1406,7 +1410,8 @@ html { scroll-padding-top: 84px; }
     if (S.details) (S.details.participants || []).forEach(function (x) { if (x.participantId === pm.participantId) d = x; });
     var chips = [["Damage Share", pct(d.championDamageShare)], ["Gold Share", gs == null ? "-" : (gs * 100).toFixed(2) + "%"]];
     return '<div class="dp ' + side + '"><div class="dh">' + esc(pm.summonerName) + " · " + esc(pm.championId) + "</div>" +
-      chips.map(function (c) { return '<span class="dchip">' + c[0] + ":<b>" + esc(c[1]) + "</b></span>"; }).join("") + "</div>";
+      chips.map(function (c) { return '<span class="dchip">' + c[0] + ":<b>" + esc(c[1]) + "</b></span>"; }).join("") +
+      (d.abilities && d.abilities.length ? '<div class="dsk" title="Skill order">' + d.abilities.map(function (a) { a = String(a).toUpperCase().charAt(0); return '<i class="' + esc(a) + '">' + esc(a) + "</i>"; }).join("") + "</div>" : "") + "</div>";
   }
   function goldOf(ft, pm, i) {
     var p = ft.participants.filter(function (x) { return x.participantId === pm.participantId; })[0] || ft.participants[i] || {};
