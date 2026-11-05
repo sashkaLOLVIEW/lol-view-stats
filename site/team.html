@@ -109,7 +109,7 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .tlogo img { width: 64px !important; height: 64px !important; }
 .tname { margin-top: 0; font-size: 16px; font-weight: 700; letter-spacing: .02em; }
 .treg { margin-top: 4px; font-size: 12px; color: var(--muted); }
-.tcoach { display: flex; align-items: center; gap: 8px; margin-top: 14px; font-size: 12px; }
+.tcoach { display: flex; align-items: center; gap: 8px; margin-top: 14px; font-size: 15px; }
 .tcoach span { color: var(--muted); }
 .tcoach .flag { border-radius: 3px; object-fit: cover; box-shadow: 0 0 0 1px var(--line); }
 .tcoach b { font-weight: 600; }
@@ -289,7 +289,7 @@ html { scroll-padding-top: 84px; }
   var COACH = {};
   function coachRow(code) {
     var k = COACH[code]; if (!k) return '';
-    return '<div class="tcoach"><span>' + (k.role || 'Head coach') + '</span>' + (k.cc ? '<img class="flag" src="https://flagcdn.com/w40/' + k.cc + '.png" srcset="https://flagcdn.com/w80/' + k.cc + '.png 2x" width="20" height="15" alt="' + k.cc.toUpperCase() + '">' : '') + '<b>' + k.name.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</b></div>';
+    return '<div class="tcoach"><span>' + (/assistant/i.test(k.role || '') ? 'Assistant Coach' : 'Head Coach') + '</span>' + (k.cc ? '<img class="flag" src="https://flagcdn.com/w40/' + k.cc + '.png" srcset="https://flagcdn.com/w80/' + k.cc + '.png 2x" width="20" height="15" alt="' + k.cc.toUpperCase() + '">' : '') + '<b>' + k.name.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</b></div>';
   }
   var LW = {"DK":1,"G2":1,"TL":1, "TLAW":1,"TSW":1};
   function logo(t, s) { return D.logos[t] ? '<img' + (LW[t] ? ' class="lwi"' : '') + ' src="' + D.logos[t] + '" alt="' + t + '" width="' + s + '" height="' + s + '" style="display:block;object-fit:contain">' : '<span style="width:' + s + 'px;height:' + s + 'px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:' + Math.max(7, Math.round(s / 3.2)) + 'px;font-weight:700;color:var(--muted);overflow:hidden">' + String(t).slice(0, 4) + '</span>'; }
