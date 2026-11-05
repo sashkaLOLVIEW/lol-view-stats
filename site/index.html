@@ -465,6 +465,8 @@ html { scroll-padding-top: 84px; }
   </header>
 
 
+  <nav class="tourn" aria-label="Tournaments"><div class="tgrid" id="tgrid"></div></nav>
+
   <main class="cols">
     <section class="tp" aria-label="Top performers">
       <div class="tp-head">
@@ -505,10 +507,6 @@ html { scroll-padding-top: 84px; }
     </section>
   </main>
 
-  <section class="tourn">
-    <h2 class="sec">Tournaments</h2>
-    <div class="tgrid" id="tgrid"></div>
-  </section>
 
   <div class="stko-row">
   <section class="stko" id="standings">
@@ -1101,12 +1099,14 @@ html { scroll-padding-top: 84px; }
 <script>document.addEventListener('dragstart', function (e) { if (e.target && e.target.tagName === 'IMG') e.preventDefault(); });</script>
 
 <style>
-.tourn { margin-top: 44px; }
-.tgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 14px; }
-.tgrid a { display: flex; align-items: center; gap: 10px; height: 50px; padding: 0 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; color: var(--fg); text-decoration: none; font-size: 13px; font-weight: 600; transition: border-color .15s; }
+.tourn { margin-top: 52px; overflow-x: auto; scrollbar-width: none; }
+.tourn::-webkit-scrollbar { display: none; }
+.tourn + .cols { margin-top: 28px; }
+.tgrid { display: flex; gap: 8px; width: max-content; min-width: 100%; }
+.tgrid a { display: grid; place-items: center; flex: 1 0 56px; height: 50px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; color: var(--fg); text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: .04em; transition: border-color .15s; }
 .tgrid a:hover { border-color: var(--muted); }
-.tgrid .ti { width: 30px; height: 24px; display: grid; place-items: center; flex: none; }
-.tgrid .ti img, .tgrid .ti svg { max-width: 30px; max-height: 24px; width: auto; height: auto; }
+.tgrid .ti { display: grid; place-items: center; height: 26px; }
+.tgrid .ti img, .tgrid .ti svg { max-width: 34px; max-height: 26px; width: auto; height: auto; }
 </style>
 <script>
 (function () {
@@ -1114,7 +1114,7 @@ html { scroll-padding-top: 84px; }
   LVF.loadMeta().then(function (m) {
     var MAJ = ['WLDs', 'MSI', 'EWC', 'FST', 'DCGI', 'LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'], ids = Object.keys(m.leagues);
     ids.sort(function (a, b) { var x = MAJ.indexOf(a), y = MAJ.indexOf(b); return (x < 0 ? 99 : x) - (y < 0 ? 99 : y) || (a < b ? -1 : 1); });
-    document.getElementById('tgrid').innerHTML = ids.map(function (id) { return '<a href="tournament.html#' + id + '"><span class="ti">' + (LVF.evIcon(id, 22) || '') + '</span>' + LVF.leagueName(id) + '</a>'; }).join('');
+    document.getElementById('tgrid').innerHTML = ids.map(function (id) { return '<a href="tournament.html#' + id + '" title="' + LVF.leagueName(id) + '" aria-label="' + LVF.leagueName(id) + '"><span class="ti">' + (LVF.evIcon(id, 22) || id) + '</span></a>'; }).join('');
   });
 })();
 </script>
