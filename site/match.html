@@ -189,7 +189,8 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
     background: repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--rh, 76px) - 1px), var(--divider) calc(var(--rh, 76px) - 1px), var(--divider) var(--rh, 76px));
     -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent); mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent); }
 }
-.mvb { display: inline-grid; place-items: center; height: 16px; padding: 0 5px; border-radius: 4px; font-size: 10px; font-weight: 800; letter-spacing: .04em; line-height: 1; flex: none; color: #0f0f0f; cursor: help; }
+.mvb { display: inline-flex; align-items: center; gap: 3px; height: 16px; padding: 0 5px; border-radius: 4px; font-size: 10px; font-weight: 800; letter-spacing: .04em; line-height: 1; flex: none; color: #0f0f0f; cursor: help; }
+.mvb .mi { flex: none; }
 .mvb.mvp { background: var(--gold); } .mvb.ace { background: var(--silver, #c9ccd1); }
 .pl-nr { display: flex; align-items: center; gap: 6px; min-width: 0; } .pl.r .pl-nr { flex-direction: row-reverse; }
 @media (max-width: 760px) { .pl.r .pl-nr { flex-direction: row; justify-content: flex-start; } .pl.r .pl-n { text-align: left; } }
@@ -731,7 +732,7 @@ html { scroll-padding-top: 84px; }
     var dm = '', dl = '', dr = '';
     for (var r = 0; r < 5; r++) {
       var pa = A.players[r], pb = B.players[r];
-      var mvb = function (m) { return m ? '<span class="mvb ' + (m === 'MVP' ? 'mvp' : 'ace') + '" title="' + (m === 'MVP' ? 'MVP: best rated player on the winning team' : 'ACE: best rated player on the losing team') + '">' + m + '</span>' : ''; };
+      var mvb = function (m) { return m ? '<span class="mvb ' + (m === 'MVP' ? 'mvp' : 'ace') + '" title="' + (m === 'MVP' ? 'MVP: best rated player on the winning team' : 'ACE: best rated player on the losing team') + '">' + (m === 'MVP' ? '<svg class="mi" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="15" r="6"/><path d="M8.5 3.5 12 9l3.5-5.5"/><path d="M12 12.5v5"/></svg>' : '<svg class="mi" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5"/><path d="M12 1.5v5M12 17.5v5M1.5 12h5M17.5 12h5"/></svg>') + m + '</span>' : ''; };
       var cell = function (p, rt) { return '<div class="pl' + (rt ? ' r' : '') + '"><div class="pc">' + ico(p.ic, p.champ) + rnc(p.rn) + '</div><div class="pl-b"><div class="pl-nr"><a class="pl-n" href="' + U.profile + '#' + encodeURIComponent(p.name) + '">' + p.name + '</a>' + mvb(p.mv) + '</div><div class="pl-s">' + im('kills', 'si') + p.k + '/' + p.d + '/' + p.a + '<span class="sp"></span>' + im('minion', 'si minion') + p.cs + '<span class="sp"></span>' + im('gold', 'si') + k1(p.gold) + '</div><div class="bv"><span class="pl-v">' + (g.live || g.pct ? Math.round(p.dmg * 100) + '%' : k1(p.dmg)) + '</span><div class="bt"><div class="bar" style="width:' + Math.max(3, p.dmg / mx * 100).toFixed(1) + '%"></div></div></div>' + itrow(p.it) + '</div></div>'; };
       dl += cell(pa, 0); dr += cell(pb, 1);
     }
@@ -761,7 +762,7 @@ html { scroll-padding-top: 84px; }
       var r = 6.5 + 1.25 * s + (t.win ? .5 : -.3);
       return Math.max(1, Math.min(10, r));
     };
-    var mvb = function (m) { return m ? '<span class="mvb ' + (m === 'MVP' ? 'mvp' : 'ace') + '" title="' + (m === 'MVP' ? 'MVP: best rated player on the winning team' : 'ACE: best rated player on the losing team') + '">' + m + '</span>' : ''; };
+    var mvb = function (m) { return m ? '<span class="mvb ' + (m === 'MVP' ? 'mvp' : 'ace') + '" title="' + (m === 'MVP' ? 'MVP: best rated player on the winning team' : 'ACE: best rated player on the losing team') + '">' + (m === 'MVP' ? '<svg class="mi" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="15" r="6"/><path d="M8.5 3.5 12 9l3.5-5.5"/><path d="M12 12.5v5"/></svg>' : '<svg class="mi" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5"/><path d="M12 1.5v5M12 17.5v5M1.5 12h5M17.5 12h5"/></svg>') + m + '</span>' : ''; };
     var drawPd = function () {
       var T = [A, B], t = T[pdSel[0]], p = t.players[pdSel[1]]; if (!p) { $('pdc').innerHTML = ''; return; }
       var tm = t.players.reduce(function (q, x) { return q + x.dmg; }, 0), mins = Math.max(1, g.len / 60), d = p.d15 || [], cls = function (v) { return v == null ? '' : v > 0 ? ' up' : v < 0 ? ' dn' : ''; };
