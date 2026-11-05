@@ -54,6 +54,8 @@ jobs:
         run: |
           mkdir -p runlog
           set -o pipefail; python fetch_schedule.py 2>&1 | tee runlog/schedule.txt
+      - name: Download the roster spreadsheet
+        run: python fetch_roster_sheet.py || true
       - name: Download item builds
         env:
           LOLESPORTS_API_KEY: ${{ secrets.LOLESPORTS_API_KEY }}

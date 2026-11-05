@@ -670,6 +670,16 @@ def load_player_info():
             key = low.get(name.lower(), name)
             if v.get("contract"): info.setdefault(key, {})["contract"] = month_year(v["contract"])
     except Exception: pass
+    try:                                            # the roster spreadsheet (fetch_roster_sheet.py) is the reference: beats every automatic source, loses only to the hand-typed CSV below
+        for name, recs in json.loads((ROOT / "config" / "roster_sheet.json").read_text(encoding="utf-8")).get("players", {}).items():
+            best = max(recs, key=lambda x: sum(1 for k in ("bd", "cc", "contract") if x.get(k)))
+            low = {k.lower(): k for k in info}; cur = info.setdefault(low.get(name.lower(), name), {})
+            if best.get("bd"): cur["bd"] = best["bd"]
+            if best.get("cc"): cur["cc"] = best["cc"]
+            c = (best.get("contract") or "").strip()
+            if c and c.upper() != "N/A": cur["contract"] = month_year(c) if c != "-" else "-"
+            elif c.upper() == "N/A": cur["contract"] = "N/A"
+    except Exception: pass
     p = ROOT / "config" / "player_info.csv"
     if p.exists():
         for r in pd.read_csv(p, dtype=str).fillna("").to_dict("records"):
@@ -692,6 +702,10 @@ def load_coaches():
         if not (team and name and "coach" in role.lower()): continue
         if team in out and "head" not in role.lower(): continue
         out[team] = {"name": name, "cc": iso2(r.get("Country")), "role": "Head coach" if "head" in role.lower() else role}
+    try:                                            # the roster spreadsheet wins over everything else
+        for team, c in json.loads((ROOT / "config" / "roster_sheet.json").read_text(encoding="utf-8")).get("coaches", {}).items():
+            out[team] = {"name": c["name"], "cc": iso2(c.get("cc")), "role": "Head coach" if "head" in c["role"].lower() else c["role"]}
+    except Exception: pass
     try:                                            # Leaguepedia coaches fill teams the spreadsheet does not cover
         for tname, ppl in json.loads((ROOT / "config" / "lpl_roster_auto.json").read_text(encoding="utf-8")).get("teams", {}).items():
             code = CODE.get(tname)                  # LPL teams that are not at Worlds have no code and no team page

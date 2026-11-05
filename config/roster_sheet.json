@@ -1,0 +1,8722 @@
+{
+ "fetched": 1793837246.7375755,
+ "players": {
+  "Flandre": [
+   {
+    "team": "AL",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   },
+   {
+    "team": "BLG",
+    "role": "Top (Sub)",
+    "bd": "1998-08-28",
+    "cc": "CN",
+    "contract": "-"
+   }
+  ],
+  "Tarzan": [
+   {
+    "team": "AL",
+    "role": "Jungle",
+    "bd": "1999-08-23",
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Shanks": [
+   {
+    "team": "AL",
+    "role": "Mid",
+    "bd": "2001-05-13",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Hope": [
+   {
+    "team": "AL",
+    "role": "Bot",
+    "bd": "2000-09-29",
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Kael": [
+   {
+    "team": "AL",
+    "role": "Support",
+    "bd": "2004-02-11",
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Bin": [
+   {
+    "team": "BLG",
+    "role": "Top",
+    "bd": "2003-09-28",
+    "cc": "CN",
+    "contract": "2026-11-17"
+   }
+  ],
+  "Xun": [
+   {
+    "team": "BLG",
+    "role": "Jungle",
+    "bd": "2002-02-05",
+    "cc": "CN",
+    "contract": "2027-11-16"
+   }
+  ],
+  "Knight": [
+   {
+    "team": "BLG",
+    "role": "Mid",
+    "bd": "2000-05-22",
+    "cc": "CN",
+    "contract": "2027-11-16"
+   }
+  ],
+  "Viper": [
+   {
+    "team": "BLG",
+    "role": "Bot",
+    "bd": "2000-10-19",
+    "cc": "KR",
+    "contract": "2027-11-16"
+   }
+  ],
+  "ON": [
+   {
+    "team": "BLG",
+    "role": "Support",
+    "bd": "2003-05-12",
+    "cc": "CN",
+    "contract": "2026-11-17"
+   }
+  ],
+  "Zdz": [
+   {
+    "team": "EDG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Xiaohao": [
+   {
+    "team": "EDG",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Angel": [
+   {
+    "team": "EDG",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Leave": [
+   {
+    "team": "EDG",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Parukia": [
+   {
+    "team": "EDG",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-21"
+   }
+  ],
+  "Soboro": [
+   {
+    "team": "IG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   },
+   {
+    "team": "FNC",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Wei": [
+   {
+    "team": "IG",
+    "role": "Jungle",
+    "bd": "2002-11-09",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Rookie": [
+   {
+    "team": "IG",
+    "role": "Mid",
+    "bd": "1997-03-11",
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Renard": [
+   {
+    "team": "IG",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Photic": [
+   {
+    "team": "IG",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Meiko": [
+   {
+    "team": "IG",
+    "role": "Support",
+    "bd": "1998-06-06",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Jwei": [
+   {
+    "team": "IG",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Xiaoxu": [
+   {
+    "team": "JDG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "JunJia": [
+   {
+    "team": "JDG",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "HongQ": [
+   {
+    "team": "JDG",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "GALA": [
+   {
+    "team": "JDG",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Vampire": [
+   {
+    "team": "JDG",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "sasi": [
+   {
+    "team": "LGD",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Heng": [
+   {
+    "team": "LGD",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Tangyuan": [
+   {
+    "team": "LGD",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-21"
+   }
+  ],
+  "Shaoye": [
+   {
+    "team": "LGD",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Ycx": [
+   {
+    "team": "LGD",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "sheer": [
+   {
+    "team": "LNG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Croco": [
+   {
+    "team": "LNG",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "BuLLDoG": [
+   {
+    "team": "LNG",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "1xn": [
+   {
+    "team": "LNG",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "MISSING": [
+   {
+    "team": "LNG",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "HOYA": [
+   {
+    "team": "NIP",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Guwon": [
+   {
+    "team": "NIP",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Care": [
+   {
+    "team": "NIP",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Assum": [
+   {
+    "team": "NIP",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Zhuo": [
+   {
+    "team": "NIP",
+    "role": "Support",
+    "bd": "2001-02-13",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Hery": [
+   {
+    "team": "OMG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Juhan": [
+   {
+    "team": "OMG",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "re0": [
+   {
+    "team": "OMG",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "haichao": [
+   {
+    "team": "OMG",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Starry": [
+   {
+    "team": "OMG",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Moham": [
+   {
+    "team": "OMG",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2025-11-18"
+   }
+  ],
+  "369": [
+   {
+    "team": "TES",
+    "role": "Top",
+    "bd": "2001-07-12",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "ZUIAN": [
+   {
+    "team": "TES",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Tian": [
+   {
+    "team": "TES",
+    "role": "Jungle",
+    "bd": "2000-07-24",
+    "cc": null,
+    "contract": "2028-11-21"
+   }
+  ],
+  "Creme": [
+   {
+    "team": "TES",
+    "role": "Mid",
+    "bd": "2003-12-14",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "JackeyLove": [
+   {
+    "team": "TES",
+    "role": "Bot",
+    "bd": "2000-11-18",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "fengyue": [
+   {
+    "team": "TES",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-21"
+   }
+  ],
+  "Keshi": [
+   {
+    "team": "TT",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "Junhao": [
+   {
+    "team": "TT",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "Heru": [
+   {
+    "team": "TT",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "Ryan3": [
+   {
+    "team": "TT",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Ahn": [
+   {
+    "team": "TT",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-07-01"
+   }
+  ],
+  "Feather": [
+   {
+    "team": "TT",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Liangchen": [
+   {
+    "team": "UP",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "climber": [
+   {
+    "team": "UP",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Saber": [
+   {
+    "team": "UP",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Hena": [
+   {
+    "team": "UP",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Xiaoxia": [
+   {
+    "team": "UP",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Zika": [
+   {
+    "team": "WBG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "jiejie": [
+   {
+    "team": "WBG",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Xiaohu": [
+   {
+    "team": "WBG",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Elk": [
+   {
+    "team": "WBG",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Hang": [
+   {
+    "team": "WBG",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Cube": [
+   {
+    "team": "WE",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   },
+   {
+    "team": "DNS",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Monki": [
+   {
+    "team": "WE",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Karis": [
+   {
+    "team": "WE",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "About": [
+   {
+    "team": "WE",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Dorian": [
+   {
+    "team": "WE",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-21"
+   }
+  ],
+  "Erha": [
+   {
+    "team": "WE",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Clear": [
+   {
+    "team": "BFX",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kangin": [
+   {
+    "team": "BFX",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Raptor": [
+   {
+    "team": "BFX",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Zephyr": [
+   {
+    "team": "BFX",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Grizzly": [
+   {
+    "team": "BFX",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "VicLa": [
+   {
+    "team": "BFX",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Daystar": [
+   {
+    "team": "BFX",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "MG": [
+   {
+    "team": "BFX",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Taeyoon": [
+   {
+    "team": "BFX",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Slayer": [
+   {
+    "team": "BFX",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   },
+   {
+    "team": "MKF",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kellin": [
+   {
+    "team": "BFX",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Luon": [
+   {
+    "team": "BFX",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Edo": [
+   {
+    "team": "BFX",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Rather": [
+   {
+    "team": "BFX",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Lira": [
+   {
+    "team": "BFX",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Key": [
+   {
+    "team": "BFX",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Casting": [
+   {
+    "team": "BRO",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "DDahyuk": [
+   {
+    "team": "BRO",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "GIDEON": [
+   {
+    "team": "BRO",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Roamer": [
+   {
+    "team": "BRO",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Pungyeon": [
+   {
+    "team": "BRO",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Tempester": [
+   {
+    "team": "BRO",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Teddy": [
+   {
+    "team": "BRO",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "OddEye": [
+   {
+    "team": "BRO",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Namgung": [
+   {
+    "team": "BRO",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "PlanB": [
+   {
+    "team": "BRO",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Ssong": [
+   {
+    "team": "BRO",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Duke": [
+   {
+    "team": "BRO",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Ssumday": [
+   {
+    "team": "BRO",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Siwoo": [
+   {
+    "team": "DK",
+    "role": "Top",
+    "bd": "2007-11-24",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Jaehyuk": [
+   {
+    "team": "DK",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Nevid": [
+   {
+    "team": "DK",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Lucid": [
+   {
+    "team": "DK",
+    "role": "Jungle",
+    "bd": "2005-01-28",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Solid": [
+   {
+    "team": "DK",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2029-11-19"
+   }
+  ],
+  "ShowMaker": [
+   {
+    "team": "DK",
+    "role": "Mid",
+    "bd": "2000-07-22",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Garden": [
+   {
+    "team": "DK",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Smash": [
+   {
+    "team": "DK",
+    "role": "Bot",
+    "bd": "2006-07-20",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Wayne": [
+   {
+    "team": "DK",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Career": [
+   {
+    "team": "DK",
+    "role": "Support",
+    "bd": "2004-08-29",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Loopy": [
+   {
+    "team": "DK",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "cvMax": [
+   {
+    "team": "DK",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "PoohManDu": [
+   {
+    "team": "DK",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Hachani": [
+   {
+    "team": "DK",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Woong": [
+   {
+    "team": "DK",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Sungmin": [
+   {
+    "team": "DK",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "DuDu": [
+   {
+    "team": "DNS",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Lancer": [
+   {
+    "team": "DNS",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Sharvel": [
+   {
+    "team": "DNS",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Pyosik": [
+   {
+    "team": "DNS",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "DDoIV": [
+   {
+    "team": "DNS",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Clozer": [
+   {
+    "team": "DNS",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Flip": [
+   {
+    "team": "DNS",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "deokdam": [
+   {
+    "team": "DNS",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Enosh": [
+   {
+    "team": "DNS",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Peter": [
+   {
+    "team": "DNS",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   },
+   {
+    "team": "DCG",
+    "role": "General Manager",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Life": [
+   {
+    "team": "DNS",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Quantum": [
+   {
+    "team": "DNS",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Ggoong": [
+   {
+    "team": "DNS",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Minit": [
+   {
+    "team": "DNS",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Millimas": [
+   {
+    "team": "DNS",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "RapidStar": [
+   {
+    "team": "DNS",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kiin": [
+   {
+    "team": "GEN",
+    "role": "Top",
+    "bd": "1999-05-28",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Ripple": [
+   {
+    "team": "GEN",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Canyon": [
+   {
+    "team": "GEN",
+    "role": "Jungle",
+    "bd": "2001-06-18",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Courage": [
+   {
+    "team": "GEN",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Chovy": [
+   {
+    "team": "GEN",
+    "role": "Mid",
+    "bd": "2001-03-03",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Kemish": [
+   {
+    "team": "GEN",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Ruler": [
+   {
+    "team": "GEN",
+    "role": "Bot",
+    "bd": "1998-12-29",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "MUDAI": [
+   {
+    "team": "GEN",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "SIRIUSS": [
+   {
+    "team": "GEN",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Duro": [
+   {
+    "team": "GEN",
+    "role": "Support",
+    "bd": "2002-02-04",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Lumos": [
+   {
+    "team": "GEN",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Jerry": [
+   {
+    "team": "GEN",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Ryu": [
+   {
+    "team": "GEN",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Lyn": [
+   {
+    "team": "GEN",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Nova": [
+   {
+    "team": "GEN",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Zeus": [
+   {
+    "team": "HLE",
+    "role": "Top",
+    "bd": "2004-01-31",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Panther": [
+   {
+    "team": "HLE",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kanavi": [
+   {
+    "team": "HLE",
+    "role": "Jungle",
+    "bd": "2000-11-02",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Jackal": [
+   {
+    "team": "HLE",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Zeka": [
+   {
+    "team": "HLE",
+    "role": "Mid",
+    "bd": "2002-11-28",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Cracker": [
+   {
+    "team": "HLE",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Gumayusi": [
+   {
+    "team": "HLE",
+    "role": "Bot",
+    "bd": "2002-02-06",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Pyeonsik": [
+   {
+    "team": "HLE",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Delight": [
+   {
+    "team": "HLE",
+    "role": "Support",
+    "bd": "2002-09-12",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Valiant": [
+   {
+    "team": "HLE",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Bluffing": [
+   {
+    "team": "HLE",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Homme": [
+   {
+    "team": "HLE",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Sin": [
+   {
+    "team": "HLE",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Mowgli": [
+   {
+    "team": "HLE",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Sensation": [
+   {
+    "team": "HLE",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Frog": [
+   {
+    "team": "KRX",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Rich": [
+   {
+    "team": "KRX",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Willer": [
+   {
+    "team": "KRX",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Winner": [
+   {
+    "team": "KRX",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Ucal": [
+   {
+    "team": "KRX",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "AKaJe": [
+   {
+    "team": "KRX",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Vincenzo": [
+   {
+    "team": "KRX",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Aiming": [
+   {
+    "team": "KRX",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "LazyFeel": [
+   {
+    "team": "KRX",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-18"
+   }
+  ],
+  "Andil": [
+   {
+    "team": "KRX",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Minous": [
+   {
+    "team": "KRX",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Frozen": [
+   {
+    "team": "KRX",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Joker": [
+   {
+    "team": "KRX",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Naehyun": [
+   {
+    "team": "KRX",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Saroo": [
+   {
+    "team": "KRX",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Raise": [
+   {
+    "team": "KRX",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Catch": [
+   {
+    "team": "KRX",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "PerfecT": [
+   {
+    "team": "KT",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Sero": [
+   {
+    "team": "KT",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Cuzz": [
+   {
+    "team": "KT",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Sylvie": [
+   {
+    "team": "KT",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Bdd": [
+   {
+    "team": "KT",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Hwichan": [
+   {
+    "team": "KT",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Jiwoo": [
+   {
+    "team": "KT",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "FenRir": [
+   {
+    "team": "KT",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Ghost": [
+   {
+    "team": "KT",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Effort": [
+   {
+    "team": "KT",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Pollu": [
+   {
+    "team": "KT",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Score": [
+   {
+    "team": "KT",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2029-11-19"
+   }
+  ],
+  "Museong": [
+   {
+    "team": "KT",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Sonstar": [
+   {
+    "team": "KT",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Spark": [
+   {
+    "team": "KT",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Lilac": [
+   {
+    "team": "KT",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kingen": [
+   {
+    "team": "NS REDFORCE",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Janus": [
+   {
+    "team": "NS REDFORCE",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Sponge": [
+   {
+    "team": "NS REDFORCE",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "MihawK": [
+   {
+    "team": "NS REDFORCE",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Scout": [
+   {
+    "team": "NS REDFORCE",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "SeTab": [
+   {
+    "team": "NS REDFORCE",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Diable": [
+   {
+    "team": "NS REDFORCE",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Lucy": [
+   {
+    "team": "NS REDFORCE",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Lehends": [
+   {
+    "team": "NS REDFORCE",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Pleata": [
+   {
+    "team": "NS REDFORCE",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Calix": [
+   {
+    "team": "NS REDFORCE",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "DanDy": [
+   {
+    "team": "NS REDFORCE",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Chelly": [
+   {
+    "team": "NS REDFORCE",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Crazy": [
+   {
+    "team": "NS REDFORCE",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "bonO": [
+   {
+    "team": "NS REDFORCE",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Doran": [
+   {
+    "team": "T1",
+    "role": "Top",
+    "bd": "2000-07-22",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Haetae": [
+   {
+    "team": "T1",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Guardian": [
+   {
+    "team": "T1",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Oner": [
+   {
+    "team": "T1",
+    "role": "Jungle",
+    "bd": "2002-12-24",
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Painter": [
+   {
+    "team": "T1",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Carim": [
+   {
+    "team": "T1",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Faker": [
+   {
+    "team": "T1",
+    "role": "Mid",
+    "bd": "1996-05-07",
+    "cc": null,
+    "contract": "2029-11-19"
+   }
+  ],
+  "Guti": [
+   {
+    "team": "T1",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Peyz": [
+   {
+    "team": "T1",
+    "role": "Bot",
+    "bd": "2005-12-05",
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Cypher": [
+   {
+    "team": "T1",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Eclipse": [
+   {
+    "team": "T1",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Jinbeom": [
+   {
+    "team": "T1",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Keria": [
+   {
+    "team": "T1",
+    "role": "Support",
+    "bd": "2002-10-14",
+    "cc": null,
+    "contract": "2029-11-19"
+   }
+  ],
+  "Cloud": [
+   {
+    "team": "T1",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "kkOma": [
+   {
+    "team": "T1",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Tom": [
+   {
+    "team": "T1",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Mata": [
+   {
+    "team": "T1",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Easyhoon": [
+   {
+    "team": "T1",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "DooTi": [
+   {
+    "team": "T1",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Nagne": [
+   {
+    "team": "T1",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Rest": [
+   {
+    "team": "CFO",
+    "role": "Top",
+    "bd": "1998-12-11",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Shad0w": [
+   {
+    "team": "CFO",
+    "role": "Jungle",
+    "bd": "2001-02-25",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "POUT": [
+   {
+    "team": "CFO",
+    "role": "Mid",
+    "bd": "2003-10-03",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Doggo": [
+   {
+    "team": "CFO",
+    "role": "Bot",
+    "bd": "2003-01-14",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kino": [
+   {
+    "team": "CFO",
+    "role": "Support",
+    "bd": "1998-04-12",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Kenny": [
+   {
+    "team": "CFO",
+    "role": "General Manager",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Gecko": [
+   {
+    "team": "Clocks",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Kangkuk": [
+   {
+    "team": "Clocks",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Razer": [
+   {
+    "team": "Clocks",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "chico": [
+   {
+    "team": "Clocks",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "YSDS": [
+   {
+    "team": "Clocks",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Fulid": [
+   {
+    "team": "Clocks",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "autefu": [
+   {
+    "team": "Clocks",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Distance": [
+   {
+    "team": "Clocks",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Zkai": [
+   {
+    "team": "CTBC Flying Oyster Academy",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Xin": [
+   {
+    "team": "CTBC Flying Oyster Academy",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Leaky": [
+   {
+    "team": "CTBC Flying Oyster Academy",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Yuhe": [
+   {
+    "team": "CTBC Flying Oyster Academy",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Tracy": [
+   {
+    "team": "CTBC Flying Oyster Academy",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "2274": [
+   {
+    "team": "CTBC Flying Oyster Academy",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-14"
+   }
+  ],
+  "DPower": [
+   {
+    "team": "CTBC Flying Oyster Academy",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Flauren": [
+   {
+    "team": "DCG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Pop9": [
+   {
+    "team": "DCG",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "HongSuo": [
+   {
+    "team": "DCG",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "XiaoXiang": [
+   {
+    "team": "DCG",
+    "role": "Mid (Sub)",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Feng": [
+   {
+    "team": "DCG",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "ShiauC": [
+   {
+    "team": "DCG",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Potential": [
+   {
+    "team": "DetonatioN FocusMe Academy",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Grit": [
+   {
+    "team": "DetonatioN FocusMe Academy",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Ravvy": [
+   {
+    "team": "DetonatioN FocusMe Academy",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Damocles": [
+   {
+    "team": "DetonatioN FocusMe Academy",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "kurahuto": [
+   {
+    "team": "DetonatioN FocusMe Academy",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Tobi": [
+   {
+    "team": "DetonatioN FocusMe Academy",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   },
+   {
+    "team": "One Round Specialists",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Momo": [
+   {
+    "team": "DFM",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Citrus": [
+   {
+    "team": "DFM",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Fisher": [
+   {
+    "team": "DFM",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Kakkun": [
+   {
+    "team": "DFM",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Woody": [
+   {
+    "team": "DFM",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Keisuke": [
+   {
+    "team": "DFM",
+    "role": "General Manager",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Yuji": [
+   {
+    "team": "Equinox Core",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-01-11"
+   }
+  ],
+  "XI LAI": [
+   {
+    "team": "Equinox Core",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-01-11"
+   }
+  ],
+  "Epic": [
+   {
+    "team": "Equinox Core",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-01-11"
+   }
+  ],
+  "Zoey": [
+   {
+    "team": "Equinox Core",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-01-11"
+   }
+  ],
+  "Lucifer": [
+   {
+    "team": "Equinox Core",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-01-11"
+   }
+  ],
+  "Mese": [
+   {
+    "team": "Equinox Core",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-01-11"
+   }
+  ],
+  "Hanli": [
+   {
+    "team": "Equinox Core",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-01-11"
+   }
+  ],
+  "LeiShan": [
+   {
+    "team": "Equinox Core",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-01-11"
+   }
+  ],
+  "Medica": [
+   {
+    "team": "Equinox Core",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-01-11"
+   }
+  ],
+  "迷失zz#Chen": [
+   {
+    "team": "Equinox Core",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Hannah": [
+   {
+    "team": "Fast8",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Karaage": [
+   {
+    "team": "Fast8",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "ice": [
+   {
+    "team": "Fast8",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "MayR": [
+   {
+    "team": "Fast8",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   },
+   {
+    "team": "FENNEL",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "raku": [
+   {
+    "team": "Fast8",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Mcf": [
+   {
+    "team": "Fast8",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "tetu": [
+   {
+    "team": "Fast8",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Lambda": [
+   {
+    "team": "Fast8",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "kkkkkkkkk": [
+   {
+    "team": "FENNEL",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Ellim": [
+   {
+    "team": "FENNEL",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "DICE": [
+   {
+    "team": "FENNEL",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Brucee": [
+   {
+    "team": "FENNEL",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Son": [
+   {
+    "team": "FENNEL",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Motive": [
+   {
+    "team": "FENNEL",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "YSKM": [
+   {
+    "team": "FRANK Esports",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Holo": [
+   {
+    "team": "FRANK Esports",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Pretender": [
+   {
+    "team": "FRANK Esports",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "MnM": [
+   {
+    "team": "FRANK Esports",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "kingpo54": [
+   {
+    "team": "FRANK Esports",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "MoonBlack": [
+   {
+    "team": "FRANK Esports",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "lazyleung": [
+   {
+    "team": "FRANK Esports",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   },
+   {
+    "team": "FRANK Esports",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Kiaya": [
+   {
+    "team": "GAM",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Gloryy": [
+   {
+    "team": "GAM",
+    "role": "Mid (Sub)",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Artemis": [
+   {
+    "team": "GAM",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Taki": [
+   {
+    "team": "GAM",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Hype": [
+   {
+    "team": "GAM",
+    "role": "Analyst",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   },
+   {
+    "team": "TH",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Izumin": [
+   {
+    "team": "GAM",
+    "role": "General Manager",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Adizai": [
+   {
+    "team": "Ground Zero Academy",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-20"
+   }
+  ],
+  "RenYe": [
+   {
+    "team": "Ground Zero Academy",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-06-30"
+   }
+  ],
+  "PeanutCoco": [
+   {
+    "team": "Ground Zero Academy",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Chain": [
+   {
+    "team": "Ground Zero Academy",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-20"
+   }
+  ],
+  "131": [
+   {
+    "team": "Ground Zero Academy",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-20"
+   }
+  ],
+  "Emoking": [
+   {
+    "team": "Ground Zero Academy",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Sabisu": [
+   {
+    "team": "Ground Zero Academy",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Bob": [
+   {
+    "team": "Ground Zero Academy",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-20"
+   }
+  ],
+  "jar": [
+   {
+    "team": "Ground Zero Academy",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "1Jiang": [
+   {
+    "team": "GZ",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Husha": [
+   {
+    "team": "GZ",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Uniboy": [
+   {
+    "team": "GZ",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Betty": [
+   {
+    "team": "GZ",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Kaiwing": [
+   {
+    "team": "GZ",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Sheep": [
+   {
+    "team": "GZ",
+    "role": "General Manager",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Arthur": [
+   {
+    "team": "GZ",
+    "role": "Manager",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Imagine": [
+   {
+    "team": "Inferno Drive Tokyo",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Enapon": [
+   {
+    "team": "Inferno Drive Tokyo",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Sai": [
+   {
+    "team": "Inferno Drive Tokyo",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "wanan": [
+   {
+    "team": "Inferno Drive Tokyo",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "JustFocus": [
+   {
+    "team": "Inferno Drive Tokyo",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "PiNK": [
+   {
+    "team": "Inferno Drive Tokyo",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Jubssal": [
+   {
+    "team": "Inferno Drive Tokyo",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "SnowRabbit": [
+   {
+    "team": "L Guide Gaming",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Amel": [
+   {
+    "team": "L Guide Gaming",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Sassappel": [
+   {
+    "team": "L Guide Gaming",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "rre": [
+   {
+    "team": "L Guide Gaming",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "NaiNa": [
+   {
+    "team": "L Guide Gaming",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "SaKi": [
+   {
+    "team": "L Guide Gaming",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "VicaL": [
+   {
+    "team": "L Guide Gaming",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Kratos": [
+   {
+    "team": "MGN Vikings Esports",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Gury": [
+   {
+    "team": "MGN Vikings Esports",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "SanSan": [
+   {
+    "team": "MGN Vikings Esports",
+    "role": "Jungle (Sub)",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-21"
+   }
+  ],
+  "Chika": [
+   {
+    "team": "MGN Vikings Esports",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Harky": [
+   {
+    "team": "MGN Vikings Esports",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-21"
+   }
+  ],
+  "SiuLoong": [
+   {
+    "team": "MGN Vikings Esports",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Suga": [
+   {
+    "team": "MGN Vikings Esports",
+    "role": "Analyst",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Zuko": [
+   {
+    "team": "MGN Vikings Esports",
+    "role": "Analyst",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-21"
+   }
+  ],
+  "LilyMeow": [
+   {
+    "team": "MGN Vikings Esports",
+    "role": "Manager",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "advance": [
+   {
+    "team": "New Meta",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Ham": [
+   {
+    "team": "New Meta",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "HRK": [
+   {
+    "team": "New Meta",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Alps": [
+   {
+    "team": "New Meta",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Eria": [
+   {
+    "team": "New Meta",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Godot": [
+   {
+    "team": "New Meta",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "koisi": [
+   {
+    "team": "New Meta",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Excellents": [
+   {
+    "team": "Nothin'Here",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Feww": [
+   {
+    "team": "Nothin'Here",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "itae": [
+   {
+    "team": "Nothin'Here",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Blondie": [
+   {
+    "team": "Nothin'Here",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Yuyuu": [
+   {
+    "team": "Nothin'Here",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Stellar": [
+   {
+    "team": "Nothin'Here",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "PonG": [
+   {
+    "team": "NOVEX",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Kreative": [
+   {
+    "team": "NOVEX",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Aquila": [
+   {
+    "team": "NOVEX",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Cryo": [
+   {
+    "team": "NOVEX",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "sh1vq": [
+   {
+    "team": "NOVEX",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Sorrymbggff": [
+   {
+    "team": "One Round Specialists",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Liang": [
+   {
+    "team": "One Round Specialists",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "K B": [
+   {
+    "team": "One Round Specialists",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Micinb": [
+   {
+    "team": "One Round Specialists",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "RedamnTion": [
+   {
+    "team": "One Round Specialists",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "ForeverLim": [
+   {
+    "team": "One Round Specialists",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "ner4": [
+   {
+    "team": "One Round Specialists",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Mogu": [
+   {
+    "team": "One Round Specialists",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "YellowYoshi": [
+   {
+    "team": "Rising Gaming",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Ankochan": [
+   {
+    "team": "Rising Gaming",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "EL": [
+   {
+    "team": "Rising Gaming",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Ramune": [
+   {
+    "team": "Rising Gaming",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Archer": [
+   {
+    "team": "Rising Gaming",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Ace": [
+   {
+    "team": "Rising Gaming",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Patch": [
+   {
+    "team": "Rising Gaming",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   },
+   {
+    "team": "SU",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "hetel": [
+   {
+    "team": "Rising Gaming",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Charley": [
+   {
+    "team": "Rising Gaming",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Nanaue": [
+   {
+    "team": "Saigon 1TAP Dino",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-12-01"
+   }
+  ],
+  "Tiphat": [
+   {
+    "team": "Saigon 1TAP Dino",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-12-01"
+   }
+  ],
+  "Wady": [
+   {
+    "team": "Saigon 1TAP Dino",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-12-01"
+   }
+  ],
+  "TT": [
+   {
+    "team": "Saigon 1TAP Dino",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-12-01"
+   }
+  ],
+  "Easylove": [
+   {
+    "team": "Saigon 1TAP Dino",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-12-01"
+   }
+  ],
+  "Vinboiz": [
+   {
+    "team": "Saigon 1TAP Dino",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-12-01"
+   }
+  ],
+  "Tahahy": [
+   {
+    "team": "Saigon 1TAP Dino",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-12-01"
+   }
+  ],
+  "JackieWind": [
+   {
+    "team": "Saigon 1TAP Dino",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-12-01"
+   }
+  ],
+  "Hasmed": [
+   {
+    "team": "Saigon 9gaming Esports",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "SCP": [
+   {
+    "team": "Saigon 9gaming Esports",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "GiaQui": [
+   {
+    "team": "Saigon 9gaming Esports",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Charlington": [
+   {
+    "team": "Saigon 9gaming Esports",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Zin": [
+   {
+    "team": "Saigon 9gaming Esports",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "PTM": [
+   {
+    "team": "Saigon 9gaming Esports",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "HanKay": [
+   {
+    "team": "Saigon 9gaming Esports",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "TungLam": [
+   {
+    "team": "Saigon 9gaming Esports",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Steller": [
+   {
+    "team": "Saigon MVK Academy",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-16"
+   }
+  ],
+  "Umi": [
+   {
+    "team": "Saigon MVK Academy",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-05-19"
+   }
+  ],
+  "NPC": [
+   {
+    "team": "Saigon MVK Academy",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-16"
+   }
+  ],
+  "Seany": [
+   {
+    "team": "Saigon MVK Academy",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-16"
+   }
+  ],
+  "Hy": [
+   {
+    "team": "Saigon MVK Academy",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-16"
+   }
+  ],
+  "Nuna": [
+   {
+    "team": "Saigon MVK Academy",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-16"
+   }
+  ],
+  "Callian": [
+   {
+    "team": "Saigon MVK Academy",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-16"
+   }
+  ],
+  "RonOP": [
+   {
+    "team": "Saigon MVK Academy",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-16"
+   }
+  ],
+  "YanLuu": [
+   {
+    "team": "Saigon MVK Academy",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Nern": [
+   {
+    "team": "Saigon Warriors",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "j1n5": [
+   {
+    "team": "Saigon Warriors",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "AisyL": [
+   {
+    "team": "Saigon Warriors",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Aomine": [
+   {
+    "team": "Saigon Warriors",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Elio": [
+   {
+    "team": "Saigon Warriors",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Swiss": [
+   {
+    "team": "Saigon Warriors",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "ptKhai": [
+   {
+    "team": "Saigon Warriors",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   },
+   {
+    "team": "Saigon Warriors",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Weizhe": [
+   {
+    "team": "Shadow Keepers Esports",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Cedric": [
+   {
+    "team": "Shadow Keepers Esports",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   },
+   {
+    "team": "Shadow Keepers Esports",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Ashlomailmax": [
+   {
+    "team": "Shadow Keepers Esports",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "1116": [
+   {
+    "team": "Shadow Keepers Esports",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Prage": [
+   {
+    "team": "Shadow Keepers Esports",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Evi": [
+   {
+    "team": "SHG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Van1": [
+   {
+    "team": "SHG",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Aria": [
+   {
+    "team": "SHG",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Marble": [
+   {
+    "team": "SHG",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Vsta": [
+   {
+    "team": "SHG",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Ando": [
+   {
+    "team": "SHG",
+    "role": "General Manager",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Hasu7": [
+   {
+    "team": "SillySilly Gaming",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Tianzhen": [
+   {
+    "team": "SillySilly Gaming",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-31"
+   }
+  ],
+  "Xzz": [
+   {
+    "team": "SillySilly Gaming",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Hermes": [
+   {
+    "team": "SillySilly Gaming",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-31"
+   }
+  ],
+  "Endless": [
+   {
+    "team": "SillySilly Gaming",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-31"
+   }
+  ],
+  "En": [
+   {
+    "team": "SillySilly Gaming",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "呂紹綸": [
+   {
+    "team": "SillySilly Gaming",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Zorenous": [
+   {
+    "team": "Team Gromp",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   },
+   {
+    "team": "TOG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Poltron": [
+   {
+    "team": "Team Gromp",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Halo": [
+   {
+    "team": "Team Gromp",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Praedyth": [
+   {
+    "team": "Team Gromp",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Bulldawg": [
+   {
+    "team": "Team Gromp",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "BabyBananaPeel": [
+   {
+    "team": "Team Gromp",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Raes": [
+   {
+    "team": "Team Gromp",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Sparda": [
+   {
+    "team": "TPHCM SN CyberCore Esports",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-30"
+   }
+  ],
+  "Rikk": [
+   {
+    "team": "TPHCM SN CyberCore Esports",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-30"
+   }
+  ],
+  "Vin": [
+   {
+    "team": "TPHCM SN CyberCore Esports",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-30"
+   }
+  ],
+  "Kairi": [
+   {
+    "team": "TPHCM SN CyberCore Esports",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-30"
+   }
+  ],
+  "Hieu3": [
+   {
+    "team": "TPHCM SN CyberCore Esports",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-30"
+   }
+  ],
+  "Yashiro": [
+   {
+    "team": "TPHCM SN CyberCore Esports",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-30"
+   }
+  ],
+  "Yongbel": [
+   {
+    "team": "TPHCM SN CyberCore Esports",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-30"
+   }
+  ],
+  "PhanVanTa": [
+   {
+    "team": "TPHCM SN CyberCore Esports",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-30"
+   }
+  ],
+  "Kyo": [
+   {
+    "team": "TPHCM SN CyberCore Esports",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-30"
+   }
+  ],
+  "Peachy": [
+   {
+    "team": "TPHCM SN CyberCore Esports",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-30"
+   }
+  ],
+  "Martinelli": [
+   {
+    "team": "TPHCM SN CyberCore Esports",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-30"
+   }
+  ],
+  "Pun": [
+   {
+    "team": "TSW",
+    "role": "Top",
+    "bd": "2002-07-29",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Hizto": [
+   {
+    "team": "TSW",
+    "role": "Jungle",
+    "bd": "2007-09-15",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Dire": [
+   {
+    "team": "TSW",
+    "role": "Mid",
+    "bd": "2006-11-22",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Eddie": [
+   {
+    "team": "TSW",
+    "role": "Bot",
+    "bd": "2003-06-17",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Bie": [
+   {
+    "team": "TSW",
+    "role": "Support",
+    "bd": "1999-12-09",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "CinCai": [
+   {
+    "team": "TSW",
+    "role": "General Manager",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "udon": [
+   {
+    "team": "Uwinks",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Elative": [
+   {
+    "team": "Uwinks",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Jericho": [
+   {
+    "team": "Uwinks",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "sign": [
+   {
+    "team": "Uwinks",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "ichida": [
+   {
+    "team": "Uwinks",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Gimi": [
+   {
+    "team": "Uwinks",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "anakin": [
+   {
+    "team": "Uwinks",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Outlaw": [
+   {
+    "team": "Uwinks",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "PAKA": [
+   {
+    "team": "Uwinks",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "antana": [
+   {
+    "team": "VAREEL YOUTH",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Fubuki": [
+   {
+    "team": "VAREEL YOUTH",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "GukBo": [
+   {
+    "team": "VAREEL YOUTH",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Vox": [
+   {
+    "team": "VAREEL YOUTH",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "f4ke": [
+   {
+    "team": "VAREEL YOUTH",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "claude": [
+   {
+    "team": "VAREEL YOUTH",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Pooh": [
+   {
+    "team": "VAREEL YOUTH",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "somanwx": [
+   {
+    "team": "VAREEL YOUTH",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Vapor": [
+   {
+    "team": "VAREEL YOUTH",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "apaMEN": [
+   {
+    "team": "VAREEL YOUTH",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Zartheit1": [
+   {
+    "team": "Viper Night Raider",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-01-07"
+   }
+  ],
+  "Listo": [
+   {
+    "team": "Viper Night Raider",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-01-07"
+   }
+  ],
+  "BuLuKaKa": [
+   {
+    "team": "Viper Night Raider",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-01-07"
+   }
+  ],
+  "MadDogg9": [
+   {
+    "team": "Viper Night Raider",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-01-07"
+   }
+  ],
+  "Keres": [
+   {
+    "team": "Viper Night Raider",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-01-07"
+   }
+  ],
+  "ANKS": [
+   {
+    "team": "Viper Night Raider",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-01-07"
+   }
+  ],
+  "Masuhana": [
+   {
+    "team": "Viper Night Raider",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-01-07"
+   }
+  ],
+  "XDDCC": [
+   {
+    "team": "Viper Night Raider",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-01-07"
+   }
+  ],
+  "曾小姐": [
+   {
+    "team": "Viper Night Raider",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Rbow": [
+   {
+    "team": "WangTing",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Killer2": [
+   {
+    "team": "WangTing",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Cid": [
+   {
+    "team": "WangTing",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Dotmm": [
+   {
+    "team": "WangTing",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "TNS": [
+   {
+    "team": "WangTing",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Feng55": [
+   {
+    "team": "WangTing",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "丁豪": [
+   {
+    "team": "WangTing",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Hedonist": [
+   {
+    "team": "Xu Ji Basalt",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Raon": [
+   {
+    "team": "Xu Ji Basalt",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Roger": [
+   {
+    "team": "Xu Ji Basalt",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Acheron": [
+   {
+    "team": "Xu Ji Basalt",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "X1aoCHiao": [
+   {
+    "team": "Xu Ji Basalt",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Sylus": [
+   {
+    "team": "Xu Ji Basalt",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Dust": [
+   {
+    "team": "Xu Ji Basalt",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Hamtis": [
+   {
+    "team": "Xu Ji Basalt",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "鄭宗全": [
+   {
+    "team": "Xu Ji Basalt",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "iu": [
+   {
+    "team": "Yang Yang Gaming",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Dopaminw": [
+   {
+    "team": "Yang Yang Gaming",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "kumuo": [
+   {
+    "team": "Yang Yang Gaming",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Nagi": [
+   {
+    "team": "Yang Yang Gaming",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Yosida": [
+   {
+    "team": "Yang Yang Gaming",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "wada": [
+   {
+    "team": "Yang Yang Gaming",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "ReaperBabe": [
+   {
+    "team": "Yang Yang Gaming",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Rylai": [
+   {
+    "team": "Yang Yang Gaming",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "JucDuc": [
+   {
+    "team": "Yang Yang Gaming",
+    "role": "",
+    "bd": null,
+    "cc": null,
+    "contract": null
+   }
+  ],
+  "Selenex": [
+   {
+    "team": "BAR",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Koldo": [
+   {
+    "team": "BAR",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Macaquinho": [
+   {
+    "team": "BAR",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Legolas": [
+   {
+    "team": "BAR",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Oscure": [
+   {
+    "team": "BAR",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Pauporter": [
+   {
+    "team": "BAR",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   },
+   {
+    "team": "UB",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Madly": [
+   {
+    "team": "BGT",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kireas": [
+   {
+    "team": "BGT",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kachanava": [
+   {
+    "team": "BGT",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Neramin": [
+   {
+    "team": "BGT",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Berebo": [
+   {
+    "team": "BGT",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Irrelevant": [
+   {
+    "team": "BIG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Habubu": [
+   {
+    "team": "BIG",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "113": [
+   {
+    "team": "BIG",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Reeker": [
+   {
+    "team": "BIG",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Patrik": [
+   {
+    "team": "BIG",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kaiser": [
+   {
+    "team": "BIG",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Boda": [
+   {
+    "team": "BKR",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   },
+   {
+    "team": "KHK",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Jeykup": [
+   {
+    "team": "BKR",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Sayn": [
+   {
+    "team": "BKR",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Unforg1ven": [
+   {
+    "team": "BKR",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Doss": [
+   {
+    "team": "BKR",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   },
+   {
+    "team": "KHK",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "sPARKY": [
+   {
+    "team": "BKR",
+    "role": "Manager",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Aytekn": [
+   {
+    "team": "BW",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Osman123": [
+   {
+    "team": "BW",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Warner": [
+   {
+    "team": "BW",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Camana": [
+   {
+    "team": "BW",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Ruep": [
+   {
+    "team": "BW",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Carry": [
+   {
+    "team": "BW",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Hamsi": [
+   {
+    "team": "DIA",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Aspect": [
+   {
+    "team": "DIA",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Yuros": [
+   {
+    "team": "DIA",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Jeyrus": [
+   {
+    "team": "DIA",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Carve": [
+   {
+    "team": "DIA",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "fabFabulous": [
+   {
+    "team": "DP",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Typhoon": [
+   {
+    "team": "DP",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "LynxCerezz": [
+   {
+    "team": "DP",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "GRRave": [
+   {
+    "team": "DP",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "BEPLUSH": [
+   {
+    "team": "DP",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Crystal": [
+   {
+    "team": "DP",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Jenax": [
+   {
+    "team": "EINS",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Xagog": [
+   {
+    "team": "EINS",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "PowerOfEvil": [
+   {
+    "team": "EINS",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "FUN k3y": [
+   {
+    "team": "EINS",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Seaz": [
+   {
+    "team": "EINS",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Archfiend": [
+   {
+    "team": "ES",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Lulas": [
+   {
+    "team": "ES",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-08-31"
+   }
+  ],
+  "xKenzuke": [
+   {
+    "team": "ES",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Fantomisto": [
+   {
+    "team": "ES",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "Yen": [
+   {
+    "team": "ES",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Gordinho": [
+   {
+    "team": "ES",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Noàh": [
+   {
+    "team": "ES",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Vizicsacsi": [
+   {
+    "team": "EWI",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Afroboi": [
+   {
+    "team": "EWI",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Relative": [
+   {
+    "team": "EWI",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Noz2k": [
+   {
+    "team": "EWI",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Wildenbruch": [
+   {
+    "team": "EWI",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Bobsik": [
+   {
+    "team": "FLK",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-25"
+   }
+  ],
+  "Clicker": [
+   {
+    "team": "FLK",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "Mentos": [
+   {
+    "team": "FLK",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-25"
+   }
+  ],
+  "Marcv1": [
+   {
+    "team": "FLK",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "Deleted": [
+   {
+    "team": "FLK",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "Razork": [
+   {
+    "team": "FNC",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Vladi": [
+   {
+    "team": "FNC",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Upset": [
+   {
+    "team": "FNC",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Lospa": [
+   {
+    "team": "FNC",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "BrokenBlade": [
+   {
+    "team": "G2",
+    "role": "Top",
+    "bd": "2000-01-19",
+    "cc": "Germany",
+    "contract": "2026-11-16"
+   }
+  ],
+  "SkewMond": [
+   {
+    "team": "G2",
+    "role": "Jungle",
+    "bd": "2004-08-09",
+    "cc": "France",
+    "contract": "2028-11-20"
+   }
+  ],
+  "Caps": [
+   {
+    "team": "G2",
+    "role": "Mid",
+    "bd": "1999-11-17",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Hans Sama": [
+   {
+    "team": "G2",
+    "role": "Bot",
+    "bd": "1999-09-02",
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Labrov": [
+   {
+    "team": "G2",
+    "role": "Support",
+    "bd": "2002-02-12",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Shelfmade": [
+   {
+    "team": "G2N",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Markoon": [
+   {
+    "team": "G2N",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Toasty": [
+   {
+    "team": "G2N",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Rin": [
+   {
+    "team": "G2N",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Tockimo": [
+   {
+    "team": "G2N",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "BliZarD": [
+   {
+    "team": "G2N",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Michel": [
+   {
+    "team": "G2N",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Carlsen": [
+   {
+    "team": "GL",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Thayger": [
+   {
+    "team": "GL",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "OMON": [
+   {
+    "team": "GL",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Harpoon": [
+   {
+    "team": "GL",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Zoelys": [
+   {
+    "team": "GL",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Marty": [
+   {
+    "team": "GL",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Dream": [
+   {
+    "team": "GL",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-08-02"
+   }
+  ],
+  "SwiT": [
+   {
+    "team": "GL",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-08-02"
+   }
+  ],
+  "Lot": [
+   {
+    "team": "GX",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Oscarinin": [
+   {
+    "team": "GX",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Th3Antonio": [
+   {
+    "team": "GX",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-18"
+   }
+  ],
+  "ISMA": [
+   {
+    "team": "GX",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Time": [
+   {
+    "team": "GX",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Jackies": [
+   {
+    "team": "GX",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Dyenn": [
+   {
+    "team": "GX",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Noah": [
+   {
+    "team": "GX",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Flakked": [
+   {
+    "team": "GX",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Rayito": [
+   {
+    "team": "GX",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "Jun": [
+   {
+    "team": "GX",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Attila": [
+   {
+    "team": "GX",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-18"
+   }
+  ],
+  "Papiteero": [
+   {
+    "team": "HRTS",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "Lurox": [
+   {
+    "team": "HRTS",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Mercy9": [
+   {
+    "team": "HRTS",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Lure": [
+   {
+    "team": "HRTS",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Batuuu": [
+   {
+    "team": "HRTS",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Badlulu": [
+   {
+    "team": "IJC",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Manaty": [
+   {
+    "team": "IJC",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   },
+   {
+    "team": "ZYB Esport",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-16"
+   }
+  ],
+  "Dajor": [
+   {
+    "team": "IJC",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Soldier": [
+   {
+    "team": "IJC",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Whiteinn": [
+   {
+    "team": "IJC",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kaboom": [
+   {
+    "team": "IJC",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   },
+   {
+    "team": "SU",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Ragner": [
+   {
+    "team": "JL",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Shift": [
+   {
+    "team": "JL",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kofte": [
+   {
+    "team": "JL",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Koba": [
+   {
+    "team": "JL",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Mersa": [
+   {
+    "team": "JL",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Vertigo": [
+   {
+    "team": "JL",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "HungryPanda": [
+   {
+    "team": "JL",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Canna": [
+   {
+    "team": "KC",
+    "role": "Top",
+    "bd": "2000-02-11",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Yike": [
+   {
+    "team": "KC",
+    "role": "Jungle",
+    "bd": "2000-11-11",
+    "cc": "Sweden",
+    "contract": "2026-11-16"
+   }
+  ],
+  "kyeahoo": [
+   {
+    "team": "KC",
+    "role": "Mid",
+    "bd": "2005-08-13",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Caliste": [
+   {
+    "team": "KC",
+    "role": "Bot",
+    "bd": "2006-08-28",
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Busio": [
+   {
+    "team": "KC",
+    "role": "Support",
+    "bd": "2003-10-22",
+    "cc": "United States",
+    "contract": "2027-11-15"
+   }
+  ],
+  "Tao": [
+   {
+    "team": "KCB",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Yukino": [
+   {
+    "team": "KCB",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kamiloo": [
+   {
+    "team": "KCB",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Hazel": [
+   {
+    "team": "KCB",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   },
+   {
+    "team": "ROSS",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Prime": [
+   {
+    "team": "KCB",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Venour": [
+   {
+    "team": "KHK",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Densi": [
+   {
+    "team": "KHK",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Abbedagge": [
+   {
+    "team": "KHK",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Unforgiven": [
+   {
+    "team": "KHK",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "NIQKL": [
+   {
+    "team": "LUA",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-08-30"
+   }
+  ],
+  "Pegaso": [
+   {
+    "team": "LUA",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "Hydra": [
+   {
+    "team": "LUA",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "Kaii": [
+   {
+    "team": "LUA",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "TIMR": [
+   {
+    "team": "LUA",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "Dani": [
+   {
+    "team": "LUA",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "XnS": [
+   {
+    "team": "MKF",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Fresskowy": [
+   {
+    "team": "MKF",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "13": [
+   {
+    "team": "MKF",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Myrtus": [
+   {
+    "team": "MKF",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Nae": [
+   {
+    "team": "MKF",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Myrwn": [
+   {
+    "team": "MKOI",
+    "role": "Top",
+    "bd": "2003-06-13",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "NightSlayer": [
+   {
+    "team": "MKOI",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Elyoya": [
+   {
+    "team": "MKOI",
+    "role": "Jungle",
+    "bd": "2000-03-13",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Sr Antonio": [
+   {
+    "team": "MKOI",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Jojopyun": [
+   {
+    "team": "MKOI",
+    "role": "Mid",
+    "bd": "2004-10-01",
+    "cc": "Canada",
+    "contract": "2026-11-16"
+   }
+  ],
+  "Supa": [
+   {
+    "team": "MKOI",
+    "role": "Bot",
+    "bd": "2000-10-23",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Alvaro": [
+   {
+    "team": "MKOI",
+    "role": "Support",
+    "bd": "2003-07-15",
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Maynter": [
+   {
+    "team": "NAVI",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Rhilech": [
+   {
+    "team": "NAVI",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Poby": [
+   {
+    "team": "NAVI",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Larssen": [
+   {
+    "team": "NAVI",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "SamD": [
+   {
+    "team": "NAVI",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Parus": [
+   {
+    "team": "NAVI",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Bayonetta": [
+   {
+    "team": "PCF",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "stalken": [
+   {
+    "team": "PCF",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "FireAscept": [
+   {
+    "team": "PCF",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Scorth": [
+   {
+    "team": "PCF",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "monkaS": [
+   {
+    "team": "PCF",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Ersin": [
+   {
+    "team": "PHX",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Ruinez": [
+   {
+    "team": "PHX",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "f0rzent": [
+   {
+    "team": "PHX",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   },
+   {
+    "team": "PHX",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Creal": [
+   {
+    "team": "PHX",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Raen1": [
+   {
+    "team": "PHX",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Varin": [
+   {
+    "team": "PHX",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Leks": [
+   {
+    "team": "ROSS",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "jokaa": [
+   {
+    "team": "ROSS",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Pasu": [
+   {
+    "team": "ROSS",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Fooneses": [
+   {
+    "team": "ROSS",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "c0st0m": [
+   {
+    "team": "ROSS",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Infoneral": [
+   {
+    "team": "ROSS",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "storm": [
+   {
+    "team": "ROSS",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Sangrod": [
+   {
+    "team": "SA",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "NightyNN": [
+   {
+    "team": "SA",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Hades": [
+   {
+    "team": "SA",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Stansfield": [
+   {
+    "team": "SA",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Revanche": [
+   {
+    "team": "SA",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Yeti": [
+   {
+    "team": "SC",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Spooky": [
+   {
+    "team": "SC",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Nafkelah": [
+   {
+    "team": "SC",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Exofeng": [
+   {
+    "team": "SC",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Steeelback": [
+   {
+    "team": "SC",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Addusto": [
+   {
+    "team": "SGE",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Szygenda": [
+   {
+    "team": "SGE",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "D4nKa": [
+   {
+    "team": "SGE",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Sencux": [
+   {
+    "team": "SGE",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Devn": [
+   {
+    "team": "SGE",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Notiko": [
+   {
+    "team": "SGE",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Richu": [
+   {
+    "team": "SGE",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Rooster": [
+   {
+    "team": "SHFT",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Boukada": [
+   {
+    "team": "SHFT",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Sheo": [
+   {
+    "team": "SHFT",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "nuc": [
+   {
+    "team": "SHFT",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Paduck": [
+   {
+    "team": "SHFT",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Trymbi": [
+   {
+    "team": "SHFT",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Stend": [
+   {
+    "team": "SHFT",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Wunder": [
+   {
+    "team": "SK",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Skeanz": [
+   {
+    "team": "SK",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Lider": [
+   {
+    "team": "SK",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "SlowQ": [
+   {
+    "team": "SK",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Jopa": [
+   {
+    "team": "SK",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Mikyx": [
+   {
+    "team": "SK",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kryze": [
+   {
+    "team": "SLY",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Zicssi": [
+   {
+    "team": "SLY",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Jool": [
+   {
+    "team": "SLY",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Aetinoth": [
+   {
+    "team": "SLY",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Piero": [
+   {
+    "team": "SLY",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "IlllIma": [
+   {
+    "team": "SU",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "RAMES": [
+   {
+    "team": "SU",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Vetheo": [
+   {
+    "team": "SU",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Nako": [
+   {
+    "team": "SU",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kakarot": [
+   {
+    "team": "SU",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Tracyn": [
+   {
+    "team": "TH",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Daglas": [
+   {
+    "team": "TH",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Serin": [
+   {
+    "team": "TH",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Way": [
+   {
+    "team": "TH",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Whiteknight": [
+   {
+    "team": "TOG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Woldjo": [
+   {
+    "team": "TOG",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Sajator": [
+   {
+    "team": "TOG",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Ryuk": [
+   {
+    "team": "TOG",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Lilipp": [
+   {
+    "team": "TOG",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Pasameelcelo": [
+   {
+    "team": "UB",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Ivama": [
+   {
+    "team": "UB",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Adrianlaneitor": [
+   {
+    "team": "UB",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Xixauxas": [
+   {
+    "team": "UB",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "ORIZ0N": [
+   {
+    "team": "UB",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Skiler99": [
+   {
+    "team": "UB",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Kozi": [
+   {
+    "team": "UCAM",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Bluerzor": [
+   {
+    "team": "UCAM",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Escik": [
+   {
+    "team": "UCAM",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "ANDARIEL": [
+   {
+    "team": "UCAM",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Passzi": [
+   {
+    "team": "UCAM",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-22"
+   }
+  ],
+  "FornoReason": [
+   {
+    "team": "USE",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "White": [
+   {
+    "team": "USE",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kanin": [
+   {
+    "team": "USE",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "DenVoksne": [
+   {
+    "team": "USE",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Twiizt": [
+   {
+    "team": "USE",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Sven": [
+   {
+    "team": "VfB Stuttgart",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Zwickl": [
+   {
+    "team": "VfB Stuttgart",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Luke": [
+   {
+    "team": "VfB Stuttgart",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Tazaku": [
+   {
+    "team": "VfB Stuttgart",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Dizl": [
+   {
+    "team": "VfB Stuttgart",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Jakobobbi": [
+   {
+    "team": "VfB Stuttgart",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Naak Nako": [
+   {
+    "team": "VIT",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Lyncas": [
+   {
+    "team": "VIT",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "FIESTA": [
+   {
+    "team": "VIT",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Carzzy": [
+   {
+    "team": "VIT",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Fleshy": [
+   {
+    "team": "VIT",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Potent": [
+   {
+    "team": "VITB",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Dawciu": [
+   {
+    "team": "VITB",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Czajek": [
+   {
+    "team": "VITB",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Yakkey": [
+   {
+    "team": "VITB",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Dekap": [
+   {
+    "team": "VITB",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Vizzpers": [
+   {
+    "team": "VITB",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Adam": [
+   {
+    "team": "ZYB Esport",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-16"
+   }
+  ],
+  "Kobs": [
+   {
+    "team": "ZYB Esport",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "SAKEN": [
+   {
+    "team": "ZYB Esport",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-16"
+   }
+  ],
+  "Jezu": [
+   {
+    "team": "ZYB Esport",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-16"
+   }
+  ],
+  "Riippp": [
+   {
+    "team": "ZYB Esport",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-16"
+   }
+  ],
+  "Nisqy": [
+   {
+    "team": "ZYB Esport",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-16"
+   }
+  ],
+  "Booshi": [
+   {
+    "team": "ZYB Esport",
+    "role": "Sub",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-16"
+   }
+  ],
+  "Hakari": [
+   {
+    "team": "7REX Team",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-05"
+   }
+  ],
+  "Hirotto": [
+   {
+    "team": "7REX Team",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-05"
+   }
+  ],
+  "lolo": [
+   {
+    "team": "7REX Team",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-05"
+   }
+  ],
+  "aikawa": [
+   {
+    "team": "7REX Team",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-05"
+   }
+  ],
+  "Bulas": [
+   {
+    "team": "7REX Team",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-05"
+   }
+  ],
+  "Thanatos": [
+   {
+    "team": "C9",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Blaber": [
+   {
+    "team": "C9",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Loki": [
+   {
+    "team": "C9",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Tactical": [
+   {
+    "team": "C9",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Vulcan": [
+   {
+    "team": "C9",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2029-11-15"
+   }
+  ],
+  "Denathor": [
+   {
+    "team": "DIG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "FBI": [
+   {
+    "team": "DIG",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Srtty": [
+   {
+    "team": "DSG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kryra": [
+   {
+    "team": "DSG",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Callme": [
+   {
+    "team": "DSG",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Sajed": [
+   {
+    "team": "DSG",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Lyonz": [
+   {
+    "team": "DSG",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Makes": [
+   {
+    "team": "Ei Nerd Esports",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-10"
+   }
+  ],
+  "Drakehero": [
+   {
+    "team": "Ei Nerd Esports",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Pilot": [
+   {
+    "team": "Ei Nerd Esports",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-10"
+   }
+  ],
+  "Kog": [
+   {
+    "team": "Ei Nerd Esports",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Elkinhoo": [
+   {
+    "team": "Ei Nerd Esports",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Damage": [
+   {
+    "team": "Ei Nerd Esports",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-27"
+   }
+  ],
+  "Bwipo": [
+   {
+    "team": "Estral Esports",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Oddie": [
+   {
+    "team": "Estral Esports",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Envy": [
+   {
+    "team": "Estral Esports",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kisee": [
+   {
+    "team": "Estral Esports",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Brance": [
+   {
+    "team": "Estral Esports",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Telas": [
+   {
+    "team": "Estral Esports",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Gakgos": [
+   {
+    "team": "FLY",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Gryffinn": [
+   {
+    "team": "FLY",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Quad": [
+   {
+    "team": "FLY",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Massu": [
+   {
+    "team": "FLY",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Cryogen": [
+   {
+    "team": "FLY",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Guigo": [
+   {
+    "team": "FUR",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Tatu": [
+   {
+    "team": "FUR",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Tutsz": [
+   {
+    "team": "FUR",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Ayu": [
+   {
+    "team": "FUR",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "JoJo": [
+   {
+    "team": "FUR",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Zothve": [
+   {
+    "team": "FX",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "curty": [
+   {
+    "team": "FX",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Peach": [
+   {
+    "team": "FX",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "hauz": [
+   {
+    "team": "FX",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "cody": [
+   {
+    "team": "FX",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "BAO": [
+   {
+    "team": "FX",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "ProDelta": [
+   {
+    "team": "FX",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Momochi": [
+   {
+    "team": "FX",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kiari": [
+   {
+    "team": "INTZ",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2029-11-19"
+   }
+  ],
+  "StineR": [
+   {
+    "team": "INTZ",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Leleko": [
+   {
+    "team": "INTZ",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-31"
+   }
+  ],
+  "Netuno": [
+   {
+    "team": "INTZ",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-31"
+   }
+  ],
+  "konseki": [
+   {
+    "team": "INTZ",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2029-11-19"
+   }
+  ],
+  "Yupps": [
+   {
+    "team": "KaBuM! Esports",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Scary": [
+   {
+    "team": "KaBuM! Esports",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Grevthar": [
+   {
+    "team": "KaBuM! Esports",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Kojima": [
+   {
+    "team": "KaBuM! Esports",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Guigs": [
+   {
+    "team": "KaBuM! Esports",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Devost": [
+   {
+    "team": "LEVIATÁN",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Booki": [
+   {
+    "team": "LEVIATÁN",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Enga": [
+   {
+    "team": "LEVIATÁN",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Strensh": [
+   {
+    "team": "LEVIATÁN",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Shiku": [
+   {
+    "team": "LEVIATÁN",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Zest": [
+   {
+    "team": "LOS",
+    "role": "Top",
+    "bd": "2003-11-05",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Curse": [
+   {
+    "team": "LOS",
+    "role": "Jungle",
+    "bd": "2005-05-18",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Feisty": [
+   {
+    "team": "LOS",
+    "role": "Mid",
+    "bd": "2003-12-19",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Duduhh": [
+   {
+    "team": "LOS",
+    "role": "Bot",
+    "bd": "2008-04-18",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Ackerman": [
+   {
+    "team": "LOS",
+    "role": "Support",
+    "bd": "2002-11-29",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Xyno": [
+   {
+    "team": "LOUD",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   },
+   {
+    "team": "VKS",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Sinatra": [
+   {
+    "team": "LOUD",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Kaze": [
+   {
+    "team": "LOUD",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Mago": [
+   {
+    "team": "LOUD",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   },
+   {
+    "team": "RED Canids Kalunga",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Rabelo": [
+   {
+    "team": "LOUD",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "uZent": [
+   {
+    "team": "LOUD",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Dhokla": [
+   {
+    "team": "LYON",
+    "role": "Top",
+    "bd": "1997-07-17",
+    "cc": "United States",
+    "contract": "2027-11-15"
+   }
+  ],
+  "Castle": [
+   {
+    "team": "LYON",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-16"
+   }
+  ],
+  "Inspired": [
+   {
+    "team": "LYON",
+    "role": "Jungle",
+    "bd": "2002-01-24",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Saint": [
+   {
+    "team": "LYON",
+    "role": "Mid",
+    "bd": "2005-01-01",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Berserker": [
+   {
+    "team": "LYON",
+    "role": "Bot",
+    "bd": "2003-05-25",
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Isles": [
+   {
+    "team": "LYON",
+    "role": "Support",
+    "bd": "2001-03-07",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Zamudo": [
+   {
+    "team": "NRG",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kisno": [
+   {
+    "team": "NRG",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Phymini": [
+   {
+    "team": "NRG",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Sushee": [
+   {
+    "team": "NRG",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Spica": [
+   {
+    "team": "NRG",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Boal": [
+   {
+    "team": "PAIN",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "CarioK": [
+   {
+    "team": "PAIN",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Samkz": [
+   {
+    "team": "PAIN",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Keine": [
+   {
+    "team": "PAIN",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Namiru": [
+   {
+    "team": "PAIN",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Trigger": [
+   {
+    "team": "PAIN",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Marvin": [
+   {
+    "team": "PAIN",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Kuri": [
+   {
+    "team": "PAIN",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Zoen": [
+   {
+    "team": "paiN Gaming Academy",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Gatovisck": [
+   {
+    "team": "paiN Gaming Academy",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "zynts": [
+   {
+    "team": "RED Canids Kalunga",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "jmz": [
+   {
+    "team": "RED Canids Kalunga",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-21"
+   }
+  ],
+  "STEPZ": [
+   {
+    "team": "RED Canids Kalunga",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "smooth": [
+   {
+    "team": "RED Canids Kalunga",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-21"
+   }
+  ],
+  "Fuuu": [
+   {
+    "team": "RED Canids Kalunga",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Nukenin": [
+   {
+    "team": "RED Canids Kalunga",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-30"
+   }
+  ],
+  "Morttheus": [
+   {
+    "team": "RED Canids Kalunga",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Nanashi": [
+   {
+    "team": "RED Canids Kalunga",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-09-21"
+   }
+  ],
+  "frosty": [
+   {
+    "team": "RED Canids Kalunga",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Manel": [
+   {
+    "team": "RED Canids Kalunga",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Hidan": [
+   {
+    "team": "RMD Gaming",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-08"
+   }
+  ],
+  "Nero": [
+   {
+    "team": "RMD Gaming",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-08"
+   }
+  ],
+  "BLACKY": [
+   {
+    "team": "RMD Gaming",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-10"
+   }
+  ],
+  "Celo": [
+   {
+    "team": "RMD Gaming",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-10"
+   }
+  ],
+  "murilao": [
+   {
+    "team": "RMD Gaming",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-10-08"
+   }
+  ],
+  "Impact": [
+   {
+    "team": "SEN",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Hambak": [
+   {
+    "team": "SEN",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "DARKWINGS": [
+   {
+    "team": "SEN",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Rahel": [
+   {
+    "team": "SEN",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Huhi": [
+   {
+    "team": "SEN",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Fudge": [
+   {
+    "team": "SR",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Contractz": [
+   {
+    "team": "SR",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Zinie": [
+   {
+    "team": "SR",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Bvoy": [
+   {
+    "team": "SR",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Zeyzal": [
+   {
+    "team": "SR",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-14"
+   }
+  ],
+  "Tyrin": [
+   {
+    "team": "Team Solid",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Aegis": [
+   {
+    "team": "Team Solid",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Morgan": [
+   {
+    "team": "TLAW",
+    "role": "Top",
+    "bd": "2001-09-26",
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "Josedeodo": [
+   {
+    "team": "TLAW",
+    "role": "Jungle",
+    "bd": "2000-05-22",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Quid": [
+   {
+    "team": "TLAW",
+    "role": "Mid",
+    "bd": "2004-04-27",
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Yeon": [
+   {
+    "team": "TLAW",
+    "role": "Bot",
+    "bd": "2001-01-07",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "CoreJJ": [
+   {
+    "team": "TLAW",
+    "role": "Support",
+    "bd": "1994-06-22",
+    "cc": null,
+    "contract": "2026-11-17"
+   }
+  ],
+  "Zekas": [
+   {
+    "team": "VKS",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "SUPERCLEBER": [
+   {
+    "team": "VKS",
+    "role": "Top",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Disamis": [
+   {
+    "team": "VKS",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "sarolu": [
+   {
+    "team": "VKS",
+    "role": "Jungle",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "Mireu": [
+   {
+    "team": "VKS",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "Qats": [
+   {
+    "team": "VKS",
+    "role": "Mid",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "ceo": [
+   {
+    "team": "VKS",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2026-11-16"
+   }
+  ],
+  "BUERO": [
+   {
+    "team": "VKS",
+    "role": "Bot",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ],
+  "scamber": [
+   {
+    "team": "VKS",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2027-11-15"
+   }
+  ],
+  "zay": [
+   {
+    "team": "VKS",
+    "role": "Support",
+    "bd": null,
+    "cc": null,
+    "contract": "2028-11-20"
+   }
+  ]
+ },
+ "coaches": {
+  "BLG": {
+   "name": "Daeny",
+   "cc": "KR",
+   "role": "Head Coach"
+  },
+  "CFO": {
+   "name": "Chawy",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "DCG": {
+   "name": "REFRA1N",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "DFM": {
+   "name": "Paz",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "GAM": {
+   "name": "Naul",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "GZ": {
+   "name": "Skywalk",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "MGN Vikings Esports": {
+   "name": "SofM",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "SHG": {
+   "name": "Corgi",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "TSW": {
+   "name": "WarHorse",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "BAR": {
+   "name": "Jandro",
+   "cc": null,
+   "role": "Coach"
+  },
+  "BGT": {
+   "name": "DooMBuLL",
+   "cc": null,
+   "role": "Coach"
+  },
+  "BIG": {
+   "name": "Don Arts",
+   "cc": null,
+   "role": "Coach"
+  },
+  "BW": {
+   "name": "Astro",
+   "cc": null,
+   "role": "Coach"
+  },
+  "DIA": {
+   "name": "Wuju",
+   "cc": null,
+   "role": "Coach"
+  },
+  "DP": {
+   "name": "Real Homie",
+   "cc": null,
+   "role": "Coach"
+  },
+  "EINS": {
+   "name": "x4NTY",
+   "cc": null,
+   "role": "Coach"
+  },
+  "ES": {
+   "name": "Stifler",
+   "cc": null,
+   "role": "Coach"
+  },
+  "EWI": {
+   "name": "Lothi",
+   "cc": null,
+   "role": "Coach"
+  },
+  "FLK": {
+   "name": "Murci",
+   "cc": null,
+   "role": "Coach"
+  },
+  "FNC": {
+   "name": "GrabbZ",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "G2": {
+   "name": "Perkz",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "G2N": {
+   "name": "Nico",
+   "cc": null,
+   "role": "Coach"
+  },
+  "GL": {
+   "name": "Xani",
+   "cc": null,
+   "role": "Coach"
+  },
+  "GX": {
+   "name": "Guilhoto",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "HRTS": {
+   "name": "Kamikaze",
+   "cc": null,
+   "role": "Coach"
+  },
+  "IJC": {
+   "name": "Naruterador",
+   "cc": null,
+   "role": "Coach"
+  },
+  "JL": {
+   "name": "Arkhe",
+   "cc": null,
+   "role": "Coach"
+  },
+  "KC": {
+   "name": "Reapered",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "KCB": {
+   "name": "Blidzy",
+   "cc": null,
+   "role": "Coach"
+  },
+  "KHK": {
+   "name": "Leggifant",
+   "cc": null,
+   "role": "Coach"
+  },
+  "LUA": {
+   "name": "Sliezzan",
+   "cc": null,
+   "role": "Coach"
+  },
+  "MKF": {
+   "name": "Disgrace",
+   "cc": null,
+   "role": "Coach"
+  },
+  "MKOI": {
+   "name": "Melzhet",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "NAVI": {
+   "name": "TheRock",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "PCF": {
+   "name": "Chonocleas",
+   "cc": null,
+   "role": "Coach"
+  },
+  "PHX": {
+   "name": "Shiguro",
+   "cc": null,
+   "role": "Coach"
+  },
+  "SA": {
+   "name": "Twenty7",
+   "cc": null,
+   "role": "Coach"
+  },
+  "SC": {
+   "name": "Eika",
+   "cc": null,
+   "role": "Coach"
+  },
+  "SGE": {
+   "name": "Bleim",
+   "cc": null,
+   "role": "Coach"
+  },
+  "SHFT": {
+   "name": "Striker",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "SK": {
+   "name": "Own3r",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "SLY": {
+   "name": "Gine",
+   "cc": null,
+   "role": "Coach"
+  },
+  "SU": {
+   "name": "Basei",
+   "cc": null,
+   "role": "Coach"
+  },
+  "TH": {
+   "name": "Hidon",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "TOG": {
+   "name": "DeadShadow",
+   "cc": null,
+   "role": "Coach"
+  },
+  "UCAM": {
+   "name": "Crusher",
+   "cc": null,
+   "role": "Coach"
+  },
+  "USE": {
+   "name": "Sheepy",
+   "cc": null,
+   "role": "Coach"
+  },
+  "VfB Stuttgart": {
+   "name": "MaxSchallah",
+   "cc": null,
+   "role": "Coach"
+  },
+  "VIT": {
+   "name": "Pad",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "VITB": {
+   "name": "Nahovsky",
+   "cc": null,
+   "role": "Coach"
+  },
+  "7REX Team": {
+   "name": "Strix",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "C9": {
+   "name": "IWDominate",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "DIG": {
+   "name": "Swiffer",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "DSG": {
+   "name": "ido",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "Ei Nerd Esports": {
+   "name": "Doran",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "Estral Esports": {
+   "name": "Snok",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "FLY": {
+   "name": "Thinkcard",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "FUR": {
+   "name": "furyz",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "FX": {
+   "name": "Guchi",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "INTZ": {
+   "name": "Patron",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "KaBuM! Esports": {
+   "name": "Medina",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "LEVIATÁN": {
+   "name": "Kouke",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "LOS": {
+   "name": "Enatron",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "LOUD": {
+   "name": "Raise",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "LYON": {
+   "name": "Reignover",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "PAIN": {
+   "name": "Von",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "paiN Gaming Academy": {
+   "name": "Paivaa",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "RED Canids Kalunga": {
+   "name": "Tockers",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "RED Canids Kalunga Academy": {
+   "name": "Kick",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "RMD Gaming": {
+   "name": "CAPIVARA",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "SEN": {
+   "name": "Goldenglue",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "SR": {
+   "name": "Reven",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "Team Solid": {
+   "name": "Reversed",
+   "cc": null,
+   "role": "Assistant Coach"
+  },
+  "TLAW": {
+   "name": "Spawn",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "Vivo Keyd Stars Academy": {
+   "name": "ti0ben",
+   "cc": null,
+   "role": "Head Coach"
+  },
+  "VKS": {
+   "name": "Smiley",
+   "cc": null,
+   "role": "Head Coach"
+  }
+ }
+}

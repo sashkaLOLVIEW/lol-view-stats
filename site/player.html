@@ -135,8 +135,11 @@ img.lwi { }
 .srow:last-child { border-bottom: 0; }
 .srow b { color: var(--fg); font-size: 14px; font-variant-numeric: tabular-nums; }
 .tabs { margin-bottom: 14px; }
-/* Age / contract lines hidden for now - remove this rule to show them again */
-.pinfo { display: none !important; }
+.hinfo { position: absolute; right: 0; bottom: 14px; z-index: 1; display: flex; gap: 40px; }
+.hinfo > div { display: flex; flex-direction: column; gap: 4px; }
+.hinfo span { font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.hinfo b { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) { .hero { flex-wrap: wrap; } .hinfo { position: static; flex: 1 0 100%; order: 3; gap: 28px; padding: 4px 0 12px; } }
 .ser { position: relative; display: flex; flex-direction: column; gap: 12px; padding-right: 34px; }
 .ser .sb { position: absolute; top: 0; bottom: 0; right: 0; width: 22px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .04em; writing-mode: vertical-rl; text-orientation: upright; pointer-events: none; }
 @container (max-width: 1000px) { .ser { padding-right: 30px; } .ser .sb { width: 20px; font-size: 10px; } }
@@ -490,7 +493,13 @@ html { scroll-padding-top: 84px; }
     if (window.LVF) LVF.entity('player', name);
     try { history.replaceState(null, '', '#' + encodeURIComponent(name)); } catch (e) {}
     function ageOf(bd) { var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(bd || ''); if (!m) return null; var n = new Date(), a = n.getFullYear() - +m[1]; if (n.getMonth() + 1 < +m[2] || (n.getMonth() + 1 === +m[2] && n.getDate() < +m[3])) a--; return a; }
-    $('hero').innerHTML = (D.logos[P.team] ? '<img class="bgl' + (LW[P.team] ? ' lwi' : '') + '" src="' + D.logos[P.team] + '" alt="">' : '') + '<div class="portrait">' + (P.face ? '<img src="' + P.face + '" alt="' + name + '">' : '<span class="ph">' + (window.LVF ? LVF.evIcon('ALLCH', 72) : '') + '</span>') + '</div><div class="who"><h1>' + (RI[P.role] || '') + name + (CC[name] ? '<img class="flag" src="https://flagcdn.com/w40/' + CC[name] + '.png" srcset="https://flagcdn.com/w80/' + CC[name] + '.png 2x" width="26" height="19" alt="' + CC[name].toUpperCase() + '" title="' + CC[name].toUpperCase() + '">' : '') + '</h1><div class="meta"><div>' + logo(P.team, 18) + '<a href="team.html#' + P.team + '"><b>' + tn(P.team) + '</b></a></div><div class="pinfo"><span class="sp"></span><span>Age: <b>' + (ageOf(P.bd) || '-') + '</b></span></div><div class="pinfo"><span class="sp"></span><span>Contract Expiry: <b>' + (P.contract || '-') + '</b></span></div></div></div>';
+    var hinfo = function (p) {
+      var age = ageOf(p.bd), ct = (p.contract || '').trim(), h = '';
+      if (age) h += '<div><span>Age</span><b>' + age + '</b></div>';
+      if (ct && ct.toUpperCase() !== 'N/A') h += '<div><span>Contract expiry</span><b>' + (ct === '-' ? 'Unknown' : ct.replace(/&/g, '&amp;').replace(/</g, '&lt;')) + '</b></div>';
+      return h ? '<div class="hinfo">' + h + '</div>' : '';
+    };
+    $('hero').innerHTML = (D.logos[P.team] ? '<img class="bgl' + (LW[P.team] ? ' lwi' : '') + '" src="' + D.logos[P.team] + '" alt="">' : '') + '<div class="portrait">' + (P.face ? '<img src="' + P.face + '" alt="' + name + '">' : '<span class="ph">' + (window.LVF ? LVF.evIcon('ALLCH', 72) : '') + '</span>') + '</div><div class="who"><h1>' + (RI[P.role] || '') + name + (CC[name] ? '<img class="flag" src="https://flagcdn.com/w40/' + CC[name] + '.png" srcset="https://flagcdn.com/w80/' + CC[name] + '.png 2x" width="26" height="19" alt="' + CC[name].toUpperCase() + '" title="' + CC[name].toUpperCase() + '">' : '') + '</h1><div class="meta"><div>' + logo(P.team, 18) + '<a href="team.html#' + P.team + '"><b>' + tn(P.team) + '</b></a></div></div></div>' + hinfo(P);
     var BI = { medal: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2h8l-2.5 6h-3z"/><circle cx="12" cy="15" r="6"/><path d="m12 12.5.9 1.8 2 .3-1.4 1.4.3 2-1.8-.9-1.8.9.3-2-1.4-1.4 2-.3z"/></svg>' };
     $('hero').insertAdjacentHTML('beforeend', (BD.awards[name] || []).length ? '<div class="badges">' + BD.awards[name].map(function (id) { var d = BD.defs[id]; return d ? '<span class="badge" tabindex="0" role="img" aria-label="' + d.name + '" data-tip="' + d.name + '">' + (BI[d.icon] || BI.medal) + '</span>' : ''; }).join('') + '</div>' : '');
     var st = [['WR %', Math.round(ag.w / ag.n * 100) + '%'], ['KDA', ag.kda.toFixed(1)], ['KILLS', ag.k.toFixed(1)], ['DEATHS', ag.d.toFixed(1)], ['CS/M', ag.cspm.toFixed(1)], ['KP %', ag.kp.toFixed(1) + '%'], ['FIRST BLOOD %', ag.fb == null ? '-' : Math.round(ag.fb) + '%'], ['DMG/M (%)', Math.round(ag.dpm) + ' (' + ag.ds.toFixed(1) + '%)'], ['GOLD/M (%)', Math.round(ag.gpm) + ' (' + ag.gs.toFixed(1) + '%)']];
