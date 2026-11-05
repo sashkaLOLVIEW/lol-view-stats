@@ -57,7 +57,13 @@ def build(csv, out_dir, code_of, icons_fn, leagues=None, current=None, team_leag
     teams = sorted(df.teamname.dropna().unique(), key=str.lower); tidx = {n: i for i, n in enumerate(teams)}
     champs = sorted(set(pl.champion.dropna()) | {b for c in ("ban1", "ban2", "ban3", "ban4", "ban5") for b in df[c].dropna()}, key=str.lower); cidx = {n: i for i, n in enumerate(champs)}
     patches = sorted({"%.2f" % x for x in df.patch.dropna()}, key=float); pt_idx = {n: i for i, n in enumerate(patches)}
-    meta = dict(current=current, leagues={}, players=players, teams=[[t, code_of(t)] for t in teams], champs=champs, patches=patches, built=str(df.date.max())[:10])
+    DOM = ["LCK", "LPL", "LEC", "LCS", "LCP", "CBLOL"]; INTL = {"WLDs", "MSI", "EWC", "FST"}
+    def home(t):   # a team's home league, whatever filter is active: its most common domestic league, else any non-international league
+        c = df[df.teamname == t].league.value_counts()
+        for pool in ([x for x in c.index if x in DOM], [x for x in c.index if x not in INTL]):
+            if pool: return pool[0]
+        return None
+    meta = dict(current=current, leagues={}, players=players, teams=[[t, code_of(t), home(t)] for t in teams], champs=champs, patches=patches, built=str(df.date.max())[:10])
 
     pix, tix = {}, {}
     for lg, d in df.groupby("league"):

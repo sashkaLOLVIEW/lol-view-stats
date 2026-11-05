@@ -152,10 +152,10 @@
       var sum = function (c) { return ix.reduce(function (a, j) { return a + (R[c][j] || 0); }, 0); };
       var row = { gid: gm.id, opp: opp >= 0 ? meta.teams[opp][1] : '?', win: T.w[i], gl: gm.len, date: gm.d.slice(0, 10), k: sum('k'), d: sum('d'), a: sum('a'), fb: T.fb[i] || 0, ft: T.ft[i] || 0, dr: T.dr[i] || 0, ba: T.ba[i] || 0,
         tw: T.tw[i] || 0, gr: T.gr[i] || 0, he: T.he[i] || 0, gold: T.gold[i] || 0, dmg: sum('dmg'), vs: sum('vs'), cs: sum('cs'), gd: sum('gd'), csd: sum('csd'), xpd: sum('xpd'), lg: gm.lg, pt: gm.pt >= 0 ? meta.patches[gm.pt] : null };
-      (teams[t[1]] = teams[t[1]] || { code: t[1], name: t[0], region: null, games: [], players: [] }).games.push(row);
+      (teams[t[1]] = teams[t[1]] || { code: t[1], name: t[0], home: t[2] || null, region: null, games: [], players: [] }).games.push(row);
     }
     Object.keys(players).forEach(function (n) { var p = players[n], seen = {}; p.games.forEach(function (g) { var t = teams[g.team]; if (t && !seen[g.team]) { seen[g.team] = 1; if (t.players.indexOf(n) < 0) t.players.push(n); } }); });
-    Object.keys(teams).forEach(function (c) { teams[c].region = mode(teams[c].games.map(function (g) { return g.lg; })); teams[c].games.sort(function (a, b) { return a.date < b.date ? -1 : 1; }); });
+    Object.keys(teams).forEach(function (c) { teams[c].region = teams[c].home || mode(teams[c].games.map(function (g) { return g.lg; })); teams[c].games.sort(function (a, b) { return a.date < b.date ? -1 : 1; }); });
     return { teams: teams, players: players, logos: {} };
   }
   /* items, runes and 1-minute gold from the Riot feed for the games of the other leagues (dist/data/items-<LEAGUE>.json, written by build.py) */
