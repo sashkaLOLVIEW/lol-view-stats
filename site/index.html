@@ -173,23 +173,23 @@ h2 svg { flex: none; }
 .tp .roles { display: flex; gap: 8px; align-items: center; width: auto; padding-left: 0; }
 .tp .roles button { background: none; border: 0; padding: 0; cursor: pointer; color: var(--dim); display: grid; place-items: center; width: 18px; height: 18px; }
 .tp .roles button.on { color: var(--fg); }
-:is(.tp, .upd) .rgdd { position: relative; }
-:is(.tp, .upd) .rgb { display: flex; align-items: center; gap: 8px; width: 132px; height: 32px; padding: 0 10px 0 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; color: var(--fg); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: border-color .15s; }
-:is(.tp, .upd) .rgb:hover, :is(.tp, .upd) .rgdd.open .rgb { border-color: var(--muted); }
-:is(.tp, .upd) .rgb .rgt { flex: 1; text-align: left; } :is(.tp, .upd) .rgb svg.cv { width: 9px; height: 9px; margin-left: auto; color: var(--muted); transition: transform .15s; } :is(.tp, .upd) .rgdd.open .rgb svg.cv { transform: rotate(180deg); }
-:is(.tp, .upd) .rgi { display: inline-grid; place-items: center; width: 28px; height: 18px; flex: none; } :is(.tp, .upd) .rgi svg, :is(.tp, .upd) .rgi img { display: block; max-width: 28px; max-height: 18px; width: auto; height: auto; object-fit: contain; } :is(.tp, .upd) .rgi svg { width: 18px; height: 18px; }
-:is(.tp, .upd) .rgm button { white-space: nowrap; } :is(.tp, .upd) .rgm { min-width: max-content; }
-:is(.tp, .upd) .rgi img.wi-l { display: none; } :is(.tp, .upd) .rgi img.wi-d { display: block; }
-@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) :is(.tp, .upd) .rgi img.wi-l { display: block; } :root:not([data-theme="dark"]) :is(.tp, .upd) .rgi img.wi-d { display: none; } }
-:root[data-theme="light"] :is(.tp, .upd) .rgi img.wi-l { display: block; } :root[data-theme="light"] :is(.tp, .upd) .rgi img.wi-d { display: none; }
-:root[data-theme="dark"] :is(.tp, .upd) .rgi img.wi-l { display: none; } :root[data-theme="dark"] :is(.tp, .upd) .rgi img.wi-d { display: block; }
-:is(.tp, .upd) .rgi img.mi { filter: none; }
-@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) :is(.tp, .upd) .rgi img.mi { filter: brightness(.22); } }
-:root[data-theme="light"] :is(.tp, .upd) .rgi img.mi { filter: brightness(.22); } :root[data-theme="dark"] :is(.tp, .upd) .rgi img.mi { filter: none; }
-:is(.tp, .upd) .rgm { position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 6px); box-sizing: border-box; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 28px #0000004d; display: none; }
-:is(.tp, .upd) .rgdd.open .rgm { display: block; }
-:is(.tp, .upd) .rgm button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 8px; border: 0; background: none; border-radius: 6px; color: var(--muted); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; text-align: left; }
-:is(.tp, .upd) .rgm button:hover { background: var(--chip-bg); color: var(--fg); } :is(.tp, .upd) .rgm button.on { color: var(--fg); }
+:is(.tp, .upd, .pdd) .rgdd { position: relative; }
+:is(.tp, .upd, .pdd) .rgb { display: flex; align-items: center; gap: 8px; width: 132px; height: 32px; padding: 0 10px 0 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; color: var(--fg); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: border-color .15s; }
+:is(.tp, .upd, .pdd) .rgb:hover, :is(.tp, .upd, .pdd) .rgdd.open .rgb { border-color: var(--muted); }
+:is(.tp, .upd, .pdd) .rgb .rgt { flex: 1; text-align: left; } :is(.tp, .upd, .pdd) .rgb svg.cv { width: 9px; height: 9px; margin-left: auto; color: var(--muted); transition: transform .15s; } :is(.tp, .upd, .pdd) .rgdd.open .rgb svg.cv { transform: rotate(180deg); }
+:is(.tp, .upd, .pdd) .rgi { display: inline-grid; place-items: center; width: 28px; height: 18px; flex: none; } :is(.tp, .upd, .pdd) .rgi svg, :is(.tp, .upd, .pdd) .rgi img { display: block; max-width: 28px; max-height: 18px; width: auto; height: auto; object-fit: contain; } :is(.tp, .upd, .pdd) .rgi svg { width: 18px; height: 18px; }
+:is(.tp, .upd, .pdd) .rgm button { white-space: nowrap; } :is(.tp, .upd, .pdd) .rgm { min-width: max-content; }
+:is(.tp, .upd, .pdd) .rgi img.wi-l { display: none; } :is(.tp, .upd, .pdd) .rgi img.wi-d { display: block; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) :is(.tp, .upd, .pdd) .rgi img.wi-l { display: block; } :root:not([data-theme="dark"]) :is(.tp, .upd, .pdd) .rgi img.wi-d { display: none; } }
+:root[data-theme="light"] :is(.tp, .upd, .pdd) .rgi img.wi-l { display: block; } :root[data-theme="light"] :is(.tp, .upd, .pdd) .rgi img.wi-d { display: none; }
+:root[data-theme="dark"] :is(.tp, .upd, .pdd) .rgi img.wi-l { display: none; } :root[data-theme="dark"] :is(.tp, .upd, .pdd) .rgi img.wi-d { display: block; }
+:is(.tp, .upd, .pdd) .rgi img.mi { filter: none; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) :is(.tp, .upd, .pdd) .rgi img.mi { filter: brightness(.22); } }
+:root[data-theme="light"] :is(.tp, .upd, .pdd) .rgi img.mi { filter: brightness(.22); } :root[data-theme="dark"] :is(.tp, .upd, .pdd) .rgi img.mi { filter: none; }
+:is(.tp, .upd, .pdd) .rgm { position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 6px); box-sizing: border-box; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 28px #0000004d; display: none; }
+:is(.tp, .upd, .pdd) .rgdd.open .rgm { display: block; }
+:is(.tp, .upd, .pdd) .rgm button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 8px; border: 0; background: none; border-radius: 6px; color: var(--muted); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; text-align: left; }
+:is(.tp, .upd, .pdd) .rgm button:hover { background: var(--chip-bg); color: var(--fg); } :is(.tp, .upd, .pdd) .rgm button.on { color: var(--fg); }
 .tp-empty { grid-column: 1 / -1; padding: 22px; border: 1px dashed var(--line); border-radius: 8px; color: var(--muted); font-size: 13px; text-align: center; }
 
 .tp-cards { margin-top: 14px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 15px; }
@@ -478,16 +478,12 @@ html { scroll-padding-top: 84px; }
     </section>
 
     <section class="col col-rank" id="rankings">
-      <h2><a href="rankings.html" style="display:flex;align-items:center;gap:7px">Power Rankings <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2>
-      <div class="updated"><b>Updated:</b> 10/19/26 6:00 AM</div>
+      <div class="hd-row">      <h2><a href="rankings.html" style="display:flex;align-items:center;gap:7px">Power Rankings <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2><div class="updated"><b>Updated:</b> 10/19/26 6:00 AM</div></div>
       <div class="stack" id="rank-list"></div>
     </section>
 
     <section class="col col-players" id="players">
-      <h2><a href="players.html" style="display:flex;align-items:center;gap:7px">Player Stats <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2>
-      <div class="chips" role="group" aria-label="Stat">
-        <button class="chip on" type="button">KDA</button><button class="chip" type="button">CS/M</button><button class="chip" type="button">DMG/M</button><button class="chip" type="button">DMG %</button><button class="chip" type="button">KP %</button>
-      </div>
+      <div class="hd-row">      <h2><a href="players.html" style="display:flex;align-items:center;gap:7px">Player Stats <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2><div class="rgdd pdd" id="pl-dd"></div></div>
       <div class="stack" id="player-list"></div>
     </section>
 
@@ -634,14 +630,19 @@ html { scroll-padding-top: 84px; }
   }
   renderPlayers(0);
   (function () {
-    var chips = document.querySelectorAll('.col-players .chip');
-    Array.prototype.forEach.call(chips, function (c, i) {
-      c.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
-      c.addEventListener('click', function () {
-        Array.prototype.forEach.call(chips, function (o) { o.classList.remove('on'); o.setAttribute('aria-pressed', 'false'); });
-        c.classList.add('on'); c.setAttribute('aria-pressed', 'true'); renderPlayers(i);
-      });
+    var NM = ['KDA', 'CS/M', 'DMG/M', 'DMG %', 'KP %'], cs = 0, dd = $('pl-dd');
+    var cv = '<svg class="cv" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m1.500 3.500 3.500 3.500 3.500-3.500"/></svg>';
+    function drawDd() {
+      dd.innerHTML = '<button type="button" class="rgb" aria-haspopup="listbox" aria-expanded="' + dd.classList.contains('open') + '"><span class="rgt">' + NM[cs] + '</span>' + cv + '</button><div class="rgm" role="listbox">' +
+        NM.map(function (n, i) { return '<button type="button" role="option" data-i="' + i + '"' + (i === cs ? ' class="on"' : '') + '>' + n + '</button>'; }).join('') + '</div>';
+    }
+    drawDd();
+    dd.addEventListener('click', function (e) {
+      e.stopPropagation(); var o = e.target.closest('button[data-i]');
+      if (o) { cs = +o.getAttribute('data-i'); dd.classList.remove('open'); drawDd(); renderPlayers(cs); return; }
+      if (e.target.closest('.rgb')) { dd.classList.toggle('open'); drawDd(); }
     });
+    document.addEventListener('click', function () { if (dd.classList.contains('open')) { dd.classList.remove('open'); drawDd(); } });
   })();
 
   // Live
@@ -1090,6 +1091,12 @@ html { scroll-padding-top: 84px; }
 .tp .roles button svg, .roles button svg, .seg button svg, .cp-roles .rp svg { width:15px; height:15px; }
 .tp .roles button:hover, .roles button:hover, .seg button:hover, .cp-roles .rp:hover { color:var(--fg); background:transparent; }
 .tp .roles button.on, .roles button.on, .seg button.on, .cp-roles .rp.on { background:color-mix(in srgb, var(--fg) 16%, var(--surface)); color:var(--fg); font-weight:700; }
+
+.hd-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 32px; }
+.hd-row .updated { margin: 0; height: auto; padding: 0; background: none; border: 0; border-radius: 0; color: var(--muted); font-size: 12px; white-space: nowrap; }
+.hd-row .updated b { color: var(--muted); font-weight: 500; }
+.hd-row + .stack { margin-top: 12px; }
+.pdd .rgb { width: 100px; } .pdd.rgdd { position: relative; } .pdd.rgdd.open .rgm { display: block; } .pdd.rgdd.open .rgb { border-color: var(--muted); } .pdd.rgdd.open .rgb svg.cv { transform: rotate(180deg); } .pdd .rgm { min-width: 100%; }
 </style>
 <script>document.addEventListener('dragstart', function (e) { if (e.target && e.target.tagName === 'IMG') e.preventDefault(); });</script>
 
