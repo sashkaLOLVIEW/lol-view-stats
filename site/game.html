@@ -270,10 +270,13 @@ html { scroll-padding-top: 84px; }
 .pdc-who .nm { font-size: 18px; font-weight: 700; line-height: 1.2; } .pdc-who .nm a { color: inherit; text-decoration: none; } .pdc-who .nm a:hover { text-decoration: underline; }
 .pdc-who .sb { margin-top: 3px; font-size: 12px; color: var(--muted); }
 .pdc-st { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-.pdc-st > div { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; min-width: 0; }
-.pdc-st .l { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); } .pdc-st .v { margin-top: 5px; font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.pdc-st > div { border: 1px solid var(--line); border-radius: 8px; padding: 10px 10px; min-width: 0; }
+.pdc-st .l { font-size: 9px; white-space: nowrap; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); } .pdc-st .v { margin-top: 5px; font-size: 15px; white-space: nowrap; font-weight: 700; font-variant-numeric: tabular-nums; }
 .pdc-st .v.up { color: var(--green); } .pdc-st .v.dn { color: var(--red); }
 .pdc-sk { grid-column: 1 / -1; }
+#pdc { container-type: inline-size; }
+@container (max-width: 800px) { .pdc-b { grid-template-columns: 1fr; } .pdc-st { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@container (max-width: 400px) { .pdc-st { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .pdc-sk h3 { margin: 0 0 10px; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
 .pdc-sg { display: grid; grid-template-columns: 22px repeat(18, minmax(0, 1fr)); gap: 3px; align-items: center; max-width: 720px; }
 .pdc-sg .k { font-size: 12px; font-weight: 700; color: var(--muted); text-align: center; } .pdc-sg .h { font-size: 10px; color: var(--dim); text-align: center; font-variant-numeric: tabular-nums; }
@@ -420,7 +423,7 @@ html { scroll-padding-top: 84px; }
     };
     var sideTeam = function (t, r) { return '<div class="sc-team' + (r ? ' r' : '') + '">' + logo(t.code, 64) + '<div><a class="sc-name" style="display:block" href="team.html#' + t.code + '">' + t.code + '</a><div class="sc-full">' + t.name + '</div><span class="tag' + (t.win ? ' win' : ' loss') + '">' + (t.win ? 'WIN' : 'LOSS') + '</span></div></div>'; };
     var CLK = '<svg class="clk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
-    $('score').innerHTML = sideTeam(A, 0) + stat(A, 0, B) + '<div class="sc-mid"><div class="sc-c"><div class="sc-time">' + CLK + fmtT(g.len) + '</div>' + (g.patch ? '<div class="sc-sub">Patch ' + g.patch + '</div>' : '') + '</div></div>' + stat(B, 1, A) + sideTeam(B, 1);
+    $('score').innerHTML = sideTeam(A, 0) + stat(A, 0, B) + '<div class="sc-mid"><div class="sc-c"><div class="sc-time">' + CLK + fmtT(g.len) + '</div>' + (g.patch ? '<div class="sc-sub">' + g.patch + '</div>' : '') + '</div></div>' + stat(B, 1, A) + sideTeam(B, 1);
     var _m = 'Worlds 2026 · Main stage · Swiss Round 1 · Match ' + g.n + ' · ' + g.date + ' · Blue side ' + A.code + ' vs Red side ' + B.code;
     var c = '';
     var bd = function (t, x, r) { return t[x] ? '<span class="fbd" title="'+(x === 'fb' ? 'First blood' : 'First turret')+'">' + '1st' + '</span>' : ''; };
@@ -476,7 +479,7 @@ html { scroll-padding-top: 84px; }
       } else sk = '<div class="pdc-sk"><h3>Skill order</h3><div class="pdc-na">Not available for this game.</div></div>';
       var bd = '';
       if (p.bo && p.bo.length && D.items) bd = '<div class="pdc-sk"><h3>Build order</h3><div class="pdc-bo">' + p.bo.map(function (id) { var x = D.items[id]; return x ? '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : ''; }).filter(Boolean).join('<span class="pgt">&gt;</span>') + '</div></div>';
-      $('pdc').innerHTML = '<div class="pdc-pick">' + pick + '</div><div class="pdc-b"><div class="pdc-who">' + (p.ic && D.icons[p.ic] ? '<img src="' + D.icons[p.ic] + '" alt="">' : '') + '<div><div class="nm"><a href="' + U.profile + '#' + encodeURIComponent(p.name) + '">' + p.name + '</a></div><div class="sb">' + p.champ + ' \u00b7 ' + p.role + ' \u00b7 ' + t.code + '</div></div></div><div class="pdc-st">' + st.map(function (x) { return '<div><div class="l">' + x[0] + '</div><div class="v' + x[2] + '">' + x[1] + '</div></div>'; }).join('') + '</div>' + bd + rb + sk + '</div>';
+      $('pdc').innerHTML = '<div class="pdc-pick">' + pick + '</div><div class="pdc-b"><div class="pdc-who">' + (p.ic && D.icons[p.ic] ? '<img src="' + D.icons[p.ic] + '" alt="">' : '') + '<div><div class="nm"><a href="' + U.profile + '#' + encodeURIComponent(p.name) + '">' + p.name + '</a></div></div></div><div class="pdc-st">' + st.map(function (x) { return '<div><div class="l">' + x[0] + '</div><div class="v' + x[2] + '">' + x[1] + '</div></div>'; }).join('') + '</div>' + bd + rb + sk + '</div>';
     };
     $('pdc').onclick = function (e) { var b = e.target.closest('button[data-s]'); if (!b) return; pdSel = [b.getAttribute('data-s'), +b.getAttribute('data-r')]; drawPd(); };
     pdSel = ['0', 0]; drawPd();

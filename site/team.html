@@ -394,7 +394,7 @@ html { scroll-padding-top: 84px; }
         + '<span class="op">' + logo(g.opp, 24) + '<b>' + g.opp + '</b><span>' + g.date + '</span></span>'
         + '<span class="m"><img class="mi" src="' + KI + '" alt="">' + Math.round(g.k) + '<span class="vs">vs</span>' + Math.round(ok(g)) + '</span>'
         + '<span class="m gdv ' + (d > 0 ? 'up' : d < 0 ? 'dn' : '') + '"><img class="mi" src="' + GI + '" alt="">' + (d > 0 ? '+' : d < 0 ? '\u2212' : '') + Math.abs(d).toLocaleString('en-US') + '</span>'
-        + '<span class="rr">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '">' + (LVF.evIcon(g.lg, 22) || '<b style="font-size:11px">' + LVF.lname(g.lg).replace(' 2026', '') + '</b>') + '</span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<span class="pv">' + (g.pt ? 'Patch ' + g.pt : '') + '</span></span>' + '</a>';
+        + '<span class="rr">' + (g.lg ? '<span class="ev" title="' + LVF.lname(g.lg) + '">' + (LVF.evIcon(g.lg, 22) || '<b style="font-size:11px">' + LVF.lname(g.lg).replace(' 2026', '') + '</b>') + '</span>' : '<span class="ev" title="Worlds 2026">' + worlds(22) + '</span>') + '<span class="pv">' + (g.pt ? '' + g.pt : '') + '</span></span>' + '</a>';
     });
     var hh = '', hi = 0;
     while (hi < HGT.length) {
