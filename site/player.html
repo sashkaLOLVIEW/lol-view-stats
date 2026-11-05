@@ -301,7 +301,7 @@ img.wi-l { display: none; } img.wi-d { display: block; }
 .rcard { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 12px 8px; }
 .rcard h3 { margin: 0 0 4px 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
 .rcard h3 { display: flex; align-items: center; gap: 8px; }
-.rcard h3 .cov { display: inline-flex; align-items: center; height: 18px; padding: 0 7px; border-radius: 6px; background: #fff; color: #3d3d3d; box-shadow: inset 0 0 0 1px #00000026; font-size: 11px; font-weight: 700; letter-spacing: .02em; text-transform: none; }
+.perf h2 .cov, .rcard h3 .cov { display: inline-flex; align-items: center; height: 18px; padding: 0 7px; border-radius: 6px; background: #fff; color: #3d3d3d; box-shadow: inset 0 0 0 1px #00000026; font-size: 11px; font-weight: 700; letter-spacing: .02em; text-transform: none; }
 .rcard svg { display: block; width: 100%; height: auto; }
 .rcard text { font-family: var(--font); }
 .rl { font-size: 10px; font-weight: 700; fill: var(--muted); text-transform: uppercase; }
@@ -383,7 +383,7 @@ html { scroll-padding-top: 84px; }
     </section>
   </div>
   <section class="perf">
-    <h2>Performance</h2>
+    <h2>Performance<span class="cov" id="ovr" title="Overall score: average of the three charts"></span></h2>
     <div class="radars" id="radars"></div>
   </section>
   <footer class="foot">
@@ -569,7 +569,9 @@ html { scroll-padding-top: 84px; }
     }
     var mh = function (ik, t) { return '<div class="c">' + '<span>' + t + '</span></div>'; };
     $('hist').innerHTML = (hh ? '<div class="gr gm mhd"><div></div><div></div><div class="gs">' + mh('ICK', 'KDA') + mh('ICC', 'CS') + mh('KP', 'KP%') + mh('ICD', 'DMG%') + mh('ICG', 'GD') + '</div><div></div></div>' : '') + hh;
-    $('radars').innerHTML = RAD.map(function (r) { var sv = radar(r[0], r[1], ag, P.role); return '<div class="rcard"><h3>' + r[0] + '<span class="cov" title="Share of the chart area covered by the stats">' + radar.cov + '/100</span></h3>' + sv + '</div>'; }).join('');
+    var covs = [];
+    $('radars').innerHTML = RAD.map(function (r) { var sv = radar(r[0], r[1], ag, P.role); covs.push(+radar.cov); return '<div class="rcard"><h3>' + r[0] + '<span class="cov" title="Share of the chart area covered by the stats">' + radar.cov + '/100</span></h3>' + sv + '</div>'; }).join('');
+    $('ovr').textContent = covs.length ? Math.round(covs.reduce(function (s, v) { return s + v; }, 0) / covs.length) + '/100' : '';
     (function () {
       var hs = $('hist'), cards = [].slice.call(hs.querySelectorAll('.gr:not(.mhd)')), shown = 10, bt = document.createElement('button');
       if (cards.length <= 10) return;
