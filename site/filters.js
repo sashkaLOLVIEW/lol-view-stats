@@ -236,7 +236,7 @@
     var ids = Object.keys(lgs), maj = MAJOR.filter(function (x) { return lgs[x]; }), rest = ids.filter(function (x) { return MAJOR.indexOf(x) < 0; }).sort(function (a, b) { return lname(a).localeCompare(lname(b)); });
     var tour = [];
     if (ids.length > 1) tour.push(['ALL|All', 'All']);
-    var add = function (l) { var sp = Object.keys(spl[l] || {}).sort(); tour.push([l + '|All', lname(l) + (sp.length > 1 ? ' (all splits)' : '')]); if (sp.length > 1) sp.forEach(function (x) { tour.push([l + '|' + x, lname(l) + ' · ' + x, 1]); }); };
+    var add = function (l) { var sp = Object.keys(spl[l] || {}).sort(); tour.push([l + '|All', lname(l) + (sp.length > 1 ? ' (All)' : '')]); if (sp.length > 1) sp.forEach(function (x) { tour.push([l + '|' + x, lname(l) + ' · ' + x, 1]); }); };
     maj.concat(rest).forEach(add);
     var Tt = Ty.filter(function (t) { return (S.league === 'ALL' || t[0] === S.league) && (S.split === 'All' || t[2] === S.split); }), mask = 0; Tt.forEach(function (t) { mask |= t[3]; });
     var stage = mask === 3 ? [['All', 'All stages'], ['Regular', 'Regular season'], ['Playoffs', 'Playoffs']] : null;
