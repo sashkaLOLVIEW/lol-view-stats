@@ -188,6 +188,9 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
     background: repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--rh, 76px) - 1px), var(--divider) calc(var(--rh, 76px) - 1px), var(--divider) var(--rh, 76px));
     -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent); mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent); }
 }
+.mvb { display: inline-grid; place-items: center; height: 16px; padding: 0 5px; border-radius: 4px; font-size: 10px; font-weight: 800; letter-spacing: .04em; line-height: 1; flex: none; color: #0f0f0f; cursor: help; }
+.mvb.mvp { background: var(--gold); } .mvb.ace { background: var(--silver, #c9ccd1); }
+.pl-nr { display: flex; align-items: center; gap: 6px; min-width: 0; } .pl.r .pl-nr { flex-direction: row-reverse; }
 .pl-n:hover { text-decoration: underline; }
 .pl-n { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pl-s { font-size: 12px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -268,7 +271,7 @@ html { scroll-padding-top: 84px; }
 .pdc-b { padding: 20px 22px 22px; display: grid; grid-template-columns: minmax(180px, 240px) minmax(0, 1fr); column-gap: 32px; row-gap: 22px; }
 .pdc-who { display: flex; align-items: center; gap: 14px; min-width: 0; } .pdc-who > img { width: 64px; height: 64px; border-radius: 10px; flex: none; }
 .pdc-who .nm { font-size: 18px; font-weight: 700; line-height: 1.2; } .pdc-who .nm a { color: inherit; text-decoration: none; } .pdc-who .nm a:hover { text-decoration: underline; }
-.pdc-who .rtg { margin-top: 6px; }
+.pdc-who .rtg { margin-top: 6px; display: flex; align-items: center; gap: 6px; }
 .rtb { display: inline-grid; place-items: center; min-width: 36px; height: 20px; padding: 0 6px; border-radius: 4px; font-weight: 700; font-size: 12px; cursor: help; }
 .rtb.rg { background: var(--gold); color: #0f0f0f; } .rtb.rb { background: var(--blue); color: #0f0f0f; } .rtb.rn { background: var(--green); color: #0f0f0f; }
 .rtb.rz { background: #fff; color: #3d3d3d; box-shadow: inset 0 0 0 1px #00000026; }
@@ -451,7 +454,8 @@ html { scroll-padding-top: 84px; }
     var dm = '', dl = '', dr = '';
     for (var r = 0; r < 5; r++) {
       var pa = A.players[r], pb = B.players[r];
-      var cell = function (p, rt) { return '<div class="pl' + (rt ? ' r' : '') + '"><div class="pc">' + ico(p.ic, p.champ) + rnc(p.rn) + '</div><div class="pl-b"><a class="pl-n" href="' + U.profile + '#' + encodeURIComponent(p.name) + '" style="display:block">' + p.name + '</a><div class="pl-s">' + im('kills', 'si') + p.k + '/' + p.d + '/' + p.a + '<span class="sp"></span>' + im('minion', 'si minion') + p.cs + '<span class="sp"></span>' + im('gold', 'si') + k1(p.gold) + '</div><div class="bv"><span class="pl-v">' + (g.live || g.pct ? Math.round(p.dmg * 100) + '%' : k1(p.dmg)) + '</span><div class="bt"><div class="bar" style="width:' + Math.max(3, p.dmg / mx * 100).toFixed(1) + '%"></div></div></div>' + itrow(p.it) + '</div></div>'; };
+      var mvb = function (m) { return m ? '<span class="mvb ' + (m === 'MVP' ? 'mvp' : 'ace') + '" title="' + (m === 'MVP' ? 'MVP: best rated player on the winning team' : 'ACE: best rated player on the losing team') + '">' + m + '</span>' : ''; };
+      var cell = function (p, rt) { return '<div class="pl' + (rt ? ' r' : '') + '"><div class="pc">' + ico(p.ic, p.champ) + rnc(p.rn) + '</div><div class="pl-b"><div class="pl-nr"><a class="pl-n" href="' + U.profile + '#' + encodeURIComponent(p.name) + '">' + p.name + '</a>' + mvb(p.mv) + '</div><div class="pl-s">' + im('kills', 'si') + p.k + '/' + p.d + '/' + p.a + '<span class="sp"></span>' + im('minion', 'si minion') + p.cs + '<span class="sp"></span>' + im('gold', 'si') + k1(p.gold) + '</div><div class="bv"><span class="pl-v">' + (g.live || g.pct ? Math.round(p.dmg * 100) + '%' : k1(p.dmg)) + '</span><div class="bt"><div class="bar" style="width:' + Math.max(3, p.dmg / mx * 100).toFixed(1) + '%"></div></div></div>' + itrow(p.it) + '</div></div>'; };
       dl += cell(pa, 0); dr += cell(pb, 1);
     }
     var dmid = ''; ['Top', 'Jungle', 'Mid', 'Bot', 'Support'].forEach(function (rn) { dmid += '<div class="dm-ic" title="' + rn + '">' + (RIC[rn] || '') + '</div>'; });
@@ -480,6 +484,7 @@ html { scroll-padding-top: 84px; }
       var r = 6.5 + 1.25 * s + (t.win ? .5 : -.3);
       return Math.max(1, Math.min(10, r));
     };
+    var mvb = function (m) { return m ? '<span class="mvb ' + (m === 'MVP' ? 'mvp' : 'ace') + '" title="' + (m === 'MVP' ? 'MVP: best rated player on the winning team' : 'ACE: best rated player on the losing team') + '">' + m + '</span>' : ''; };
     var drawPd = function () {
       var T = [A, B], t = T[pdSel[0]], p = t.players[pdSel[1]]; if (!p) { $('pdc').innerHTML = ''; return; }
       var tm = t.players.reduce(function (q, x) { return q + x.dmg; }, 0), mins = Math.max(1, g.len / 60), d = p.d15 || [], cls = function (v) { return v == null ? '' : v > 0 ? ' up' : v < 0 ? ' dn' : ''; };
@@ -501,7 +506,7 @@ html { scroll-padding-top: 84px; }
       } else sk = '<div class="pdc-sk"><h3>Skill order</h3><div class="pdc-na">Not available for this game.</div></div>';
       var bd = '';
       if (p.bo && p.bo.length && D.items) bd = '<div class="pdc-sk"><h3>Build order</h3><div class="pdc-bo">' + p.bo.map(function (id) { var x = D.items[id]; return x ? '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : ''; }).filter(Boolean).join('<span class="pgt">&gt;</span>') + '</div></div>';
-      $('pdc').innerHTML = '<div class="pdc-pick">' + pick + '</div><div class="pdc-b"><div class="pdc-who">' + (p.ic && D.icons[p.ic] ? '<img src="' + D.icons[p.ic] + '" alt="">' : '') + '<div><div class="nm"><a href="' + U.profile + '#' + encodeURIComponent(p.name) + '">' + p.name + '</a></div>' + (function () { var r = gameRating(t, p); return r == null ? '' : '<div class="rtg"><span class="rtb ' + (r >= 8.5 ? 'rg' : r >= 7 ? 'rb' : r >= 5.5 ? 'rn' : 'rz') + '" title="Estimated game rating (0-10). Compares this player\'s KP, deaths, damage share, gold share, CS/min and GD@15 with other players in the same role, plus a small bonus for a win.">' + r.toFixed(1) + '</span></div>'; })() + '</div></div><div class="pdc-st">' + st.map(function (x) { return '<div><div class="l">' + x[0] + '</div><div class="v' + x[2] + '">' + x[1] + '</div></div>'; }).join('') + '</div>' + bd + rb + sk + '</div>';
+      $('pdc').innerHTML = '<div class="pdc-pick">' + pick + '</div><div class="pdc-b"><div class="pdc-who">' + (p.ic && D.icons[p.ic] ? '<img src="' + D.icons[p.ic] + '" alt="">' : '') + '<div><div class="nm"><a href="' + U.profile + '#' + encodeURIComponent(p.name) + '">' + p.name + '</a></div>' + (function () { var r = p.rt != null ? p.rt : gameRating(t, p); return r == null ? '' : '<div class="rtg"><span class="rtb ' + (r >= 8.5 ? 'rg' : r >= 7 ? 'rb' : r >= 5.5 ? 'rn' : 'rz') + '" title="Estimated game rating (0-10). Compares this player\'s KP, deaths, damage share, gold share, CS/min and GD@15 with other players in the same role, plus a small bonus for a win.">' + r.toFixed(1) + '</span>' + mvb(p.mv) + '</div>'; })() + '</div></div><div class="pdc-st">' + st.map(function (x) { return '<div><div class="l">' + x[0] + '</div><div class="v' + x[2] + '">' + x[1] + '</div></div>'; }).join('') + '</div>' + bd + rb + sk + '</div>';
     };
     $('pdc').onclick = function (e) { var b = e.target.closest('button[data-s]'); if (!b) return; pdSel = [b.getAttribute('data-s'), +b.getAttribute('data-r')]; drawPd(); };
     pdSel = ['0', 0]; drawPd();

@@ -138,6 +138,8 @@ img.lwi { }
 .hinfo { position: absolute; right: 0; bottom: 14px; z-index: 1; display: flex; align-items: center; gap: 28px; font-size: 14px; color: var(--fg); white-space: nowrap; }
 .hinfo b { color: var(--fg); font-weight: 600; margin-left: 6px; }
 @media (max-width: 760px) { .hero { flex-wrap: wrap; } .hinfo { position: static; flex: 1 0 100%; order: 3; gap: 20px; padding: 4px 0 12px; flex-wrap: wrap; } }
+.mvb { display: inline-grid; place-items: center; height: 16px; padding: 0 5px; border-radius: 4px; font-size: 10px; font-weight: 800; letter-spacing: .04em; line-height: 1; flex: none; color: #0f0f0f; cursor: help; }
+.mvb.mvp { background: var(--gold); } .mvb.ace { background: var(--silver, #c9ccd1); }
 .ser { position: relative; display: flex; flex-direction: column; gap: 12px; padding-right: 28px; }
 .ser .sb { position: absolute; top: 0; bottom: 0; right: 0; width: 22px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .04em; writing-mode: vertical-rl; text-orientation: upright; pointer-events: none; }
 @container (max-width: 1000px) { .ser { padding-right: 25px; } .ser .sb { width: 20px; font-size: 10px; } }
@@ -553,7 +555,7 @@ html { scroll-padding-top: 84px; }
       var o = OG[g.gid + '|' + g.role + '|' + g.opp], len = Math.round(g.gl * 60), mm = Math.floor(len / 60), ss = ('0' + (len % 60)).slice(-2), kp = g.tk ? Math.round((g.k + g.a) / g.tk * 100) : null;
       var dm = /^\d{4}-(\d{2})-(\d{2})/.exec(g.date || ''), dt = dm ? new Date(2026, +dm[1] - 1, +dm[2]).toLocaleDateString('en-GB', {day: 'numeric', month: 'short'}) : '';
       return '<a class="gr gm" href="' + (g.lg ? 'game.html#' + encodeURIComponent(g.gid) + '@' + g.lg : U.game + '#' + g.gid) + '">' + '<div class="rl"><span class="res ' + (g.win ? 'w' : 'l') + '">' + (g.win ? 'VICTORY' : 'DEFEAT') + '</span><div class="gt">' + mm + ':' + ss + '</div></div>'
-        + '<div><div class="t"><span class="pt">' + gicon(g.ic, g.champ, 'cm') + '<span>' + g.champ + '</span></span> <span class="vs">vs ' + logo(g.opp, 16) + ' ' + (o ? o.n : g.opp) + (o ? ' ' + gicon(o.g.ic, o.g.champ, 'cm') : '') + '</span></div>' + '<div class="ld">' + itrow(g.it, rnrow(g)) + '</div></div>'
+        + '<div><div class="t"><span class="pt">' + gicon(g.ic, g.champ, 'cm') + '<span>' + g.champ + '</span>' + (g.mv ? '<span class="mvb ' + (g.mv === 'MVP' ? 'mvp' : 'ace') + '" title="' + (g.mv === 'MVP' ? 'MVP: best rated player on the winning team' : 'ACE: best rated player on the losing team') + '">' + g.mv + '</span>' : '') + '</span> <span class="vs">vs ' + logo(g.opp, 16) + ' ' + (o ? o.n : g.opp) + (o ? ' ' + gicon(o.g.ic, o.g.champ, 'cm') : '') + '</span></div>' + '<div class="ld">' + itrow(g.it, rnrow(g)) + '</div></div>'
         + '<div class="gs"><div class="c"><div class="top"><b>' + g.k + '</b><i>/</i><b>' + g.d + '</b><i>/</i><b>' + g.a + '</b></div></div>'
         + '<div class="c"><div class="top"><b>' + Math.round(g.cs) + '</b></div></div>'
         + '<div class="c"><div class="top"><b>' + (kp == null ? '-' : kp + '%') + '</b></div></div>'

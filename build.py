@@ -258,6 +258,52 @@ def riot_only_games(w, ic):
     if out: print("  games from Riot's feed (not in Oracle's Elixir yet):", len(out))
     return out
 
+def annotate_ratings(GD, PD):
+    """Single-game rating (0-10) for every player, plus MVP (best rating on the winning team) and ACE (best on the losing team).
+    The rating compares KP, deaths/min, damage share, gold share, CS/min and GD@15 with every same-role player in the data, plus a small win/loss adjustment."""
+    import math
+    def feats(t, x, mins):
+        tk = sum(y["k"] for y in t["players"]); tg = sum(y["gold"] for y in t["players"]); td = sum(y["dmg"] for y in t["players"])
+        d15 = x.get("d15") or []
+        return [(x["k"] + x["a"]) / max(1, tk), x["d"] / mins, (x["dmg"] / td) if td else 0, (x["gold"] / tg) if tg else 0, x["cs"] / mins, d15[0] if d15 and d15[0] is not None else None]
+    acc = {}
+    for g in GD["games"]:
+        mins = max(1.0, g["len"] / 60)
+        for t in g["teams"]:
+            for x in t["players"]:
+                try: f = feats(t, x, mins)
+                except Exception: continue
+                a = acc.setdefault(x["role"], [[] for _ in f])
+                for i, v in enumerate(f):
+                    if v is not None: a[i].append(v)
+    base = {}
+    for r, cols in acc.items():
+        base[r] = []
+        for l in cols:
+            m = sum(l) / max(1, len(l)); sd = math.sqrt(sum((v - m) ** 2 for v in l) / max(1, len(l))) or 1
+            base[r].append((m, sd))
+    W = [.25, -.35, .30, .20, .15, .25]; got = {}
+    for g in GD["games"]:
+        mins = max(1.0, g["len"] / 60)
+        for t in g["teams"]:
+            best = None
+            for x in t["players"]:
+                x["rt"] = x["mv"] = None
+                try: f = feats(t, x, mins)
+                except Exception: continue
+                b = base.get(x["role"])
+                if not b: continue
+                sc = sum(W[i] * (v - b[i][0]) / b[i][1] for i, v in enumerate(f) if v is not None)
+                raw = 6.5 + 1.25 * sc + (0.5 if t["win"] else -0.3); x["rt"] = round(max(1.0, min(10.0, raw)), 1)
+                if best is None or raw > best[0]: best = (raw, x)
+            if best is not None and not g.get("live"): best[1]["mv"] = "MVP" if t["win"] else "ACE"
+        for t in g["teams"]:
+            for x in t["players"]: got[(g["id"], x["name"])] = (x.get("rt"), x.get("mv"))
+    for pv in PD["players"].values():
+        for x in pv["games"]:
+            r = got.get((x.get("gid"), pv["name"]))
+            if r: x["rt"], x["mv"] = r
+
 def build_game(w, logos_all):
     icons = {}
     def ic(n):
@@ -874,6 +920,7 @@ def main(csv):
     extra = [(pd.Timestamp(g["start"]), frozenset(t["code"] for t in g["teams"]), NS(code=g["teams"][0]["code"], result=g["teams"][0]["win"]), NS(code=g["teams"][1]["code"], result=g["teams"][1]["win"]), g["id"]) for g in GD["games"] if g.get("pct")]
     allres = build_recent(w, extra); rec = allres[:4]
     PD = build_profiles(w, faces_old, logos_all)
+    annotate_ratings(GD, PD)
     PI = load_player_info()
     for n, pl_ in PD["players"].items():
         pl_["bd"] = (PI.get(n) or {}).get("bd"); pl_["contract"] = (PI.get(n) or {}).get("contract")
