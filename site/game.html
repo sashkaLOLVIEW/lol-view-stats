@@ -191,6 +191,7 @@ h2 { margin: 0; font-size: 15px; font-weight: 600; height: 20px; display: flex; 
 .mvb { display: inline-grid; place-items: center; height: 16px; padding: 0 5px; border-radius: 4px; font-size: 10px; font-weight: 800; letter-spacing: .04em; line-height: 1; flex: none; color: #0f0f0f; cursor: help; }
 .mvb.mvp { background: var(--gold); } .mvb.ace { background: var(--silver, #c9ccd1); }
 .pl-nr { display: flex; align-items: center; gap: 6px; min-width: 0; } .pl.r .pl-nr { flex-direction: row-reverse; }
+@media (max-width: 760px) { .pl.r .pl-nr { flex-direction: row; justify-content: flex-start; } .pl.r .pl-n { text-align: left; } }
 .pl-n:hover { text-decoration: underline; }
 .pl-n { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pl-s { font-size: 12px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
