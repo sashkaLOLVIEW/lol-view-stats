@@ -173,23 +173,23 @@ h2 svg { flex: none; }
 .tp .roles { display: flex; gap: 8px; align-items: center; width: auto; padding-left: 0; }
 .tp .roles button { background: none; border: 0; padding: 0; cursor: pointer; color: var(--dim); display: grid; place-items: center; width: 18px; height: 18px; }
 .tp .roles button.on { color: var(--fg); }
-.tp .rgdd { position: relative; }
-.tp .rgb { display: flex; align-items: center; gap: 8px; width: 132px; height: 32px; padding: 0 10px 0 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; color: var(--fg); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: border-color .15s; }
-.tp .rgb:hover, .tp .rgdd.open .rgb { border-color: var(--muted); }
-.tp .rgb .rgt { flex: 1; text-align: left; } .tp .rgb svg.cv { width: 9px; height: 9px; margin-left: auto; color: var(--muted); transition: transform .15s; } .tp .rgdd.open .rgb svg.cv { transform: rotate(180deg); }
-.tp .rgi { display: inline-grid; place-items: center; width: 28px; height: 18px; flex: none; } .tp .rgi svg, .tp .rgi img { display: block; max-width: 28px; max-height: 18px; width: auto; height: auto; object-fit: contain; } .tp .rgi svg { width: 18px; height: 18px; }
-.tp .rgm button { white-space: nowrap; } .tp .rgm { min-width: max-content; }
-.tp .rgi img.wi-l { display: none; } .tp .rgi img.wi-d { display: block; }
-@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .tp .rgi img.wi-l { display: block; } :root:not([data-theme="dark"]) .tp .rgi img.wi-d { display: none; } }
-:root[data-theme="light"] .tp .rgi img.wi-l { display: block; } :root[data-theme="light"] .tp .rgi img.wi-d { display: none; }
-:root[data-theme="dark"] .tp .rgi img.wi-l { display: none; } :root[data-theme="dark"] .tp .rgi img.wi-d { display: block; }
-.tp .rgi img.mi { filter: none; }
-@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .tp .rgi img.mi { filter: brightness(.22); } }
-:root[data-theme="light"] .tp .rgi img.mi { filter: brightness(.22); } :root[data-theme="dark"] .tp .rgi img.mi { filter: none; }
-.tp .rgm { position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 6px); box-sizing: border-box; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 28px #0000004d; display: none; }
-.tp .rgdd.open .rgm { display: block; }
-.tp .rgm button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 8px; border: 0; background: none; border-radius: 6px; color: var(--muted); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; text-align: left; }
-.tp .rgm button:hover { background: var(--chip-bg); color: var(--fg); } .tp .rgm button.on { color: var(--fg); }
+:is(.tp, .upd) .rgdd { position: relative; }
+:is(.tp, .upd) .rgb { display: flex; align-items: center; gap: 8px; width: 132px; height: 32px; padding: 0 10px 0 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; color: var(--fg); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: border-color .15s; }
+:is(.tp, .upd) .rgb:hover, :is(.tp, .upd) .rgdd.open .rgb { border-color: var(--muted); }
+:is(.tp, .upd) .rgb .rgt { flex: 1; text-align: left; } :is(.tp, .upd) .rgb svg.cv { width: 9px; height: 9px; margin-left: auto; color: var(--muted); transition: transform .15s; } :is(.tp, .upd) .rgdd.open .rgb svg.cv { transform: rotate(180deg); }
+:is(.tp, .upd) .rgi { display: inline-grid; place-items: center; width: 28px; height: 18px; flex: none; } :is(.tp, .upd) .rgi svg, :is(.tp, .upd) .rgi img { display: block; max-width: 28px; max-height: 18px; width: auto; height: auto; object-fit: contain; } :is(.tp, .upd) .rgi svg { width: 18px; height: 18px; }
+:is(.tp, .upd) .rgm button { white-space: nowrap; } :is(.tp, .upd) .rgm { min-width: max-content; }
+:is(.tp, .upd) .rgi img.wi-l { display: none; } :is(.tp, .upd) .rgi img.wi-d { display: block; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) :is(.tp, .upd) .rgi img.wi-l { display: block; } :root:not([data-theme="dark"]) :is(.tp, .upd) .rgi img.wi-d { display: none; } }
+:root[data-theme="light"] :is(.tp, .upd) .rgi img.wi-l { display: block; } :root[data-theme="light"] :is(.tp, .upd) .rgi img.wi-d { display: none; }
+:root[data-theme="dark"] :is(.tp, .upd) .rgi img.wi-l { display: none; } :root[data-theme="dark"] :is(.tp, .upd) .rgi img.wi-d { display: block; }
+:is(.tp, .upd) .rgi img.mi { filter: none; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) :is(.tp, .upd) .rgi img.mi { filter: brightness(.22); } }
+:root[data-theme="light"] :is(.tp, .upd) .rgi img.mi { filter: brightness(.22); } :root[data-theme="dark"] :is(.tp, .upd) .rgi img.mi { filter: none; }
+:is(.tp, .upd) .rgm { position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 6px); box-sizing: border-box; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 28px #0000004d; display: none; }
+:is(.tp, .upd) .rgdd.open .rgm { display: block; }
+:is(.tp, .upd) .rgm button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 8px; border: 0; background: none; border-radius: 6px; color: var(--muted); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; text-align: left; }
+:is(.tp, .upd) .rgm button:hover { background: var(--chip-bg); color: var(--fg); } :is(.tp, .upd) .rgm button.on { color: var(--fg); }
 .tp-empty { grid-column: 1 / -1; padding: 22px; border: 1px dashed var(--line); border-radius: 8px; color: var(--muted); font-size: 13px; text-align: center; }
 
 .tp-cards { margin-top: 14px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 15px; }
@@ -283,6 +283,7 @@ img.wi-l { display: none; } img.wi-d { display: block; }
 .stko { margin-top: 56px; }
 .stko-tabs { margin-top: 0; }
 #upcoming .row { flex: 0 0 auto !important; height: 62px !important; min-height: 0 !important; }
+.up-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; } .up-head.sec { margin-top: 28px; } .up-head h2 { min-width: 0; } .up-head .rgdd { margin-left: auto; } .up-head .rgb { width: 132px; }
 .up-tabs { margin: 12px 0 0; gap: 6px; } .up-tabs .chip { height: 26px; padding: 0 9px; font-size: 11px; }
 .stko-tabs .chip { height: 30px; padding: 0 14px; font-size: 12px; }
 .stko .stand-hd { margin-top: 16px; }
@@ -497,8 +498,10 @@ html { scroll-padding-top: 84px; }
       <div id="live-list"></div>
       </div>
 
-      <h2 class="sec">Upcoming Matches <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></h2>
-      <div class="chips up-tabs" id="upTabs" role="group" aria-label="League filter"></div>
+      <div class="up-head sec upd">
+        <h2>Upcoming Matches <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></h2>
+        <div class="rgdd" id="up-rg"></div>
+      </div>
       <div class="stack" id="upcoming"></div>
 
       <h2 class="sec" style="margin-top:34px"><a href="results.html" style="display:flex;align-items:center;gap:7px">Recent Results <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2>
@@ -692,6 +695,17 @@ html { scroll-padding-top: 84px; }
   // Upcoming matches: filled by build.py from the lolesports schedule (rows: home, away, UK time, date, BO, league, start-epoch-ms)
   var UP = {"global": [], "lck": [], "lpl": [], "lec": [], "lcs": [], "cblol": [], "lcp": []};
   var UPN = [["global", "Global"], ["lck", "LCK"], ["lpl", "LPL"], ["lec", "LEC"], ["lcs", "LCS"], ["cblol", "CBLOL"], ["lcp", "LCP"]], upKey = 'global';
+  function upLive(k) { var now = Date.now(); return (UP[k] || []).some(function (m) { return m[6] + 3 * 3600e3 > now; }); }
+  function upName(k) { return k === 'global' ? 'Worlds' : String(k).toUpperCase(); }
+  var upChev = '<svg class="cv" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m1.500 3.500 3.500 3.500 3.500-3.500"/></svg>';
+  function drawUp() {   // same dropdown as Top Performers, listing only the leagues that have games scheduled
+    var ks = UPN.map(function (n) { return n[0]; }).filter(upLive), ic = window.__rgIcon || function () { return ''; };
+    if (!ks.length) ks = ['global'];
+    if (ks.indexOf(upKey) < 0) upKey = ks[0];
+    var ik = function (k) { return ic(k === 'global' ? 'Global' : upName(k)); }, el = $('up-rg');
+    el.innerHTML = '<button type="button" class="rgb" aria-haspopup="listbox" aria-expanded="' + (el.classList.contains('open') ? 'true' : 'false') + '"><span class="rgi">' + ik(upKey) + '</span><span class="rgt">' + upName(upKey) + '</span>' + (ks.length > 1 ? upChev : '') + '</button>' +
+      (ks.length > 1 ? '<div class="rgm" role="listbox">' + ks.map(function (k) { return '<button type="button" role="option" data-k="' + k + '"' + (k === upKey ? ' class="on"' : '') + '><span class="rgi">' + ik(k) + '</span>' + upName(k) + '</button>'; }).join('') + '</div>' : '');
+  }
   var TBDI = '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--muted)" stroke-width="2" aria-label="TBD"><circle cx="16" cy="16" r="12.5"/><path d="M10.500 16h11" stroke-linecap="round"/></svg>';
   function tl(c) { return c === 'TBD' ? TBDI : logo(c, 32); }
   // times are shown in the visitor's own timezone (built from the UTC start time)
@@ -699,6 +713,7 @@ html { scroll-padding-top: 84px; }
   function ld(ms) { return new Date(ms).toLocaleDateString('en-US', {month: 'short', day: 'numeric'}); }
   window.renderUp = renderUp;
   function renderUp() {
+    drawUp();
     var now = Date.now(), list = (UP[upKey] || []).filter(function (m) { return m[6] + 3 * 3600e3 > now; }).slice(0, Math.max(1, 4 - liveN));
     $('upcoming').innerHTML = list.length ? list.map(function (m) {
       var lg = m[5] === 'worlds' ? worlds(24) : '<span style="font-size:10px;font-weight:700;color:var(--muted)">' + String(m[5]).toUpperCase() + '</span>';
@@ -706,11 +721,13 @@ html { scroll-padding-top: 84px; }
       return '<' + (lk ? 'a href="match.html#' + m[7] + '"' : 'div') + ' class="row match res"><div class="lgw"><span class="lg">' + lg + '</span><span class="bo">' + m[4] + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + tl(m[0]) + '<span class="score vsx">vs</span>' + tl(m[1]) + '<span class="tag">' + m[1] + '</span></div><div class="when">' + lt(m[6]) + '<span>' + ld(m[6]) + '</span></div></' + (lk ? 'a' : 'div') + '>';
     }).join('') : '<div class="row" style="color:var(--muted);font-size:12px">No upcoming matches' + (upKey === 'global' ? ' in the schedule yet' : ' for this league') + '</div>';
   }
-  $('upTabs').innerHTML = UPN.map(function (n) { return '<button class="chip' + (n[0] === upKey ? ' on' : '') + '" type="button" data-k="' + n[0] + '">' + n[1] + '</button>'; }).join('');
-  $('upTabs').addEventListener('click', function (e) {
-    var b = e.target.closest('.chip'); if (!b) return; upKey = b.getAttribute('data-k');
-    Array.prototype.forEach.call($('upTabs').children, function (c) { c.classList.toggle('on', c === b); }); renderUp();
+  $('up-rg').addEventListener('click', function (e) {
+    e.stopPropagation();
+    var o = e.target.closest('button[data-k]');
+    if (o) { upKey = o.getAttribute('data-k'); $('up-rg').classList.remove('open'); renderUp(); return; }
+    if (e.target.closest('.rgb')) { $('up-rg').classList.toggle('open'); drawUp(); }
   });
+  document.addEventListener('click', function () { if ($('up-rg').classList.contains('open')) { $('up-rg').classList.remove('open'); drawUp(); } });
   renderUp();
 
   // Recent results
@@ -830,6 +847,7 @@ html { scroll-padding-top: 84px; }
         RGL.map(function (g) { return '<button type="button" role="option" data-g="' + g + '"' + (g === region ? ' class="on"' : '') + '><span class="rgi">' + rgIcon(g) + '</span>' + rgName(g) + '</button>'; }).join('') + '</div>';
     };
     setTimeout(drawRg, 0);
+    window.__rgIcon = rgIcon; setTimeout(function () { if (window.renderUp) window.renderUp(); }, 0);
     $('tp-rg').addEventListener('click', function (e) {
       e.stopPropagation();
       var o = e.target.closest('button[data-g]');
