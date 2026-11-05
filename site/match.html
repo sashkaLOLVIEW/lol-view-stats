@@ -536,6 +536,7 @@ html { scroll-padding-top: 84px; }
 .pdc-b { padding: 20px 22px 22px; display: grid; grid-template-columns: minmax(180px, 240px) minmax(0, 1fr); column-gap: 32px; row-gap: 22px; }
 .pdc-who { display: flex; align-items: center; gap: 14px; min-width: 0; } .pdc-who > img { width: 64px; height: 64px; border-radius: 10px; flex: none; }
 .pdc-who .nm { font-size: 18px; font-weight: 700; line-height: 1.2; } .pdc-who .nm a { color: inherit; text-decoration: none; } .pdc-who .nm a:hover { text-decoration: underline; }
+.pdc-who .rtg { margin-top: 6px; }
 .pdc-who .sb { margin-top: 3px; font-size: 12px; color: var(--muted); }
 .pdc-st { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .pdc-st > div { border: 1px solid var(--line); border-radius: 8px; padding: 10px 10px; min-width: 0; }
@@ -737,6 +738,24 @@ html { scroll-padding-top: 84px; }
     // player detail card (blue top laner by default)
     var pdSel = ['0', 0];
     var fmtS = function (v) { return v == null ? '-' : (v > 0 ? '+' : v < 0 ? '\u2212' : '') + Math.abs(Math.round(v)).toLocaleString('en-US'); };
+    // single-game rating (0-10): this player's game compared with every same-role player in the data, plus a small win/loss adjustment
+    var ratingBase = null, gameRating = function (t, p) {
+      var F = function (tt, x) {
+        var tk = tt.players.reduce(function (s, y) { return s + y.k; }, 0), tg = tt.players.reduce(function (s, y) { return s + y.gold; }, 0), td = tt.players.reduce(function (s, y) { return s + y.dmg; }, 0), mn = Math.max(1, g_len / 60);
+        return [(x.k + x.a) / Math.max(1, tk), x.d / mn, td ? x.dmg / td : 0, tg ? x.gold / tg : 0, x.cs / mn, x.d15 && x.d15[0] != null ? x.d15[0] : null];
+      }, g_len = 0;
+      if (!ratingBase) {
+        var acc = {};
+        D.games.forEach(function (gm) { g_len = gm.len; gm.teams.forEach(function (tt) { tt.players.forEach(function (x) { var f = F(tt, x), a = acc[x.role] = acc[x.role] || f.map(function () { return []; }); f.forEach(function (v, i) { if (v != null) a[i].push(v); }); }); }); });
+        ratingBase = {};
+        Object.keys(acc).forEach(function (r) { ratingBase[r] = acc[r].map(function (l) { var m = l.reduce(function (s, v) { return s + v; }, 0) / (l.length || 1), sd = Math.sqrt(l.reduce(function (s, v) { return s + (v - m) * (v - m); }, 0) / (l.length || 1)); return [m, sd || 1]; }); });
+      }
+      g_len = g.len; var B = ratingBase[p.role]; if (!B) return null;
+      var f = F(t, p), W = [.25, -.35, .30, .20, .15, .25], s = 0;
+      f.forEach(function (v, i) { if (v != null) s += W[i] * (v - B[i][0]) / B[i][1]; });
+      var r = 6.5 + 1.25 * s + (t.win ? .5 : -.3);
+      return Math.max(1, Math.min(10, r));
+    };
     var drawPd = function () {
       var T = [A, B], t = T[pdSel[0]], p = t.players[pdSel[1]]; if (!p) { $('pdc').innerHTML = ''; return; }
       var tm = t.players.reduce(function (q, x) { return q + x.dmg; }, 0), mins = Math.max(1, g.len / 60), d = p.d15 || [], cls = function (v) { return v == null ? '' : v > 0 ? ' up' : v < 0 ? ' dn' : ''; };
@@ -758,7 +777,7 @@ html { scroll-padding-top: 84px; }
       } else sk = '<div class="pdc-sk"><h3>Skill order</h3><div class="pdc-na">Not available for this game.</div></div>';
       var bd = '';
       if (p.bo && p.bo.length && D.items) bd = '<div class="pdc-sk"><h3>Build order</h3><div class="pdc-bo">' + p.bo.map(function (id) { var x = D.items[id]; return x ? '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : ''; }).filter(Boolean).join('<span class="pgt">&gt;</span>') + '</div></div>';
-      $('pdc').innerHTML = '<div class="pdc-pick">' + pick + '</div><div class="pdc-b"><div class="pdc-who">' + (p.ic && D.icons[p.ic] ? '<img src="' + D.icons[p.ic] + '" alt="">' : '') + '<div><div class="nm"><a href="' + U.profile + '#' + encodeURIComponent(p.name) + '">' + p.name + '</a></div></div></div><div class="pdc-st">' + st.map(function (x) { return '<div><div class="l">' + x[0] + '</div><div class="v' + x[2] + '">' + x[1] + '</div></div>'; }).join('') + '</div>' + bd + rb + sk + '</div>';
+      $('pdc').innerHTML = '<div class="pdc-pick">' + pick + '</div><div class="pdc-b"><div class="pdc-who">' + (p.ic && D.icons[p.ic] ? '<img src="' + D.icons[p.ic] + '" alt="">' : '') + '<div><div class="nm"><a href="' + U.profile + '#' + encodeURIComponent(p.name) + '">' + p.name + '</a></div>' + (function () { var r = gameRating(t, p); return r == null ? '' : '<div class="rtg"><span class="rtb ' + (r >= 8.5 ? 'rg' : r >= 7 ? 'rb' : r >= 5.5 ? 'rn' : 'rz') + '" title="Estimated game rating (0-10). Compares this player\'s KP, deaths, damage share, gold share, CS/min and GD@15 with other players in the same role, plus a small bonus for a win.">' + r.toFixed(1) + '</span></div>'; })() + '</div></div><div class="pdc-st">' + st.map(function (x) { return '<div><div class="l">' + x[0] + '</div><div class="v' + x[2] + '">' + x[1] + '</div></div>'; }).join('') + '</div>' + bd + rb + sk + '</div>';
     };
     $('pdc').onclick = function (e) { var b = e.target.closest('button[data-s]'); if (!b) return; pdSel = [b.getAttribute('data-s'), +b.getAttribute('data-r')]; drawPd(); };
     pdSel = ['0', 0]; drawPd();
