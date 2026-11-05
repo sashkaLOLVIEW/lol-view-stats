@@ -1102,19 +1102,19 @@ html { scroll-padding-top: 84px; }
 .tourn { margin-top: 52px; overflow-x: auto; scrollbar-width: none; }
 .tourn::-webkit-scrollbar { display: none; }
 .tourn + .cols { margin-top: 28px; }
-.tgrid { display: flex; gap: 8px; width: max-content; min-width: 100%; }
-.tgrid a { display: grid; place-items: center; flex: 1 0 56px; height: 50px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; color: var(--fg); text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: .04em; transition: border-color .15s; }
+.tgrid { display: flex; gap: 6px; width: max-content; }
+.tgrid a { display: grid; place-items: center; width: 44px; height: 32px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; color: var(--fg); text-decoration: none; transition: border-color .15s; }
 .tgrid a:hover { border-color: var(--muted); }
-.tgrid .ti { display: grid; place-items: center; height: 26px; }
-.tgrid .ti img, .tgrid .ti svg { max-width: 34px; max-height: 26px; width: auto; height: auto; }
+.tgrid .ti { display: grid; place-items: center; height: 18px; }
+.tgrid .ti img, .tgrid .ti svg { max-width: 24px; max-height: 18px; width: auto; height: auto; }
 </style>
 <script>
 (function () {
   if (!window.LVF) return;
   LVF.loadMeta().then(function (m) {
-    var MAJ = ['WLDs', 'MSI', 'EWC', 'FST', 'DCGI', 'LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'], ids = Object.keys(m.leagues);
+    var MAJ = ['WLDs', 'MSI', 'EWC', 'FST', 'DCGI', 'LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'], ids = Object.keys(m.leagues).filter(function (id) { return LVF.evIcon(id, 22); });
     ids.sort(function (a, b) { var x = MAJ.indexOf(a), y = MAJ.indexOf(b); return (x < 0 ? 99 : x) - (y < 0 ? 99 : y) || (a < b ? -1 : 1); });
-    document.getElementById('tgrid').innerHTML = ids.map(function (id) { return '<a href="tournament.html#' + id + '" title="' + LVF.leagueName(id) + '" aria-label="' + LVF.leagueName(id) + '"><span class="ti">' + (LVF.evIcon(id, 22) || id) + '</span></a>'; }).join('');
+    document.getElementById('tgrid').innerHTML = ids.map(function (id) { return '<a href="tournament.html#' + id + '" title="' + LVF.leagueName(id) + '" aria-label="' + LVF.leagueName(id) + '"><span class="ti">' + LVF.evIcon(id, 18) + '</span></a>'; }).join('');
   });
 })();
 </script>
