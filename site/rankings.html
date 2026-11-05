@@ -348,7 +348,29 @@ html { scroll-padding-top: 84px; }
 </style>
 
 <style>
+.rkd.rgdd { position: relative; }
+.rkd .rgb { display: flex; align-items: center; gap: 8px; width: 132px; height: 32px; padding: 0 10px 0 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; color: var(--fg); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: border-color .15s; }
+.rkd .rgb:hover, .rkd.rgdd.open .rgb { border-color: var(--muted); }
+.rkd .rgb .rgt { flex: 1; text-align: left; } .rkd .rgb svg.cv { width: 9px; height: 9px; margin-left: auto; color: var(--muted); transition: transform .15s; } .rkd.rgdd.open .rgb svg.cv { transform: rotate(180deg); }
+.rkd .rgi { display: inline-grid; place-items: center; width: 28px; height: 18px; flex: none; } .rkd .rgi svg, .rkd .rgi img { display: block; max-width: 28px; max-height: 18px; width: auto; height: auto; object-fit: contain; } .rkd .rgi svg { width: 18px; height: 18px; }
+.rkd .rgm button { white-space: nowrap; } .rkd .rgm { min-width: max-content; }
+.rkd .rgi img.wi-l { display: none; } .rkd .rgi img.wi-d { display: block; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .rkd .rgi img.wi-l { display: block; } :root:not([data-theme="dark"]) .rkd .rgi img.wi-d { display: none; } }
+:root[data-theme="light"] .rkd .rgi img.wi-l { display: block; } :root[data-theme="light"] .rkd .rgi img.wi-d { display: none; }
+:root[data-theme="dark"] .rkd .rgi img.wi-l { display: none; } :root[data-theme="dark"] .rkd .rgi img.wi-d { display: block; }
+.rkd .rgi img.mi { filter: none; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .rkd .rgi img.mi { filter: brightness(.22); } }
+:root[data-theme="light"] .rkd .rgi img.mi { filter: brightness(.22); } :root[data-theme="dark"] .rkd .rgi img.mi { filter: none; }
+.rkd .rgm { position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 6px); box-sizing: border-box; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 28px #0000004d; display: none; }
+.rkd.rgdd.open .rgm { display: block; }
+.rkd .rgm button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 8px; border: 0; background: none; border-radius: 6px; color: var(--muted); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; text-align: left; }
+.rkd .rgm button:hover { background: var(--chip-bg); color: var(--fg); } .rkd .rgm button.on { color: var(--fg); }
+.rkd.rgdd{margin-top:14px;width:132px}
+</style>
+<style>
 .rs { max-width: 900px; margin: 0 auto; padding: 34px 0 0; }
+@media (min-width:1081px){.rs{max-width:calc((min(1312px,100vw - 32px) - 64px)*316/968);margin-left:0;margin-right:0}}
+@media (min-width:1081px){.rs{max-width:calc((min(1312px,100vw - 32px) - 64px)*316/968);margin-left:0;margin-right:0}}
 .rs-sub { font-size: 12px; color: var(--dim); margin-top: 6px; }
 .rs .stack { margin-top: 16px; }
 .rs-more { display: flex; justify-content: center; margin-top: 18px; }
@@ -394,8 +416,7 @@ html { scroll-padding-top: 84px; }
 
   <main class="rs">
     <h2 class="sec">Power Rankings</h2>
-    <div class="rs-sub" id="rk-sub"></div>
-    <div class="chips" id="rk-tabs" role="group" aria-label="Region"></div>
+    <div class="rgdd rkd" id="rk-tabs"></div>
     <div class="stack" id="results"></div>
   </main>
   </div>
@@ -408,6 +429,8 @@ html { scroll-padding-top: 84px; }
   </footer>
 </div>
 
+<script src="filters.js"></script>
+<script src="filters.js"></script>
 <script>
 (function () {
   // placeholder club badges (neutral shapes in each club's colour, not official marks)
@@ -443,12 +466,20 @@ html { scroll-padding-top: 84px; }
   var ARW = {up: '<svg width="9" height="6" viewBox="0 0 9 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m1 5 3.500-3.500L8 5"/></svg>', dn: '<svg width="9" height="6" viewBox="0 0 9 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 3.500 3.500L8 1"/></svg>'};
   function chgChip(c) { var m = /^(up|dn)(\d+)$/.exec(c || ''); return m ? '<span class="chg ' + (m[1] === 'up' ? 'up' : 'down') + '">' + ARW[m[1]] + m[2] + '</span>' : '<span class="chg">-</span>'; }
   var REG = ['All', 'LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'], cur = 'All';
-  $('rk-sub').textContent = 'Elo rating from 2026 results, including international events · ' + rank.length + ' tier 1 teams (LCK, LPL, LEC, LCS, LCP, CBLOL)' + (rankUpd ? ' · updated ' + rankUpd : '') + ' · UK time';
-  $('rk-tabs').innerHTML = REG.map(function (n) { return '<button class="chip' + (n === cur ? ' on' : '') + '" type="button" data-k="' + n + '">' + n + '</button>'; }).join('');
+  var CHV = '<svg class="cv" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m1.500 3.500 3.500 3.500 3.500-3.500"/></svg>';
+  var rki = function (n) { return n === 'All' ? (window.LVF && LVF.trophy || '') : (window.LVF ? LVF.evIcon(n, 18) : ''); };
+  function drawTabs() {
+    var el = $('rk-tabs');
+    el.innerHTML = '<button type="button" class="rgb" aria-haspopup="listbox" aria-expanded="' + el.classList.contains('open') + '"><span class="rgi">' + rki(cur) + '</span><span class="rgt">' + cur + '</span>' + CHV + '</button>' +
+      '<div class="rgm" role="listbox">' + REG.map(function (n) { return '<button type="button" role="option" data-k="' + n + '"' + (n === cur ? ' class="on"' : '') + '><span class="rgi">' + rki(n) + '</span>' + n + '</button>'; }).join('') + '</div>';
+  }
+  drawTabs();
   $('rk-tabs').addEventListener('click', function (e) {
-    var b = e.target.closest('.chip'); if (!b) return; cur = b.getAttribute('data-k');
-    Array.prototype.forEach.call($('rk-tabs').children, function (c) { c.classList.toggle('on', c === b); }); render();
+    e.stopPropagation(); var o = e.target.closest('button[data-k]');
+    if (o) { cur = o.getAttribute('data-k'); $('rk-tabs').classList.remove('open'); drawTabs(); render(); return; }
+    if (e.target.closest('.rgb')) { $('rk-tabs').classList.toggle('open'); drawTabs(); }
   });
+  document.addEventListener('click', function () { if ($('rk-tabs').classList.contains('open')) { $('rk-tabs').classList.remove('open'); drawTabs(); } });
   function lg(code) { return LOGOS[code] ? logo(code) : '<span class="mono">' + code.slice(0, 4) + '</span>'; }
   function render() {
     $('results').innerHTML = rank.map(function (r, i) { return [r, i + 1]; }).filter(function (x) { return cur === 'All' || x[0][1] === cur; }).map(function (x) {
@@ -504,18 +535,21 @@ html { scroll-padding-top: 84px; }
     if (!q) { box.className = 'sr'; return; }
     var tm = SD.t.filter(function (t) { return t[0].toLowerCase().indexOf(q) > -1 || t[1].toLowerCase().indexOf(q) > -1; }).sort(rank(q)).slice(0, 5);
     var pl = SD.p.filter(function (p) { return p[0].toLowerCase().indexOf(q) > -1; }).sort(rank(q)).slice(0, 8);
+    var tn = (window.LVF && LVF.tours ? LVF.tours() : []).filter(function (t) { return t[0].toLowerCase().indexOf(q) > -1 || t[1].toLowerCase().indexOf(q) > -1; }).sort(rank(q)).slice(0, 4);
     var ch = (SD.c || []).filter(function (c) { return c[0].toLowerCase().indexOf(q) > -1; }).sort(rank(q)).slice(0, 5);
     var LW = {DK: 1, G2: 1, TL: 1, TLAW: 1};
     var lg = function (c, s) { return SD.l[c] ? '<img' + (LW[c] ? ' class="lwi"' : '') + ' src="' + SD.l[c] + '" alt="" width="' + s + '" height="' + s + '">' : ''; };
     items = tm.map(function (t) { var r = SD.tr[t[0]]; return {h: 'team.html#' + t[0], l: t[1], pre: lg(t[0], 20), post: SD.g[r] ? '<img class="mi" src="' + SD.g[r] + '" alt="' + r + '" title="' + r + '" width="18" height="18">' : ''}; })
       .concat(pl.map(function (p) { return {h: 'player.html#' + encodeURIComponent(p[0]), l: p[0], pre: '', post: (SD.r[p[2]] || '') + lg(p[1], 20)}; }))
-      .concat(ch.map(function (c) { return {h: 'champion.html#' + encodeURIComponent(c[0]), l: c[0], pre: '<img class="cs" src="' + c[1] + '" alt="" width="20" height="20">', post: ''}; }));
+      .concat(ch.map(function (c) { return {h: 'champion.html#' + encodeURIComponent(c[0]), l: c[0], pre: '<img class="cs" src="' + c[1] + '" alt="" width="20" height="20">', post: ''}; }))
+      .concat(tn.map(function (t) { return {h: 'tournament.html#' + t[0], l: t[1], pre: '<span style="width:20px;display:flex;justify-content:center">' + (LVF.evIcon(t[0], 18) || '') + '</span>', post: ''}; }));
     var row = function (x, i) { return '<a data-i="' + i + '">' + x.pre + '<b>' + esc(x.l) + '</b><i>' + x.post + '</i></a>'; };
     var h = '';
     if (tm.length) h += '<div class="sh">Teams</div>' + items.slice(0, tm.length).map(function (x, i) { return row(x, i); }).join('');
     if (pl.length) h += '<div class="sh">Players</div>' + items.slice(tm.length, tm.length + pl.length).map(function (x, i) { return row(x, i + tm.length); }).join('');
-    if (ch.length) h += '<div class="sh">Champions</div>' + items.slice(tm.length + pl.length).map(function (x, i) { return row(x, i + tm.length + pl.length); }).join('');
-    box.innerHTML = h || '<div class="none">No teams, players or champions found</div>';
+    if (ch.length) h += '<div class="sh">Champions</div>' + items.slice(tm.length + pl.length, tm.length + pl.length + ch.length).map(function (x, i) { return row(x, i + tm.length + pl.length); }).join('');
+    if (tn.length) h += '<div class="sh">Tournaments</div>' + items.slice(tm.length + pl.length + ch.length).map(function (x, i) { return row(x, i + tm.length + pl.length + ch.length); }).join('');
+    box.innerHTML = h || '<div class="none">Nothing found</div>';
     box.className = 'sr on';
   }
   function mark() { Array.prototype.forEach.call(box.querySelectorAll('a'), function (a) { a.classList.toggle('act', +a.getAttribute('data-i') === act); }); }

@@ -28,7 +28,7 @@
   function isDefault() { return S.league === 'WLDs' && S.split === 'All' && S.stage === 'All' && S.year === 'All'; }
 
   /* a filtered dataset: arrays of games / player rows / team rows restricted to the scope, with game ids remapped */
-  function slice(d, lg) {
+  function slice(d, lg, S) {
     var G = d.games, keep = [], map = {};
     for (var i = 0; i < G.id.length; i++) {
       if (S.year !== 'All' && G.y[i] !== +S.year) continue;
@@ -40,13 +40,13 @@
       Object.keys(blk).forEach(function (k) { o[k] = idx.map(function (j) { return blk[k][j]; }); }); o.g = o.g.map(function (g) { return map[g]; }); o.n = idx.length; return o; };
     return { lg: lg, keep: keep, games: keep.map(function (i) { var r = {}; Object.keys(G).forEach(function (k) { r[k] = G[k][i]; }); r.sp = d.splitNames[G.sp[i]]; r.lg = lg; return r; }), rows: pick(d.rows), teams: pick(d.teams) };
   }
-  function dataset() {
-    var ids = S.league === 'ALL' ? Object.keys(meta.leagues) : [S.league];
+  function dataset(sc) {
+    var S0 = sc || S, ids = S0.league === 'ALL' ? Object.keys(meta.leagues) : [S0.league];
     return Promise.all(ids.map(loadLeague)).then(function (ds) {
       var out = { games: [], rows: null, teams: null };
       ds.forEach(function (d, i) {
         d.splitNames = d.splitNames || meta.leagues[ids[i]].splits;
-        var s = slice(d, ids[i]), base = out.games.length;
+        var s = slice(d, ids[i], S0), base = out.games.length;
         out.games = out.games.concat(s.games);
         ['rows', 'teams'].forEach(function (b) {
           var x = s[b]; x.g = x.g.map(function (g) { return g + base; });
@@ -294,7 +294,7 @@
     return true;
   }
   function init() {
-    if (!$('.page > .topbar')) return;
+    if (!$('.page > .topbar') || /(tournament|rankings)\.html$/.test(location.pathname)) return;
     css(); bar = document.createElement('div'); bar.id = 'lvf';
     loadMeta().then(function () {
       if (!place()) return;
@@ -326,7 +326,9 @@
     if (same || !bar || !meta) return; Object.assign(S, entityDefault()); return apply();
   }
   function entity(kind, name) { if (ENT && ENT.kind === kind && ENT.name === name) { render((bar && bar.querySelector('.st') || {}).textContent); return; } return focus(kind, name); }
-  window.LVF = { entity: entity, focus: focus, set: function (o) { if (Object.keys(o).every(function (k) { return S[k] === o[k]; })) return; Object.assign(S, o); if (bar && meta) return apply(); }, has: function (kind, n) { return loadMeta().then(function (m) { return kind === 'player' ? m.players.indexOf(n) >= 0 : kind === 'team' ? !!m.tname[n] : m.champs.indexOf(n) >= 0; }); }, onChange: function (fn) { handlers.push(fn); if (bar && meta) fn(cur, S); }, state: function () { return S; }, meta: function () { return meta; }, wd: wd, players: players, isDefault: isDefault, lname: lname,
+  function tours() { return meta ? Object.keys(meta.leagues).map(function (l) { return [l, lname(l)]; }) : []; }
+  function load(league, split) { return loadMeta().then(function () { return dataset({ league: league, split: split || 'All', stage: 'All', year: 'All' }); }); }
+  window.LVF = { trophy: TROPHY, tours: tours, load: load, players: function (ds) { return players(ds); }, entity: entity, focus: focus, set: function (o) { if (Object.keys(o).every(function (k) { return S[k] === o[k]; })) return; Object.assign(S, o); if (bar && meta) return apply(); }, has: function (kind, n) { return loadMeta().then(function (m) { return kind === 'player' ? m.players.indexOf(n) >= 0 : kind === 'team' ? !!m.tname[n] : m.champs.indexOf(n) >= 0; }); }, onChange: function (fn) { handlers.push(fn); if (bar && meta) fn(cur, S); }, state: function () { return S; }, meta: function () { return meta; }, wd: wd, players: players, isDefault: isDefault, lname: lname,
     loadMeta: loadMeta, profile: profile, results: results, leagueName: lname, evIcon: evIcon, icons: function () { return jget('data/champs.json'); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

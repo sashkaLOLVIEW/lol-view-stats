@@ -983,6 +983,9 @@ def main(csv):
     # recent results (all series)
     s = rd("site/results.html"); s = jreplace(s, "RES", allres); s = jreplace(s, "LOGOS", logos_all)
     s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "results.html", stamp(s))
+    # tournament pages (one template, routed by #LEAGUE[/split])
+    s = rd("site/tournament.html"); s = jreplace(s, "LOGOS", logos_all); s = jreplace(s, "UP", build_upcoming())
+    s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "tournament.html", stamp(s))
     # players
     s = rd("site/players.html")
     for name, val in (("WD", WD), ("FACES", FACES), ("FACESF", FACES)): s = jreplace(s, name, val)
