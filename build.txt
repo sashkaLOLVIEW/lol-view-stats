@@ -1,0 +1,30 @@
+reading /home/runner/work/lol-view-stats/lol-view-stats/data/2026_LoL_esports_match_data_from_OraclesElixir.csv
+  61 games, 80 players
+  games from Riot's feed (not in Oracle's Elixir yet): 4
+  player info: 80 birthdates, 77 contracts
+  items: 61 of 61 games matched to Riot data
+  support players (raw item ids from Riot): 122
+     ('LOLTMNT02_482269', 'Blue', 'sup') [3364, 3050, 3009, 3067, 2055, 1033, 1029] | held back by tidy_items: []
+     ('LOLTMNT02_482269', 'Red', 'sup') [3364, 3190, 2055, 2055, 2525] | held back by tidy_items: []
+     ('LOLTMNT02_482292', 'Blue', 'sup') [3364, 2031, 3222, 3158, 3109, 3067] | held back by tidy_items: []
+     ('LOLTMNT02_482292', 'Red', 'sup') [3364, 3152, 3158, 3916, 3082, 2055, 2055, 1029] | held back by tidy_items: []
+     ('LOLTMNT02_482304', 'Blue', 'sup') [3364, 3109, 3190, 3067, 2055, 2055] | held back by tidy_items: []
+     ('LOLTMNT02_482304', 'Red', 'sup') [3364, 3190, 3109, 2055, 2055, 3158, 3067, 3114] | held back by tidy_items: []
+     ('LOLTMNT02_482313', 'Blue', 'sup') [3364, 2031, 3190, 3111, 3109, 3067, 2055] | held back by tidy_items: []
+     ('LOLTMNT02_482313', 'Red', 'sup') [3364, 3050, 3009, 3109, 2055, 3067, 1011] | held back by tidy_items: []
+  most common items on supports: [(3364, 'Oracle Lens', 122), (2055, 'Control Ward', 116), (3158, 'Ionian Boots of Lucidity', 68), (3067, 'Kindlegem', 58), (3109, "Knight's Vow", 53), (3190, 'Locket of the Iron Solari', 50), (3222, "Mikael's Blessing", 41), (3050, "Zeke's Convergence", 25), (6620, 'Echoes of Helia', 21), (3111, "Mercury's Treads", 18), (3504, 'Ardent Censer', 17), (3009, 'Boots of Swiftness', 14), (1029, 'Cloth Armor', 14), (2065, "Shurelya's Battlesong", 13), (3114, 'Forbidden Idol', 12), (1028, 'Ruby Crystal', 11), (3916, 'Oblivion Orb', 10), (6617, 'Moonstone Renewer', 10)]
+  position keys seen: ['bot', 'jng', 'mid', 'sup', 'top']
+  support quest items found in the data: none | names: []
+  rune pages by length: {9: 610} | shard sets: {(5005, 5008, 5011): 237, (5008, 5008, 5011): 163, (5005, 5010, 5011): 83, (5008, 5010, 5011): 32, (5007, 5008, 5011): 27, (5007, 5010, 5011): 21, (5005, 5008, 5001): 16, (5005, 5001, 5011): 14} | shard ids without an icon: []
+  players without a trinket: 6 of 610 | with a build order: 610
+  item icons embedded: 168 | rune icons: 72 (game page)
+  rankings: 16 teams, top 3: GEN, BLG, IG
+  upcoming: {'global': 3, 'lck': 0, 'lpl': 0, 'lec': 0, 'lcs': 0, 'cblol': 0, 'lcp': 0}
+  upcoming: {'global': 3, 'lck': 0, 'lpl': 0, 'lec': 0, 'lcs': 0, 'cblol': 0, 'lcp': 0}
+  overview snapshots: 0 built, 36 reused
+  bootcamp: 80 players, 0 with a ranked soloQ account
+  filter data: 12 leagues, 396 players, 60 teams, 157 champions -> /home/runner/work/lol-view-stats/lol-view-stats/dist/data
+  no icon for item 3097 (403 Client Error: Forbidden for url: https://ddragon.leagueoflegends.com/cdn/16.22.1/img/item/3097.png)
+  other-league items: 2391 of 9611 OE games matched to Riot data
+  no icon for item 3097 (403 Client Error: Forbidden for url: https://ddragon.leagueoflegends.com/cdn/16.22.1/img/item/3097.png)
+done - 13 pages written to dist/ (data through Nov 6)

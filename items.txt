@@ -1,0 +1,116 @@
+leagues used: worlds, msi, first_stand, lck, lpl, lec, lcs, lcp, cblol-brazil
+other leagues in the API (not used): americas_cup, arabian_league, asian_games, cacg, cblol_promotion, cd, demacia_cup, duelo_de_reyes, emea_masters, esports_balkan_league, ewc_lol, fls, hellenic_legends_league, hitpoint_masters, kespa_cup, lck_challengers_league, lcl, lco, lcp_promotion, lcs_promotion, les, lfl, liga_portuguesa, lit, ljl-japan, lla, lta_cross, lta_n, lta_s, nacl, nlc, north_regional_league, pcs, primeleague, rift_legends, roadoflegends, south_regional_league, tft_esports, turkiye-sampiyonluk-ligi, vcs, wqs, wsci
+games already cached: 2469
+  worlds: 37 finished matches
+  msi: 20 finished matches
+  game 115570934355614600 ['LYON', 'HLE'] failed: no finished frame
+  game 115570934355614594 ['G2', 'LYON'] failed: no finished frame
+  game 115570934355614560 ['HLE', 'G2'] failed: no finished frame
+  game 115570934355614542 ['HLE', 'TSW'] failed: no finished frame
+  first_stand: 13 finished matches
+  lck: 188 finished matches
+  game 117030752644841590 ['BFX', 'T1'] failed: no finished frame
+  game 115548147900619044 ['DK', 'T1'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115548147900750248 ['NS', 'DNS'] failed: no finished frame
+  game 115548147900553470 ['GEN', 'KT'] failed: no finished frame
+  game 115548147900553475 ['GEN', 'DK'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115548147900553455 ['HLE', 'DK'] failed: no finished frame
+  game 115548128963037544 ['NS', 'DK'] failed: no finished frame
+  game 115548128963037504 ['GEN', 'BRO'] failed: no finished frame
+  game 115548128962971961 ['DNS', 'NS'] failed: no finished frame
+  game 115548128962906316 ['BFX', 'HLE'] failed: no finished frame
+  game 115548128963037522 ['BRO', 'KRX'] failed: no finished frame
+  game 115548128962840657 ['NS', 'T1'] failed: no finished frame
+  game 115848315792779653 ['GEN', 'KT'] failed: no finished frame
+  game 115848315857267094 ['HLE', 'T1'] failed: no finished frame
+  lpl: 249 finished matches
+  game 117155436343202167 ['NIP', 'JDG'] failed: no finished frame
+  game 117155436343202137 ['TES', 'LGD'] failed: no finished frame
+  game 116566921179204475 ['EDG', 'NIP'] failed: no finished frame
+  game 116566854547769750 ['JDG', 'EDG'] failed: no finished frame
+  game 116566854547769669 ['JDG', 'BLG'] failed: no finished frame
+  game 116566854547835321 ['WBG', 'LNG'] failed: no finished frame
+  game 116566854547769546 ['TES', 'BLG'] failed: Expecting value: line 1 column 1 (char 0)
+  game 116566854547769727 ['WE', 'TT'] failed: Expecting value: line 1 column 1 (char 0)
+  game 116566854547769589 ['TES', 'EDG'] failed: no finished frame
+  game 116566854547769549 ['WE', 'BLG'] failed: no finished frame
+  game 116566854547769653 ['EDG', 'TT'] failed: no finished frame
+  game 115616219464607519 ['BLG', 'WE'] failed: no finished frame
+  game 115616219464607492 ['WE', 'TES'] failed: no finished frame
+  game 115616219464607488 ['BLG', 'EDG'] failed: no finished frame
+  game 115616219464541935 ['TES', 'JDG'] failed: no finished frame
+  game 115616219464541908 ['JDG', 'TT'] failed: no finished frame
+  game 115616219464541899 ['NIP', 'EDG'] failed: no finished frame
+  game 115615926677896682 ['JDG', 'WBG'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115615926685761106 ['UP', 'LNG'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115615926677896700 ['WE', 'WBG'] failed: no finished frame
+  game 115615924499588652 ['LNG', 'TT'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115615924499588604 ['IG', 'NIP'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115654899804988539 ['WBG', 'JDG'] failed: no finished frame
+  game 115654899804988534 ['AL', 'WBG'] failed: no finished frame
+  game 115654899804988485 ['NIP', 'BLG'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115654899804988480 ['WBG', 'IG'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115654899804988463 ['WE', 'LNG'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115654899804988443 ['EDG', 'OMG'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115654899804988430 ['WE', 'TES'] failed: no finished frame
+  game 115654384752392981 ['AL', 'BLG'] failed: no finished frame
+  game 115654384752393049 ['NIP', 'TT'] failed: no finished frame
+  game 115654384752393012 ['WBG', 'AL'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115617456674537248 ['WBG', 'JDG'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115617456674537252 ['EDG', 'NIP'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115654384754621319 ['EDG', 'NIP'] failed: Expecting value: line 1 column 1 (char 0)
+  game 115654384754621296 ['WBG', 'BLG'] failed: no finished frame
+  lec: 186 finished matches
+  game 115548681803406316 ['VIT', 'MKOI'] failed: no finished frame
+  game 115548681803406124 ['GX', 'TH'] failed: no finished frame
+  game 115548681803406252 ['MKOI', 'SK'] failed: no finished frame
+  game 115548681803406129 ['SK', 'TH'] failed: no finished frame
+  game 115548681803406186 ['GX', 'VIT'] failed: no finished frame
+  game 115548681803406188 ['SK', 'VIT'] failed: no finished frame
+  game 115548681803406280 ['KC', 'FNC'] failed: no finished frame
+  game 115548681803406269 ['MKOI', 'FNC'] failed: no finished frame
+  game 115548681803406172 ['KC', 'NAVI'] failed: no finished frame
+  game 115548681803406194 ['VIT', 'MKOI'] failed: no finished frame
+  game 115548681803406276 ['MKOI', 'G2'] failed: no finished frame
+  game 115548668059523770 ['GX', 'KC'] failed: no finished frame
+  game 115548668059589341 ['KC', 'FNC'] failed: no finished frame
+  game 115548668059523677 ['NAVI', 'SHFT'] failed: no finished frame
+  game 115548668059523697 ['NAVI', 'KC'] failed: no finished frame
+  game 115548668059523767 ['GX', 'FNC'] failed: no finished frame
+  game 115548539108480889 ['KC', 'GX'] failed: no finished frame
+  game 115548539108415322 ['KC', 'G2'] failed: no finished frame
+  game 115548424308414227 ['KCB', 'NAVI'] failed: no finished frame
+  lcs: 95 finished matches
+  game 115564797163821194 ['SEN', 'LYON'] failed: no finished frame
+  game 115564793879469333 ['TLAW', 'LYON'] failed: no finished frame
+  game 115564793879403677 ['FLY', 'C9'] failed: no finished frame
+  game 115564793879338125 ['SR', 'SEN'] failed: no finished frame
+  game 115564793879469271 ['SR', 'FLY'] failed: no finished frame
+  game 115564689066973288 ['C9', 'LYON'] failed: no finished frame
+  game 115564689066907695 ['TLAW', 'SEN'] failed: no finished frame
+  lcp: 97 finished matches
+  game 116769742220520938 ['TSW', 'CFO'] failed: no finished frame
+  game 116769742220520944 ['GAM', 'MVK'] failed: no finished frame
+  game 115570814727903864 ['MVK', 'GAM'] failed: no finished frame
+  game 115570814727903850 ['GZ', 'DCG'] failed: no finished frame
+  game 115570683341512192 ['CFO', 'MVK'] failed: no finished frame
+  game 115570683341250013 ['SHG', 'GAM'] failed: no finished frame
+  game 115570683341446644 ['TSW', 'MVK'] failed: no finished frame
+  game 115570683341446629 ['GZ', 'MVK'] failed: no finished frame
+  game 115570680941730321 ['MVK', 'TSW'] failed: no finished frame
+  game 115570680941664708 ['DCG', 'DFM'] failed: no finished frame
+  game 115570680941730316 ['MVK', 'SHG'] failed: no finished frame
+  game 115570680941664748 ['DCG', 'TSW'] failed: no finished frame
+  cblol-brazil: 117 finished matches
+  game 115565671526402991 ['LOS', 'RED'] failed: no finished frame
+  game 115565670260181862 ['LOS', 'LOUD'] failed: no finished frame
+  game 115565670260181822 ['LOUD', 'VKS'] failed: no finished frame
+  game 115565670260116270 ['LOUD', 'VKS'] failed: no finished frame
+  game 115565670260116263 ['LOUD', 'PAIN'] failed: no finished frame
+  game 115565670260116267 ['RED', 'LOUD'] failed: no finished frame
+  game 115565621821672130 ['RED', 'LOUD'] failed: no finished frame
+  game 115565621821672116 ['FUR', 'LOS'] failed: no finished frame
+  game 115565621821672090 ['LOUD', 'LOS'] failed: no finished frame
+  game 115565621821672082 ['VKS', 'LOUD'] failed: no finished frame
+  game 115565525419283326 ['FX', 'PAIN'] failed: no finished frame
+items: 2469 games cached (0 new, 103 failed)
