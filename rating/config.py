@@ -49,7 +49,7 @@ WIN_WITHIN = {"relative_to_team": .75, "result": .25}   # composition of categor
 # --- scaling and shrinkage ----------------------------------------------------
 Z_CLIP = 3.0
 RATING_SCALE = 12.0        # rating = 50 + RATING_SCALE * z
-DISPLAY_RATING = lambda r: min(99.9, max(1.0, 68 + 4 * (r - 50)))  # site display scale (best players in the 90s)
+DISPLAY_RATING = lambda r: min(99.9, max(1.0, 68 + 3.3 * (r - 50)))  # site display scale (best players in the 90s)
 K_SHRINK = 5
 MIN_GAMES_LEADERBOARD = 1
 

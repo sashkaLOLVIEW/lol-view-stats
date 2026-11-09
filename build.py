@@ -110,7 +110,7 @@ def ratings(csv):
     df = RD.load(str(csv)); teams, players = RD.split(df)
     m = RR.match_table(players, teams)
     lb = RR.aggregate(m, stage="Main stage").set_index("player")["rating"]
-    return {p: round(min(99.9, max(1.0, 68 + 4 * (float(v) - 50))), 1) for p, v in lb.items()}
+    return {p: round(min(99.9, max(1.0, 68 + 3.3 * (float(v) - 50))), 1) for p, v in lb.items()}
 
 # ----------------------------------------------------------------------------------------------
 # 2. homepage / players data (WD)
