@@ -560,6 +560,9 @@ html { scroll-padding-top: 84px; }
 .pdc-who { display: flex; align-items: center; gap: 14px; min-width: 0; } .pdc-who > img { width: 64px; height: 64px; border-radius: 10px; flex: none; }
 .pdc-who .nm { font-size: 18px; font-weight: 700; line-height: 1.2; } .pdc-who .nm a { color: inherit; text-decoration: none; } .pdc-who .nm a:hover { text-decoration: underline; }
 .pdc-who .rtg { margin-top: 6px; display: flex; align-items: center; gap: 6px; }
+.pdc-who .rtg { flex-wrap: wrap; row-gap: 4px; }
+.pdc-who .cat { display: inline-flex; align-items: center; gap: 5px; height: 20px; padding: 0 7px; border-radius: 4px; background: var(--pill); font-size: 11px; line-height: 1; white-space: nowrap; }
+.pdc-who .cat i { font-style: normal; color: var(--muted); } .pdc-who .cat b { font-weight: 700; font-variant-numeric: tabular-nums; }
 .pdc-who .sb { margin-top: 3px; font-size: 12px; color: var(--muted); }
 .pdc-st { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .pdc-st > div { border: 1px solid var(--line); border-radius: 8px; padding: 10px 10px; min-width: 0; }
@@ -780,6 +783,30 @@ html { scroll-padding-top: 84px; }
       var r = 6.5 + 1.25 * s + (t.win ? .5 : -.3);
       return Math.max(1, Math.min(10, r));
     };
+    // per-game category scores (0-100), same three categories and stats as the radar charts on the player profile:
+    // each stat is this game's percentile among every same-role game in the data, a category is the mean of its stats
+    var catBase = null, CATS = [
+      ['Combat', 'Combat score (0-100): this game\'s KDA, KP%, damage/min, damage share, kills and deaths, ranked against every same-role game at the event.', ['kda', 'kp', 'dpm', 'ds', 'k', '-d']],
+      ['Laning', 'Laning score (0-100): GD@15, CSD@15, XPD@15, CS/min, gold/min and gold share, ranked against every same-role game at the event.', ['gd', 'csd', 'xpd', 'cspm', 'gpm', 'gs']],
+      ['Utility', 'Utility score (0-100): vision score/min, wards/min, clears/min, assists, KP% and damage taken/min, ranked against every same-role game at the event.', ['vs', 'wpm', 'wcpm', 'a', 'kp', 'dtm']]];
+    var gameStats = function (tt, x, len) {
+      var mn = Math.max(1, len / 60), tk = tt.players.reduce(function (q, y) { return q + y.k; }, 0), tg = tt.players.reduce(function (q, y) { return q + y.gold; }, 0), td = tt.players.reduce(function (q, y) { return q + y.dmg; }, 0), d15 = x.d15 || [];
+      return { kda: (x.k + x.a) / Math.max(1, x.d), kp: (x.k + x.a) / Math.max(1, tk), dpm: x.dmg / mn, ds: td ? x.dmg / td : 0, k: x.k, d: x.d, gd: d15[0], csd: d15[1], xpd: d15[2], cspm: x.cs / mn, gpm: x.gold / mn, gs: tg ? x.gold / tg : 0, vs: x.vs, wpm: x.wpm, wcpm: x.wcpm, a: x.a, dtm: x.dtm };
+    };
+    var catScores = function (t, p) {
+      if (!catBase) {
+        catBase = {};
+        D.games.forEach(function (gm) { gm.teams.forEach(function (tt) { tt.players.forEach(function (x) { var st = gameStats(tt, x, gm.len), b = catBase[x.role] = catBase[x.role] || {}; Object.keys(st).forEach(function (k) { if (st[k] != null) (b[k] = b[k] || []).push(st[k]); }); }); }); });
+      }
+      var B = catBase[p.role]; if (!B) return []; var st = gameStats(t, p, g.len);
+      return CATS.map(function (c) {
+        var ps = []; c[2].forEach(function (key) {
+          var inv = key.charAt(0) === '-', k = inv ? key.slice(1) : key, v = st[k], l = B[k]; if (v == null || !l || l.length < 2) return;
+          var lo = l.filter(function (z) { return z < v; }).length, eq = l.filter(function (z) { return z === v; }).length, q = (lo + (eq - 1) / 2) / (l.length - 1) * 100; ps.push(inv ? 100 - q : q);
+        });
+        return ps.length ? [c[0], Math.round(ps.reduce(function (a, b) { return a + b; }, 0) / ps.length), c[1]] : null;
+      }).filter(Boolean);
+    };
     var mvb = function (m) { return m ? '<span class="mvb ' + (m === 'MVP' ? 'mvp' : 'ace') + '" title="' + (m === 'MVP' ? 'MVP: best rated player on the winning team' : 'ACE: best rated player on the losing team') + '">' + (m === 'MVP' ? '<svg class="mi" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.5 1h5.2l2.3 8.2H8.200z"/><path d="M18.5 1h-5.2L11 9.200h4.800z"/><circle cx="12" cy="16" r="7"/></svg>' : '<svg class="mi" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5"/><path d="M12 1.5v5M12 17.5v5M1.5 12h5M17.5 12h5"/></svg>') + m + '</span>' : ''; };
     var drawPd = function () {
       var T = [A, B], t = T[pdSel[0]], p = t.players[pdSel[1]]; if (!p) { $('pdc').innerHTML = ''; return; }
@@ -802,7 +829,7 @@ html { scroll-padding-top: 84px; }
       } else sk = '<div class="pdc-sk"><h3>Skill order</h3><div class="pdc-na">Not available for this game.</div></div>';
       var bd = '';
       if (p.bo && p.bo.length && D.items) bd = '<div class="pdc-sk"><h3>Build order</h3><div class="pdc-bo">' + p.bo.map(function (id) { var x = D.items[id]; return x ? '<img src="' + x[1] + '" alt="' + x[0] + '" title="' + x[0] + '">' : ''; }).filter(Boolean).join('<span class="pgt">&gt;</span>') + '</div></div>';
-      $('pdc').innerHTML = '<div class="pdc-pick">' + pick + '</div><div class="pdc-b"><div class="pdc-who">' + (p.ic && D.icons[p.ic] ? '<img src="' + D.icons[p.ic] + '" alt="">' : '') + '<div><div class="nm"><a href="' + U.profile + '#' + encodeURIComponent(p.name) + '">' + p.name + '</a></div>' + (function () { var r = p.rt != null ? p.rt : gameRating(t, p); return r == null ? '' : '<div class="rtg"><span class="rtb ' + (r >= 8.5 ? 'rg' : r >= 7 ? 'rb' : r >= 5.5 ? 'rn' : 'rz') + '" title="Estimated game rating (0-10). Compares this player\'s KP, deaths, damage share, gold share, CS/min and GD@15 with other players in the same role, plus a small bonus for a win.">' + r.toFixed(1) + '</span>' + mvb(p.mv) + '</div>'; })() + '</div></div><div class="pdc-st">' + st.map(function (x) { return '<div><div class="l">' + x[0] + '</div><div class="v' + x[2] + '">' + x[1] + '</div></div>'; }).join('') + '</div>' + bd + rb + sk + '</div>';
+      $('pdc').innerHTML = '<div class="pdc-pick">' + pick + '</div><div class="pdc-b"><div class="pdc-who">' + (p.ic && D.icons[p.ic] ? '<img src="' + D.icons[p.ic] + '" alt="">' : '') + '<div><div class="nm"><a href="' + U.profile + '#' + encodeURIComponent(p.name) + '">' + p.name + '</a></div>' + (function () { var r = p.rt != null ? p.rt : gameRating(t, p); return r == null ? '' : '<div class="rtg"><span class="rtb ' + (r >= 8.5 ? 'rg' : r >= 7 ? 'rb' : r >= 5.5 ? 'rn' : 'rz') + '" title="Estimated game rating (0-10). Compares this player\'s KP, deaths, damage share, gold share, CS/min and GD@15 with other players in the same role, plus a small bonus for a win.">' + r.toFixed(1) + '</span>' + mvb(p.mv) + catScores(t, p).map(function (c) { return '<span class="cat" title="' + c[2] + '"><i>' + c[0] + '</i><b>' + c[1] + '</b></span>'; }).join('') + '</div>'; })() + '</div></div><div class="pdc-st">' + st.map(function (x) { return '<div><div class="l">' + x[0] + '</div><div class="v' + x[2] + '">' + x[1] + '</div></div>'; }).join('') + '</div>' + bd + rb + sk + '</div>';
     };
     $('pdc').onclick = function (e) { var b = e.target.closest('button[data-s]'); if (!b) return; pdSel = [b.getAttribute('data-s'), +b.getAttribute('data-r')]; drawPd(); };
     pdSel = ['0', 0]; drawPd();

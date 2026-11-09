@@ -320,7 +320,9 @@ def build_game(w, logos_all):
                 r = pl[pl.position == pos].iloc[0]
                 players.append(dict(role=ROLE[pos], name=r.playername, champ=r.champion, ic=ic(r.champion), k=int(r.kills), d=int(r.deaths), a=int(r.assists),
                                     dmg=int(r.damagetochampions), cs=int(r["total cs"]), gold=int(r.totalgold),
-                                    d15=[(int(r[c]) if pd.notna(r[c]) else None) for c in ("golddiffat15", "csdiffat15", "xpdiffat15")]))
+                                    d15=[(int(r[c]) if pd.notna(r[c]) else None) for c in ("golddiffat15", "csdiffat15", "xpdiffat15")],
+                                    vs=(round(float(r.vspm), 2) if pd.notna(r.vspm) else None), wpm=(round(float(r.wpm), 2) if pd.notna(r.wpm) else None),
+                                    wcpm=(round(float(r.wcpm), 2) if pd.notna(r.wcpm) else None), dtm=(round(float(r.damagetakenperminute)) if pd.notna(r.damagetakenperminute) else None)))
             d = lambda c: int(tr[c]) if pd.notna(tr[c]) else 0
             teams.append(dict(code=need_code(tr.teamname), name=tr.teamname, side=side, win=int(tr.result), k=int(pl.kills.sum()), d=int(pl.deaths.sum()), a=int(pl.assists.sum()),
                               gold=int(tr.totalgold), towers=d("towers"), inh=d("inhibitors"), fb=d("firstblood"), ft=d("firsttower"), grubs=d("void_grubs"), heralds=d("heralds"), elders=d("elders"), barons=d("barons"),
