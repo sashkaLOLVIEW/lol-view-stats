@@ -502,10 +502,12 @@ html { scroll-padding-top: 84px; }
   img.sc-x { display: block; position: absolute; left: 50%; bottom: 4px; width: 22px; height: 22px; transform: translateX(-50%); object-fit: contain; }
 }
 @media (max-width: 760px) {
-  .score .sc-st > div:first-child { position: relative; }
-  .score .sc-st > div:first-child img.si { visibility: hidden; }
-  .score .sc-st:not(.r) > div:first-child img.kx { display: block; visibility: visible; position: absolute; right: -8px; bottom: 2px; transform: translateX(50%); width: 18px; height: 18px; }
-  .score .sc-st:not(.r) > div:first-child { margin-right: 8px; } .score .sc-st.r > div:first-child { margin-left: 8px; }
+  .score .sc-st > div:first-child { position: relative; align-self: center; }
+  .score .sc-st > div:first-child img.si { display: none; }
+  .score .sc-st:not(.r) > div:first-child img.kx { display: block; position: absolute; right: -16px; top: 50%; transform: translate(50%, -50%); width: 18px; height: 18px; }
+  .score .sc-st:not(.r) > div:first-child { margin-right: 16px; align-items: flex-end; } .score .sc-st.r > div:first-child { margin-left: 16px; align-items: flex-start; }
+  .score .sc-st, .score .sc-st:not(.r) { justify-content: flex-start; align-items: stretch; }
+  .score .sc-st > div:not(:first-child) { flex: 0 0 auto; padding: 0 7px; } .score .sc-st > div:first-child { flex: 0 0 auto; }
   .score { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px 0; padding: 14px 0 16px; min-height: 0; }
   .score > :nth-child(1) { grid-area: 1 / 1 / 2 / 3; } .score > :nth-child(3) { grid-area: 1 / 3 / 2 / 5; order: 0; } .score > :nth-child(5) { grid-area: 1 / 5 / 2 / 7; }
   .score > :nth-child(2) { grid-area: 2 / 1 / 3 / 4; } .score > :nth-child(4) { grid-area: 2 / 4 / 3 / 7; }
@@ -513,7 +515,7 @@ html { scroll-padding-top: 84px; }
   .score .sc-team > div { display: flex; flex-direction: column; align-items: center; }
   .score .sc-team img, .score .sc-team .ph { width: 48px; height: 48px; max-width: 48px; max-height: 48px; }
   .score .sc-full { display: none; } .score .sc-name { font-size: 18px; }
-  .score .sc-st, .score .sc-st:not(.r) { justify-content: center; gap: 2px; align-self: center; }
+  .score .sc-st, .score .sc-st:not(.r) { justify-content: flex-start; gap: 2px; align-self: center; }
   .score .sc-st:not(.r) { flex-direction: row-reverse; }
   .score .sc-st > div { min-width: 0; flex: 1 1 0; font-size: 12px; gap: 4px; } .score .sc-st > div:first-child { min-width: 0; } .score .sc-st > div:first-child b { font-size: 22px; }
   .score .sc-st > div:first-child img { width: 18px; height: 18px; } .score .sc-st img { width: 13px; height: 13px; }
