@@ -406,6 +406,7 @@ html { scroll-padding-top: 84px; }
     out += '<path d="' + area + '" fill="var(--blue)" fill-opacity=".8" clip-path="url(#ca)"/><path d="' + area + '" fill="var(--red)" fill-opacity=".8" clip-path="url(#cb)"/>';
     if (LANE) {
       // objective lanes under the time axis: blue team's on the first row, red team's on the second; an icon sits at the minute the objective was taken
+      var usedIc = {};   // icons drawn as masks filled with the text colour (iOS Safari ignores CSS filters on SVG <image>)
       var NAMES = { turret: 'Turret', inhibitor: 'Inhibitor', nashor: 'Baron', elder: 'Elder Drake', infernal: 'Infernal Drake', mountain: 'Mountain Drake', cloud: 'Cloud Drake', ocean: 'Ocean Drake', hextech: 'Hextech Drake', chemtech: 'Chemtech Drake' };
       var rowY = [H + 14, H + 38], tm = function (t) { var m = Math.floor(t), sc = Math.round((t - m) * 60); return m + ':' + ('0' + sc).slice(-2); };
       [0, 1].forEach(function (sd) {
@@ -414,9 +415,10 @@ html { scroll-padding-top: 84px; }
         var last = -99;
         g.obj.filter(function (e) { return e[1] === sd && IC[e[2]]; }).sort(function (a, b) { return a[0] - b[0]; }).forEach(function (e) {
           var x = Math.min(W - pr - 9, Math.max(X(e[0]), last + 20)); last = x;
-          out += '<g><title>' + (g.teams[sd] ? g.teams[sd].code + ' · ' : '') + (NAMES[e[2]] || e[2]) + ' · ' + tm(e[0]) + '</title><circle cx="' + x.toFixed(1) + '" cy="' + rowY[sd] + '" r="9" fill="var(--bg)" stroke="' + col + '" stroke-width="1.5"/><image class="mi" href="' + IC[e[2]] + '" x="' + (x - 6).toFixed(1) + '" y="' + (rowY[sd] - 6) + '" width="12" height="12"/></g>';
+          out += '<g><title>' + (g.teams[sd] ? g.teams[sd].code + ' · ' : '') + (NAMES[e[2]] || e[2]) + ' · ' + tm(e[0]) + '</title><circle cx="' + x.toFixed(1) + '" cy="' + rowY[sd] + '" r="9" fill="var(--bg)" stroke="' + col + '" stroke-width="1.5"/><rect x="' + (x - 6).toFixed(1) + '" y="' + (rowY[sd] - 6) + '" width="12" height="12" fill="var(--fg)" mask="url(#gm-' + e[2] + ')"/></g>'; usedIc[e[2]] = 1;
         });
       });
+      out += '<defs>' + Object.keys(usedIc).map(function (k) { return '<mask id="gm-' + k + '" maskContentUnits="objectBoundingBox"><image href="' + IC[k] + '" x="0" y="0" width="1" height="1"/></mask>'; }).join('') + '</defs>';
     }
     return out + '</svg>';
   }
