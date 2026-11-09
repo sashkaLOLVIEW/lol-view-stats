@@ -39,6 +39,7 @@ def build(csv, out_dir, code_of, icons_fn, leagues=None, current=None, team_leag
     df = pd.read_csv(csv, low_memory=False)
     df["date"] = pd.to_datetime(df["date"])
     df = df[df.gameid.notna() & (df.year == 2026)].copy()      # the site only covers 2026 (the file also has a few 2025 / 2027 rows)
+    df = df[~((df.league == "WLDs") & (df.date < "2026-10-01"))].copy()   # 17-19 Sep "WLDs" rows are the LPL regional qualifier (JDG, WE, IG, TES), not Worlds: play-ins start 15 Oct
     df["split"] = df["split"].fillna("")
     if leagues: df = df[df.league.isin(leagues)].copy()
     if team_leagues:   # only teams (and their players) that play in these domestic leagues; their games at international events stay
