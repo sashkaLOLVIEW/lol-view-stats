@@ -493,7 +493,19 @@ html { scroll-padding-top: 84px; }
 .mv .bhead,.mv .brow{grid-template-columns:minmax(0,1fr) 62px minmax(0,1fr);}
 .mv .opills{gap:8px; padding-right:6px;}
 .mv .opills.r{padding-left:6px;}}
+.sc-st img.kx, img.sc-x { display: none; }
+/* desktop: one crossed-swords icon centred between the two kill totals (the in-flow icons keep their space but are hidden) */
+@media (min-width: 1081px) {
+  .sc-st > div:first-child img.si { visibility: hidden; }
+  .sc-mid { position: relative; align-self: stretch; }
+  .sc-mid .sc-c { transform: translateY(-14px); }
+  img.sc-x { display: block; position: absolute; left: 50%; bottom: 4px; width: 22px; height: 22px; transform: translateX(-50%); object-fit: contain; }
+}
 @media (max-width: 760px) {
+  .score .sc-st > div:first-child { position: relative; }
+  .score .sc-st > div:first-child img.si { visibility: hidden; }
+  .score .sc-st:not(.r) > div:first-child img.kx { display: block; visibility: visible; position: absolute; right: -8px; bottom: 2px; transform: translateX(50%); width: 18px; height: 18px; }
+  .score .sc-st:not(.r) > div:first-child { margin-right: 8px; } .score .sc-st.r > div:first-child { margin-left: 8px; }
   .score { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px 0; padding: 14px 0 16px; min-height: 0; }
   .score > :nth-child(1) { grid-area: 1 / 1 / 2 / 3; } .score > :nth-child(3) { grid-area: 1 / 3 / 2 / 5; order: 0; } .score > :nth-child(5) { grid-area: 1 / 5 / 2 / 7; }
   .score > :nth-child(2) { grid-area: 2 / 1 / 3 / 4; } .score > :nth-child(4) { grid-area: 2 / 4 / 3 / 7; }
@@ -708,11 +720,11 @@ html { scroll-padding-top: 84px; }
     var dn = function (t) { return t.drakes.reduce(function (s, d) { return s + d[1]; }, 0); };
     var stat = function (t, r, o) {
       var rows = [['Kills', 'kills', t.k, o.k, t.k], ['Gold', 'gold', t.gold, o.gold, k1(t.gold)], ['Turrets', 'turret', t.towers, o.towers, t.towers], ['Dragons', 'dragon', dn(t), dn(o), dn(t)], ['Barons', 'nashor', t.barons, o.barons, t.barons]];
-      return '<div class="sc-st' + (r ? ' r' : '') + '">' + rows.map(function (x) { return '<div title="' + x[0] + '"' + (x[2] < x[3] ? ' class="trail"' : '') + '>' + im(x[1], 'si') + '<b>' + x[4] + '</b></div>'; }).join('') + '</div>';
+      return '<div class="sc-st' + (r ? ' r' : '') + '">' + rows.map(function (x) { return '<div title="' + x[0] + '"' + (x[2] < x[3] ? ' class="trail"' : '') + '>' + im(x[1], 'si') + (x[1] === 'kills' && !r ? im('kills', 'si kx') : '') + '<b>' + x[4] + '</b></div>'; }).join('') + '</div>';
     };
     var sideTeam = function (t, r) { return '<div class="sc-team' + (r ? ' r' : '') + '">' + logo(t.code, 64) + '<div><a class="sc-name" style="display:block" href="team.html#' + t.code + '">' + t.code + '</a><div class="sc-full">' + t.name + '</div><span class="tag' + (t.win ? ' win' : ' loss') + '">' + (t.win ? 'WIN' : 'LOSS') + '</span></div></div>'; };
     var CLK = '<svg class="clk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
-    $('score').innerHTML = sideTeam(A, 0) + stat(A, 0, B) + '<div class="sc-mid"><div class="sc-c"><div class="sc-time">' + CLK + fmtT(g.len) + '</div>' + (g.patch ? '<div class="sc-sub">' + g.patch + '</div>' : '') + '</div></div>' + stat(B, 1, A) + sideTeam(B, 1);
+    $('score').innerHTML = sideTeam(A, 0) + stat(A, 0, B) + '<div class="sc-mid"><div class="sc-c"><div class="sc-time">' + CLK + fmtT(g.len) + '</div>' + (g.patch ? '<div class="sc-sub">' + g.patch + '</div>' : '') + '</div>' + im('kills', 'sc-x') + '</div>' + stat(B, 1, A) + sideTeam(B, 1);
     var _m = 'Worlds 2026 · Main stage · Swiss Round 1 · Match ' + g.n + ' · ' + g.date + ' · Blue side ' + A.code + ' vs Red side ' + B.code;
     var c = '';
     var bd = function (t, x, r) { return t[x] ? '<span class="fbd" title="'+(x === 'fb' ? 'First blood' : 'First turret')+'">' + '1st' + '</span>' : ''; };
