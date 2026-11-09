@@ -40,7 +40,7 @@
     --bg: #f2f2f0; --surface: #ffffff; --surface-2: #fafaf8; --stripe: #f0f0ed; --line: #d3d3ce;
     --fg: #121212; --muted: #6a6a6a; --dim: #8e8e8e; --pill: #e4e4e0; --chip-bg: #e9e9e5; --chip-fg: #7a7a7a;
     --on-active-bg: #121212; --on-active-fg: #ffffff;
-    --gold: #a98a00; --blue: #2a6fc0; --green: #2f8f20; --red: #d33b2c; --orange: #cc4a22;
+    --gold: #e8d46a; --gold-ink: #a98a00; --blue: #2a6fc0; --green: #2f8f20; --red: #d33b2c; --orange: #cc4a22;
     --live-bg: #fde8e9; --live-line: #d8323a; --updated-bg: #e3f1fa; --updated-line: #3a9bd5; --updated-fg: #0f2a36;
     --divider: #c3c3bd; color-scheme: light;
   }
@@ -49,7 +49,7 @@
   --bg: #f2f2f0; --surface: #ffffff; --surface-2: #fafaf8; --stripe: #f0f0ed; --line: #d3d3ce;
   --fg: #121212; --muted: #6a6a6a; --dim: #8e8e8e; --pill: #e4e4e0; --chip-bg: #e9e9e5; --chip-fg: #7a7a7a;
   --on-active-bg: #121212; --on-active-fg: #ffffff;
-  --gold: #a98a00; --blue: #2a6fc0; --green: #2f8f20; --red: #d33b2c; --orange: #cc4a22;
+  --gold: #e8d46a; --gold-ink: #a98a00; --blue: #2a6fc0; --green: #2f8f20; --red: #d33b2c; --orange: #cc4a22;
   --live-bg: #fde8e9; --live-line: #d8323a; --updated-bg: #e3f1fa; --updated-line: #3a9bd5; --updated-fg: #0f2a36;
   --divider: #c3c3bd; color-scheme: light;
 }
@@ -91,7 +91,7 @@ h2 svg { flex: none; }
 
 .row { display: flex; align-items: center; height: 50px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 16px 0 15px; min-width: 0; }
 .rk { width: 28px; flex: none; font-size: 13px; font-weight: 600; color: var(--muted); }
-.rk.r1 { color: var(--gold); } .rk.r2 { color: var(--fg); } .rk.r3 { color: var(--orange); }
+.rk.r1 { color: var(--gold-ink, var(--gold)); } .rk.r2 { color: var(--fg); } .rk.r3 { color: var(--orange); }
 .name { font-size: 14px; font-weight: 700; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sub { font-size: 12px; color: var(--muted); font-weight: 500; line-height: 1.2; }
 .grow { flex: 1; min-width: 0; }
@@ -115,7 +115,7 @@ h2 svg { flex: none; }
 .avatar { flex: none; width: 34px; height: 34px; border-radius: 4px; background: none; border: 1px solid var(--line); overflow: hidden; margin-right: 9px; }
 .avatar svg { display: block; }
 .val { font-size: 13px; font-weight: 600; line-height: 1.2; font-variant-numeric: tabular-nums; }
-.val.mu { color: var(--muted); } .val.g { color: var(--green); } .val.b { color: var(--blue); } .val.y { color: var(--gold); }
+.val.mu { color: var(--muted); } .val.g { color: var(--green); } .val.b { color: var(--blue); } .val.y { color: var(--gold-ink, var(--gold)); }
 .col-players .rk { width: 25px; }
 
 /* live column */

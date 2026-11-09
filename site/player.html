@@ -45,7 +45,7 @@
     --bg: #f2f2f0; --surface: #ffffff; --surface-2: #fafaf8; --stripe: #f0f0ed; --line: #d3d3ce;
     --fg: #121212; --muted: #6a6a6a; --dim: #8e8e8e; --pill: #e4e4e0; --chip-bg: #e9e9e5; --chip-fg: #7a7a7a;
     --on-active-bg: #121212; --on-active-fg: #ffffff;
-    --gold: #a98a00; --blue: #2a6fc0; --green: #2f8f20; --red: #d33b2c; --orange: #cc4a22;
+    --gold: #e8d46a; --gold-ink: #a98a00; --blue: #2a6fc0; --green: #2f8f20; --red: #d33b2c; --orange: #cc4a22;
     --live-bg: #fde8e9; --live-line: #d8323a; --updated-bg: #e3f1fa; --updated-line: #3a9bd5; --updated-fg: #0f2a36;
     --divider: #c3c3bd; color-scheme: light;
   }
@@ -54,7 +54,7 @@
   --bg: #f2f2f0; --surface: #ffffff; --surface-2: #fafaf8; --stripe: #f0f0ed; --line: #d3d3ce;
   --fg: #121212; --muted: #6a6a6a; --dim: #8e8e8e; --pill: #e4e4e0; --chip-bg: #e9e9e5; --chip-fg: #7a7a7a;
   --on-active-bg: #121212; --on-active-fg: #ffffff;
-  --gold: #a98a00; --blue: #2a6fc0; --green: #2f8f20; --red: #d33b2c; --orange: #cc4a22;
+  --gold: #e8d46a; --gold-ink: #a98a00; --blue: #2a6fc0; --green: #2f8f20; --red: #d33b2c; --orange: #cc4a22;
   --live-bg: #fde8e9; --live-line: #d8323a; --updated-bg: #e3f1fa; --updated-line: #3a9bd5; --updated-fg: #0f2a36;
   --divider: #c3c3bd; color-scheme: light;
 }
@@ -110,7 +110,7 @@ img.lwi { }
 .portrait, .who { position: relative; z-index: 1; }
 .hero { overflow: visible; }
 .badges { position: absolute; right: 64px; bottom: 14px; display: flex; gap: 10px; z-index: 2; }
-.badge { position: relative; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--gold); display: grid; place-items: center; cursor: default; }
+.badge { position: relative; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--gold-ink, var(--gold)); display: grid; place-items: center; cursor: default; }
 .badge svg { display: block; }
 .badge::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); white-space: nowrap; background: var(--fg); color: var(--bg); font-size: 12px; padding: 5px 9px; border-radius: 6px; opacity: 0; pointer-events: none; transition: opacity .12s; }
 .badge:hover::after, .badge:focus-visible::after { opacity: 1; }
