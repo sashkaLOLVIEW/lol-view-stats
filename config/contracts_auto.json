@@ -1,5 +1,5 @@
 {
- "fetched": 1794284598.104037,
+ "fetched": 1794371776.6086276,
  "players": {
   "Cube": {
    "contract": "2027-11-16",
@@ -2042,11 +2042,6 @@
    "league": "LEC"
   },
   "Serin": {
-   "contract": "2027-11-15",
-   "team": "Team Heretics",
-   "league": "LEC"
-  },
-  "Way": {
    "contract": "2027-11-15",
    "team": "Team Heretics",
    "league": "LEC"
@@ -9680,15 +9675,6 @@
    "role": "ADC",
    "raw_end": "November 20, 2028",
    "contract": "2028-11-20"
-  },
-  {
-   "league": "LEC",
-   "player": "Way",
-   "team": "Team Heretics",
-   "tri": "",
-   "role": "SUPPORT",
-   "raw_end": "November 15, 2027",
-   "contract": "2027-11-15"
   },
   {
    "league": "LEC",
