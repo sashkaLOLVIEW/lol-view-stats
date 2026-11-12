@@ -35,6 +35,50 @@ def match_z(df):
     return {(g, n): v for g, n, v in zip(p.gameid, p[k], p.z_obs) if pd.notna(v)}
 
 
+INTL = {"MSI", "EWC", "FST", "WLDs", "WSCI", "WLRQ", "CCWS", "AC", "AM", "DCGI", "DCup"}
+
+
+def build_results(df, code_of, current=None):
+    """Tournament results per player (dist/data/results.json): for every event (league + split) the team they played for and its placing.
+
+    Domestic events with playoff games: the last playoff game decides 1st / 2nd, the other playoff teams are ordered by when they were
+    knocked out (teams out on the same day share a range, e.g. 5th-6th), then the teams that missed the playoffs by regular-season record.
+    International events (and domestic ones with no playoff flag in the data) use every game: knock-out order, or just the record when
+    nobody is eliminated. The `current` event is marked ongoing instead of ranked."""
+    t = df[(df.position == "team") & df.teamname.notna()]
+    pl = df[(df.position != "team") & df.playername.notna() & df.teamname.notna()]
+    rec = {}                                                              # (league, split, team) -> (a, b, kind, n_teams, last_date)
+    for (lg, sp), g in t.groupby(["league", "split"]):
+        g = g.copy(); g["day"] = g.date.dt.date; teams = list(g.teamname.unique()); n = len(teams); last = str(g.date.max())[:10]
+        has_po = (g.playoffs == 1).any() and lg not in INTL
+        wl = g.groupby("teamname").result.agg(["sum", "count"]); wl["l"] = wl["count"] - wl["sum"]
+        by_rec = list(wl.sort_values(["sum", "l"], ascending=[False, True]).index)   # best record first
+        if lg not in INTL and not has_po:
+            for i, tm in enumerate(by_rec): rec[(lg, sp, tm)] = (i + 1, i + 1, "rs", n, last)
+            continue
+        po = g[g.playoffs == 1] if has_po else g
+        fin = po.loc[po.date.idxmax()]; fg = po[po.gameid == fin.gameid]
+        champ = fg[fg.result == 1].teamname.tolist(); runner = fg[fg.result == 0].teamname.tolist()
+        placed = {}
+        if champ and runner: placed[champ[0]] = (1, 1); placed[runner[0]] = (2, 2)
+        rest = po[~po.teamname.isin(placed)].groupby("teamname").day.max()
+        pos = 3 if placed else 1
+        for day in sorted(set(rest), reverse=True):
+            grp = [tm for tm, d in rest.items() if d == day]; hi = pos + len(grp) - 1
+            for tm in grp: placed[tm] = (pos, hi)
+            pos = hi + 1
+        for tm, (a, b) in placed.items(): rec[(lg, sp, tm)] = (a, b, "po", n, last)
+        miss = [tm for tm in by_rec if tm not in placed]
+        for i, tm in enumerate(miss): rec[(lg, sp, tm)] = (pos + i, pos + i, "rs", n, last)
+    out = {}
+    for (lg, sp, name, tm), g in pl.groupby(["league", "split", "playername", "teamname"]):
+        r = rec.get((lg, sp, tm))
+        if not r: continue
+        w = int(g.result.sum()); out.setdefault(name, []).append([lg, sp, code_of(tm), r[0], r[1], r[2], r[3], w, len(g) - w, r[4], 1 if lg == current else 0])
+    for v in out.values(): v.sort(key=lambda x: x[9], reverse=True)
+    return out
+
+
 def build(csv, out_dir, code_of, icons_fn, leagues=None, current=None, team_leagues=None):
     df = pd.read_csv(csv, low_memory=False)
     df["date"] = pd.to_datetime(df["date"])
@@ -104,5 +148,6 @@ def build(csv, out_dir, code_of, icons_fn, leagues=None, current=None, team_leag
     meta["pix"] = {k: [[a, b, c, m[0], m[1]] for (a, b, c), m in sorted(v.items())] for k, v in pix.items()}
     meta["tix"] = {k: [[a, b, c, m[0], m[1]] for (a, b, c), m in sorted(v.items())] for k, v in tix.items()}
     (out_dir / "meta.json").write_text(json.dumps(meta, separators=(",", ":")), encoding="utf-8")
+    (out_dir / "results.json").write_text(json.dumps(build_results(df, code_of, current), separators=(",", ":")), encoding="utf-8")
     (out_dir / "champs.json").write_text(json.dumps({c: icons_fn(c) for c in champs if icons_fn(c)}, separators=(",", ":")), encoding="utf-8")
     print("  filter data: %d leagues, %d players, %d teams, %d champions -> %s" % (len(meta["leagues"]), len(players), len(teams), len(champs), out_dir))

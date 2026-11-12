@@ -333,6 +333,20 @@ html { scroll-padding-top: 84px; }
 .topbar::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: color-mix(in srgb, var(--bg) 75%, transparent); }
 .topbar::after { content: ""; position: absolute; z-index: -1; left: 50%; width: 100vw; transform: translateX(-50%); top: 100%; height: 40px; pointer-events: none; background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 75%, transparent), color-mix(in srgb, var(--bg) 0%, transparent)); }
 .topbar .nav, .topbar .search input { background: var(--bg); }   /* stay fully opaque on top of the translucent bar */
+
+.vtabs { display: inline-flex; gap: 4px; margin: 18px 0 4px; padding: 3px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.vtabs button { height: 30px; padding: 0 14px; border: 0; border-radius: 7px; background: transparent; color: var(--muted); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.vtabs button.on { background: var(--fg); color: var(--bg); }
+#tres { display: none; margin-top: 12px; }
+body.tr-on #tres { display: block; } body.tr-on .body, body.tr-on .perf { display: none; }
+.trt { width: 100%; border-collapse: collapse; font-size: 14px; }
+.trt th { text-align: left; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.trt td { padding: 11px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.trt .ev { display: flex; align-items: center; gap: 10px; } .trt .ev small { display: block; color: var(--muted); font-size: 12px; }
+.trt a.tm { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); text-decoration: none; font-weight: 600; }
+.trt .pl { font-weight: 700; white-space: nowrap; } .trt .pl.top { color: var(--gold-ink, var(--gold)); } .trt .pl small { display: block; color: var(--muted); font-weight: 400; font-size: 11px; }
+.trt .wl { color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) { .trt th:last-child, .trt td:last-child { display: none; } .trt td, .trt th { padding: 10px 6px; } }
 </style>
 <style>
 .kofi { display: grid; place-items: center; width: 24px; height: 24px; flex: none; }
@@ -376,6 +390,8 @@ html { scroll-padding-top: 84px; }
     </div>
   </header>
   <section class="hero" id="hero"></section>
+  <div class="vtabs" id="vtabs" role="tablist"><button type="button" class="on" data-v="ov">Overview</button><button type="button" data-v="tr">Tournament results</button></div>
+  <div id="tres"></div>
   <div class="body">
     <aside class="side"><div id="stats"></div></aside>
     <section>
@@ -494,6 +510,7 @@ html { scroll-padding-top: 84px; }
     poolShown = 10;
     var P = D.players[name]; if (!P) return; if (cur !== name) champSel = ''; cur = name; var ag = AGG[name];
     if (window.LVF) LVF.entity('player', name);
+    if (document.body.classList.contains('tr-on') && typeof renderRes === 'function') setTimeout(renderRes, 0);
     try { history.replaceState(null, '', '#' + encodeURIComponent(name)); } catch (e) {}
     function ageOf(bd) { var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(bd || ''); if (!m) return null; var n = new Date(), a = n.getFullYear() - +m[1]; if (n.getMonth() + 1 < +m[2] || (n.getMonth() + 1 === +m[2] && n.getDate() < +m[3])) a--; return a; }
     var infoRows = function (p) {   // Age and Contract Expiry sit under the team in the hero
@@ -592,6 +609,35 @@ html { scroll-padding-top: 84px; }
   var dflt = D.players.Chovy ? 'Chovy' : names[0];
   if (D.players[h]) show(h); else if (!h || !window.LVF) show(dflt);   // a player outside the embedded Worlds data: stay blank until their own profile is ready, never flash the default one
   var D0 = D;
+
+  var RES = null, resP = null;
+  function ord(n) { var v = n % 100; return n + (['th', 'st', 'nd', 'rd'][(v - 20) % 10] || ['th', 'st', 'nd', 'rd'][v] || 'th'); }
+  function place(r) {
+    if (r[10]) return '<span class="pl">In progress</span>';
+    var top = r[3] === 1, t = r[3] === r[4] ? ord(r[3]) : ord(r[3]) + '–' + ord(r[4]);
+    return '<span class="pl' + (top ? ' top' : '') + '">' + t + (r[5] === 'rs' ? '<small>Missed playoffs</small>' : '') + '</span>';
+  }
+  function renderRes() {
+    var box = $('tres'), name = cur; if (!name) return;
+    function draw() {
+      var rows = (RES && RES[name]) || [];
+      if (!rows.length) { box.innerHTML = '<div style="padding:24px 4px;color:var(--muted)">No tournament results for ' + name + ' yet.</div>'; return; }
+      box.innerHTML = '<table class="trt"><thead><tr><th>Tournament</th><th>Team</th><th>Placing</th><th>Record</th></tr></thead><tbody>' + rows.map(function (r) {
+        var ic = LVF.evIcon(r[0], 26) || '';
+        return '<tr><td><div class="ev"><span style="width:26px;display:flex;justify-content:center">' + ic + '</span><div><a href="tournament.html#' + r[0] + '" style="color:inherit;text-decoration:none;font-weight:600">' + LVF.lname(r[0]) + '</a>' + (r[1] ? '<small>' + r[1] + '</small>' : '') + '</div></div></td>'
+          + '<td><a class="tm" href="team.html#' + r[2] + '">' + logo(r[2], 24) + '<span>' + r[2] + '</span></a></td><td>' + place(r) + '</td><td class="wl">' + r[7] + '–' + r[8] + '</td></tr>';
+      }).join('') + '</tbody></table>';
+    }
+    if (RES) return draw();
+    box.innerHTML = '<div style="padding:24px 4px;color:var(--muted)">Loading…</div>';
+    (resP = resP || fetch('data/results.json').then(function (r) { return r.json(); })).then(function (j) { RES = j; if (document.body.classList.contains('tr-on') && cur === name) draw(); }, function () { box.innerHTML = '<div style="padding:24px 4px;color:var(--muted)">Tournament results unavailable.</div>'; });
+  }
+  function setView(v) {
+    document.body.classList.toggle('tr-on', v === 'tr');
+    Array.prototype.forEach.call(document.querySelectorAll('#vtabs button'), function (b) { var on = b.dataset.v === v; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
+    if (v === 'tr') renderRes();
+  }
+  $('vtabs').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) setView(b.dataset.v); });
   var wanted = h;
   function want() { var hh = wanted; if (window.LVF && hh && !D.players[hh]) LVF.has('player', hh).then(function (ok) { if (ok) LVF.focus('player', hh); else if (!$('stats').innerHTML) show(dflt); }, function () { if (!$('stats').innerHTML) show(dflt); }); }
   want();
