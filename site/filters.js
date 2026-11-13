@@ -282,7 +282,7 @@
     render('Loading…');
     return dataset().then(function (ds) {
       if (my !== busy) return; cur = ds; cur.scope = S;
-      var n = ds.games.length; render(ENT ? (n ? '' : 'Nothing matches these filters') : n.toLocaleString('en-US') + ' game' + (n === 1 ? '' : 's') + (n ? '' : ' - nothing matches these filters'));
+      var n = ds.games.length; render(ENT || window.LVF_NOCOUNT ? (n ? '' : 'Nothing matches these filters') : n.toLocaleString('en-US') + ' game' + (n === 1 ? '' : 's') + (n ? '' : ' - nothing matches these filters'));
       handlers.forEach(function (h) { h(ds, S); });
     }).catch(function (e) { render('Could not load data'); console.error(e); });
   }
