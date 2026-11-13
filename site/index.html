@@ -457,15 +457,17 @@ html { scroll-padding-top: 84px; }
       </a>
       
       <button class="toggle" id="theme" type="button" aria-label="Toggle light and dark theme"></button>
-      <label class="search">
-        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="var(--dim)" stroke-width="1.4" aria-hidden="true"><circle cx="5" cy="5" r="3.6"/><path d="m8 8 3 3"/></svg>
-        <input id="q" type="search" placeholder="Search" aria-label="Search">
-      </label>
     </div>
   </header>
 
 
-  <nav class="tourn" aria-label="Tournaments"><div class="tgrid" id="tgrid"></div></nav>
+  <section class="finder">
+    <label class="search">
+      <svg width="18" height="18" viewBox="0 0 12 12" fill="none" stroke="var(--dim)" stroke-width="1.2" aria-hidden="true"><circle cx="5" cy="5" r="3.6"/><path d="m8 8 3 3"/></svg>
+      <input id="q" type="search" placeholder="Search players, teams or champions" aria-label="Search">
+    </label>
+    <nav class="tourn" aria-label="Tournaments"><div class="tgrid" id="tgrid"></div></nav>
+  </section>
 
   <main class="cols">
     <section class="tp" aria-label="Top performers">
@@ -1102,6 +1104,7 @@ html { scroll-padding-top: 84px; }
 .hd-row + .stack { margin-top: 12px; }
 .pdd .rgb { width: 100px; } .pdd.rgdd { position: relative; } .pdd.rgdd.open .rgm { display: block; } .pdd.rgdd.open .rgb { border-color: var(--muted); } .pdd.rgdd.open .rgb svg.cv { transform: rotate(180deg); } .pdd .rgm { min-width: 100%; }
 </style>
+<script>(function () { var q = document.getElementById('q'), m = window.matchMedia('(max-width: 760px)'); function f() { q.placeholder = m.matches ? 'Search' : 'Search players, teams or champions'; } f(); (m.addEventListener ? m.addEventListener('change', f) : m.addListener(f)); })();</script>
 <script>document.addEventListener('dragstart', function (e) { if (e.target && e.target.tagName === 'IMG') e.preventDefault(); });</script>
 
 <style>
@@ -1113,12 +1116,23 @@ html { scroll-padding-top: 84px; }
 .tgrid a:hover { border-color: var(--muted); }
 .tgrid .ti { display: grid; place-items: center; height: 18px; }
 .tgrid .ti img, .tgrid .ti svg { max-width: 24px; max-height: 18px; width: auto; height: auto; }
+
+/* homepage finder: big pill search with the tournament icons centred underneath */
+.finder { display: flex; flex-direction: column; align-items: center; gap: 18px; margin: 56px 0 8px; }
+.finder .search { flex: none; width: min(680px, 100%); }
+.finder .search input { height: 58px; border-radius: 999px; background: var(--surface); padding: 0 24px 0 56px; font-size: 16px; }
+.finder .search svg { left: 22px; top: 20px; }
+.finder .tourn { margin: 0; overflow: visible; max-width: 760px; }
+.finder .tgrid { width: auto; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.finder .tgrid a { width: 56px; height: 38px; border-radius: 999px; }
+.finder + .cols { margin-top: 36px; }
+@media (max-width: 760px) { .finder { margin-top: 28px; gap: 14px; } .finder .search input { height: 50px; font-size: 15px; padding-left: 48px; } .finder .search svg { left: 18px; top: 16px; } .finder .tgrid a { width: 48px; height: 34px; } }
 </style>
 <script>
 (function () {
   if (!window.LVF) return;
   LVF.loadMeta().then(function (m) {
-    var MAJ = ['WLDs', 'MSI', 'EWC', 'FST', 'DCGI', 'LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'], ids = Object.keys(m.leagues).filter(function (id) { return LVF.evIcon(id, 22); });
+    var MAJ = ['WLDs', 'MSI', 'EWC', 'FST', 'DCGI', 'AC', 'LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'], ids = Object.keys(m.leagues).filter(function (id) { return LVF.evIcon(id, 22); });
     ids.sort(function (a, b) { var x = MAJ.indexOf(a), y = MAJ.indexOf(b); return (x < 0 ? 99 : x) - (y < 0 ? 99 : y) || (a < b ? -1 : 1); });
     document.getElementById('tgrid').innerHTML = ids.map(function (id) { return '<a href="tournament.html#' + id + '" title="' + LVF.leagueName(id) + '" aria-label="' + LVF.leagueName(id) + '"><span class="ti">' + LVF.evIcon(id, 18) + '</span></a>'; }).join('');
   });
