@@ -219,7 +219,7 @@
       '#lvf .fd.open .fm{display:block}#lvf .fm button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--fg);font:inherit;font-size:12.5px;padding:7px 10px;border-radius:5px;cursor:pointer;white-space:nowrap}' +
       '#lvf .fi{display:inline-grid;place-items:center;width:28px;height:18px;flex:none}#lvf .fi img{width:auto;height:auto;max-width:28px;max-height:18px}#lvf .fm button:has(.fi){display:flex;align-items:center;gap:8px}#lvf .fb .fi{margin-right:-2px}#lvf .fm button.sub{padding-left:46px;color:var(--muted)}#lvf .fm button.sub.on{color:var(--fg)}' +
       '#lvf .fm button:hover,#lvf .fm button.on{background:var(--surface-2)}#lvf .fm .gh{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);padding:8px 10px 4px}' +
-      '#lvf .st{color:var(--muted);font-size:12px;margin-left:4px}#lvf .rs{background:none;border:0;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;text-decoration:underline;padding:0}';
+      '#lvf .lst{color:var(--muted);font-size:12px;margin-left:4px}#lvf .rs{background:none;border:0;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;text-decoration:underline;padding:0}';
     document.head.appendChild(s);
   }
   var chev = '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg>';
@@ -272,7 +272,7 @@
     var cur = S.league + '|' + S.split, tl = (o.tour.filter(function (t) { return t[0] === cur; })[0] || [0, ''])[1];
     var h = dd('year', yl, [['All', 'All years']].concat(o.years.map(function (y) { return [String(y), String(y)]; })), S.year, o.years.length <= 1) + dd('tour', tl, o.tour, cur, o.tour.length <= 1);
     if (o.stage) h += dd('stage', (o.stage.filter(function (x) { return x[0] === S.stage; })[0] || o.stage[0])[1], o.stage, S.stage, false);
-    bar.innerHTML = h + '<span class="st">' + (status || '') + '</span>' + (isDefault() ? '' : '<button type="button" class="rs" data-reset="1">' + (ENT ? 'Reset' : 'Back to Worlds') + '</button>');
+    bar.innerHTML = h + '<span class="lst">' + (status || '') + '</span>' + (isDefault() ? '' : '<button type="button" class="rs" data-reset="1">' + 'Reset' + '</button>');
     if (open) { var d = bar.querySelector('#' + open); if (d) d.classList.add('open'); }
   }
   function apply() {
@@ -325,7 +325,7 @@
     var same = ENT && ENT.kind === kind && ENT.name === name; ENT = { kind: kind, name: name };
     if (same || !bar || !meta) return; Object.assign(S, entityDefault()); return apply();
   }
-  function entity(kind, name) { if (ENT && ENT.kind === kind && ENT.name === name) { render((bar && bar.querySelector('.st') || {}).textContent); return; } return focus(kind, name); }
+  function entity(kind, name) { if (ENT && ENT.kind === kind && ENT.name === name) { render((bar && bar.querySelector('.lst') || {}).textContent); return; } return focus(kind, name); }
   function tours() { return meta ? Object.keys(meta.leagues).map(function (l) { return [l, lname(l)]; }) : []; }
   function load(league, split) { return loadMeta().then(function () { return dataset({ league: league, split: split || 'All', stage: 'All', year: 'All' }); }); }
   window.LVF = { trophy: TROPHY, tours: tours, load: load, players: function (ds) { return players(ds); }, entity: entity, focus: focus, set: function (o) { if (Object.keys(o).every(function (k) { return S[k] === o[k]; })) return; Object.assign(S, o); if (bar && meta) return apply(); }, has: function (kind, n) { return loadMeta().then(function (m) { return kind === 'player' ? m.players.indexOf(n) >= 0 : kind === 'team' ? !!m.tname[n] : m.champs.indexOf(n) >= 0; }); }, onChange: function (fn) { handlers.push(fn); if (bar && meta) fn(cur, S); }, state: function () { return S; }, meta: function () { return meta; }, wd: wd, players: players, isDefault: isDefault, lname: lname,

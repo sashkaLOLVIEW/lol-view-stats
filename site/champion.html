@@ -445,10 +445,10 @@ html { scroll-padding-top: 84px; }
       return fetch('https://ddragon.leagueoflegends.com/cdn/' + v[0] + '/data/en_US/champion.json').then(function (r) { return r.json(); });
     }).then(function (j) { var m = {}; Object.keys(j.data).forEach(function (id) { m[norm(id)] = id; m[norm(j.data[id].name)] = id; }); SPL = m; return m; }));
   }
-  function paintSplash(ic) {
-    if (!ic) return;
+  function paintSplash(ic, nm) {
+    if (!ic && !nm) return;
     splashMap().then(function (m) {
-      var id = SPLX[ic] || m[ic], el = document.getElementById('cpbn'); if (!id || !el) return;
+      var id = SPLX[ic] || m[ic] || m[norm(nm || '')], el = document.getElementById('cpbn'); if (!id || !el) return;
       var u = 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + id + '_0.jpg', im = new Image();
       im.onload = function () { var e2 = document.getElementById('cpbn'); if (e2) { e2.style.backgroundImage = 'url(' + u + ')'; e2.classList.add('on'); } };
       im.src = u;
@@ -476,7 +476,7 @@ html { scroll-padding-top: 84px; }
     var pres = Math.round((tot + bn) / nG * 100);
     $('hd').innerHTML = '<div class="cp-hd"><div class="cp-bn" id="cpbn"></div><div class="big-w' + (ZOOM[n] ? ' zw' : '') + '">' + (C.ic ? '<img class="big" src="' + D.icons[C.ic] + '" alt="' + n + '"' + (ZOOM[n] ? ' style="transform:scale(' + ZOOM[n] + ')"' : '') + '>' : '') + '</div><div><div class="cp-name">' + n + '</div><div class="cp-roles">' + (Object.keys(roles).sort(function (a, b) { return roles[b] - roles[a]; }).map(function (r) { return '<button type="button" class="rp' + (role === r ? ' on' : '') + '" data-r="' + r + '" aria-pressed="' + (role === r) + '" title="' + (role === r ? 'Show all roles' : 'Show only ' + r) + '">' + (RI[r] || r) + '<b>' + Math.round(roles[r] / tot * 100) + '%</b></button>'; }).join('') || '<span class="res">Not picked</span>') + '</div></div><div class="cp-sum">'
       + [['Picks', pk], ['Bans', bn], ['Presence', pres + '%'], ['Win rate', pk ? Math.round(w / pk * 100) + '%' : '-'], ['Record', pk ? w + '-' + (pk - w) : '-']].map(function (x) { return '<div class="cp-k"><b>' + x[1] + '</b><span>' + x[0] + '</span></div>'; }).join('') + '</div></div>';
-    paintSplash(C.ic);
+    paintSplash(C.ic, n);
     Array.prototype.forEach.call(document.querySelectorAll('#hd .rp'), function (b) { b.addEventListener('click', function () { var r = b.getAttribute('data-r'); render(n, r === role ? null : r); }); });
     // stats
     var s = '';
