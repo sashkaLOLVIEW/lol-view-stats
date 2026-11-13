@@ -398,7 +398,7 @@ html { scroll-padding-top: 84px; }
 .rcard svg { display: block; width: 100%; height: auto; }
 .rcard text { font-family: var(--font); }
 
-.stko-row { display: block; margin-top: 56px; }
+.stko-row { display: block; margin-top: 56px; } .stko-row[hidden] { display: none; }
 .stko-row .stko { margin-top: 0; min-width: 0; }
 .stko-row .stand-hd, .stko-row .srow2 { grid-template-columns: 28px minmax(0, 1fr) 54px 104px; column-gap: 8px; }
 .stko-row .stand-hd { padding: 0 12px; } .stko-row .srow2 { padding: 0 12px; }
@@ -508,7 +508,7 @@ html { scroll-padding-top: 84px; }
   </main>
 
 
-  <div class="stko-row">
+  <div class="stko-row" hidden>   <!-- Knockout Bracket, Floor & Ceiling and Closing Out Leads: hidden for the homepage rebuild; remove "hidden" to bring them back -->
   <section class="stko" id="standings">
     <h2>Knockout Bracket</h2>
     <div id="pane-ko">
