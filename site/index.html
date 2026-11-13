@@ -466,7 +466,7 @@ html { scroll-padding-top: 84px; }
       <svg width="18" height="18" viewBox="0 0 12 12" fill="none" stroke="var(--dim)" stroke-width="1.2" aria-hidden="true"><circle cx="5" cy="5" r="3.6"/><path d="m8 8 3 3"/></svg>
       <input id="q" type="search" placeholder="Search players, teams or champions" aria-label="Search">
     </label>
-    <nav class="tourn" aria-label="Tournaments"><div class="tgrid" id="tgrid"></div></nav>
+    <nav class="tourn" aria-label="Tournaments"><span class="tl">Tournaments</span><div class="tgrid" id="tgrid"></div></nav>
   </section>
 
   <main class="cols">
@@ -1127,6 +1127,13 @@ html { scroll-padding-top: 84px; }
 .finder .tgrid a { width: 56px; height: 38px; border-radius: 999px; }
 .finder + .cols { margin-top: 36px; }
 @media (max-width: 760px) { .finder { margin-top: 28px; gap: 14px; } .finder .search input { height: 50px; font-size: 15px; padding-left: 48px; } .finder .search svg { left: 18px; top: 16px; } .finder .tgrid a { width: 48px; height: 34px; } }
+
+.finder .tourn { display: flex; align-items: center; gap: 6px; padding: 5px 8px 5px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; max-width: 100%; }
+.finder .tourn .tl { color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-right: 6px; white-space: nowrap; }
+.finder .tgrid { gap: 2px; flex-wrap: nowrap; }
+.finder .tgrid a { width: 42px; height: 32px; border: 0; background: transparent; border-radius: 999px; }
+.finder .tgrid a:hover { background: var(--surface-2, color-mix(in srgb, var(--fg) 10%, transparent)); }
+@media (max-width: 760px) { .finder .tourn { flex-direction: column; align-items: center; gap: 4px; padding: 10px 10px 8px; border-radius: 22px; } .finder .tourn .tl { margin: 0; } .finder .tgrid { flex-wrap: wrap; justify-content: center; } .finder .tgrid a { width: 42px; height: 32px; } }
 </style>
 <script>
 (function () {
