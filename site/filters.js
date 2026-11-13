@@ -3,7 +3,7 @@
 (function () {
   var ROLES = ['Top', 'Jungle', 'Mid', 'Bot', 'Support'];
   var NAMES = { WLDs: 'Worlds', MSI: 'MSI', LCK: 'LCK', LPL: 'LPL', LEC: 'LEC', LCS: 'LCS', LCP: 'LCP', CBLOL: 'CBLOL', LCKC: 'LCK Challengers', LAS: 'LAS', LES: 'LES', LJL: 'LJL', LLA: 'LLA', PCS: 'PCS', VCS: 'VCS', TCL: 'TCL', LFL: 'LFL', NLC: 'NLC', PRM: 'Prime League', LIT: 'LIT', EM: 'EMEA Masters', EWC: 'EWC', FST: 'FST', CD: 'Circuit Demacia', NACL: 'NACL', AL: 'LPL Academy', LRN: 'LRN', LRS: 'LRS', WLRQ: 'Worlds Qualifiers', WSCI: 'Worlds Play-Ins', CCWS: 'CCWS', AC: 'Asia Cup', AM: 'Americas Cup', DCGI: 'DCGI', DCup: 'DCup', HC: 'Hitpoint Challengers', HLL: 'Hellenic Legends', HM: 'Hitpoint Masters', HW: 'HW', NL: 'NL', RL: 'Rift Legends', ROL: 'Roll', LPLOL: 'LPLOL', EBL: 'Esports Balkan League', KeSPA: 'KeSPA' };
-  var MAJOR = ['WLDs', 'MSI', 'EWC', 'FST', 'LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'];
+  var MAJOR = ['WLDs', 'MSI', 'EWC', 'FST', 'DCGI', 'AC', 'LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'];
   var S = { league: 'WLDs', split: 'All', stage: 'All', year: 'All' };
   var meta = null, cache = {}, handlers = [], bar = null, busy = 0, cur = null;
   var $ = function (s, r) { return (r || document).querySelector(s); };
