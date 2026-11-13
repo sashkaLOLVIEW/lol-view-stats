@@ -350,6 +350,13 @@ html { scroll-padding-top: 84px; }
 .topbar::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: color-mix(in srgb, var(--bg) 75%, transparent); }
 .topbar::after { content: ""; position: absolute; z-index: -1; left: 50%; width: 100vw; transform: translateX(-50%); top: 100%; height: 40px; pointer-events: none; background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 75%, transparent), color-mix(in srgb, var(--bg) 0%, transparent)); }
 .topbar .nav, .topbar .search input { background: var(--bg); }   /* stay fully opaque on top of the translucent bar */
+
+.cp-hd { position: relative; overflow: hidden; isolation: isolate; }
+.cp-hd > * { position: relative; z-index: 1; }
+.cp-hd > .cp-bn { position: absolute; inset: 0; z-index: 0; background-size: cover; background-position: 70% 22%; opacity: 0; transition: opacity .4s; pointer-events: none; }
+.cp-hd > .cp-bn.on { opacity: .5; }
+.cp-hd > .cp-bn::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--surface) 0%, color-mix(in srgb, var(--surface) 78%, transparent) 38%, transparent 100%); }
+:root[data-theme="light"] .cp-hd > .cp-bn.on { opacity: .42; }
 </style>
 <style>
 /* role selector box: same look everywhere */
@@ -428,6 +435,24 @@ html { scroll-padding-top: 84px; }
   var LW = {"DK":1,"G2":1,"TL":1,"TLAW":1};
   function logo(t, s) { return D.logos[t] ? '<img' + (LW[t] ? ' class="lwi"' : '') + ' src="' + D.logos[t] + '" alt="' + t + '" width="' + s + '" height="' + s + '" style="display:block;object-fit:contain;border-radius:0">' : '<span style="width:' + s + 'px;height:' + s + 'px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:' + Math.max(7, Math.round(s / 3.2)) + 'px;font-weight:700;color:var(--muted);overflow:hidden">' + String(t).slice(0, 4) + '</span>'; }
   var ZOOM = {};
+
+  // splash banner: Data Dragon names the art by champion id (KaiSa, MonkeyKing...), so map our icon keys to ids once
+  var SPL = null, SPLP = null, SPLX = {renataglaasc: 'Renata'};
+  function norm(x) { return String(x).toLowerCase().replace(/[^a-z0-9]/g, ''); }
+  function splashMap() {
+    return SPLP || (SPLP = fetch('https://ddragon.leagueoflegends.com/api/versions.json').then(function (r) { return r.json(); }).then(function (v) {
+      return fetch('https://ddragon.leagueoflegends.com/cdn/' + v[0] + '/data/en_US/champion.json').then(function (r) { return r.json(); });
+    }).then(function (j) { var m = {}; Object.keys(j.data).forEach(function (id) { m[norm(id)] = id; m[norm(j.data[id].name)] = id; }); SPL = m; return m; }));
+  }
+  function paintSplash(ic) {
+    if (!ic) return;
+    splashMap().then(function (m) {
+      var id = SPLX[ic] || m[ic], el = document.getElementById('cpbn'); if (!id || !el) return;
+      var u = 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + id + '_0.jpg', im = new Image();
+      im.onload = function () { var e2 = document.getElementById('cpbn'); if (e2) { e2.style.backgroundImage = 'url(' + u + ')'; e2.classList.add('on'); } };
+      im.src = u;
+    }, function () {});
+  }
   function ci(n, s) { var c = D.champs[n]; if (!c || !c.ic) return ''; var im = '<img src="' + D.icons[c.ic] + '" alt="' + n + '"' + (s ? ' width="' + s + '" height="' + s + '"' : '') + (ZOOM[n] ? ' style="transform:scale(' + ZOOM[n] + ')"' : '') + '>'; return ZOOM[n] ? '<span class="zw">' + im + '</span>' : im; }
   function sg(v) { return v == null ? '-' : (v > 0 ? '+' : '') + Math.round(v).toLocaleString('en-US'); }
   var II = {kills: "data:image/webp;base64,UklGRrgAAABXRUJQVlA4TKwAAAAvE8AEEAWDRpIUtX/T9XDwYCDCba1ta/KiG8SFLiU1h32yxn+yBbbJV2OpvxqXGdI9E5D+rmGigVFKIqYZMXCRiGks9WoRBxuJODgH08ONg4tGScQBLrLwALgorXBRkukBN/WMgYuSlS/0bmAzDRMlrQH+cgumnKVkbgMYrNO6zBGANiVBWLDyBeCQkgAIE60BgLN5EgBAGAGAvzwl3Q0LBuuUUtJtaNNQt/Bj", minion: "data:image/webp;base64,UklGRjgBAABXRUJQVlA4TCsBAAAvE8AEEPVIrW3bjaTOP+kDZGI4rQwaffSLiLdTAO09/W3mIqEJ4SOBCCgCABCMZivxAfaaor1Ve0+w3Y3zdTcr2Uy2kn0T4CggEXDMF267cwEKlgP++eMHsX0OYIll4TtMWGYUIXKdI/wGtW0KiKSyJ3dhxjJRhMpdjiQ1GGxjTSrhY7CENWCWQRNZzVHv7u5yF0JuahE0W6GHwZojLFLmmU+EtgFdYbcJnzE2MAGVRp4hWLqPuatIzwC9NwXPUcL4hcLkvd6FhdJaAS653K0haPeU5S4EbF3YvITvPL9bBMFS9nDxZ5Ph7PlCZLcLjfusOSmW3N0Fp5vaRL7XWi/lMC8ha3O4iT1LGCKS/6Flc3zzPHVdl9BvLxNuYl1Tc7IXZ25essXTla04BAA="};
@@ -448,8 +473,9 @@ html { scroll-padding-top: 84px; }
     if (role && !roles[role]) role = null;
     var R = role ? ALL.filter(function (r) { return r.role === role; }) : ALL, pk = R.length, w = R.filter(function (r) { return r.win; }).length, tot = ALL.length;
     var pres = Math.round((tot + bn) / nG * 100);
-    $('hd').innerHTML = '<div class="cp-hd"><div class="big-w' + (ZOOM[n] ? ' zw' : '') + '">' + (C.ic ? '<img class="big" src="' + D.icons[C.ic] + '" alt="' + n + '"' + (ZOOM[n] ? ' style="transform:scale(' + ZOOM[n] + ')"' : '') + '>' : '') + '</div><div><div class="cp-name">' + n + '</div><div class="cp-roles">' + (Object.keys(roles).sort(function (a, b) { return roles[b] - roles[a]; }).map(function (r) { return '<button type="button" class="rp' + (role === r ? ' on' : '') + '" data-r="' + r + '" aria-pressed="' + (role === r) + '" title="' + (role === r ? 'Show all roles' : 'Show only ' + r) + '">' + (RI[r] || r) + '<b>' + Math.round(roles[r] / tot * 100) + '%</b></button>'; }).join('') || '<span class="res">Not picked</span>') + '</div></div><div class="cp-sum">'
+    $('hd').innerHTML = '<div class="cp-hd"><div class="cp-bn" id="cpbn"></div><div class="big-w' + (ZOOM[n] ? ' zw' : '') + '">' + (C.ic ? '<img class="big" src="' + D.icons[C.ic] + '" alt="' + n + '"' + (ZOOM[n] ? ' style="transform:scale(' + ZOOM[n] + ')"' : '') + '>' : '') + '</div><div><div class="cp-name">' + n + '</div><div class="cp-roles">' + (Object.keys(roles).sort(function (a, b) { return roles[b] - roles[a]; }).map(function (r) { return '<button type="button" class="rp' + (role === r ? ' on' : '') + '" data-r="' + r + '" aria-pressed="' + (role === r) + '" title="' + (role === r ? 'Show all roles' : 'Show only ' + r) + '">' + (RI[r] || r) + '<b>' + Math.round(roles[r] / tot * 100) + '%</b></button>'; }).join('') || '<span class="res">Not picked</span>') + '</div></div><div class="cp-sum">'
       + [['Picks', pk], ['Bans', bn], ['Presence', pres + '%'], ['Win rate', pk ? Math.round(w / pk * 100) + '%' : '-'], ['Record', pk ? w + '-' + (pk - w) : '-']].map(function (x) { return '<div class="cp-k"><b>' + x[1] + '</b><span>' + x[0] + '</span></div>'; }).join('') + '</div></div>';
+    paintSplash(C.ic);
     Array.prototype.forEach.call(document.querySelectorAll('#hd .rp'), function (b) { b.addEventListener('click', function () { var r = b.getAttribute('data-r'); render(n, r === role ? null : r); }); });
     // stats
     var s = '';
