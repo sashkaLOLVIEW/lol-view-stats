@@ -217,7 +217,7 @@ h2 svg { flex: none; }
 .tp-srow em.r3 { background: var(--bronze); color: var(--ink); }
 @media (max-width: 1080px) {
   .cols { grid-template-areas: none; grid-template-rows: none; }
-  .tp, .col-rank, .col-players, .col-live { grid-area: auto; }
+  .tp, .col-rank, .col-players, .col-live, .col-recent { grid-area: auto; }
   .tp { margin-bottom: 0; }
   .tp-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
@@ -505,7 +505,10 @@ html { scroll-padding-top: 84px; }
       </div>
       <div class="stack" id="upcoming"></div>
 
-      <h2 class="sec" style="margin-top:34px"><a href="results.html" style="display:flex;align-items:center;gap:7px">Recent Results <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2>
+    </section>
+
+    <section class="col col-recent" id="results-sec">
+      <div class="hd-row"><h2><a href="results.html" style="display:flex;align-items:center;gap:7px">Recent Results <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2></div>
       <div class="stack" id="recent"></div>
     </section>
   </main>
@@ -1135,6 +1138,20 @@ html { scroll-padding-top: 84px; }
 .finder .tgrid a { width: 42px; height: 32px; border: 0; background: transparent; border-radius: 999px; }
 .finder .tgrid a:hover { background: var(--surface-2, color-mix(in srgb, var(--fg) 10%, transparent)); }
 @media (max-width: 760px) { .finder .tourn { flex-direction: column; align-items: center; gap: 4px; padding: 10px 10px 8px; border-radius: 22px; } .finder .tourn .tl { margin: 0; } .finder .tgrid { flex-wrap: wrap; justify-content: center; } .finder .tgrid a { width: 42px; height: 32px; } }
+
+/* homepage grid: row 1 = Top Performers + Upcoming, row 2 = Power Rankings + Player Stats + Recent Results; every heading is 40px tall and every list starts 12px below it */
+@media (min-width: 1081px) { .cols { grid-template-areas: "tp tp live" "rank players recent"; grid-template-rows: auto auto; row-gap: 36px; } .col-recent { grid-area: recent; } }
+.tp { margin-bottom: 0; }
+.tp-head, .col-live .up-head, .col-live .up-head.sec, .hd-row { margin: 0; height: 40px; min-height: 0; align-items: center; }
+.tp-head { flex-wrap: nowrap; }
+.tp-cards, .col-live .stack, .col-recent .stack, .col-rank .stack, .col-players .stack { margin-top: 12px; }
+.col-live, .col-recent, .col-rank, .col-players { display: flex; flex-direction: column; }
+.col-live .stack, .col-recent .stack, .col-rank .stack, .col-players .stack { flex: 1 1 auto; min-height: auto; }
+.col-recent .stack .row { height: auto; min-height: 50px; flex: 1 1 0; }
+#live-wrap:not([hidden]) { margin-bottom: 24px; }
+@media (min-width: 1081px) { #upcoming > .row:only-child:not(.match) { flex: 1 1 auto !important; height: auto !important; justify-content: center; text-align: center; } }
+@media (max-width: 900px) { .tp-head { height: auto; min-height: 40px; flex-wrap: wrap; row-gap: 10px; } .tp-head h2 { white-space: nowrap; } }
+@media (max-width: 1080px) { .cols { row-gap: 44px; grid-template-areas: none; grid-template-rows: none; } .col-live .stack, .col-recent .stack, .col-rank .stack, .col-players .stack { flex: none; } }
 </style>
 <script>
 (function () {
