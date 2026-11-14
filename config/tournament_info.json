@@ -9,5 +9,72 @@
    },
    "mvp": ""
   }
- }
+ },
+ "LPL|Split 1": {
+  "groups": {
+   "Ascend": [
+    "AL",
+    "BLG",
+    "IG",
+    "JDG",
+    "TES",
+    "WBG"
+   ],
+   "Perseverance": [
+    "EDG",
+    "NIP",
+    "TT",
+    "WE"
+   ],
+   "Nirvana": [
+    "LGD",
+    "LNG",
+    "OMG",
+    "UP"
+   ]
+  }
+ },
+ "LPL|Split 2": {
+  "groups": {
+   "Ascend": [
+    "AL",
+    "BLG",
+    "IG",
+    "JDG",
+    "NIP",
+    "TES",
+    "WBG",
+    "WE"
+   ],
+   "Nirvana": [
+    "EDG",
+    "LGD",
+    "LNG",
+    "OMG",
+    "TT",
+    "UP"
+   ]
+  }
+ },
+ "LPL|Split 3": {
+  "groups": {
+   "Ascend": [
+    "AL",
+    "BLG",
+    "EDG",
+    "JDG",
+    "LGD",
+    "TES",
+    "TT",
+    "WE"
+   ],
+   "Nirvana": [
+    "IG",
+    "LNG",
+    "NIP",
+    "WBG"
+   ]
+  }
+ },
+ "_notes": "LPL groups: Split 1 Ascend/Nirvana from the published format, Perseverance = the remaining four teams (matches who played whom in the data). Split 2 = top 8 / bottom 6 of Split 1, Split 3 = top 8 / bottom 4 of Split 2; both match the schedule data."
 }
