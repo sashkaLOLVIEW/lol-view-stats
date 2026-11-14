@@ -82,7 +82,7 @@ button { font-family: inherit; color: inherit; }
 .search svg { position: absolute; left: 11px; top: 12px; }
 
 /* columns */
-.cols { display: grid; grid-template-columns: 316fr 316fr 336fr; grid-template-areas: "tp tp live" "rank players live"; grid-template-rows: auto 1fr; column-gap: 32px; margin-top: 52px; }
+.cols { display: grid; grid-template-columns: 316fr 316fr 168fr; grid-template-areas: "tp tp live" "rank players live"; grid-template-rows: auto 1fr; column-gap: 32px; margin-top: 52px; }
 .col { min-width: 0; position: relative; }
 .col-rank { grid-area: rank; } .col-players { grid-area: players; } .col-live { grid-area: live; }
 .col + .col::before { content: ""; position: absolute; left: -16.5px; top: 8px; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--divider) 15%, var(--divider) 85%, transparent); }
@@ -444,9 +444,9 @@ html { scroll-padding-top: 84px; }
 .row:hover, .srow2:hover, a.match:hover, .hrow:hover { border-color: var(--muted); }
 </style>
 <style>
-/* navbar as wide as the first column of the homepage grid (316fr of 316fr 316fr 336fr, 32px gaps) */
-@media (min-width: 1081px) { .page > .topbar > .nav { flex: none; box-sizing: border-box; width: calc((100% - 64px) * 316 / 968); justify-content: space-between; }
-.page > .topbar .tools .search { flex: none; box-sizing: border-box; width: calc((min(1312px, 100vw - 32px) - 64px) * 336 / 968); } }
+/* navbar as wide as the first column of the homepage grid (316fr of 316fr 316fr 168fr, 32px gaps) */
+@media (min-width: 1081px) { .page > .topbar > .nav { flex: none; box-sizing: border-box; width: calc((100% - 64px) * 316 / 800); justify-content: space-between; }
+.page > .topbar .tools .search { flex: none; box-sizing: border-box; width: calc((min(1312px, 100vw - 32px) - 64px) * 168 / 800); } }
 </style>
 <div class="page">
   <header class="topbar">
@@ -468,7 +468,7 @@ html { scroll-padding-top: 84px; }
       <svg width="18" height="18" viewBox="0 0 12 12" fill="none" stroke="var(--dim)" stroke-width="1.2" aria-hidden="true"><circle cx="5" cy="5" r="3.6"/><path d="m8 8 3 3"/></svg>
       <input id="q" type="search" placeholder="Search players, teams, champions or tournaments" aria-label="Search">
     </label>
-    <nav class="tourn" aria-label="Tournaments"><span class="tl">Tournaments</span><div class="tgrid" id="tgrid"></div></nav>
+    <nav class="tourn" aria-label="Quick view"><span class="tl">Quick view</span><div class="tgrid" id="tgrid"></div></nav>
   </section>
 
   <main class="cols">
@@ -693,8 +693,7 @@ html { scroll-padding-top: 84px; }
       el.innerHTML = live.map(function (m, i) {
         var w1 = (m.bl.result || {}).gameWins || 0, w2 = (m.rd.result || {}).gameWins || 0;
         return '<a class="row match res liverow" href="match.html#' + m.id + '" style="margin-top:' + (i ? 8 : 12) + 'px;color:inherit;text-decoration:none" aria-label="Watch live match"><div class="lgw"><span class="lg">' + worlds(24) + '</span>' + (m.bo ? '<span class="bo">BO' + m.bo + '</span>' : '') + '</div>'
-          + '<div class="res-center"><span class="tag">' + m.bl.code + '</span>' + logo(m.bl.code, 32) + '<span class="score">' + w1 + ':' + w2 + '</span>' + logo(m.rd.code, 32) + '<span class="tag">' + m.rd.code + '</span></div>'
-          + '<div class="when"><em class="ck" style="font-style:normal;color:var(--fg);font-weight:600" data-i="' + i + '">' + (m.lv ? 'Live' : m.over ? 'Final' : m.brk ? 'Break' : '00:00') + '</em><span>' + (m.over && !m.lv ? 'Series over' : (m.brk && !m.lv ? 'Next: Game ' : 'Game ') + m.num) + '</span></div></a>';
+          + '<div class="res-center"><span class="tm">' + logo(m.bl.code, 32) + '<span class="tag">' + m.bl.code + '</span></span><div class="mid"><span class="score">' + w1 + ':' + w2 + '</span><div class="when"><em class="ck" style="font-style:normal;color:var(--fg);font-weight:600" data-i="' + i + '">' + (m.lv ? 'Live' : m.over ? 'Final' : m.brk ? 'Break' : '00:00') + '</em><span>' + (m.over && !m.lv ? 'Series over' : (m.brk && !m.lv ? 'Next: Game ' : 'Game ') + m.num) + '</span></div></div><span class="tm">' + logo(m.rd.code, 32) + '<span class="tag">' + m.rd.code + '</span></span></div></a>';
       }).join('');
       tick(); liveN = live.length; if (window.renderUp) window.renderUp();
     }
@@ -728,7 +727,7 @@ html { scroll-padding-top: 84px; }
     $('upcoming').innerHTML = list.length ? list.map(function (m) {
       var lg = m[5] === 'worlds' ? worlds(24) : '<span style="font-size:10px;font-weight:700;color:var(--muted)">' + String(m[5]).toUpperCase() + '</span>';
       var lk = m[7] && !(m[0] === 'TBD' && m[1] === 'TBD');
-      return '<' + (lk ? 'a href="match.html#' + m[7] + '"' : 'div') + ' class="row match res"><div class="lgw"><span class="lg">' + lg + '</span><span class="bo">' + m[4] + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + tl(m[0]) + '<span class="score vsx">vs</span>' + tl(m[1]) + '<span class="tag">' + m[1] + '</span></div><div class="when">' + lt(m[6]) + '<span>' + ld(m[6]) + '</span></div></' + (lk ? 'a' : 'div') + '>';
+      return '<' + (lk ? 'a href="match.html#' + m[7] + '"' : 'div') + ' class="row match res"><div class="lgw"><span class="lg">' + lg + '</span><span class="bo">' + m[4] + '</span></div><div class="res-center"><span class="tm">' + tl(m[0]) + '<span class="tag">' + m[0] + '</span></span><div class="mid"><span class="score vsx">vs</span><div class="when">' + lt(m[6]) + '<span>' + ld(m[6]) + '</span></div></div><span class="tm">' + tl(m[1]) + '<span class="tag">' + m[1] + '</span></span></div></' + (lk ? 'a' : 'div') + '>';
     }).join('') : '<div class="row" style="color:var(--muted);font-size:12px">No upcoming matches' + (upKey === 'global' ? ' in the schedule yet' : ' for this league') + '</div>';
   }
   $('up-rg').addEventListener('click', function (e) {
@@ -743,7 +742,7 @@ html { scroll-padding-top: 84px; }
   // Recent results
   var rec = [["IG", "2:1", "LYON", "23:50", "Oct 28", "LOLTMNT02_486183"], ["T1", "2:0", "MKOI", "21:12", "Oct 28", "LOLTMNT02_486159"], ["TL", "2:0", "AL", "21:54", "Oct 26", "LOLTMNT02_482911"], ["LOS", "2:0", "TSW", "20:01", "Oct 26", "LOLTMNT02_483861"]];
   $('recent').innerHTML = rec.map(function (m) {
-    return '<a class="row match res" href="' + U.game + '#' + m[5] + '"><div class="lgw"><span class="lg">' + worlds(24) + '</span><span class="bo">' + (+m[1].split(':')[0] >= 3 ? 'BO5' : +m[1].split(':')[0] + +m[1].split(':')[1] > 1 ? 'BO3' : 'BO1') + '</span></div><div class="res-center"><span class="tag">' + m[0] + '</span>' + logo(m[0], 32) + '<span class="score">' + m[1].split(':')[0] + ':<span class="lo">' + m[1].split(':')[1] + '</span></span>' + logo(m[2], 32) + '<span class="tag lo">' + m[2] + '</span></div><div class="when"><span>' + ld(m[6]) + '</span></div></a>';
+    return '<a class="row match res" href="' + U.game + '#' + m[5] + '"><div class="lgw"><span class="lg">' + worlds(24) + '</span><span class="bo">' + (+m[1].split(':')[0] >= 3 ? 'BO5' : +m[1].split(':')[0] + +m[1].split(':')[1] > 1 ? 'BO3' : 'BO1') + '</span></div><div class="res-center"><span class="tm">' + logo(m[0], 32) + '<span class="tag">' + m[0] + '</span></span><div class="mid"><span class="score">' + m[1].split(':')[0] + ':<span class="lo">' + m[1].split(':')[1] + '</span></span><div class="when"><span>' + ld(m[6]) + '</span></div></div><span class="tm">' + logo(m[2], 32) + '<span class="tag lo">' + m[2] + '</span></span></div></a>';
   }).join('');
 
   // Role filters
@@ -1162,6 +1161,28 @@ html { scroll-padding-top: 84px; }
 @media (min-width: 1081px) { #upcoming > .row:only-child:not(.match) { flex: 1 1 auto !important; height: auto !important; justify-content: center; text-align: center; } }
 @media (max-width: 900px) { .tp-head { height: auto; min-height: 40px; flex-wrap: wrap; row-gap: 10px; } .tp-head h2 { white-space: nowrap; } }
 @media (max-width: 1080px) { .cols { row-gap: 44px; grid-template-areas: none; grid-template-rows: none; } .col-live .stack, .col-recent .stack, .col-rank .stack, .col-players .stack { flex: none; } }
+
+/* compact right column: event icon + BO badge stacked, team icons with names underneath */
+#upcoming .row, .col-live .stack .row, .col-recent .stack .row, #live-list .row { height: auto !important; min-height: 76px !important; padding: 10px 12px !important; }
+.match.res { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 12px; align-items: center; }
+.match.res > .lgw { flex-direction: column; align-items: center; gap: 5px; justify-self: start; }
+.match.res > .res-center { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); column-gap: 6px; justify-items: center; width: 100%; }
+.res-center .tm { display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 0; }
+.res-center .tm .tag { margin: 0 !important; font-size: 12px; line-height: 1.1; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.res-center .mid { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 40px; }
+.res-center .mid .score { width: auto; font-size: 15px; }
+.res-center .mid .when { margin: 0; text-align: center; font-size: 11px; line-height: 1.2; }
+.res-center .mid .when em.ck { font-size: 11px; }
+@media (min-width: 1081px) { .res-center .mid { min-width: 34px; } }
+
+/* Quick view: no pill */
+.finder .tourn { background: none !important; border: 0 !important; border-radius: 0 !important; padding: 0 !important; }
+.finder .tourn .tl { text-transform: none; letter-spacing: 0; font-size: 13px; }
+.finder .tgrid a { border-radius: 8px; }
+@media (max-width: 760px) { .finder .tourn { padding: 0 !important; } }
+
+/* champion table hidden on the homepage */
+#champions { display: none !important; }
 </style>
 <script>
 (function () {
