@@ -1199,6 +1199,13 @@ html { scroll-padding-top: 84px; }
   .page > .topbar .tools .search input { height: 29px; }
   .page > .topbar .tools .search svg { top: 7px; }
 }
+
+/* one continuous divider before the right column */
+@media (min-width: 1081px) {
+  .cols { position: relative; }
+  .col-live::before, .col-recent::before { display: none; }
+  .cols::after { content: ""; position: absolute; top: 8px; bottom: 0; width: 1px; left: calc((100% - 64px) * 632 / 800 + 48px - .5px); background: linear-gradient(to bottom, transparent, var(--divider) 8%, var(--divider) 92%, transparent); }
+}
 </style>
 <script>
 (function () {
