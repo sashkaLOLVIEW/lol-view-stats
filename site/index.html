@@ -1149,7 +1149,7 @@ html { scroll-padding-top: 84px; }
 .finder-art { width: 240px; height: 156px; margin-bottom: -30px; }
 @media (max-width: 760px) { .finder { margin-bottom: 32px; } .finder + .cols { margin-top: 32px; } .finder-art { width: 190px; height: 124px; margin-bottom: -24px; } }
 /* homepage grid: row 1 = Top Performers + Upcoming, row 2 = Power Rankings + Player Stats + Recent Results; every heading is 40px tall and every list starts 12px below it */
-@media (min-width: 1081px) { .cols { grid-template-areas: "tp tp live" "rank players recent"; grid-template-rows: auto auto; row-gap: 36px; } .col-recent { grid-area: recent; } }
+@media (min-width: 1081px) { .cols { grid-template-areas: "tp tp live" "tp tp recent" "rank players recent"; grid-template-rows: auto 1fr auto; row-gap: 36px; } .col-recent { grid-area: recent; } }
 .tp { margin-bottom: 0; }
 .tp-head, .col-live .up-head, .col-live .up-head.sec, .hd-row { margin: 0; height: 40px; min-height: 0; align-items: center; }
 .tp-head { flex-wrap: nowrap; }
@@ -1183,6 +1183,8 @@ html { scroll-padding-top: 84px; }
 
 /* champion table hidden on the homepage */
 #champions { display: none !important; }
+
+@media (min-width: 1081px) { .col-recent .stack { flex: 0 0 auto; } .col-recent .stack .row { flex: 0 0 auto; } .col-recent { align-self: start; } }
 </style>
 <script>
 (function () {
