@@ -526,6 +526,7 @@ html { scroll-padding-top: 84px; }
     return Object.keys(by).map(function (k) { return by[k]; }).sort(function (a, b) { return (b.w / b.g) - (a.w / a.g) || b.w - a.w || a.g - b.g; });
   }
   var mmss = function (s) { return Math.floor(s / 60) + ':' + ('0' + Math.round(s % 60)).slice(-2); };
+  var INTL = ['WLDs', 'MSI', 'EWC', 'FST', 'DCGI', 'AC', 'AM', 'WSCI', 'WLRQ', 'CCWS', 'DCup'];   // international events: only these show a prize pool
   var EV = null, ordn = function (n) { var v = n % 100; return n + (['th', 'st', 'nd', 'rd'][(v - 20) % 10] || ['th', 'st', 'nd', 'rd'][v] || 'th'); };
   var plc = function (a, b) { return a === b ? ordn(a) : ordn(a) + '\u2013' + ordn(b); };
   var fd = function (d) { return d ? new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'}) : ''; };
@@ -541,8 +542,8 @@ html { scroll-padding-top: 84px; }
         fact('Start date', '<b><span>' + fd(start) + '</span></b>') + fact(ev && ev.on ? 'Last game' : 'End date', '<b><span>' + fd(end) + '</span></b>') +
         fact('Winner', ev ? teamFact(M, ev.w, ev) : '<b><span>-</span></b>', !ev) + fact('Runner-up', ev ? teamFact(M, ev.r, ev) : '<b><span>-</span></b>', !ev) +
         fact('MVP', mvp ? '<a href="player.html#' + encodeURIComponent(mvp.p) + '"><b>' + (mvp.t ? logo(mvp.t, 22) : '') + '<span>' + esc(mvp.p) + '</span>' + (mvp.rt ? '<em>' + (+mvp.rt).toFixed(1) + '</em>' : '') + '</b></a>' : '<b><span>-</span></b>', !mvp) +
-        fact('Prize pool', ev && ev.prize ? '<b><span>' + esc(ev.prize) + '</span></b>' : '<b><span>Not listed</span></b>', !(ev && ev.prize)) +
-        fact('Games', '<b><span>' + ds.games.length + '</span></b>') + fact('Teams', '<b><span>' + (ev ? ev.t.length : standings(ds, M).length) + '</span></b>') + '</div>';
+        (INTL.indexOf(LID) >= 0 ? fact('Prize pool', ev && ev.prize ? '<b><span>' + esc(ev.prize) + '</span></b>' : '<b><span>Not listed</span></b>', !(ev && ev.prize)) : '') +
+        fact('Games', '<b><span>' + ds.games.length + '</span></b>') + fact('Teams', '<b><span>' + (ev ? ev.t.length : standings(ds, M).length) + '</span></b>').replace('class="fact', INTL.indexOf(LID) >= 0 ? 'class="fact' : 'style="grid-column: span 2" class="fact') + '</div>';
     }
     if (ev && ev.t && ev.t.length) {
       var chip = function (r) { return '<a class="pt" href="team.html#' + r[2] + '">' + logo(r[2], 24) + '<span>' + esc(tname(M, r[2])) + '</span>' + (ev.on ? '' : '<em' + (r[0] === 1 ? ' class="top"' : '') + '>' + plc(r[0], r[1]) + '</em>') + '</a>'; };
