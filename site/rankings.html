@@ -542,7 +542,7 @@ html { scroll-padding-top: 84px; }
     if (!q) { box.className = 'sr'; return; }
     var tm = SD.t.filter(function (t) { return t[0].toLowerCase().indexOf(q) > -1 || t[1].toLowerCase().indexOf(q) > -1; }).sort(rank(q)).slice(0, 5);
     var pl = SD.p.filter(function (p) { return p[0].toLowerCase().indexOf(q) > -1; }).sort(rank(q)).slice(0, 8);
-    var tn = (window.LVF && LVF.tours ? LVF.tours() : []).filter(function (t) { return t[0].toLowerCase().indexOf(q) > -1 || t[1].toLowerCase().indexOf(q) > -1; }).sort(rank(q)).slice(0, 4);
+    var tn = (window.LVF && LVF.tours ? LVF.tours() : []).filter(function (t) { return t[0].toLowerCase().indexOf(q) > -1 || t[1].toLowerCase().indexOf(q) > -1 || (t[2] || '').indexOf(q) > -1; }).sort(rank(q)).slice(0, 4);
     var ch = (SD.c || []).filter(function (c) { return c[0].toLowerCase().indexOf(q) > -1; }).sort(rank(q)).slice(0, 5);
     var LW = {DK: 1, G2: 1, TL: 1, TLAW: 1};
     var lg = function (c, s) { return SD.l[c] ? '<img' + (LW[c] ? ' class="lwi"' : '') + ' src="' + SD.l[c] + '" alt="" width="' + s + '" height="' + s + '">' : ''; };
