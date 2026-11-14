@@ -1213,6 +1213,11 @@ html { scroll-padding-top: 84px; }
 
 .match.res .lgw .lg { width: 18px; height: 18px; }
 .match.res .lgw .lg svg, .match.res .lgw .lg img { width: 18px; height: 18px; max-width: 18px; max-height: 18px; }
+
+/* whole card clickable in Power Rankings / Player Stats */
+#rankings .row, #players .row { position: relative; cursor: pointer; transition: background .12s; }
+#rankings .row .name::after, #players .row .name::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+#rankings .row:hover, #players .row:hover { background: var(--surface-2, var(--stripe, var(--surface))); }
 </style>
 <script>
 (function () {
