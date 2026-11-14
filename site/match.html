@@ -498,10 +498,15 @@ html { scroll-padding-top: 84px; }
 /* desktop: one crossed-swords icon centred between the two kill totals (the in-flow icons keep their space but are hidden) */
 @media (min-width: 1081px) {
   .sc-st > div:first-child img.si { visibility: hidden; }
-  .sc-mid { position: relative; align-self: stretch; }
-  .sc-mid .sc-c { transform: translateY(-14px); }
+  .score { --sg: 28px; --kg: 12px; }
+  .sc-mid { position: relative; align-self: stretch; width: 22px; min-width: 22px; }   /* only as wide as the icon: the clock and patch overflow it, centred */
+  .sc-mid .sc-c { transform: translateY(-26px); white-space: nowrap; }
   img.sc-x { display: block; position: absolute; left: 50%; bottom: 4px; width: 22px; height: 22px; transform: translateX(-50%); object-fit: contain; }
+  /* kill totals hug the icon: same gap (--kg) on both sides, numbers pushed against it */
+  .score > :nth-child(2) { margin-right: calc(var(--kg) - var(--sg)); } .score > :nth-child(4) { margin-left: calc(var(--kg) - var(--sg)); }
+  .sc-st:not(.r) > div:first-child { min-width: 0; align-items: flex-end; } .sc-st.r > div:first-child { min-width: 0; align-items: flex-start; }
 }
+@media (min-width: 1081px) and (max-width: 1280px) { .score { --sg: 14px; } }
 @media (max-width: 760px) {
   .score .sc-st > div:first-child { position: relative; align-self: center; }
   .score .sc-st > div:first-child img.si { display: none; }

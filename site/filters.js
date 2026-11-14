@@ -333,3 +333,36 @@
     loadMeta: loadMeta, profile: profile, results: results, leagueName: lname, evIcon: evIcon, icons: function () { return jget('data/champs.json'); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
+
+/* hover tooltips: every title="" on the site is shown in one style (dark pill, like the rune hint) instead of the browser's own box */
+(function () {
+  if (window.__lvfTips) return; window.__lvfTips = 1;
+  var st = document.createElement('style');
+  st.textContent = '#lvf-tip{position:fixed;z-index:2147483000;left:0;top:0;max-width:280px;width:max-content;background:var(--fg,#111);color:var(--bg,#fff);font:500 11.5px/1.35 var(--font,inherit);padding:6px 9px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .12s;white-space:normal;text-align:center}#lvf-tip.on{opacity:1}';
+  document.head.appendChild(st);
+  var tip = document.createElement('div'); tip.id = 'lvf-tip'; tip.setAttribute('role', 'tooltip'); document.body.appendChild(tip);
+  var cur = null;
+  function hide() { tip.classList.remove('on'); cur = null; }
+  function show(el) {
+    var t = el.getAttribute('data-ttl'); if (!t) return;
+    cur = el; tip.textContent = t; tip.classList.add('on');
+    var r = el.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight, x = r.left + r.width / 2 - w / 2, y = r.top - h - 8;
+    if (y < 4) y = r.bottom + 8;
+    x = Math.max(6, Math.min(x, window.innerWidth - w - 6));
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function take(el) {
+    var t = el.getAttribute('title');
+    if (t != null) { if (t.trim()) { el.setAttribute('data-ttl', t); if (!el.getAttribute('aria-label') && !el.textContent.trim()) el.setAttribute('aria-label', t); } el.removeAttribute('title'); }
+  }
+  document.addEventListener('mouseover', function (e) {
+    var el = e.target.closest && e.target.closest('[title],[data-ttl]');
+    if (!el) { if (cur) hide(); return; }
+    take(el); if (el !== cur) show(el);
+  }, true);
+  document.addEventListener('mouseout', function (e) { if (cur && !cur.contains(e.relatedTarget)) hide(); }, true);
+  document.addEventListener('focusin', function (e) { var el = e.target.closest && e.target.closest('[title],[data-ttl]'); if (el) { take(el); show(el); } });
+  document.addEventListener('focusout', hide);
+  window.addEventListener('scroll', hide, true);
+  document.addEventListener('click', hide, true);
+})();
