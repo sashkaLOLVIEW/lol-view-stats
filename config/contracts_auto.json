@@ -1,5 +1,5 @@
 {
- "fetched": 1794544552.4573379,
+ "fetched": 1794630346.780623,
  "players": {
   "Cube": {
    "contract": "2027-11-16",
@@ -21,7 +21,7 @@
    "team": "Xi'an Team WE",
    "league": "LPL"
   },
-  "Dorian": {
+  "Tyrion": {
    "contract": "2028-11-21",
    "team": "Xi'an Team WE",
    "league": "LPL"
@@ -56,13 +56,28 @@
    "team": "WeiboGaming",
    "league": "LPL"
   },
-  "Liangchen": {
+  "Xiaohao": {
+   "contract": "2026-11-17",
+   "team": "WeiboGaming",
+   "league": "LPL"
+  },
+  "Jwei": {
+   "contract": "2026-11-17",
+   "team": "WeiboGaming",
+   "league": "LPL"
+  },
+  "Moham": {
+   "contract": "2026-11-17",
+   "team": "WeiboGaming",
+   "league": "LPL"
+  },
+  "Hery": {
    "contract": "2026-11-17",
    "team": "Ultra Prime",
    "league": "LPL"
   },
   "climber": {
-   "contract": "2027-11-16",
+   "contract": "2026-11-17",
    "team": "Ultra Prime",
    "league": "LPL"
   },
@@ -76,38 +91,13 @@
    "team": "Ultra Prime",
    "league": "LPL"
   },
-  "Hena": {
+  "LP": {
    "contract": "2026-11-17",
    "team": "Ultra Prime",
    "league": "LPL"
   },
-  "Keshi": {
-   "contract": "2026-09-30",
-   "team": "THUNDER TALK GAMING",
-   "league": "LPL"
-  },
-  "Junhao": {
-   "contract": "2026-09-30",
-   "team": "THUNDER TALK GAMING",
-   "league": "LPL"
-  },
-  "Ryan3": {
-   "contract": "2026-11-17",
-   "team": "THUNDER TALK GAMING",
-   "league": "LPL"
-  },
   "Feather": {
    "contract": "2027-11-16",
-   "team": "THUNDER TALK GAMING",
-   "league": "LPL"
-  },
-  "Heru": {
-   "contract": "2026-09-30",
-   "team": "THUNDER TALK GAMING",
-   "league": "LPL"
-  },
-  "Ahn": {
-   "contract": "2026-07-01",
    "team": "THUNDER TALK GAMING",
    "league": "LPL"
   },
@@ -121,8 +111,8 @@
    "team": "TOP ESPORTS",
    "league": "LPL"
   },
-  "fengyue": {
-   "contract": "2028-11-21",
+  "Zhuo": {
+   "contract": "2026-11-17",
    "team": "TOP ESPORTS",
    "league": "LPL"
   },
@@ -132,7 +122,7 @@
    "league": "LPL"
   },
   "Tian": {
-   "contract": "2028-11-21",
+   "contract": "2026-11-17",
    "team": "TOP ESPORTS",
    "league": "LPL"
   },
@@ -141,28 +131,8 @@
    "team": "TOP ESPORTS",
    "league": "LPL"
   },
-  "Juhan": {
-   "contract": "2026-11-17",
-   "team": "Oh My God",
-   "league": "LPL"
-  },
-  "Hery": {
-   "contract": "2026-11-17",
-   "team": "Oh My God",
-   "league": "LPL"
-  },
-  "Moham": {
-   "contract": "2025-11-18",
-   "team": "Oh My God",
-   "league": "LPL"
-  },
-  "haichao": {
-   "contract": "2026-11-17",
-   "team": "Oh My God",
-   "league": "LPL"
-  },
-  "Starry": {
-   "contract": "2026-11-17",
+  "Alley": {
+   "contract": "2026-11-15",
    "team": "Oh My God",
    "league": "LPL"
   },
@@ -171,7 +141,27 @@
    "team": "Oh My God",
    "league": "LPL"
   },
-  "Zhuo": {
+  "Linfeng": {
+   "contract": "2026-11-15",
+   "team": "Oh My God",
+   "league": "LPL"
+  },
+  "Banye": {
+   "contract": "2026-11-15",
+   "team": "Oh My God",
+   "league": "LPL"
+  },
+  "Starry": {
+   "contract": "2026-11-17",
+   "team": "Oh My God",
+   "league": "LPL"
+  },
+  "Dorian": {
+   "contract": "2026-11-15",
+   "team": "Oh My God",
+   "league": "LPL"
+  },
+  "HOYA": {
    "contract": "2026-11-17",
    "team": "Shenzhen NINJAS IN PYJAMAS",
    "league": "LPL"
@@ -181,23 +171,28 @@
    "team": "Shenzhen NINJAS IN PYJAMAS",
    "league": "LPL"
   },
-  "Assum": {
-   "contract": "2026-11-17",
-   "team": "Shenzhen NINJAS IN PYJAMAS",
-   "league": "LPL"
-  },
   "Care": {
    "contract": "2026-11-17",
    "team": "Shenzhen NINJAS IN PYJAMAS",
    "league": "LPL"
   },
-  "HOYA": {
+  "Photic": {
    "contract": "2026-11-17",
    "team": "Shenzhen NINJAS IN PYJAMAS",
    "league": "LPL"
   },
-  "MISSING": {
+  "sheer": {
+   "contract": "2027-11-16",
+   "team": "Suzhou LNG Esports",
+   "league": "LPL"
+  },
+  "5t5": {
    "contract": "2026-11-17",
+   "team": "Suzhou LNG Esports",
+   "league": "LPL"
+  },
+  "Nia": {
+   "contract": "2027-11-16",
    "team": "Suzhou LNG Esports",
    "league": "LPL"
   },
@@ -206,32 +201,17 @@
    "team": "Suzhou LNG Esports",
    "league": "LPL"
   },
-  "sheer": {
-   "contract": "2027-11-16",
-   "team": "Suzhou LNG Esports",
-   "league": "LPL"
-  },
-  "BuLLDoG": {
-   "contract": "2027-11-16",
-   "team": "Suzhou LNG Esports",
-   "league": "LPL"
-  },
-  "Croco": {
+  "MISSING": {
    "contract": "2026-11-17",
    "team": "Suzhou LNG Esports",
    "league": "LPL"
   },
-  "Shaoye": {
-   "contract": "2026-11-17",
-   "team": "LGD GAMING",
-   "league": "LPL"
-  },
-  "sasi": {
+  "Burdol": {
    "contract": "2027-11-16",
    "team": "LGD GAMING",
    "league": "LPL"
   },
-  "Ycx": {
+  "Heng": {
    "contract": "2026-11-17",
    "team": "LGD GAMING",
    "league": "LPL"
@@ -241,9 +221,14 @@
    "team": "LGD GAMING",
    "league": "LPL"
   },
-  "Heng": {
+  "Shaoye": {
    "contract": "2026-11-17",
    "team": "LGD GAMING",
+   "league": "LPL"
+  },
+  "Xiaoxu": {
+   "contract": "2026-11-17",
+   "team": "Beijing JDG Esports",
    "league": "LPL"
   },
   "JunJia": {
@@ -251,7 +236,7 @@
    "team": "Beijing JDG Esports",
    "league": "LPL"
   },
-  "Xiaoxu": {
+  "xiaofeng": {
    "contract": "2026-11-17",
    "team": "Beijing JDG Esports",
    "league": "LPL"
@@ -261,22 +246,22 @@
    "team": "Beijing JDG Esports",
    "league": "LPL"
   },
-  "Vampire": {
-   "contract": "2027-11-16",
-   "team": "Beijing JDG Esports",
-   "league": "LPL"
-  },
   "GALA": {
    "contract": "2026-11-17",
    "team": "Beijing JDG Esports",
    "league": "LPL"
   },
-  "Photic": {
+  "Vampire": {
+   "contract": "2027-11-16",
+   "team": "Beijing JDG Esports",
+   "league": "LPL"
+  },
+  "TheShy": {
    "contract": "2026-11-17",
    "team": "Invictus Gaming",
    "league": "LPL"
   },
-  "Meiko": {
+  "Wei": {
    "contract": "2026-11-17",
    "team": "Invictus Gaming",
    "league": "LPL"
@@ -286,27 +271,27 @@
    "team": "Invictus Gaming",
    "league": "LPL"
   },
-  "Wei": {
+  "Assum": {
    "contract": "2026-11-17",
    "team": "Invictus Gaming",
    "league": "LPL"
   },
-  "Jwei": {
+  "JiaQi": {
    "contract": "2026-11-17",
    "team": "Invictus Gaming",
    "league": "LPL"
   },
-  "Renard": {
+  "Meiko": {
    "contract": "2026-11-17",
    "team": "Invictus Gaming",
    "league": "LPL"
   },
-  "Soboro": {
-   "contract": "2027-11-16",
-   "team": "Invictus Gaming",
+  "sinian": {
+   "contract": "2029-11-20",
+   "team": "EDWARD GAMING",
    "league": "LPL"
   },
-  "Xiaohao": {
+  "BuLLDog": {
    "contract": "2026-11-17",
    "team": "EDWARD GAMING",
    "league": "LPL"
@@ -316,19 +301,19 @@
    "team": "EDWARD GAMING",
    "league": "LPL"
   },
-  "Leave": {
-   "contract": "2027-11-16",
-   "team": "EDWARD GAMING",
+  "Bin": {
+   "contract": "2026-11-17",
+   "team": "BILIBILI GAMING",
    "league": "LPL"
   },
-  "Angel": {
+  "Flandre": {
    "contract": "2026-11-17",
-   "team": "EDWARD GAMING",
+   "team": "BILIBILI GAMING",
    "league": "LPL"
   },
-  "Zdz": {
+  "Wenbo": {
    "contract": "2026-11-17",
-   "team": "EDWARD GAMING",
+   "team": "BILIBILI GAMING",
    "league": "LPL"
   },
   "Xun": {
@@ -341,32 +326,22 @@
    "team": "BILIBILI GAMING",
    "league": "LPL"
   },
+  "Viper": {
+   "contract": "2026-11-17",
+   "team": "BILIBILI GAMING",
+   "league": "LPL"
+  },
   "ON": {
    "contract": "2027-11-16",
    "team": "BILIBILI GAMING",
    "league": "LPL"
   },
-  "Viper": {
+  "Breath": {
    "contract": "2027-11-16",
-   "team": "BILIBILI GAMING",
-   "league": "LPL"
-  },
-  "Bin": {
-   "contract": "2026-11-17",
-   "team": "BILIBILI GAMING",
+   "team": "Anyone's Legend",
    "league": "LPL"
   },
   "Tarzan": {
-   "contract": "2027-11-16",
-   "team": "Anyone's Legend",
-   "league": "LPL"
-  },
-  "Flandre": {
-   "contract": "2026-11-17",
-   "team": "Anyone's Legend",
-   "league": "LPL"
-  },
-  "Kael": {
    "contract": "2027-11-16",
    "team": "Anyone's Legend",
    "league": "LPL"
@@ -377,6 +352,11 @@
    "league": "LPL"
   },
   "Hope": {
+   "contract": "2027-11-16",
+   "team": "Anyone's Legend",
+   "league": "LPL"
+  },
+  "Kael": {
    "contract": "2027-11-16",
    "team": "Anyone's Legend",
    "league": "LPL"
@@ -1887,6 +1867,11 @@
    "league": "LEC"
   },
   "Vladi": {
+   "contract": "2026-11-16",
+   "team": "Fnatic",
+   "league": "LEC"
+  },
+  "Soboro": {
    "contract": "2026-11-16",
    "team": "Fnatic",
    "league": "LEC"
@@ -4476,10 +4461,10 @@
   },
   {
    "league": "LPL",
-   "player": "Dorian",
+   "player": "Tyrion",
    "team": "Xi'an Team WE",
    "tri": "",
-   "role": "SUP",
+   "role": "JUG",
    "raw_end": "November 21, 2028",
    "contract": "2028-11-21"
   },
@@ -4539,7 +4524,34 @@
   },
   {
    "league": "LPL",
-   "player": "Liangchen",
+   "player": "Xiaohao",
+   "team": "WeiboGaming",
+   "tri": "",
+   "role": "JUG",
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
+  },
+  {
+   "league": "LPL",
+   "player": "Jwei",
+   "team": "WeiboGaming",
+   "tri": "",
+   "role": "SUP",
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
+  },
+  {
+   "league": "LPL",
+   "player": "Moham",
+   "team": "WeiboGaming",
+   "tri": "",
+   "role": "SUP",
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
+  },
+  {
+   "league": "LPL",
+   "player": "Hery",
    "team": "Ultra Prime",
    "tri": "UP",
    "role": "TOP",
@@ -4552,8 +4564,8 @@
    "team": "Ultra Prime",
    "tri": "",
    "role": "JUG",
-   "raw_end": "November 16, 2027",
-   "contract": "2027-11-16"
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
   },
   {
    "league": "LPL",
@@ -4575,35 +4587,8 @@
   },
   {
    "league": "LPL",
-   "player": "Hena",
+   "player": "LP",
    "team": "Ultra Prime",
-   "tri": "",
-   "role": "ADC",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LPL",
-   "player": "Keshi",
-   "team": "THUNDER TALK GAMING",
-   "tri": "TT",
-   "role": "TOP",
-   "raw_end": "September 30, 2026",
-   "contract": "2026-09-30"
-  },
-  {
-   "league": "LPL",
-   "player": "Junhao",
-   "team": "THUNDER TALK GAMING",
-   "tri": "",
-   "role": "JUG",
-   "raw_end": "September 30, 2026",
-   "contract": "2026-09-30"
-  },
-  {
-   "league": "LPL",
-   "player": "Ryan3",
-   "team": "THUNDER TALK GAMING",
    "tri": "",
    "role": "ADC",
    "raw_end": "November 17, 2026",
@@ -4617,24 +4602,6 @@
    "role": "SUP",
    "raw_end": "November 16, 2027",
    "contract": "2027-11-16"
-  },
-  {
-   "league": "LPL",
-   "player": "Heru",
-   "team": "THUNDER TALK GAMING",
-   "tri": "",
-   "role": "MID",
-   "raw_end": "September 30, 2026",
-   "contract": "2026-09-30"
-  },
-  {
-   "league": "LPL",
-   "player": "Ahn",
-   "team": "THUNDER TALK GAMING",
-   "tri": "",
-   "role": "ADC",
-   "raw_end": "July 1, 2026",
-   "contract": "2026-07-01"
   },
   {
    "league": "LPL",
@@ -4656,12 +4623,12 @@
   },
   {
    "league": "LPL",
-   "player": "fengyue",
+   "player": "Zhuo",
    "team": "TOP ESPORTS",
    "tri": "",
    "role": "SUP",
-   "raw_end": "November 21, 2028",
-   "contract": "2028-11-21"
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
   },
   {
    "league": "LPL",
@@ -4678,8 +4645,8 @@
    "team": "TOP ESPORTS",
    "tri": "",
    "role": "JUG",
-   "raw_end": "November 21, 2028",
-   "contract": "2028-11-21"
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
   },
   {
    "league": "LPL",
@@ -4692,48 +4659,12 @@
   },
   {
    "league": "LPL",
-   "player": "Juhan",
-   "team": "Oh My God",
-   "tri": "OMG",
-   "role": "JUG",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LPL",
-   "player": "Hery",
+   "player": "Alley",
    "team": "Oh My God",
    "tri": "",
    "role": "TOP",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LPL",
-   "player": "Moham",
-   "team": "Oh My God",
-   "tri": "",
-   "role": "SUP",
-   "raw_end": "November 18, 2025",
-   "contract": "2025-11-18"
-  },
-  {
-   "league": "LPL",
-   "player": "haichao",
-   "team": "Oh My God",
-   "tri": "",
-   "role": "MID",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LPL",
-   "player": "Starry",
-   "team": "Oh My God",
-   "tri": "",
-   "role": "ADC",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
+   "raw_end": "November 15, 2026",
+   "contract": "2026-11-15"
   },
   {
    "league": "LPL",
@@ -4746,10 +4677,46 @@
   },
   {
    "league": "LPL",
-   "player": "Zhuo",
-   "team": "Shenzhen NINJAS IN PYJAMAS",
-   "tri": "NIP",
+   "player": "Linfeng",
+   "team": "Oh My God",
+   "tri": "",
+   "role": "MID",
+   "raw_end": "November 15, 2026",
+   "contract": "2026-11-15"
+  },
+  {
+   "league": "LPL",
+   "player": "Banye",
+   "team": "Oh My God",
+   "tri": "OMG",
+   "role": "ADC",
+   "raw_end": "November 15, 2026",
+   "contract": "2026-11-15"
+  },
+  {
+   "league": "LPL",
+   "player": "Starry",
+   "team": "Oh My God",
+   "tri": "",
+   "role": "ADC",
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
+  },
+  {
+   "league": "LPL",
+   "player": "Dorian",
+   "team": "Oh My God",
+   "tri": "",
    "role": "SUP",
+   "raw_end": "November 15, 2026",
+   "contract": "2026-11-15"
+  },
+  {
+   "league": "LPL",
+   "player": "HOYA",
+   "team": "Shenzhen NINJAS IN PYJAMAS",
+   "tri": "",
+   "role": "TOP",
    "raw_end": "November 17, 2026",
    "contract": "2026-11-17"
   },
@@ -4764,15 +4731,6 @@
   },
   {
    "league": "LPL",
-   "player": "Assum",
-   "team": "Shenzhen NINJAS IN PYJAMAS",
-   "tri": "",
-   "role": "ADC",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LPL",
    "player": "Care",
    "team": "Shenzhen NINJAS IN PYJAMAS",
    "tri": "",
@@ -4782,26 +4740,8 @@
   },
   {
    "league": "LPL",
-   "player": "HOYA",
+   "player": "Photic",
    "team": "Shenzhen NINJAS IN PYJAMAS",
-   "tri": "",
-   "role": "TOP",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LPL",
-   "player": "MISSING",
-   "team": "Suzhou LNG Esports",
-   "tri": "LNG",
-   "role": "SUP",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LPL",
-   "player": "1xn",
-   "team": "Suzhou LNG Esports",
    "tri": "",
    "role": "ADC",
    "raw_end": "November 17, 2026",
@@ -4818,16 +4758,7 @@
   },
   {
    "league": "LPL",
-   "player": "BuLLDoG",
-   "team": "Suzhou LNG Esports",
-   "tri": "",
-   "role": "MID",
-   "raw_end": "November 16, 2027",
-   "contract": "2027-11-16"
-  },
-  {
-   "league": "LPL",
-   "player": "Croco",
+   "player": "5t5",
    "team": "Suzhou LNG Esports",
    "tri": "",
    "role": "JUG",
@@ -4836,16 +4767,34 @@
   },
   {
    "league": "LPL",
-   "player": "Shaoye",
-   "team": "LGD GAMING",
-   "tri": "LGD",
+   "player": "Nia",
+   "team": "Suzhou LNG Esports",
+   "tri": "",
+   "role": "MID",
+   "raw_end": "November 16, 2027",
+   "contract": "2027-11-16"
+  },
+  {
+   "league": "LPL",
+   "player": "1xn",
+   "team": "Suzhou LNG Esports",
+   "tri": "",
    "role": "ADC",
    "raw_end": "November 17, 2026",
    "contract": "2026-11-17"
   },
   {
    "league": "LPL",
-   "player": "sasi",
+   "player": "MISSING",
+   "team": "Suzhou LNG Esports",
+   "tri": "LNG",
+   "role": "SUP",
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
+  },
+  {
+   "league": "LPL",
+   "player": "Burdol",
    "team": "LGD GAMING",
    "tri": "",
    "role": "TOP",
@@ -4854,10 +4803,10 @@
   },
   {
    "league": "LPL",
-   "player": "Ycx",
+   "player": "Heng",
    "team": "LGD GAMING",
    "tri": "",
-   "role": "SUP",
+   "role": "JUG",
    "raw_end": "November 17, 2026",
    "contract": "2026-11-17"
   },
@@ -4872,19 +4821,10 @@
   },
   {
    "league": "LPL",
-   "player": "Heng",
+   "player": "Shaoye",
    "team": "LGD GAMING",
-   "tri": "",
-   "role": "JUG",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LPL",
-   "player": "JunJia",
-   "team": "Beijing JDG Esports",
-   "tri": "JDG",
-   "role": "JUG",
+   "tri": "LGD",
+   "role": "ADC",
    "raw_end": "November 17, 2026",
    "contract": "2026-11-17"
   },
@@ -4899,10 +4839,37 @@
   },
   {
    "league": "LPL",
+   "player": "JunJia",
+   "team": "Beijing JDG Esports",
+   "tri": "JDG",
+   "role": "JUG",
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
+  },
+  {
+   "league": "LPL",
+   "player": "xiaofeng",
+   "team": "Beijing JDG Esports",
+   "tri": "",
+   "role": "JUG",
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
+  },
+  {
+   "league": "LPL",
    "player": "HongQ",
    "team": "Beijing JDG Esports",
    "tri": "",
    "role": "MID",
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
+  },
+  {
+   "league": "LPL",
+   "player": "GALA",
+   "team": "Beijing JDG Esports",
+   "tri": "",
+   "role": "ADC",
    "raw_end": "November 17, 2026",
    "contract": "2026-11-17"
   },
@@ -4917,18 +4884,45 @@
   },
   {
    "league": "LPL",
-   "player": "GALA",
-   "team": "Beijing JDG Esports",
+   "player": "TheShy",
+   "team": "Invictus Gaming",
    "tri": "",
+   "role": "TOP",
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
+  },
+  {
+   "league": "LPL",
+   "player": "Wei",
+   "team": "Invictus Gaming",
+   "tri": "",
+   "role": "JUG",
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
+  },
+  {
+   "league": "LPL",
+   "player": "Rookie",
+   "team": "Invictus Gaming",
+   "tri": "",
+   "role": "MID",
+   "raw_end": "November 16, 2027",
+   "contract": "2027-11-16"
+  },
+  {
+   "league": "LPL",
+   "player": "Assum",
+   "team": "Invictus Gaming",
+   "tri": "IG",
    "role": "ADC",
    "raw_end": "November 17, 2026",
    "contract": "2026-11-17"
   },
   {
    "league": "LPL",
-   "player": "Photic",
+   "player": "JiaQi",
    "team": "Invictus Gaming",
-   "tri": "IG",
+   "tri": "",
    "role": "ADC",
    "raw_end": "November 17, 2026",
    "contract": "2026-11-17"
@@ -4944,55 +4938,28 @@
   },
   {
    "league": "LPL",
-   "player": "Rookie",
-   "team": "Invictus Gaming",
-   "tri": "",
-   "role": "MID",
-   "raw_end": "November 16, 2027",
-   "contract": "2027-11-16"
-  },
-  {
-   "league": "LPL",
-   "player": "Wei",
-   "team": "Invictus Gaming",
-   "tri": "",
-   "role": "JUG",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LPL",
-   "player": "Jwei",
-   "team": "Invictus Gaming",
-   "tri": "",
-   "role": "SUP",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LPL",
-   "player": "Renard",
-   "team": "Invictus Gaming",
-   "tri": "",
-   "role": "MID",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LPL",
-   "player": "Soboro",
-   "team": "Invictus Gaming",
-   "tri": "",
-   "role": "TOP",
-   "raw_end": "November 16, 2027",
-   "contract": "2027-11-16"
-  },
-  {
-   "league": "LPL",
-   "player": "Xiaohao",
+   "player": "Jiejie",
    "team": "EDWARD GAMING",
    "tri": "EDG",
    "role": "JUG",
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
+  },
+  {
+   "league": "LPL",
+   "player": "sinian",
+   "team": "EDWARD GAMING",
+   "tri": "",
+   "role": "MID",
+   "raw_end": "November 20, 2029",
+   "contract": "2029-11-20"
+  },
+  {
+   "league": "LPL",
+   "player": "BuLLDog",
+   "team": "EDWARD GAMING",
+   "tri": "",
+   "role": "MID",
    "raw_end": "November 17, 2026",
    "contract": "2026-11-17"
   },
@@ -5007,26 +4974,26 @@
   },
   {
    "league": "LPL",
-   "player": "Leave",
-   "team": "EDWARD GAMING",
+   "player": "Bin",
+   "team": "BILIBILI GAMING",
    "tri": "",
-   "role": "ADC",
-   "raw_end": "November 16, 2027",
-   "contract": "2027-11-16"
-  },
-  {
-   "league": "LPL",
-   "player": "Angel",
-   "team": "EDWARD GAMING",
-   "tri": "",
-   "role": "MID",
+   "role": "TOP",
    "raw_end": "November 17, 2026",
    "contract": "2026-11-17"
   },
   {
    "league": "LPL",
-   "player": "Zdz",
-   "team": "EDWARD GAMING",
+   "player": "Flandre",
+   "team": "BILIBILI GAMING",
+   "tri": "",
+   "role": "TOP",
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
+  },
+  {
+   "league": "LPL",
+   "player": "Wenbo",
+   "team": "BILIBILI GAMING",
    "tri": "",
    "role": "TOP",
    "raw_end": "November 17, 2026",
@@ -5052,6 +5019,15 @@
   },
   {
    "league": "LPL",
+   "player": "Viper",
+   "team": "BILIBILI GAMING",
+   "tri": "",
+   "role": "ADC",
+   "raw_end": "November 17, 2026",
+   "contract": "2026-11-17"
+  },
+  {
+   "league": "LPL",
    "player": "ON",
    "team": "BILIBILI GAMING",
    "tri": "",
@@ -5061,21 +5037,12 @@
   },
   {
    "league": "LPL",
-   "player": "Viper",
-   "team": "BILIBILI GAMING",
-   "tri": "",
-   "role": "ADC",
-   "raw_end": "November 16, 2027",
-   "contract": "2027-11-16"
-  },
-  {
-   "league": "LPL",
-   "player": "Bin",
-   "team": "BILIBILI GAMING",
+   "player": "Breath",
+   "team": "Anyone's Legend",
    "tri": "",
    "role": "TOP",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
+   "raw_end": "November 16, 2027",
+   "contract": "2027-11-16"
   },
   {
    "league": "LPL",
@@ -5083,24 +5050,6 @@
    "team": "Anyone's Legend",
    "tri": "AL",
    "role": "JUG",
-   "raw_end": "November 16, 2027",
-   "contract": "2027-11-16"
-  },
-  {
-   "league": "LPL",
-   "player": "Flandre",
-   "team": "Anyone's Legend",
-   "tri": "",
-   "role": "TOP",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LPL",
-   "player": "Kael",
-   "team": "Anyone's Legend",
-   "tri": "",
-   "role": "SUP",
    "raw_end": "November 16, 2027",
    "contract": "2027-11-16"
   },
@@ -5119,6 +5068,15 @@
    "team": "Anyone's Legend",
    "tri": "",
    "role": "ADC",
+   "raw_end": "November 16, 2027",
+   "contract": "2027-11-16"
+  },
+  {
+   "league": "LPL",
+   "player": "Kael",
+   "team": "Anyone's Legend",
+   "tri": "",
+   "role": "SUP",
    "raw_end": "November 16, 2027",
    "contract": "2027-11-16"
   },
