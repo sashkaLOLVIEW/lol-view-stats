@@ -1146,6 +1146,9 @@ html { scroll-padding-top: 84px; }
 .finder .search input { height: 46px; border-radius: 10px; padding: 0 56px 0 20px; font-size: 15px; }
 .finder .search svg { left: auto; right: 20px; top: 14px; width: 18px; height: 18px; pointer-events: none; }
 @media (max-width: 760px) { .finder { margin-top: 20px; } .finder-art { width: 132px; height: 86px; margin-bottom: -16px; } .finder .search input { height: 44px; font-size: 15px; padding: 0 50px 0 16px; } .finder .search svg { right: 17px; top: 13px; } }
+.finder { margin-bottom: 44px; } .finder + .cols { margin-top: 44px; }
+.finder-art { width: 240px; height: 156px; margin-bottom: -30px; }
+@media (max-width: 760px) { .finder { margin-bottom: 32px; } .finder + .cols { margin-top: 32px; } .finder-art { width: 190px; height: 124px; margin-bottom: -24px; } }
 /* homepage grid: row 1 = Top Performers + Upcoming, row 2 = Power Rankings + Player Stats + Recent Results; every heading is 40px tall and every list starts 12px below it */
 @media (min-width: 1081px) { .cols { grid-template-areas: "tp tp live" "rank players recent"; grid-template-rows: auto auto; row-gap: 36px; } .col-recent { grid-area: recent; } }
 .tp { margin-bottom: 0; }
