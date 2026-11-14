@@ -501,7 +501,7 @@ html { scroll-padding-top: 84px; }
       </div>
 
       <div class="up-head sec upd">
-        <h2>Upcoming Matches <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></h2>
+        <h2>Upcoming <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></h2>
         <div class="rgdd" id="up-rg"></div>
       </div>
       <div class="stack" id="upcoming"></div>
@@ -1206,6 +1206,10 @@ html { scroll-padding-top: 84px; }
   .col-live::before, .col-recent::before { display: none; }
   .cols::after { content: ""; position: absolute; top: 8px; bottom: 0; width: 1px; left: calc((100% - 64px) * 632 / 800 + 48px - .5px); background: linear-gradient(to bottom, transparent, var(--divider) 8%, var(--divider) 92%, transparent); }
 }
+
+/* homepage cards: no team names, no BO badge */
+.res-center .tm .tag, .match.res .lgw .bo { display: none !important; }
+#upcoming .row, .col-live .stack .row, .col-recent .stack .row, #live-list .row { min-height: 64px !important; }
 </style>
 <script>
 (function () {
