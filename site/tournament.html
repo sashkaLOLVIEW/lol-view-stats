@@ -434,6 +434,34 @@ html { scroll-padding-top: 84px; }
   .tn .pr > :nth-child(3), .tn .pr > :nth-child(5) { display: none; }
   .tn-h h1 { font-size: 22px; }
 }
+/* layout: full page width like the other pages, one consistent rhythm (44px between sections, 14px below a heading) */
+.tn { max-width: none; margin: 0; padding: 28px 0 0; }
+.tn h2.sec { margin-top: 44px; }
+.tn .tt, .tn .tops, .tn .facts, .tn .parts, .tn .stack { margin-top: 14px; }
+.tn .tops { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.tn .sub3 { margin: 22px 0 0; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); font-weight: 600; }
+.tn .sub3 + .tops { margin-top: 10px; }
+.tn .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.tn .fact { background: var(--surface); padding: 14px 16px 16px; min-width: 0; }
+.tn .fact small { display: block; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
+.tn .fact b { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; min-width: 0; }
+.tn .fact b span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tn .fact a { color: inherit; text-decoration: none; } .tn .fact a:hover b span { text-decoration: underline; }
+.tn .fact em { font-style: normal; font-weight: 400; color: var(--muted); font-size: 12px; margin-left: auto; padding-left: 6px; white-space: nowrap; }
+.tn .fact.na b { color: var(--dim); font-weight: 500; }
+.tn .parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.tn .grp { grid-column: 1 / -1; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: var(--muted); margin: 8px 0 -2px; } .tn .grp:first-child { margin-top: 0; }
+.tn .pt { display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; color: var(--fg); text-decoration: none; font-size: 13px; font-weight: 500; transition: border-color .15s; }
+.tn .pt:hover { border-color: var(--muted); }
+.tn .pt span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tn .pt em { font-style: normal; color: var(--muted); font-size: 12px; font-weight: 400; }
+.tn .pt em.top { color: var(--gold-ink, var(--gold)); font-weight: 700; }
+.tn .sp { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 12px; padding: 0 16px; height: 46px; font-size: 13px; border-top: 1px solid var(--divider, var(--line)); color: var(--fg); text-decoration: none; }
+.tn .sp:first-child { border-top: 0; } .tn a.sp:hover { background: var(--stripe, var(--surface-2)); }
+.tn .sp.th { height: 34px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
+.tn .sp .tm { display: flex; align-items: center; gap: 8px; min-width: 0; } .tn .sp .tm span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 1000px) { .tn .tops { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .tn .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tn .tops { grid-template-columns: 1fr; } .tn .sp { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); height: auto; padding: 10px 14px; row-gap: 4px; } .tn .sp > :nth-child(2) { grid-column: 2; } .tn .sp.th { display: none; } .tn h2.sec { margin-top: 36px; } }
 </style>
   <main class="tn">
     <div class="tn-h"><span class="ic" id="tic"></span><div><h1 id="tt">Tournament</h1><div class="tn-sub" id="tsub"></div></div></div>
@@ -498,22 +526,72 @@ html { scroll-padding-top: 84px; }
     return Object.keys(by).map(function (k) { return by[k]; }).sort(function (a, b) { return (b.w / b.g) - (a.w / a.g) || b.w - a.w || a.g - b.g; });
   }
   var mmss = function (s) { return Math.floor(s / 60) + ':' + ('0' + Math.round(s % 60)).slice(-2); };
+  var EV = null, ordn = function (n) { var v = n % 100; return n + (['th', 'st', 'nd', 'rd'][(v - 20) % 10] || ['th', 'st', 'nd', 'rd'][v] || 'th'); };
+  var plc = function (a, b) { return a === b ? ordn(a) : ordn(a) + '\u2013' + ordn(b); };
+  var fd = function (d) { return d ? new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'}) : ''; };
+  function curEv(M) { var l = M.leagues[LID], e = EV && EV[LID]; if (!e) return null; if (SPL !== 'All') return e[SPL] || null; var sp = (l.splits || []).filter(function (x) { return x !== undefined; }); return sp.length <= 1 ? (e[sp[0] || ''] || null) : null; }
+  function tname(M, c) { var n = c; Object.keys(M.teams).some(function (k) { if (M.teams[k][1] === c) { n = M.teams[k][0]; return true; } }); return n; }
+  function teamFact(M, codes, ev) { if (ev && ev.on) return '<b><span>In progress</span></b>'; if (!codes || !codes.length) return '<b><span>-</span></b>'; return '<a href="team.html#' + codes[0] + '"><b>' + logo(codes[0], 22) + '<span>' + esc(tname(M, codes[0])) + '</span></b></a>'; }
+  function overview(M, ev, ds, PL, el) {
+    var l = M.leagues[LID], h = '', fact = function (k, v, na) { return '<div class="fact' + (na ? ' na' : '') + '"><small>' + k + '</small>' + v + '</div>'; };
+    var start = ev ? ev.s : l.first, end = ev ? ev.e : l.last;
+    if (ev || SPL === 'All') {
+      var mvp = ev && ev.mvp ? PL.filter(function (p) { return p.p === ev.mvp; })[0] || { p: ev.mvp, rt: null, t: '' } : el.slice().sort(function (a, b) { return (b.rt || 0) - (a.rt || 0); })[0];
+      h += '<h2 class="sec">Overview</h2><div class="facts">' +
+        fact('Start date', '<b><span>' + fd(start) + '</span></b>') + fact(ev && ev.on ? 'Last game' : 'End date', '<b><span>' + fd(end) + '</span></b>') +
+        fact('Winner', ev ? teamFact(M, ev.w, ev) : '<b><span>-</span></b>', !ev) + fact('Runner-up', ev ? teamFact(M, ev.r, ev) : '<b><span>-</span></b>', !ev) +
+        fact('MVP', mvp ? '<a href="player.html#' + encodeURIComponent(mvp.p) + '"><b>' + (mvp.t ? logo(mvp.t, 22) : '') + '<span>' + esc(mvp.p) + '</span>' + (mvp.rt ? '<em>' + (+mvp.rt).toFixed(1) + '</em>' : '') + '</b></a>' : '<b><span>-</span></b>', !mvp) +
+        fact('Prize pool', ev && ev.prize ? '<b><span>' + esc(ev.prize) + '</span></b>' : '<b><span>Not listed</span></b>', !(ev && ev.prize)) +
+        fact('Games', '<b><span>' + ds.games.length + '</span></b>') + fact('Teams', '<b><span>' + (ev ? ev.t.length : standings(ds, M).length) + '</span></b>') + '</div>';
+    }
+    if (ev && ev.t && ev.t.length) {
+      var chip = function (r) { return '<a class="pt" href="team.html#' + r[2] + '">' + logo(r[2], 24) + '<span>' + esc(tname(M, r[2])) + '</span>' + (ev.on ? '' : '<em' + (r[0] === 1 ? ' class="top"' : '') + '>' + plc(r[0], r[1]) + '</em>') + '</a>'; };
+      h += '<h2 class="sec">Participants</h2><div class="parts">';
+      if (ev.groups && Object.keys(ev.groups).length) {
+        var seen = {};
+        Object.keys(ev.groups).forEach(function (g) { h += '<div class="grp">' + esc(g) + ' group</div>' + ev.t.filter(function (r) { return ev.groups[g].indexOf(r[2]) >= 0 && (seen[r[2]] = 1); }).map(chip).join(''); });
+        var rest = ev.t.filter(function (r) { return !seen[r[2]]; }); if (rest.length) h += '<div class="grp">Other</div>' + rest.map(chip).join('');
+      } else h += ev.t.map(chip).join('');
+      h += '</div>';
+    } else if (SPL === 'All' && ev === null && EV && EV[LID] && Object.keys(EV[LID]).length > 1) {
+      h += '<h2 class="sec">Splits</h2><div class="tt"><div class="sp th"><span>Split</span><span>Dates</span><span>Winner</span><span>Runner-up</span></div>' + (l.splits || []).map(function (n) {
+        var e = EV[LID][n]; if (!e) return '';
+        var tm = function (c) { return e.on ? 'In progress' : c && c[0] ? '<span class="tm">' + logo(c[0], 20) + '<span>' + esc(tname(M, c[0])) + '</span></span>' : '-'; };
+        return '<a class="sp" href="#' + encodeURIComponent(LID) + '/' + encodeURIComponent(n) + '"><span>' + esc(n || LVF.leagueName(LID)) + '</span><span style="color:var(--muted)">' + fd(e.s).replace(/, \d{4}/, '') + ' - ' + fd(e.e).replace(/, \d{4}/, '') + '</span>' + tm(e.w) + tm(e.r) + '</a>'; }).join('') + '</div>';
+    }
+    return h;
+  }
+  function statsBlock(PL, el, CH) {
+    var top = function (title, f, fmt, desc) {
+      var a = el.slice().sort(function (x, y) { return desc ? f(y) - f(x) : f(x) - f(y); }).slice(0, 5);
+      return '<div class="card"><h3>' + title + '</h3>' + a.map(function (p, i) { return '<a class="li" href="player.html#' + encodeURIComponent(p.p) + '"><span class="n">' + (i + 1) + '</span>' + logo(p.t, 20) + '<b>' + esc(p.p) + '</b><span class="v">' + fmt(f(p)) + '</span></a>'; }).join('') + '</div>';
+    };
+    var ctop = function (title, list, f, fmt) {
+      var a = list.slice(0, 5);
+      return '<div class="card"><h3>' + title + '</h3>' + a.map(function (c, i) { return '<a class="li" href="champion.html#' + encodeURIComponent(c.c) + '"><span class="n">' + (i + 1) + '</span><b>' + esc(c.c) + '</b><span class="v">' + fmt(f(c)) + '</span></a>'; }).join('') + '</div>';
+    };
+    var minP = 3, byPk = CH.slice().sort(function (a, b) { return b.pk - a.pk || b.w - a.w; }), byBn = CH.slice().sort(function (a, b) { return b.bn - a.bn || b.pk - a.pk; }),
+      byWr = CH.filter(function (c) { return c.pk >= minP; }).sort(function (a, b) { return b.wr - a.wr || b.pk - a.pk; }), byPr = CH.slice().sort(function (a, b) { return b.pr - a.pr || b.pk - a.pk; });
+    return '<h2 class="sec">Stats overview</h2><div class="sub3">Players</div><div class="tops">' +
+      top('KDA', function (p) { return p.kda; }, function (v) { return v.toFixed(2); }, 1) + top('Damage per minute', function (p) { return p.dpm; }, function (v) { return Math.round(v); }, 1) +
+      top('Gold diff @15', function (p) { return p.gd; }, function (v) { return (v > 0 ? '+' : '') + Math.round(v); }, 1) + top('Kill participation', function (p) { return p.kp; }, function (v) { return v.toFixed(1) + '%'; }, 1) + '</div>' +
+      '<div class="sub3">Champions</div><div class="tops">' +
+      ctop('Most picked', byPk, function (c) { return c.pk; }, function (v) { return v + ' picks'; }) + ctop('Most banned', byBn, function (c) { return c.bn; }, function (v) { return v + ' bans'; }) +
+      ctop('Highest win rate (' + minP + '+ picks)', byWr, function (c) { return c.wr; }, function (v) { return v + '%'; }) + ctop('Highest presence', byPr, function (c) { return c.pr; }, function (v) { return v + '%'; }) + '</div>';
+  }
   function draw() {
     var M = LVF.meta(), ds = DS, h = '';
     var TS = standings(ds, M), PL = LVF.players(ds), live = Date.now();
     var up = (UP.global || []).filter(function (m) { return m[5] === (LID === 'WLDs' ? 'worlds' : LID.toLowerCase()) && m[6] + 3 * 3600e3 > live; }).slice(0, 4);
     if (up.length) h += '<h2 class="sec">Upcoming Matches</h2><div class="stack">' + up.map(upRow).join('') + '</div>';
     if (!ds.games.length) { $('tbody').innerHTML = h + '<div class="row empty" style="color:var(--muted);font-size:12px">No games played yet</div>'; return; }
+    var ev = curEv(M), minG0 = Math.max(2, Math.round(Math.max.apply(null, TS.map(function (x) { return x.g; })) * 0.3));
+    h += overview(M, ev, ds, PL, PL.filter(function (p) { return p.g >= minG0; }));
     h += '<h2 class="sec">Standings</h2><div class="tt"><div class="tr th"><span>#</span><span>Team</span><span class="r">W-L</span><span class="r">Win %</span><span class="r">K/D</span><span class="r">Avg time</span></div>' +
       TS.map(function (x, i) { var c = M.teams[x.t][1]; return '<a class="tr" href="team.html#' + c + '"><span class="n">' + (i + 1) + '</span><span class="tm">' + logo(c, 24) + '<span>' + esc(M.teams[x.t][0]) + '</span></span><span class="r">' + x.w + '-' + (x.g - x.w) + '</span><span class="r">' + Math.round(100 * x.w / x.g) + '%</span><span class="r">' + (x.k / Math.max(1, x.d)).toFixed(2) + '</span><span class="r">' + mmss(x.len / x.g) + '</span></a>'; }).join('') + '</div>';
     h += '<h2 class="sec">Results</h2><div class="stack" id="results"></div><div class="rs-more"><button class="chip" id="more" type="button">Show more</button></div>';
     var minG = Math.max(2, Math.round(Math.max.apply(null, TS.map(function (x) { return x.g; })) * 0.3)), el = PL.filter(function (p) { return p.g >= minG; });
-    var top = function (title, f, fmt, desc) {
-      var a = el.slice().sort(function (x, y) { return desc ? f(y) - f(x) : f(x) - f(y); }).slice(0, 5);
-      return '<div class="card"><h3>' + title + '</h3>' + a.map(function (p, i) { return '<a class="li" href="player.html#' + encodeURIComponent(p.p) + '"><span class="n">' + (i + 1) + '</span>' + logo(p.t, 20) + '<b>' + esc(p.p) + '</b><span class="v">' + fmt(f(p)) + '</span></a>'; }).join('') + '</div>';
-    };
-    h += '<h2 class="sec">Top Performers</h2><div class="tops">' + top('KDA', function (p) { return p.kda; }, function (v) { return v.toFixed(2); }, 1) + top('Damage per minute', function (p) { return p.dpm; }, function (v) { return Math.round(v); }, 1) +
-      top('Gold diff @15', function (p) { return p.gd; }, function (v) { return (v > 0 ? '+' : '') + Math.round(v); }, 1) + top('Kill participation', function (p) { return p.kp; }, function (v) { return v.toFixed(1) + '%'; }, 1) + '</div>';
+    h += statsBlock(PL, el, LVF.champs(ds));
     h += '<h2 class="sec">Players</h2><div class="tt" id="ptbl"></div>';
     $('tbody').innerHTML = h;
     RES = LVF.results(ds); shown = 10; drawRes();
@@ -542,6 +620,7 @@ html { scroll-padding-top: 84px; }
   }
   function load() {
     var m = LVF.meta().leagues[LID]; chips(m);
+    if (window.__setSub) window.__setSub();
     $('tbody').innerHTML = '<div class="row empty" style="color:var(--muted);font-size:12px">Loading…</div>';
     LVF.load(LID, SPL).then(function (ds) { DS = ds; draw(); }).catch(function () { $('tbody').innerHTML = '<div class="row empty" style="color:var(--muted);font-size:12px">Could not load this tournament</div>'; });
   }
@@ -553,8 +632,9 @@ html { scroll-padding-top: 84px; }
       var nm = LVF.leagueName(LID); document.title = nm + ' - LoL Esports Stats';
       $('tt').textContent = nm; $('tic').innerHTML = LVF.evIcon(LID, 52) || '';
       var l = M.leagues[LID], f = function (d) { return d ? new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC'}) : ''; };
-      $('tsub').textContent = '2026 · ' + f(l.first) + ' - ' + f(l.last) + ' · ' + l.n + ' games';
-      load();
+      var setSub = function () { var e0 = curEv(M), a0 = e0 ? e0.s : l.first, b0 = e0 ? e0.e : l.last; $('tsub').textContent = '2026 \u00b7 ' + f(a0) + ' - ' + f(b0) + ' \u00b7 ' + (e0 ? e0.g : l.n) + ' games'; };
+      window.__setSub = setSub; var go = function () { setSub(); load(); };
+      if (EV) go(); else fetch('data/events.json').then(function (r) { return r.json(); }).then(function (j) { EV = j; }, function () { EV = {}; }).then(go);
     });
   }
   window.addEventListener('hashchange', boot);

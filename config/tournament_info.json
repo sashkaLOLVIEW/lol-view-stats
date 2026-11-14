@@ -1,0 +1,13 @@
+{
+ "_readme": "Hand-typed extras per event. Key = LEAGUE|Split (split is empty for international events, e.g. \"MSI|\"). Optional fields: prize (text, e.g. \"$1,000,000\"), groups (object: group name -> list of team codes), mvp (player name, overrides the rating-based pick).",
+ "_example": {
+  "LPL|Split 1": {
+   "prize": "",
+   "groups": {
+    "Ascend": [],
+    "Nirvana": []
+   },
+   "mvp": ""
+  }
+ }
+}

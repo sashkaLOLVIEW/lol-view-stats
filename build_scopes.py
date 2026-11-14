@@ -48,8 +48,10 @@ def build_results(df, code_of, current=None):
     t = df[(df.position == "team") & df.teamname.notna()]
     pl = df[(df.position != "team") & df.playername.notna() & df.teamname.notna()]
     rec = {}                                                              # (league, split, team) -> (a, b, kind, n_teams, last_date)
+    evs = {}                                                              # (league, split) -> start, end, n games
     for (lg, sp), g in t.groupby(["league", "split"]):
         g = g.copy(); g["day"] = g.date.dt.date; teams = list(g.teamname.unique()); n = len(teams); last = str(g.date.max())[:10]
+        evs[(lg, sp)] = {"s": str(g.date.min())[:10], "e": last, "g": int(g.gameid.nunique())}
         has_po = (g.playoffs == 1).any() and lg not in INTL
         wl = g.groupby("teamname").result.agg(["sum", "count"]); wl["l"] = wl["count"] - wl["sum"]
         by_rec = list(wl.sort_values(["sum", "l"], ascending=[False, True]).index)   # best record first
@@ -76,7 +78,18 @@ def build_results(df, code_of, current=None):
         if not r: continue
         w = int(g.result.sum()); out.setdefault(name, []).append([lg, sp, code_of(tm), r[0], r[1], r[2], r[3], w, len(g) - w, r[4], 1 if lg == current else 0])
     for v in out.values(): v.sort(key=lambda x: x[9], reverse=True)
-    return out
+    events = {}
+    for (lg, sp, tm), r in rec.items():
+        e = events.setdefault(lg, {}).setdefault(sp, dict(evs[(lg, sp)], t=[]))
+        e["t"].append([r[0], r[1], code_of(tm), r[2]])
+    for lg, d in events.items():
+        for sp, e in d.items():
+            e["t"].sort(key=lambda x: (x[0], x[2])); e["on"] = 1 if lg == current else 0
+            if not e["on"]:
+                top = [x[2] for x in e["t"] if x[3] == "po"]
+                e["w"] = [x[2] for x in e["t"] if x[0] == 1 and x[3] == "po"][:1]
+                e["r"] = [x[2] for x in e["t"] if x[0] == 2 and x[3] == "po"][:1]
+    return out, events
 
 
 def build(csv, out_dir, code_of, icons_fn, leagues=None, current=None, team_leagues=None):
@@ -148,6 +161,15 @@ def build(csv, out_dir, code_of, icons_fn, leagues=None, current=None, team_leag
     meta["pix"] = {k: [[a, b, c, m[0], m[1]] for (a, b, c), m in sorted(v.items())] for k, v in pix.items()}
     meta["tix"] = {k: [[a, b, c, m[0], m[1]] for (a, b, c), m in sorted(v.items())] for k, v in tix.items()}
     (out_dir / "meta.json").write_text(json.dumps(meta, separators=(",", ":")), encoding="utf-8")
-    (out_dir / "results.json").write_text(json.dumps(build_results(df, code_of, current), separators=(",", ":")), encoding="utf-8")
+    res, events = build_results(df, code_of, current)
+    (out_dir / "results.json").write_text(json.dumps(res, separators=(",", ":")), encoding="utf-8")
+    info = {}                                                              # hand-typed extras: prize pool, groups, MVP (config/tournament_info.json, key "LEAGUE|Split")
+    try: info = json.loads((Path(__file__).resolve().parent / "config" / "tournament_info.json").read_text(encoding="utf-8"))
+    except Exception: pass
+    for k, v in info.items():
+        if k.startswith("_"): continue
+        lg, _, sp = k.partition("|")
+        if lg in events and sp in events[lg]: events[lg][sp].update({a: b for a, b in v.items() if not a.startswith("_")})
+    (out_dir / "events.json").write_text(json.dumps(events, separators=(",", ":")), encoding="utf-8")
     (out_dir / "champs.json").write_text(json.dumps({c: icons_fn(c) for c in champs if icons_fn(c)}, separators=(",", ":")), encoding="utf-8")
     print("  filter data: %d leagues, %d players, %d teams, %d champions -> %s" % (len(meta["leagues"]), len(players), len(teams), len(champs), out_dir))
