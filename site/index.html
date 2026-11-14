@@ -1189,6 +1189,16 @@ html { scroll-padding-top: 84px; }
 .tp-badge, .tp-badge.gold, .tp-badge.blue, .tp-badge.green, .tp-rating span { color: #000 !important; }
 .finder { margin-bottom: 72px; } .finder + .cols { margin-top: 72px; }
 @media (max-width: 760px) { .finder { margin-bottom: 52px; } .finder + .cols { margin-top: 52px; } }
+
+/* full-width navbar with the tools (search/discord/theme) inside it */
+@media (min-width: 1081px) {
+  .page > .topbar { position: sticky; display: block; }
+  .page > .topbar > .nav { display: flex; width: 100%; box-sizing: border-box; justify-content: flex-start; padding-right: 330px; }
+  .page > .topbar > .tools { position: absolute; right: 14px; top: 12px; height: 35px; flex: none; width: auto; gap: 14px; align-items: center; }
+  .page > .topbar .tools .search { flex: none; width: 240px; }
+  .page > .topbar .tools .search input { height: 29px; }
+  .page > .topbar .tools .search svg { top: 7px; }
+}
 </style>
 <script>
 (function () {

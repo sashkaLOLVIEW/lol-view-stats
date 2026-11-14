@@ -568,7 +568,17 @@ html { scroll-padding-top: 84px; }
   window.addEventListener('resize', function () { if (innerWidth > 760) set(false); });
 })();
 </script>
-<style>img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; }</style>
+<style>img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; }
+/* full-width navbar with the tools (search/discord/theme) inside it */
+@media (min-width: 1081px) {
+  .page > .topbar { position: sticky; display: block; }
+  .page > .topbar > .nav { display: flex; width: 100%; box-sizing: border-box; justify-content: flex-start; padding-right: 330px; }
+  .page > .topbar > .tools { position: absolute; right: 14px; top: 12px; height: 35px; flex: none; width: auto; gap: 14px; align-items: center; }
+  .page > .topbar .tools .search { flex: none; width: 240px; }
+  .page > .topbar .tools .search input { height: 29px; }
+  .page > .topbar .tools .search svg { top: 7px; }
+}
+</style>
 <script>document.addEventListener('dragstart', function (e) { if (e.target && e.target.tagName === 'IMG') e.preventDefault(); });</script>
 </body>
 </html>
