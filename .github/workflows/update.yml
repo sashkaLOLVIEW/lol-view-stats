@@ -88,6 +88,8 @@ jobs:
           mkdir -p runlog
           set -o pipefail; python fetch_bootcamp.py 2>&1 | tee runlog/bootcamp.txt
       - name: Build site
+        env:
+          PYTHONHASHSEED: "0"   # makes the build reproducible, so "nothing changed" can be detected
         run: |
           mkdir -p runlog
           set -o pipefail; python build.py 2>&1 | tee runlog/build.txt
@@ -96,6 +98,31 @@ jobs:
         run: |
           [ -f data/riot_games.json ] && python -c "import json;d=json.load(open('data/riot_games.json'));print(len(d),'games saved');[print(k,v.get('mid'),[t['code'] for t in v['teams']],v['number']) for k,v in d.items()]" > runlog/riot_saved.txt 2>&1 || echo "no riot_games.json" > runlog/riot_saved.txt
           cd runlog && git init -q && git checkout -q -b run-log && git add -A && git -c user.name=bot -c user.email=bot@users.noreply.github.com commit -qm "run log $GITHUB_RUN_ID" && git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" run-log || true
+      - name: Fingerprint the built site
+        id: fp
+        run: echo "hash=$(find dist -type f | sort | xargs sha256sum | sha256sum | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+      - name: Has this exact site already been published to Cloudflare?
+        id: cfseen
+        uses: actions/cache/restore@v4
+        with:
+          path: runlog/cf-published.txt
+          key: cf-published-${{ steps.fp.outputs.hash }}
+      - name: Publish to Cloudflare Pages (skipped when nothing changed or secrets are missing)
+        if: steps.cfseen.outputs.cache-hit != 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_PROJECT: ${{ vars.CF_PAGES_PROJECT || 'prohub' }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then echo "Cloudflare secrets not set - skipping"; exit 0; fi
+          npx --yes wrangler@3 pages deploy dist --project-name "$CF_PROJECT" --branch main --commit-dirty=true
+          mkdir -p runlog && echo "${{ steps.fp.outputs.hash }}" > runlog/cf-published.txt
+      - name: Remember that this site was published
+        if: steps.cfseen.outputs.cache-hit != 'true' && hashFiles('runlog/cf-published.txt') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: runlog/cf-published.txt
+          key: cf-published-${{ steps.fp.outputs.hash }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
