@@ -561,8 +561,8 @@ html { scroll-padding-top: 84px; }
   }
   (function () { var mu = document.getElementById('mu'); function t(e) { var w = e.target.closest ? e.target.closest('.mtw') : null; if (w) w.classList.toggle('sc', w.scrollLeft > 0); } mu.addEventListener('scroll', t, true); })();
   var h = ''; try { h = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
-  var start = names.filter(function (n) { return n.toLowerCase() === h.toLowerCase(); })[0] || names[0];
-  render(start);
+  var start = names.filter(function (n) { return n.toLowerCase() === h.toLowerCase(); })[0] || (h ? null : names[0]);
+  if (start) render(start);   // a champion outside the default scope is loaded by want() below, so don't flash the first champion meanwhile
   var D0 = D;
   function want(hh) { if (window.LVF && hh && !D.champs[hh]) LVF.has('champion', hh).then(function (ok) { if (ok) LVF.set({league: 'ALL', split: 'All', stage: 'All', year: 'All'}); }); }
   var wanted = h; want(h);
