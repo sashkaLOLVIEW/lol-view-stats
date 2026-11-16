@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Game Stats</title>
+<title>PROHUB | Game</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
 <style>
@@ -428,6 +428,7 @@ html { scroll-padding-top: 84px; }
   function stageOf(s) { var d = String(s || '').slice(0, 10); if (!d) return ''; return d < '2026-10-19' ? 'Play-Ins' : d <= '2026-10-31' ? 'Swiss' : d <= '2026-11-06' ? 'Quarterfinals' : d <= '2026-11-10' ? 'Semifinals' : 'Final'; }
   function render(i) {
     var g = D.games[i], A = g.teams[0], B = g.teams[1];
+    document.title = 'PROHUB | ' + A.code + ' vs ' + B.code + ' \u00b7 Game ' + (i + 1);
     var dn = function (t) { return t.drakes.reduce(function (s, d) { return s + d[1]; }, 0); };
     var stat = function (t, r, o) {
       var rows = [['Kills', 'kills', t.k, o.k, t.k], ['Gold', 'gold', t.gold, o.gold, k1(t.gold)], ['Turrets', 'turret', t.towers, o.towers, t.towers], ['Dragons', 'dragon', dn(t), dn(o), dn(t)], ['Barons', 'nashor', t.barons, o.barons, t.barons]];

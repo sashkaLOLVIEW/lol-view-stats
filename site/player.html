@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Player Profile</title>
+<title>PROHUB | Player</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
 <style>
@@ -604,7 +604,7 @@ body.tr-on #tres { display: block; } body.tr-on .body, body.tr-on .perf { displa
       var ap = function () { cards.forEach(function (c, i) { c.style.display = i < shown ? '' : 'none'; }); [].slice.call(hs.querySelectorAll('.ser')).forEach(function (w) { w.style.display = [].some.call(w.querySelectorAll('.gr'), function (c) { return c.style.display !== 'none'; }) ? '' : 'none'; }); more.style.display = shown < cards.length ? '' : 'none'; rst.style.display = shown > 10 ? '' : 'none'; };
       hs.appendChild(wrap); ap();
     })();
-    document.title = name + ' · Player Profile';
+    document.title = 'PROHUB | ' + name;
   }
   var h = ''; try { h = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
   var dflt = D.players.Chovy ? 'Chovy' : names[0];

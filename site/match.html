@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Match - LoL Esports Stats</title>
+<title>PROHUB | Match</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
 <style>
@@ -1077,7 +1077,7 @@ html { scroll-padding-top: 84px; }
     $("match").hidden = game; $("score").hidden = !game; $("gcols").hidden = !game; $("mdet").hidden = !game;
     $("gold").hidden = !live; $("board").hidden = !live; $("ovgrid").hidden = !(mode === "ov" || live);
     setChips();
-    document.title = (m.teams[0].code + " vs " + m.teams[1].code) + " - LoL Esports Stats";
+    document.title = "PROHUB | " + m.teams[0].code + " vs " + m.teams[1].code;
     if (game) { openGame(rg); return; }
     S.tok++;
     if (mode === "ov") { seriesHeader(); setNotice("", S.upcoming ? "<b>Upcoming</b> This match has not started yet" : "<b>Live</b> The series updates by itself"); drawCmp(m.teams[0], m.teams[1]); }

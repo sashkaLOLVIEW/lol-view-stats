@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Champion Profile</title>
+<title>PROHUB | Champion</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
 <style>
@@ -470,6 +470,7 @@ html { scroll-padding-top: 84px; }
     if (!e.target.closest('#cfd')) $('cfd').classList.remove('open');
   });
   function render(n, role) {
+    document.title = 'PROHUB | ' + n;
     var C = D.champs[n], ALL = C.rows, nG = D.games, bn = C.bans.length;
     var roles = {}; ALL.forEach(function (r) { roles[r.role] = (roles[r.role] || 0) + 1; });
     if (role && !roles[role]) role = null;

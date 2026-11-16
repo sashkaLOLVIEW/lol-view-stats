@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<title>Recent Results</title>
+<title>PROHUB | Tournament</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
 <style>
@@ -630,7 +630,7 @@ html { scroll-padding-top: 84px; }
     LVF.loadMeta().then(function (M) {
       if (!M.leagues[LID]) { $('tt').textContent = 'Tournament not found'; return; }
       if (SPL !== 'All' && (M.leagues[LID].splits || []).indexOf(SPL) < 0) SPL = 'All';
-      var nm = LVF.leagueName(LID); document.title = nm + ' - LoL Esports Stats';
+      var nm = LVF.leagueName(LID); document.title = 'PROHUB | ' + nm;
       $('tt').textContent = nm; $('tic').innerHTML = LVF.evIcon(LID, 52) || '';
       var l = M.leagues[LID], f = function (d) { return d ? new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC'}) : ''; };
       var setSub = function () { var e0 = curEv(M), a0 = e0 ? e0.s : l.first, b0 = e0 ? e0.e : l.last; $('tsub').textContent = '2026 \u00b7 ' + f(a0) + ' - ' + f(b0) + ' \u00b7 ' + (e0 ? e0.g : l.n) + ' games'; };
