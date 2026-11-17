@@ -553,6 +553,8 @@ html { scroll-padding-top: 84px; }
 .finder { gap: 0; } .finder > .search { margin-top: 0; } .finder > .tourn { margin-top: 18px; }
 .finder-art { display: block; width: 164px; height: 107px; object-fit: contain; object-position: center bottom; margin-bottom: -20px; position: relative; z-index: 0; pointer-events: none; user-select: none; }
 .finder .search { position: relative; z-index: 1; }
+.page > .topbar + .finder { margin-top: 160px !important; }
+@media (max-width: 760px) { .page > .topbar + .finder { margin-top: 56px !important; } }
 .finder .search input { height: 46px; border-radius: 10px; padding: 0 56px 0 20px; font-size: 15px; }
 .finder .search svg { left: auto; right: 20px; top: 14px; width: 18px; height: 18px; pointer-events: none; }
 @media (max-width: 760px) { .finder { margin-top: 20px; } .finder-art { width: 132px; height: 86px; margin-bottom: -16px; } .finder .search input { height: 44px; font-size: 15px; padding: 0 50px 0 16px; } .finder .search svg { right: 17px; top: 13px; } }
