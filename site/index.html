@@ -676,6 +676,11 @@ body { padding-top: 0; }
 .strip { width: auto; margin: 0 calc(-1 * max(16px, env(safe-area-inset-right, 0px))) 16px calc(-1 * max(16px, env(safe-area-inset-left, 0px))); }
 .strip-seg { padding: 10px 12px; }
 .sb-l { left: 52px; } .sb-r { right: 12px; }
+
+.strip-seg .stack { cursor: grab; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+.strip-seg .stack.dragging { cursor: grabbing; scroll-behavior: auto; user-select: none; }
+.strip-seg .stack.dragging a { pointer-events: none; }
+.strip-seg .stack a, .strip-seg .stack img { -webkit-user-drag: none; }
 </style>
   <section class="strip" id="strip" aria-label="Recent results and upcoming matches">
     <section class="strip-seg col-recent" id="results-sec">
@@ -1316,6 +1321,18 @@ body { padding-top: 0; }
     l.addEventListener('click', function () { st.scrollBy({ left: -Math.max(220, st.clientWidth * 0.8) }); });
     r.addEventListener('click', function () { st.scrollBy({ left: Math.max(220, st.clientWidth * 0.8) }); });
     st.addEventListener('scroll', upd); window.addEventListener('resize', upd);
+    // drag with the mouse (touch already scrolls natively)
+    var down = false, moved = false, sx = 0, sl = 0;
+    st.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse' || e.button !== 0) return; down = true; moved = false; sx = e.clientX; sl = st.scrollLeft; });
+    window.addEventListener('pointermove', function (e) {
+      if (!down) return;
+      var dx = e.clientX - sx;
+      if (!moved && Math.abs(dx) > 5) { moved = true; st.classList.add('dragging'); }
+      if (moved) { st.scrollLeft = sl - dx; e.preventDefault(); }
+    });
+    window.addEventListener('pointerup', function () { if (!down) return; down = false; if (moved) setTimeout(function () { st.classList.remove('dragging'); }, 0); });
+    st.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+    st.addEventListener('dragstart', function (e) { e.preventDefault(); });
     if (window.MutationObserver) new MutationObserver(upd).observe(st, { childList: true });
     if (window.ResizeObserver) new ResizeObserver(upd).observe(st);
     upd(); setTimeout(upd, 400);
