@@ -688,10 +688,21 @@ body { padding-top: 0; }
 .strip-seg .stack.dragging a { pointer-events: none; }
 .strip-seg .stack a, .strip-seg .stack img { -webkit-user-drag: none; }
 .strip { margin-bottom: 0 !important; }
+
+/* strip cards: flush, no gaps or rounding, separated by a single line */
+.strip-seg { padding-top: 0; padding-bottom: 0; }
+#results-sec { min-height: 0; }
+.strip-seg .stack { gap: 0; }
+.strip-seg .stack .row, #live-list .row { border-radius: 0 !important; border: 0 !important; border-right: 1px solid var(--line) !important; background: transparent !important; box-shadow: none; min-height: 84px !important; }
+.strip-seg .stack .row:first-child { border-left: 0 !important; }
+.strip-seg .stack .row:hover { background: var(--stripe, var(--surface-2)) !important; }
+#live-list { gap: 0; }
+.strip-seg .hd-row { margin-right: 12px !important; }
+.sb { height: 48px; }
 </style>
   <section class="strip" id="strip" aria-label="Recent results and upcoming matches">
     <section class="strip-seg col-recent" id="results-sec">
-      <div class="hd-row"><h2><a href="results.html" style="display:flex;align-items:center;gap:7px">Recent Results <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2></div>
+      <div class="hd-row"><h2><a href="results.html" style="display:flex;align-items:center;gap:7px">Recent <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2></div>
       <div class="stack" id="recent"></div>
       <button type="button" class="sb sb-l" aria-label="Scroll left" hidden><svg width="9" height="14" viewBox="0 0 9 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1 1.5 7 7 13"/></svg></button><button type="button" class="sb sb-r" aria-label="Scroll right" hidden><svg width="9" height="14" viewBox="0 0 9 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1 5.500 6L2 13"/></svg></button>
     </section>
