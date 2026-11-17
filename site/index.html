@@ -1334,7 +1334,7 @@ body { padding-top: 0; }
 (function () {
   if (!window.LVF) return;
   LVF.loadMeta().then(function (m) {
-    var MAJ = ['WLDs', 'MSI', 'EWC', 'FST', 'DCGI', 'AC', 'LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'], ids = Object.keys(m.leagues).filter(function (id) { return LVF.evIcon(id, 22); });
+    var MAJ = ['WLDs', 'MSI', 'FST', 'AC', 'LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'], ids = Object.keys(m.leagues).filter(function (id) { return LVF.evIcon(id, 22); });
     ids.sort(function (a, b) { var x = MAJ.indexOf(a), y = MAJ.indexOf(b); return (x < 0 ? 99 : x) - (y < 0 ? 99 : y) || (a < b ? -1 : 1); });
     document.getElementById('tgrid').innerHTML = ids.map(function (id) { return '<a href="tournament.html#' + id + '" title="' + LVF.leagueName(id) + '" aria-label="' + LVF.leagueName(id) + '"><span class="ti">' + LVF.evIcon(id, 18) + '</span></a>'; }).join('');
   });
