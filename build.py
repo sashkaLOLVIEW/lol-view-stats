@@ -920,7 +920,7 @@ def main(csv):
     GD = build_game(w, logos_all)
     from types import SimpleNamespace as NS
     extra = [(pd.Timestamp(g["start"]), frozenset(t["code"] for t in g["teams"]), NS(code=g["teams"][0]["code"], result=g["teams"][0]["win"]), NS(code=g["teams"][1]["code"], result=g["teams"][1]["win"]), g["id"]) for g in GD["games"] if g.get("pct")]
-    allres = build_recent(w, extra); rec = allres[:4]
+    allres = build_recent(w, extra); rec = allres[:10]
     PD = build_profiles(w, faces_old, logos_all)
     annotate_ratings(GD, PD)
     PI = load_player_info()

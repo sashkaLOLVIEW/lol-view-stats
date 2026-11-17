@@ -458,6 +458,27 @@ html { scroll-padding-top: 84px; }
 .page > .topbar .tools .search { flex: none; box-sizing: border-box; width: calc((min(1312px, 100vw - 32px) - 64px) * 168 / 800); } }
 </style>
 <div class="page">
+  <section class="strip" id="strip" aria-label="Upcoming matches and recent results">
+    <section class="strip-seg col-live" id="schedule">
+      <!-- Live Now: hidden until a match is live. Remove the "hidden" attribute (or set live-wrap.hidden = false) to show it. -->
+      <div id="live-wrap" hidden>
+      <h2>Live Now</h2>
+      <div id="live-list"></div>
+      </div>
+
+      <div class="up-head sec upd">
+        <h2>Upcoming <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></h2>
+        <div class="rgdd" id="up-rg"></div>
+      </div>
+      <div class="stack" id="upcoming"></div>
+
+    </section>
+
+    <section class="strip-seg col-recent" id="results-sec">
+      <div class="hd-row"><h2><a href="results.html" style="display:flex;align-items:center;gap:7px">Recent Results <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2></div>
+      <div class="stack" id="recent"></div>
+    </section>
+  </section>
   <header class="topbar">
     <nav class="nav" aria-label="Main"><a href="index.html" aria-current="page">Home</a><a href="rankings.html">Rankings</a><a href="players.html">Players</a><a href="champions.html">Champions</a>
     </nav>
@@ -502,25 +523,6 @@ html { scroll-padding-top: 84px; }
       <div class="stack" id="player-list"></div>
     </section>
 
-    <section class="col col-live" id="schedule">
-      <!-- Live Now: hidden until a match is live. Remove the "hidden" attribute (or set live-wrap.hidden = false) to show it. -->
-      <div id="live-wrap" hidden>
-      <h2>Live Now</h2>
-      <div id="live-list"></div>
-      </div>
-
-      <div class="up-head sec upd">
-        <h2>Upcoming <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></h2>
-        <div class="rgdd" id="up-rg"></div>
-      </div>
-      <div class="stack" id="upcoming"></div>
-
-    </section>
-
-    <section class="col col-recent" id="results-sec">
-      <div class="hd-row"><h2><a href="results.html" style="display:flex;align-items:center;gap:7px">Recent Results <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2></div>
-      <div class="stack" id="recent"></div>
-    </section>
   </main>
   <section class="y27" id="y2027" aria-label="2027 season">
     <h2>2027</h2>
@@ -749,7 +751,7 @@ html { scroll-padding-top: 84px; }
   window.renderUp = renderUp;
   function renderUp() {
     drawUp();
-    var now = Date.now(), list = (UP[upKey] || []).filter(function (m) { return m[6] + 3 * 3600e3 > now; }).slice(0, Math.max(1, 4 - liveN));
+    var now = Date.now(), list = (UP[upKey] || []).filter(function (m) { return m[6] + 3 * 3600e3 > now; }).slice(0, Math.max(1, 8 - liveN));
     $('upcoming').innerHTML = list.length ? list.map(function (m) {
       var lg = m[5] === 'worlds' ? worlds(24) : '<span style="font-size:10px;font-weight:700;color:var(--muted)">' + String(m[5]).toUpperCase() + '</span>';
       var lk = m[7] && !(m[0] === 'TBD' && m[1] === 'TBD');
@@ -1244,6 +1246,25 @@ html { scroll-padding-top: 84px; }
 #rankings .row, #players .row { position: relative; cursor: pointer; transition: background .12s; }
 #rankings .row .name::after, #players .row .name::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 #rankings .row:hover, #players .row:hover { background: var(--surface-2, var(--stripe, var(--surface))); }
+
+/* upcoming + recent results: one horizontal strip above the navbar */
+.strip { display: flex; align-items: stretch; gap: 0; overflow-x: auto; margin: 12px 0 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; scrollbar-width: thin; }
+.strip-seg { display: flex !important; flex-direction: row !important; align-items: center; gap: 10px; padding: 10px 12px; flex: none; }
+.strip-seg + .strip-seg { border-left: 1px solid var(--line); }
+.strip-seg .up-head, .strip-seg .hd-row { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 8px; height: auto !important; min-height: 0 !important; margin: 0 !important; width: 118px; flex: none; }
+.strip-seg h2 { font-size: 13px; height: auto; }
+.strip-seg .stack { display: flex !important; flex-direction: row; gap: 8px; margin: 0 !important; flex: none !important; }
+.strip-seg .stack .row, #live-list .row { flex: none !important; width: 214px; height: auto !important; min-height: 76px !important; margin: 0 !important; }
+#live-wrap:not([hidden]) { display: flex; align-items: center; gap: 10px; margin: 0 6px 0 0 !important; }
+#live-list { display: flex; gap: 8px; } #live-list .liverow { margin-top: 0 !important; }
+.strip-seg #up-rg { margin: 0; }
+@media (min-width: 1081px) {
+  .cols { grid-template-columns: 1fr 1fr; grid-template-areas: "tp tp" "rank players"; grid-template-rows: auto 1fr; row-gap: 36px; }
+  .cols::after { display: none; }
+  .col-players { position: relative; }
+  .col-players::before { content: ""; position: absolute; left: -16.5px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--divider) 8%, var(--divider) 92%, transparent); }
+}
+.strip-seg .hd-row h2 a { flex-wrap: wrap; }
 </style>
 <script>
 (function () {
