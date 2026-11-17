@@ -682,9 +682,15 @@ html { scroll-padding-top: 84px; }
 /* navbar: full-width bar (same fill as the results strip), sticky; the links stay inside the page container */
 body { padding-top: 0; }
 .topbar { position: sticky; top: 0; z-index: 60; margin-top: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0; }
-.page > .topbar { position: sticky; display: block; }
+.page > .topbar { position: sticky; }
 .topbar::before { background: var(--surface); border-bottom: 1px solid var(--line); }
 .topbar::after { display: none; }
+@media (max-width: 760px) {
+  .page > .topbar { display: flex; flex-wrap: wrap; align-items: center; column-gap: 10px; row-gap: 0; }
+  .burger { order: 1; width: 35px; height: 35px; background: transparent !important; border: 0 !important; }
+  .topbar > .tools { order: 2; height: 35px; }
+  .topbar > .nav.open { order: 3; flex: 0 0 100%; width: 100%; box-sizing: border-box; position: static; background: transparent; border: 0; border-radius: 0; box-shadow: none; padding: 2px 0 8px; margin: 0; }
+}
 @media (min-width: 1081px) { .page > .topbar > .nav:not(.open) { padding-left: 0; } .page > .topbar > .tools { right: 0; } }
 .page > .topbar > .nav:not(.open) { background: transparent; border-color: transparent; }
 .topbar .search input { background: var(--bg); }
