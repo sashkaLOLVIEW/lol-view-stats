@@ -351,7 +351,7 @@ img.wi-l { display: none; } img.wi-d { display: block; }
 
 /* fixed top bar: solid page background behind the bar, gradient fading out from its bottom edge */
 html { scroll-padding-top: 84px; }
-.topbar { position: sticky; top: 0; z-index: 60; margin-top: -12px; padding-top: 12px; padding-bottom: 12px; margin-bottom: -12px; }
+.topbar { position: relative; margin-top: -12px; padding-top: 12px; padding-bottom: 12px; margin-bottom: -12px; }
 .topbar::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: color-mix(in srgb, var(--bg) 75%, transparent); }
 .topbar::after { content: ""; position: absolute; z-index: -1; left: 50%; width: 100vw; transform: translateX(-50%); top: 100%; height: 40px; pointer-events: none; background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 75%, transparent), color-mix(in srgb, var(--bg) 0%, transparent)); }
 .topbar .nav, .topbar .search input { background: var(--bg); }   /* stay fully opaque on top of the translucent bar */
@@ -603,7 +603,7 @@ html { scroll-padding-top: 84px; }
 
 /* full-width navbar with the tools (search/discord/theme) inside it */
 @media (min-width: 1081px) {
-  .page > .topbar { position: sticky; display: block; }
+  .page > .topbar { position: relative; display: block; }
   .page > .topbar > .nav { display: flex; width: 100%; box-sizing: border-box; justify-content: flex-start; padding-right: 330px; }
   .page > .topbar > .tools { position: absolute; right: 14px; top: 12px; height: 35px; flex: none; width: auto; gap: 14px; align-items: center; }
   .page > .topbar .tools .search { flex: none; width: 240px; }
@@ -661,6 +661,16 @@ html { scroll-padding-top: 84px; }
 .sb-l { left: max(12px, calc(50vw - 656px + 130px)); } .sb-r { right: max(12px, calc(50vw - 656px)); }
 .sb[hidden] { display: none; }
 #results-sec { min-height: 98px; }
+.topbar::before, .topbar::after { display: none !important; }   /* navbar no longer sticks */
+html { scroll-padding-top: 0 !important; }
+
+/* strip: sits flush at the top; Recent Results label runs vertically, no arrow */
+body { padding-top: 0; }
+.strip { margin-top: 0; }
+.strip-seg .hd-row h2 svg, .strip-seg .up-head h2 svg { display: none; }
+#results-sec .hd-row { width: 34px; align-self: stretch; padding: 0 !important; justify-content: center; align-items: center; border-right: 1px solid var(--line); margin-right: 4px !important; }
+#results-sec .hd-row h2 { height: auto; }
+#results-sec .hd-row h2 a { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; letter-spacing: .08em; text-transform: uppercase; font-size: 11px; color: var(--dim); }
 </style>
 <div class="page">
   <section class="strip" id="strip" aria-label="Recent results and upcoming matches">
