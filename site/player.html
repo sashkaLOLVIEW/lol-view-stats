@@ -696,7 +696,7 @@ body.tr-on #tres { display: block; } body.tr-on .body, body.tr-on .perf { displa
   inp.setAttribute('autocomplete', 'off');
   var items = [], act = -1;
   function esc(x) { return String(x).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  function go(h) { inp.blur(); box.className = 'sr'; inp.value = ''; var same = location.pathname.split('/').pop() === h.split('#')[0]; location.href = h; if (same) setTimeout(function () { location.reload(); }, 30); }
+  function go(h) { inp.blur(); box.className = 'sr'; inp.value = ''; var same = (location.pathname.split('/').pop().replace(/\.html$/, '') || 'index') + '.html' === h.split('#')[0]; location.href = h; if (same) setTimeout(function () { location.reload(); }, 30); }
   function rank(q) { return function (a, b) { return (a[0].toLowerCase().indexOf(q) !== 0) - (b[0].toLowerCase().indexOf(q) !== 0); }; }
   function run() {
     var q = inp.value.trim().toLowerCase(); act = -1;

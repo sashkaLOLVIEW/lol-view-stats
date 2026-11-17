@@ -515,6 +515,7 @@ html { scroll-padding-top: 84px; }
   .score .sc-st, .score .sc-st:not(.r) { justify-content: flex-start; align-items: stretch; }
   .score .sc-st > div:not(:first-child) { flex: 0 0 auto; padding: 0 7px; } .score .sc-st > div:first-child { flex: 0 0 auto; }
   .score .sc-st > div:nth-child(3) { margin-left: auto; }   /* towers / dragons / barons go to the outer edge; gold stays beside the kills */
+  .score .sc-st:not(.r) > div:nth-child(3) { margin-left: 0; margin-right: auto; }   /* left side is row-reversed: push the objective group outward to match the right side */
   .score { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px 0; padding: 14px 0 16px; min-height: 0; }
   .score > :nth-child(1) { grid-area: 1 / 1 / 2 / 3; } .score > :nth-child(3) { grid-area: 1 / 3 / 2 / 5; order: 0; } .score > :nth-child(5) { grid-area: 1 / 5 / 2 / 7; }
   .score > :nth-child(2) { grid-area: 2 / 1 / 3 / 4; } .score > :nth-child(4) { grid-area: 2 / 4 / 3 / 7; }
@@ -1538,7 +1539,7 @@ html { scroll-padding-top: 84px; }
   inp.setAttribute('autocomplete', 'off');
   var items = [], act = -1;
   function esc(x) { return String(x).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  function go(h) { inp.blur(); box.className = 'sr'; inp.value = ''; var same = location.pathname.split('/').pop() === h.split('#')[0]; location.href = h; if (same) setTimeout(function () { location.reload(); }, 30); }
+  function go(h) { inp.blur(); box.className = 'sr'; inp.value = ''; var same = (location.pathname.split('/').pop().replace(/\.html$/, '') || 'index') + '.html' === h.split('#')[0]; location.href = h; if (same) setTimeout(function () { location.reload(); }, 30); }
   function rank(q) { return function (a, b) { return (a[0].toLowerCase().indexOf(q) !== 0) - (b[0].toLowerCase().indexOf(q) !== 0); }; }
   function run() {
     var q = inp.value.trim().toLowerCase(); act = -1;
