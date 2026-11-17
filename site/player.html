@@ -831,6 +831,14 @@ body { padding-top: 0; }
 .vrow #lvf { margin: 0 !important; padding: 0 !important; }
 .badge { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 .vrow #lvf .lst:empty { display: none; }
+@media (max-width: 760px) {
+  .badges { position: static; order: 4; flex: 1 0 100%; flex-wrap: wrap; justify-content: flex-start; gap: 4px 10px; padding: 0 0 14px; }
+}
+@media (max-width: 760px) {
+  .badge:nth-child(-n+2)::after { left: 0; transform: none; }
+  .badge:nth-last-child(-n+3)::after { left: auto; right: 0; transform: none; }
+  .badges { max-width: 100%; }
+}
 </style>
 <script>document.addEventListener('dragstart', function (e) { if (e.target && e.target.tagName === 'IMG') e.preventDefault(); });</script>
 </body>
