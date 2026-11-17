@@ -975,6 +975,7 @@ def main(csv):
     s = jreplace(s, "UP", build_upcoming())
     s = jreplace(s, "SD", build_search(s, WD, CH))
     wr(out / "index.html", stamp(s))
+    wr(out / "404.html", rd("site/404.html"))
     # champion stats page
     s = rd("site/champions.html")
     for name, val in (("WD", WD), ("CHAMPS", CH)): s = jreplace(s, name, val)

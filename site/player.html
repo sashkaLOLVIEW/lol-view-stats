@@ -608,7 +608,7 @@ body.tr-on #tres { display: block; } body.tr-on .body, body.tr-on .perf { displa
   }
   var h = ''; try { h = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
   var dflt = D.players.Chovy ? 'Chovy' : names[0];
-  if (D.players[h]) show(h); else if (!h || !window.LVF) show(dflt);   // a player outside the embedded Worlds data: stay blank until their own profile is ready, never flash the default one
+  if (D.players[h]) show(h); else if (!h) location.replace('404.html'); else if (!window.LVF) show(dflt);   // a player outside the embedded Worlds data: stay blank until their own profile is ready, never flash the default one
   var D0 = D;
 
   var RES = null, resP = null;
@@ -640,7 +640,7 @@ body.tr-on #tres { display: block; } body.tr-on .body, body.tr-on .perf { displa
   }
   $('vtabs').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) setView(b.dataset.v); });
   var wanted = h;
-  function want() { var hh = wanted; if (window.LVF && hh && !D.players[hh]) LVF.has('player', hh).then(function (ok) { if (ok) LVF.focus('player', hh); else if (!$('stats').innerHTML) show(dflt); }, function () { if (!$('stats').innerHTML) show(dflt); }); }
+  function want() { var hh = wanted; if (window.LVF && hh && !D.players[hh]) LVF.has('player', hh).then(function (ok) { if (ok) LVF.focus('player', hh); else location.replace('404.html'); }, function () { if (!$('stats').innerHTML) $('hero').innerHTML = '<div style="padding:28px;color:var(--muted)">Could not load this player. Check your connection and refresh.</div>'; }); }
   want();
   function setD(nd) {
     D = nd; if (nd !== D0) Object.keys(nd.players).forEach(function (n) { var o = D0.players[n]; if (o && o.face && !nd.players[n].face) nd.players[n].face = o.face; });
@@ -778,7 +778,7 @@ body.tr-on #tres { display: block; } body.tr-on .body, body.tr-on .perf { displa
   var row = document.createElement('div'); row.className = 'navx navrow'; nav.appendChild(row);
   [['Discord', 'a[aria-label="Discord"]'], ['Ko-fi', 'a[aria-label="Ko-fi"]']].forEach(function (x) {
     var src = bar.querySelector(x[1]); if (!src) return;
-    var l = document.createElement('a'); l.className = 'navx navic'; l.href = src.getAttribute('href'); l.setAttribute('aria-label', x[0]); l.innerHTML = src.innerHTML;
+    var l = document.createElement('a'); l.className = 'navx navic'; l.href = src.getAttribute('href'); l.setAttribute('aria-label', x[0]); l.innerHTML = src.innerHTML; if (x[0] === 'Discord') { l.classList.add('dc'); l.innerHTML += '<span>Discord Community</span>'; }
     if (src.getAttribute('target')) { l.target = src.getAttribute('target'); l.rel = 'noopener'; }
     row.appendChild(l);
   });
@@ -811,6 +811,11 @@ body { padding-top: 0; }
 .page > .topbar { position: sticky; }
 .topbar::before { background: var(--surface); border-bottom: 1px solid var(--line); }
 .topbar::after { display: none; }
+@media (max-width: 760px) {
+  .topbar:has(> .nav.open)::before { border-bottom-color: transparent; }
+  .topbar > .nav.open a.navic.dc { width: auto; height: 42px; padding: 0 16px; gap: 10px; border: 1px solid var(--line); border-radius: 10px; font-size: 14px; font-weight: 600; }
+  .topbar > .nav.open a.navic.dc:hover { background: var(--stripe, var(--surface-2)); }
+}
 @media (max-width: 760px) {
   .page > .topbar { display: flex; flex-wrap: wrap; align-items: center; column-gap: 10px; row-gap: 0; }
   .burger { order: 2; width: 35px; height: 35px; background: transparent !important; border: 0 !important; }

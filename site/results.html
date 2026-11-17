@@ -581,7 +581,7 @@ html { scroll-padding-top: 84px; }
   var row = document.createElement('div'); row.className = 'navx navrow'; nav.appendChild(row);
   [['Discord', 'a[aria-label="Discord"]'], ['Ko-fi', 'a[aria-label="Ko-fi"]']].forEach(function (x) {
     var src = bar.querySelector(x[1]); if (!src) return;
-    var l = document.createElement('a'); l.className = 'navx navic'; l.href = src.getAttribute('href'); l.setAttribute('aria-label', x[0]); l.innerHTML = src.innerHTML;
+    var l = document.createElement('a'); l.className = 'navx navic'; l.href = src.getAttribute('href'); l.setAttribute('aria-label', x[0]); l.innerHTML = src.innerHTML; if (x[0] === 'Discord') { l.classList.add('dc'); l.innerHTML += '<span>Discord Community</span>'; }
     if (src.getAttribute('target')) { l.target = src.getAttribute('target'); l.rel = 'noopener'; }
     row.appendChild(l);
   });
@@ -608,6 +608,11 @@ body { padding-top: 0; }
 .page > .topbar { position: sticky; }
 .topbar::before { background: var(--surface); border-bottom: 1px solid var(--line); }
 .topbar::after { display: none; }
+@media (max-width: 760px) {
+  .topbar:has(> .nav.open)::before { border-bottom-color: transparent; }
+  .topbar > .nav.open a.navic.dc { width: auto; height: 42px; padding: 0 16px; gap: 10px; border: 1px solid var(--line); border-radius: 10px; font-size: 14px; font-weight: 600; }
+  .topbar > .nav.open a.navic.dc:hover { background: var(--stripe, var(--surface-2)); }
+}
 @media (max-width: 760px) {
   .page > .topbar { display: flex; flex-wrap: wrap; align-items: center; column-gap: 10px; row-gap: 0; }
   .burger { order: 2; width: 35px; height: 35px; background: transparent !important; border: 0 !important; }
