@@ -800,11 +800,11 @@ body.tr-on #tres { display: block; } body.tr-on .body, body.tr-on .perf { displa
   .page > .topbar .tools .search svg { top: 7px; }
 }
 
-/* background team logo: flat black (light mode) / white (dark mode) */
-.hero img.bgl, .hero img.bgl.lwi { filter: brightness(0) blur(3px) !important; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hero img.bgl, :root:not([data-theme="light"]) .hero img.bgl.lwi { filter: brightness(0) invert(1) blur(3px) !important; } }
-:root[data-theme="dark"] .hero img.bgl, :root[data-theme="dark"] .hero img.bgl.lwi { filter: brightness(0) invert(1) blur(3px) !important; }
-:root[data-theme="light"] .hero img.bgl, :root[data-theme="light"] .hero img.bgl.lwi { filter: brightness(0) blur(3px) !important; }
+/* background team logo: the original artwork, desaturated, very faint and a bit larger */
+.hero .bgl { width: 400px; height: 400px; bottom: -110px; clip-path: inset(0 0 110px 0); opacity: .05; }
+.hero img.bgl, .hero img.bgl.lwi { filter: grayscale(1) blur(3px) !important; }
+:root[data-theme="light"] .hero img.bgl.lwi { filter: grayscale(1) invert(1) blur(3px) !important; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .hero img.bgl.lwi { filter: grayscale(1) invert(1) blur(3px) !important; } }
 /* navbar: full-width bar (same fill as the results strip), sticky; the links stay inside the page container */
 body { padding-top: 0; }
 .topbar { position: sticky; top: 0; z-index: 60; margin-top: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0; }
