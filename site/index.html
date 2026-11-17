@@ -672,7 +672,7 @@ body { padding-top: 0; }
   .burger { order: 2; width: 35px; height: 35px; background: transparent !important; border: 0 !important; }
   .topbar > .tools { order: 1; height: 35px; }
   .topbar > .tools > .search { order: 1; } .topbar > .tools > .toggle { order: 2; }
-  .topbar > .nav.open { order: 3; flex: 0 0 100%; width: 100%; box-sizing: border-box; position: static; background: transparent; border: 0; border-radius: 0; box-shadow: none; padding: 2px 0 8px; margin: 0; }
+  .topbar > .nav.open { position: absolute; top: 100%; left: 50%; width: 100vw; transform: translateX(-50%); box-sizing: border-box; margin: 0; padding: 2px 16px 10px; background: var(--surface); border: 0; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: 0 14px 24px -12px rgba(0,0,0,.28); }
 }
 @media (min-width: 1081px) { .page > .topbar > .nav:not(.open) { padding-left: 0; } .page > .topbar > .tools { right: 0; } }
 .page > .topbar > .nav:not(.open) { background: transparent; border-color: transparent; }
