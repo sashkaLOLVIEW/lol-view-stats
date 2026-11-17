@@ -710,6 +710,16 @@ body { padding-top: 0; }
 
 .strip-seg .stack .row.viewall { display: flex; align-items: center; justify-content: center; gap: 8px; width: 150px; font-size: 13px; font-weight: 600; text-align: center; color: var(--fg); }
 .strip-seg .stack .row.viewall svg { display: block; flex: none; }
+
+/* recent results cards: logos either side, middle column = date / score / tournament icon */
+#recent .row.rr { display: flex !important; justify-content: center; width: auto !important; padding: 8px 20px !important; }
+#recent .rr .res-center { grid-template-columns: auto auto auto; column-gap: 16px; width: auto; align-items: center; }
+#recent .rr .mid { display: grid; grid-template-rows: 1fr auto 1fr; justify-items: center; align-items: center; row-gap: 3px; min-width: 0; align-self: stretch; }
+#recent .rr .mid .when { align-self: end; margin: 0; line-height: 1; }
+#recent .rr .mid .score { width: auto; font-size: 16px; line-height: 1; }
+#recent .rr .mid .evi { align-self: start; display: grid; place-items: center; line-height: 0; }
+#recent .rr .mid .evi svg, #recent .rr .mid .evi img { width: 16px; height: 16px; }
+#results-sec { padding-left: 0; }
 </style>
   <section class="strip" id="strip" aria-label="Recent results and upcoming matches">
     <section class="strip-seg col-recent" id="results-sec">
@@ -1027,7 +1037,7 @@ body { padding-top: 0; }
   // Recent results
   var rec = [["IG", "2:1", "LYON", "23:50", "Oct 28", "LOLTMNT02_486183"], ["T1", "2:0", "MKOI", "21:12", "Oct 28", "LOLTMNT02_486159"], ["TL", "2:0", "AL", "21:54", "Oct 26", "LOLTMNT02_482911"], ["LOS", "2:0", "TSW", "20:01", "Oct 26", "LOLTMNT02_483861"]];
   $('recent').innerHTML = rec.map(function (m) {
-    return '<a class="row match res" href="' + U.game + '#' + m[5] + '"><div class="lgw"><span class="lg">' + worlds(24) + '</span><span class="bo">' + (+m[1].split(':')[0] >= 3 ? 'BO5' : +m[1].split(':')[0] + +m[1].split(':')[1] > 1 ? 'BO3' : 'BO1') + '</span></div><div class="res-center"><span class="tm">' + logo(m[0], 32) + '<span class="tag">' + m[0] + '</span></span><div class="mid"><span class="score">' + m[1].split(':')[0] + ':<span class="lo">' + m[1].split(':')[1] + '</span></span><div class="when"><span>' + ld(m[6]) + '</span></div></div><span class="tm">' + logo(m[2], 32) + '<span class="tag lo">' + m[2] + '</span></span></div></a>';
+    return '<a class="row match res rr" href="' + U.game + '#' + m[5] + '"><div class="res-center"><span class="tm">' + logo(m[0], 32) + '<span class="tag">' + m[0] + '</span></span><div class="mid"><div class="when"><span>' + ld(m[6]) + '</span></div><span class="score">' + m[1].split(':')[0] + ':<span class="lo">' + m[1].split(':')[1] + '</span></span><span class="evi">' + worlds(16) + '</span></div><span class="tm">' + logo(m[2], 32) + '<span class="tag lo">' + m[2] + '</span></span></div></a>';
   }).join('') + '<a class="row viewall" href="results.html">View all</a>';
 
   // Role filters
