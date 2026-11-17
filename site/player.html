@@ -330,7 +330,7 @@ img.wi-l { display: none; } img.wi-d { display: block; }
 
 /* fixed top bar: solid page background behind the bar, gradient fading out from its bottom edge */
 html { scroll-padding-top: 84px; }
-.topbar { position: relative; margin-top: -12px; padding-top: 12px; padding-bottom: 12px; margin-bottom: -12px; }
+.topbar { position: sticky; top: 0; z-index: 60; margin-top: -12px; padding-top: 12px; padding-bottom: 12px; margin-bottom: -12px; }
 .topbar::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: color-mix(in srgb, var(--bg) 75%, transparent); }
 .topbar::after { content: ""; position: absolute; z-index: -1; left: 50%; width: 100vw; transform: translateX(-50%); top: 100%; height: 40px; pointer-events: none; background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 75%, transparent), color-mix(in srgb, var(--bg) 0%, transparent)); }
 .topbar .nav, .topbar .search input { background: var(--bg); }   /* stay fully opaque on top of the translucent bar */
@@ -792,7 +792,7 @@ body.tr-on #tres { display: block; } body.tr-on .body, body.tr-on .perf { displa
 <style>img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; }
 /* full-width navbar with the tools (search/discord/theme) inside it */
 @media (min-width: 1081px) {
-  .page > .topbar { position: relative; display: block; }
+  .page > .topbar { position: sticky; display: block; }
   .page > .topbar > .nav { display: flex; width: 100%; box-sizing: border-box; justify-content: flex-start; padding-right: 330px; }
   .page > .topbar > .tools { position: absolute; right: 14px; top: 12px; height: 35px; flex: none; width: auto; gap: 14px; align-items: center; }
   .page > .topbar .tools .search { flex: none; width: 240px; }
@@ -805,8 +805,14 @@ body.tr-on #tres { display: block; } body.tr-on .body, body.tr-on .perf { displa
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hero img.bgl, :root:not([data-theme="light"]) .hero img.bgl.lwi { filter: brightness(0) invert(1) blur(3px) !important; } }
 :root[data-theme="dark"] .hero img.bgl, :root[data-theme="dark"] .hero img.bgl.lwi { filter: brightness(0) invert(1) blur(3px) !important; }
 :root[data-theme="light"] .hero img.bgl, :root[data-theme="light"] .hero img.bgl.lwi { filter: brightness(0) blur(3px) !important; }
-.topbar::before, .topbar::after { display: none !important; }   /* navbar no longer sticks */
-html { scroll-padding-top: 0 !important; }
+/* navbar: full-width bar (same fill as the results strip), sticky; the links stay inside the page container */
+body { padding-top: 0; }
+.topbar { position: sticky; top: 0; z-index: 60; margin-top: 0; padding-top: 12px; padding-bottom: 12px; margin-bottom: -12px; }
+.page > .topbar { position: sticky; display: block; }
+.topbar::before { background: var(--surface); border-bottom: 1px solid var(--line); }
+.topbar::after { display: none; }
+.page > .topbar > .nav:not(.open) { background: transparent; border-color: transparent; }
+.topbar .search input { background: var(--bg); }
 </style>
 <script>document.addEventListener('dragstart', function (e) { if (e.target && e.target.tagName === 'IMG') e.preventDefault(); });</script>
 </body>
