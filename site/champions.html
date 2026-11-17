@@ -674,14 +674,14 @@ html { scroll-padding-top: 84px; }
 @media (min-width: 1081px) {
   .page > .topbar { position: sticky; display: block; }
   .page > .topbar > .nav { display: flex; width: 100%; box-sizing: border-box; justify-content: flex-start; padding-right: 330px; }
-  .page > .topbar > .tools { position: absolute; right: 14px; top: 12px; height: 35px; flex: none; width: auto; gap: 14px; align-items: center; }
+  .page > .topbar > .tools { position: absolute; right: 14px; top: 0; height: 35px; flex: none; width: auto; gap: 14px; align-items: center; }
   .page > .topbar .tools .search { flex: none; width: 240px; }
   .page > .topbar .tools .search input { height: 29px; }
   .page > .topbar .tools .search svg { top: 7px; }
 }
 /* navbar: full-width bar (same fill as the results strip), sticky; the links stay inside the page container */
 body { padding-top: 0; }
-.topbar { position: sticky; top: 0; z-index: 60; margin-top: 0; padding-top: 12px; padding-bottom: 12px; margin-bottom: -12px; }
+.topbar { position: sticky; top: 0; z-index: 60; margin-top: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0; }
 .page > .topbar { position: sticky; display: block; }
 .topbar::before { background: var(--surface); border-bottom: 1px solid var(--line); }
 .topbar::after { display: none; }
