@@ -421,6 +421,15 @@ html { scroll-padding-top: 84px; }
 @media (max-width: 760px) { #lead { grid-auto-flow: row; grid-template-rows: none; grid-template-columns: 1fr; } #lead .lb:nth-child(8) { border-bottom: 1px solid var(--divider); } }
 .stko > h2 { margin: 0 0 14px; }
 @media (max-width: 1080px) { .stko-row { grid-template-columns: 1fr; } .fcol { grid-column: auto; margin-top: 44px; } .fcol::before { display: none; } }
+
+.y27 { margin-top: 72px; }
+.y27 .y-sub { margin: 22px 0 12px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
+.y27 .y-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+.y27 .y-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.y27 .y-name { font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.y27 .y-tag { font-size: 10px; font-weight: 600; color: var(--dim); }
+.y27 .y-row { display: flex; justify-content: space-between; gap: 10px; margin-top: 8px; font-size: 12px; color: var(--dim); }
+.y27 .y-row b { font-weight: 600; color: var(--text, inherit); }
 </style>
 <style>
 .discord svg { width: 21px; height: 16px; }
@@ -513,6 +522,13 @@ html { scroll-padding-top: 84px; }
       <div class="stack" id="recent"></div>
     </section>
   </main>
+  <section class="y27" id="y2027" aria-label="2027 season">
+    <h2>2027</h2>
+    <div class="y-sub">Regional splits</div>
+    <div class="y-grid" id="y27-reg"></div>
+    <div class="y-sub">International tournaments</div>
+    <div class="y-grid" id="y27-int"></div>
+  </section>
 
 
   <div class="stko-row" hidden>   <!-- Knockout Bracket, Floor & Ceiling and Closing Out Leads: hidden for the homepage rebuild; remove "hidden" to bring them back -->
@@ -558,6 +574,16 @@ html { scroll-padding-top: 84px; }
   </footer>
 </div>
 
+<script>
+/* 2027 calendar - edit this list as dates, formats and venues are announced. Leave a field as "TBA" until confirmed. */
+(function () {
+  var REG = ["LCK", "LPL", "LEC", "LCS", "LCP", "CBLOL"].map(function (n) { return { n: n, rows: [["Split 1", "TBA"], ["Split 2", "TBA"], ["Split 3", "TBA"]] }; });
+  var INT = [{ n: "First Stand", rows: [["Dates", "TBA"], ["Location", "TBA"]] }, { n: "MSI", rows: [["Dates", "TBA"], ["Location", "TBA"]] }, { n: "Esports World Cup", rows: [["Dates", "TBA"], ["Location", "TBA"]] }, { n: "Worlds", rows: [["Dates", "TBA"], ["Location", "TBA"]] }];
+  function card(c) { return '<div class="y-card"><div class="y-name">' + c.n + '<span class="y-tag">2027</span></div>' + c.rows.map(function (r) { return '<div class="y-row"><span>' + r[0] + '</span><b>' + r[1] + '</b></div>'; }).join('') + '</div>'; }
+  document.getElementById('y27-reg').innerHTML = REG.map(card).join('');
+  document.getElementById('y27-int').innerHTML = INT.map(card).join('');
+})();
+</script>
 <script src="filters.js"></script>
 <script>
 (function () {
