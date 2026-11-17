@@ -699,6 +699,9 @@ body { padding-top: 0; }
 #live-list { gap: 0; }
 .strip-seg .hd-row { margin-right: 12px !important; }
 .sb { height: 48px; }
+
+.strip-seg .stack .row.viewall { display: flex; align-items: center; justify-content: center; gap: 8px; width: 150px; font-size: 13px; font-weight: 600; text-align: center; color: var(--fg); }
+.strip-seg .stack .row.viewall svg { display: block; flex: none; }
 </style>
   <section class="strip" id="strip" aria-label="Recent results and upcoming matches">
     <section class="strip-seg col-recent" id="results-sec">
@@ -1017,7 +1020,7 @@ body { padding-top: 0; }
   var rec = [["IG", "2:1", "LYON", "23:50", "Oct 28", "LOLTMNT02_486183"], ["T1", "2:0", "MKOI", "21:12", "Oct 28", "LOLTMNT02_486159"], ["TL", "2:0", "AL", "21:54", "Oct 26", "LOLTMNT02_482911"], ["LOS", "2:0", "TSW", "20:01", "Oct 26", "LOLTMNT02_483861"]];
   $('recent').innerHTML = rec.map(function (m) {
     return '<a class="row match res" href="' + U.game + '#' + m[5] + '"><div class="lgw"><span class="lg">' + worlds(24) + '</span><span class="bo">' + (+m[1].split(':')[0] >= 3 ? 'BO5' : +m[1].split(':')[0] + +m[1].split(':')[1] > 1 ? 'BO3' : 'BO1') + '</span></div><div class="res-center"><span class="tm">' + logo(m[0], 32) + '<span class="tag">' + m[0] + '</span></span><div class="mid"><span class="score">' + m[1].split(':')[0] + ':<span class="lo">' + m[1].split(':')[1] + '</span></span><div class="when"><span>' + ld(m[6]) + '</span></div></div><span class="tm">' + logo(m[2], 32) + '<span class="tag lo">' + m[2] + '</span></span></div></a>';
-  }).join('');
+  }).join('') + '<a class="row viewall" href="results.html">View all <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a>';
 
   // Role filters
   var roleIcons = [
