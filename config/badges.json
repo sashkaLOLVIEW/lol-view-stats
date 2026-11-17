@@ -1,9 +1,54 @@
 {
-  "_note": "Badges shown on player profiles (bottom right of the header). Add a definition under defs, then list its id for a player under awards. Career-game counts are not in the Oracle's Elixir file (it only covers 2026), so awards are listed by hand. Faker is a placeholder example.",
+  "_note": "Badges shown on player profiles (bottom right of the header). Add a definition under defs, then list its id for a player under awards. Career-game counts are not in the Oracle's Elixir file (it only covers 2026), so awards are listed by hand. A def with \"event\" (an icon key from event_icons.json, e.g. MSI or WLDs) shows that tournament's icon; otherwise \"icon\" picks a built-in one.",
   "defs": {
-    "games1000": {"name": "1,000+ career games", "icon": "medal"}
+    "games1000": {
+      "name": "1,000+ career games",
+      "icon": "medal"
+    },
+    "worlds2013": {
+      "name": "Worlds: 2013",
+      "event": "WLDs"
+    },
+    "worlds2015": {
+      "name": "Worlds: 2015",
+      "event": "WLDs"
+    },
+    "worlds2016": {
+      "name": "Worlds: 2016",
+      "event": "WLDs"
+    },
+    "worlds2023": {
+      "name": "Worlds: 2023",
+      "event": "WLDs"
+    },
+    "worlds2024": {
+      "name": "Worlds: 2024",
+      "event": "WLDs"
+    },
+    "worlds2025": {
+      "name": "Worlds: 2025",
+      "event": "WLDs"
+    },
+    "msi2016": {
+      "name": "MSI: 2016",
+      "event": "MSI"
+    },
+    "msi2017": {
+      "name": "MSI: 2017",
+      "event": "MSI"
+    }
   },
   "awards": {
-    "Faker": ["games1000"]
+    "Faker": [
+      "worlds2013",
+      "worlds2015",
+      "worlds2016",
+      "worlds2023",
+      "worlds2024",
+      "worlds2025",
+      "msi2016",
+      "msi2017",
+      "games1000"
+    ]
   }
 }
