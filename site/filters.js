@@ -208,7 +208,7 @@
 
   /* ---------- UI ---------- */
   var ENT = null;   // {kind, name}: on a player / team page only what that player or team took part in is offered
-  var PLACE = { 'player.html': ['prepend', '.body > section'], 'team.html': ['prepend', '.tbody > .main'], 'champion.html': ['after', '.gh'], 'players.html': ['after', '.tp .tp-head'], 'index.html': ['after', '.tp .tp-head'], '': ['after', '.tp .tp-head'],
+  var PLACE = { 'player.html': ['append', '#vrow'], 'team.html': ['prepend', '.tbody > .main'], 'champion.html': ['after', '.gh'], 'players.html': ['after', '.tp .tp-head'], 'index.html': ['after', '.tp .tp-head'], '': ['after', '.tp .tp-head'],
     'champions.html': ['after', '#champions > h2, #champions > :first-child'], 'results.html': ['after', 'h2.sec'] };
   function css() {
     var s = document.createElement('style');
@@ -290,7 +290,7 @@
     var pg = location.pathname.split('/').pop(), r = PLACE[pg] || PLACE['index.html'], el = $(r[1]);
     if (!el) { el = $('.page > .topbar'); r = ['after', '']; }
     if (!el) return false;
-    if (r[0] === 'prepend') el.insertBefore(bar, el.firstChild); else el.parentNode.insertBefore(bar, el.nextSibling);
+    if (r[0] === 'append') el.appendChild(bar); else if (r[0] === 'prepend') el.insertBefore(bar, el.firstChild); else el.parentNode.insertBefore(bar, el.nextSibling);
     return true;
   }
   function init() {

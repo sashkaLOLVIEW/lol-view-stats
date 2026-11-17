@@ -110,7 +110,7 @@ img.lwi { }
 .hero .bgl { position: absolute; right: 6%; bottom: -90px; width: 330px; height: 330px; clip-path: inset(0 0 90px 0); object-fit: contain; opacity: .1; filter: blur(3px); pointer-events: none; z-index: 0; max-width: none; max-height: none; }
 .portrait, .who { position: relative; z-index: 1; }
 .hero { overflow: visible; }
-.badges { position: absolute; right: 64px; bottom: 14px; display: flex; gap: 10px; z-index: 2; }
+.badges { position: absolute; right: 0; bottom: 14px; display: flex; gap: 10px; z-index: 2; }
 .badge { position: relative; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--gold-ink, var(--gold)); display: grid; place-items: center; cursor: default; }
 .badge svg { display: block; }
 .badge::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); white-space: nowrap; background: var(--fg); color: var(--bg); font-size: 12px; padding: 5px 9px; border-radius: 6px; opacity: 0; pointer-events: none; transition: opacity .12s; }
@@ -391,7 +391,7 @@ body.tr-on #tres { display: block; } body.tr-on .body, body.tr-on .perf { displa
     </div>
   </header>
   <section class="hero" id="hero"></section>
-  <div class="vtabs" id="vtabs" role="tablist"><button type="button" class="on" data-v="ov">Overview</button><button type="button" data-v="tr">Tournament results</button></div>
+  <div class="vrow" id="vrow"><div class="vtabs" id="vtabs" role="tablist"><button type="button" class="on" data-v="ov">Overview</button><button type="button" data-v="tr">Tournament results</button></div></div>
   <div id="tres"></div>
   <div class="body">
     <aside class="side"><div id="stats"></div></aside>
@@ -811,8 +811,14 @@ body { padding-top: 0; }
 .page > .topbar { position: sticky; display: block; }
 .topbar::before { background: var(--surface); border-bottom: 1px solid var(--line); }
 .topbar::after { display: none; }
+@media (min-width: 1081px) { .page > .topbar > .nav:not(.open) { padding-left: 0; } .page > .topbar > .tools { right: 0; } }
 .page > .topbar > .nav:not(.open) { background: transparent; border-color: transparent; }
 .topbar .search input { background: var(--bg); }
+.vrow { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin: 18px 0 4px; }
+.vrow .vtabs { margin: 0; }
+.vrow #lvf { margin: 0 !important; padding: 0 !important; }
+.badge { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+.vrow #lvf .lst:empty { display: none; }
 </style>
 <script>document.addEventListener('dragstart', function (e) { if (e.target && e.target.tagName === 'IMG') e.preventDefault(); });</script>
 </body>
