@@ -1,5 +1,5 @@
 {
- "fetched": 1794805216.4440258,
+ "fetched": 1794889622.590094,
  "players": {
   "Cube": {
    "contract": "2027-11-16",
@@ -1156,16 +1156,6 @@
    "team": "BNK FEARX",
    "league": "LCK"
   },
-  "Kiaya": {
-   "contract": "2026-11-16",
-   "team": "GAM Esports",
-   "league": "LCP"
-  },
-  "Artemis": {
-   "contract": "2026-11-16",
-   "team": "GAM Esports",
-   "league": "LCP"
-  },
   "Taki": {
    "contract": "2027-11-16",
    "team": "GAM Esports",
@@ -1181,18 +1171,8 @@
    "team": "GAM Esports",
    "league": "LCP"
   },
-  "Hype": {
-   "contract": "2026-11-16",
-   "team": "GAM Esports",
-   "league": "LCP"
-  },
   "Kratos": {
    "contract": "2027-11-15",
-   "team": "MGN Vikings Esports",
-   "league": "LCP"
-  },
-  "Gury": {
-   "contract": "2026-11-16",
    "team": "MGN Vikings Esports",
    "league": "LCP"
   },
@@ -1216,18 +1196,8 @@
    "team": "MGN Vikings Esports",
    "league": "LCP"
   },
-  "SofM": {
-   "contract": "2026-11-16",
-   "team": "MGN Vikings Esports",
-   "league": "LCP"
-  },
   "BigKoro": {
    "contract": "2028-11-21",
-   "team": "MGN Vikings Esports",
-   "league": "LCP"
-  },
-  "Suga": {
-   "contract": "2026-11-16",
    "team": "MGN Vikings Esports",
    "league": "LCP"
   },
@@ -1256,169 +1226,9 @@
    "team": "Team Secret Whales",
    "league": "LCP"
   },
-  "Bie": {
-   "contract": "2026-11-16",
-   "team": "Team Secret Whales",
-   "league": "LCP"
-  },
-  "WarHorse": {
-   "contract": "2026-11-17",
-   "team": "Team Secret Whales",
-   "league": "LCP"
-  },
   "Ciel": {
    "contract": "2027-11-15",
    "team": "Team Secret Whales",
-   "league": "LCP"
-  },
-  "Flauren": {
-   "contract": "2026-11-17",
-   "team": "Deep Cross Gaming",
-   "league": "LCP"
-  },
-  "Pop9": {
-   "contract": "2026-11-17",
-   "team": "Deep Cross Gaming",
-   "league": "LCP"
-  },
-  "HongSuo": {
-   "contract": "2026-11-17",
-   "team": "Deep Cross Gaming",
-   "league": "LCP"
-  },
-  "Feng": {
-   "contract": "2026-11-17",
-   "team": "Deep Cross Gaming",
-   "league": "LCP"
-  },
-  "ShiauC": {
-   "contract": "2026-11-17",
-   "team": "Deep Cross Gaming",
-   "league": "LCP"
-  },
-  "XiaoXiang": {
-   "contract": "2026-11-17",
-   "team": "Deep Cross Gaming",
-   "league": "LCP"
-  },
-  "REFRA1N": {
-   "contract": "2026-11-17",
-   "team": "Deep Cross Gaming",
-   "league": "LCP"
-  },
-  "Lxz": {
-   "contract": "2026-11-17",
-   "team": "Deep Cross Gaming",
-   "league": "LCP"
-  },
-  "1Jiang": {
-   "contract": "2026-11-17",
-   "team": "Ground Zero Gaming",
-   "league": "LCP"
-  },
-  "Husha": {
-   "contract": "2026-11-17",
-   "team": "Ground Zero Gaming",
-   "league": "LCP"
-  },
-  "Uniboy": {
-   "contract": "2026-11-17",
-   "team": "Ground Zero Gaming",
-   "league": "LCP"
-  },
-  "Betty": {
-   "contract": "2026-11-17",
-   "team": "Ground Zero Gaming",
-   "league": "LCP"
-  },
-  "Kaiwing": {
-   "contract": "2026-11-17",
-   "team": "Ground Zero Gaming",
-   "league": "LCP"
-  },
-  "Skywalk": {
-   "contract": "2026-11-17",
-   "team": "Ground Zero Gaming",
-   "league": "LCP"
-  },
-  "Ratis": {
-   "contract": "2026-11-17",
-   "team": "Ground Zero Gaming",
-   "league": "LCP"
-  },
-  "Rest": {
-   "contract": "2026-11-17",
-   "team": "CTBC Flying Oyster",
-   "league": "LCP"
-  },
-  "Shad0w": {
-   "contract": "2026-11-17",
-   "team": "CTBC Flying Oyster",
-   "league": "LCP"
-  },
-  "POUT": {
-   "contract": "2026-11-17",
-   "team": "CTBC Flying Oyster",
-   "league": "LCP"
-  },
-  "Doggo": {
-   "contract": "2026-11-16",
-   "team": "CTBC Flying Oyster",
-   "league": "LCP"
-  },
-  "Kino": {
-   "contract": "2026-11-17",
-   "team": "CTBC Flying Oyster",
-   "league": "LCP"
-  },
-  "Chawy": {
-   "contract": "2026-11-16",
-   "team": "CTBC Flying Oyster",
-   "league": "LCP"
-  },
-  "Wulala": {
-   "contract": "2026-11-16",
-   "team": "CTBC Flying Oyster",
-   "league": "LCP"
-  },
-  "Momo": {
-   "contract": "2026-11-17",
-   "team": "DetonatioN FocusMe",
-   "league": "LCP"
-  },
-  "Citrus": {
-   "contract": "2026-11-17",
-   "team": "DetonatioN FocusMe",
-   "league": "LCP"
-  },
-  "Fisher": {
-   "contract": "2026-11-17",
-   "team": "DetonatioN FocusMe",
-   "league": "LCP"
-  },
-  "Kakkun": {
-   "contract": "2027-11-16",
-   "team": "DetonatioN FocusMe",
-   "league": "LCP"
-  },
-  "Woody": {
-   "contract": "2026-11-17",
-   "team": "DetonatioN FocusMe",
-   "league": "LCP"
-  },
-  "Paz": {
-   "contract": "2026-11-17",
-   "team": "DetonatioN FocusMe",
-   "league": "LCP"
-  },
-  "TaNa": {
-   "contract": "2026-11-17",
-   "team": "DetonatioN FocusMe",
-   "league": "LCP"
-  },
-  "Gismo": {
-   "contract": "2026-11-17",
-   "team": "DetonatioN FocusMe",
    "league": "LCP"
   },
   "Evi": {
@@ -1426,33 +1236,8 @@
    "team": "Fukuoka SoftBank HAWKS gaming",
    "league": "LCP"
   },
-  "Van1": {
-   "contract": "2026-11-17",
-   "team": "Fukuoka SoftBank HAWKS gaming",
-   "league": "LCP"
-  },
-  "Aria": {
-   "contract": "2026-11-17",
-   "team": "Fukuoka SoftBank HAWKS gaming",
-   "league": "LCP"
-  },
   "Marble": {
    "contract": "2027-11-16",
-   "team": "Fukuoka SoftBank HAWKS gaming",
-   "league": "LCP"
-  },
-  "Vsta": {
-   "contract": "2026-11-17",
-   "team": "Fukuoka SoftBank HAWKS gaming",
-   "league": "LCP"
-  },
-  "Corgi": {
-   "contract": "2026-11-17",
-   "team": "Fukuoka SoftBank HAWKS gaming",
-   "league": "LCP"
-  },
-  "Maru": {
-   "contract": "2026-11-17",
    "team": "Fukuoka SoftBank HAWKS gaming",
    "league": "LCP"
   },
@@ -1801,31 +1586,6 @@
    "team": "Saigon MVK Academy",
    "league": "LCP"
   },
-  "Jackies": {
-   "contract": "2026-11-16",
-   "team": "GIANTX",
-   "league": "LEC"
-  },
-  "Jun": {
-   "contract": "2026-11-16",
-   "team": "GIANTX",
-   "league": "LEC"
-  },
-  "Noah": {
-   "contract": "2026-11-16",
-   "team": "GIANTX",
-   "league": "LEC"
-  },
-  "Lot": {
-   "contract": "2026-11-16",
-   "team": "GIANTX",
-   "league": "LEC"
-  },
-  "ISMA": {
-   "contract": "2026-11-16",
-   "team": "GIANTX",
-   "league": "LEC"
-  },
   "Guilhoto": {
    "contract": "Day After Worlds 2026",
    "team": "GIANTX",
@@ -1838,16 +1598,6 @@
   },
   "Maxlore": {
    "contract": "Day After Worlds 2026",
-   "team": "GIANTX",
-   "league": "LEC"
-  },
-  "Oscarinin": {
-   "contract": "2026-11-16",
-   "team": "GIANTX",
-   "league": "LEC"
-  },
-  "Flakked": {
-   "contract": "2026-11-16",
    "team": "GIANTX",
    "league": "LEC"
   },
@@ -2028,6 +1778,11 @@
   },
   "Serin": {
    "contract": "2027-11-15",
+   "team": "Team Heretics",
+   "league": "LEC"
+  },
+  "Hype": {
+   "contract": "2028-11-20",
    "team": "Team Heretics",
    "league": "LEC"
   },
@@ -6522,24 +6277,6 @@
   },
   {
    "league": "LCP",
-   "player": "Kiaya",
-   "team": "GAM Esports",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCP",
-   "player": "Artemis",
-   "team": "GAM Esports",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCP",
    "player": "Taki",
    "team": "GAM Esports",
    "tri": "",
@@ -6567,15 +6304,6 @@
   },
   {
    "league": "LCP",
-   "player": "Hype",
-   "team": "GAM Esports",
-   "tri": "",
-   "role": "Analyst",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCP",
    "player": "Izumin",
    "team": "GAM Esports",
    "tri": "",
@@ -6591,15 +6319,6 @@
    "role": "Top",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LCP",
-   "player": "Gury",
-   "team": "MGN Vikings Esports",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LCP",
@@ -6639,30 +6358,12 @@
   },
   {
    "league": "LCP",
-   "player": "SofM",
-   "team": "MGN Vikings Esports",
-   "tri": "",
-   "role": "Head Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCP",
    "player": "BigKoro",
    "team": "MGN Vikings Esports",
    "tri": "",
    "role": "Assistant Coach",
    "raw_end": "November 21, 2028",
    "contract": "2028-11-21"
-  },
-  {
-   "league": "LCP",
-   "player": "Suga",
-   "team": "MGN Vikings Esports",
-   "tri": "",
-   "role": "Analyst",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LCP",
@@ -6720,24 +6421,6 @@
   },
   {
    "league": "LCP",
-   "player": "Bie",
-   "team": "Team Secret Whales",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCP",
-   "player": "WarHorse",
-   "team": "Team Secret Whales",
-   "tri": "",
-   "role": "Head Coach",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
    "player": "Ciel",
    "team": "Team Secret Whales",
    "tri": "",
@@ -6756,147 +6439,12 @@
   },
   {
    "league": "LCP",
-   "player": "Flauren",
-   "team": "Deep Cross Gaming",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Pop9",
-   "team": "Deep Cross Gaming",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "HongSuo",
-   "team": "Deep Cross Gaming",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Feng",
-   "team": "Deep Cross Gaming",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "ShiauC",
-   "team": "Deep Cross Gaming",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "XiaoXiang",
-   "team": "Deep Cross Gaming",
-   "tri": "",
-   "role": "Sub/Mid",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "REFRA1N",
-   "team": "Deep Cross Gaming",
-   "tri": "",
-   "role": "Head Coach",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Lxz",
-   "team": "Deep Cross Gaming",
-   "tri": "",
-   "role": "Assistant Coach",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
    "player": "Peter",
    "team": "Deep Cross Gaming",
    "tri": "",
    "role": "General Manager",
    "raw_end": "",
    "contract": null
-  },
-  {
-   "league": "LCP",
-   "player": "1Jiang",
-   "team": "Ground Zero Gaming",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Husha",
-   "team": "Ground Zero Gaming",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Uniboy",
-   "team": "Ground Zero Gaming",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Betty",
-   "team": "Ground Zero Gaming",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Kaiwing",
-   "team": "Ground Zero Gaming",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Skywalk",
-   "team": "Ground Zero Gaming",
-   "tri": "",
-   "role": "Head Coach",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Ratis",
-   "team": "Ground Zero Gaming",
-   "tri": "",
-   "role": "Assistant Coach",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
   },
   {
    "league": "LCP",
@@ -6918,152 +6466,8 @@
   },
   {
    "league": "LCP",
-   "player": "Rest",
-   "team": "CTBC Flying Oyster",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Shad0w",
-   "team": "CTBC Flying Oyster",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "POUT",
-   "team": "CTBC Flying Oyster",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Doggo",
-   "team": "CTBC Flying Oyster",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCP",
-   "player": "Kino",
-   "team": "CTBC Flying Oyster",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Chawy",
-   "team": "CTBC Flying Oyster",
-   "tri": "",
-   "role": "Head Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCP",
-   "player": "Wulala",
-   "team": "CTBC Flying Oyster",
-   "tri": "",
-   "role": "Assistant Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCP",
    "player": "Kenny",
    "team": "CTBC Flying Oyster",
-   "tri": "",
-   "role": "General Manager",
-   "raw_end": "",
-   "contract": null
-  },
-  {
-   "league": "LCP",
-   "player": "Momo",
-   "team": "DetonatioN FocusMe",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Citrus",
-   "team": "DetonatioN FocusMe",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Fisher",
-   "team": "DetonatioN FocusMe",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Kakkun",
-   "team": "DetonatioN FocusMe",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2027",
-   "contract": "2027-11-16"
-  },
-  {
-   "league": "LCP",
-   "player": "Woody",
-   "team": "DetonatioN FocusMe",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Paz",
-   "team": "DetonatioN FocusMe",
-   "tri": "",
-   "role": "Head Coach",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "TaNa",
-   "team": "DetonatioN FocusMe",
-   "tri": "",
-   "role": "Assistant Coach",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Gismo",
-   "team": "DetonatioN FocusMe",
-   "tri": "",
-   "role": "Assistant Coach",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Keisuke",
-   "team": "DetonatioN FocusMe",
    "tri": "",
    "role": "General Manager",
    "raw_end": "",
@@ -7080,57 +6484,12 @@
   },
   {
    "league": "LCP",
-   "player": "Van1",
-   "team": "Fukuoka SoftBank HAWKS gaming",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Aria",
-   "team": "Fukuoka SoftBank HAWKS gaming",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
    "player": "Marble",
    "team": "Fukuoka SoftBank HAWKS gaming",
    "tri": "",
    "role": "Bot",
    "raw_end": "November 16, 2027",
    "contract": "2027-11-16"
-  },
-  {
-   "league": "LCP",
-   "player": "Vsta",
-   "team": "Fukuoka SoftBank HAWKS gaming",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Corgi",
-   "team": "Fukuoka SoftBank HAWKS gaming",
-   "tri": "",
-   "role": "Head Coach",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCP",
-   "player": "Maru",
-   "team": "Fukuoka SoftBank HAWKS gaming",
-   "tri": "",
-   "role": "Assistant Coach",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
   },
   {
    "league": "LCP",
@@ -9213,51 +8572,6 @@
   },
   {
    "league": "LEC",
-   "player": "Jackies",
-   "team": "GIANTX",
-   "tri": "GX",
-   "role": "MID",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Jun",
-   "team": "GIANTX",
-   "tri": "",
-   "role": "SUPPORT",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Noah",
-   "team": "GIANTX",
-   "tri": "",
-   "role": "ADC",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Lot",
-   "team": "GIANTX",
-   "tri": "",
-   "role": "TOP",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "ISMA",
-   "team": "GIANTX",
-   "tri": "",
-   "role": "JUNGLE",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
    "player": "Guilhoto",
    "team": "GIANTX",
    "tri": "",
@@ -9282,24 +8596,6 @@
    "role": "ASSISTANT COACH",
    "raw_end": "Day After Worlds 2026",
    "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
-   "player": "Oscarinin",
-   "team": "GIANTX",
-   "tri": "",
-   "role": "TOP",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Flakked",
-   "team": "GIANTX",
-   "tri": "",
-   "role": "ADC",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LEC",
