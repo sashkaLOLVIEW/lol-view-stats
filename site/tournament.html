@@ -654,7 +654,7 @@ html { overflow-x: hidden; overflow-x: clip; }
       h += '<h2 class="sec">Splits</h2><div class="tt"><div class="sp th"><span>Split</span><span>Dates</span><span>Winner</span><span>Runner-up</span></div>' + (l.splits || []).map(function (n) {
         var e = EV[LID][n]; if (!e) return '';
         var tm = function (c) { return e.on ? 'In progress' : c && c[0] ? '<span class="tm">' + logo(c[0], 20) + '<span>' + esc(tname(M, c[0])) + '</span></span>' : '-'; };
-        return '<a class="sp" href="/tournament/' + encodeURIComponent(LID) + '/' + encodeURIComponent(n) + '"><span>' + esc(n || LVF.leagueName(LID)) + '</span><span style="color:var(--muted)">' + fd(e.s).replace(/, \d{4}/, '') + ' - ' + fd(e.e).replace(/, \d{4}/, '') + '</span>' + tm(e.w) + tm(e.r) + '</a>'; }).join('') + '</div>';
+        return '<a class="sp" href="/tournament/' + encodeURIComponent(TS(LID)) + '/' + encodeURIComponent(n) + '"><span>' + esc(n || LVF.leagueName(LID)) + '</span><span style="color:var(--muted)">' + fd(e.s).replace(/, \d{4}/, '') + ' - ' + fd(e.e).replace(/, \d{4}/, '') + '</span>' + tm(e.w) + tm(e.r) + '</a>'; }).join('') + '</div>';
     }
     return h;
   }
@@ -708,7 +708,7 @@ html { overflow-x: hidden; overflow-x: clip; }
   }
   document.addEventListener('click', function (e) {
     var s = e.target.closest('.th-s'); if (s && $('ptbl') && $('ptbl').contains(s)) { var k = s.dataset.k; if (psort === k) pdir = -pdir; else { psort = k; pdir = typeof window.__PL[0][k] === 'string' ? 1 : -1; } drawPl(); return; }
-    var c = e.target.closest('#tsp .chip'); if (c) { SPL = c.dataset.v; history.replaceState(null, '', '/tournament/' + LID + (SPL === 'All' ? '' : '/' + encodeURIComponent(SPL))); load(); }
+    var c = e.target.closest('#tsp .chip'); if (c) { SPL = c.dataset.v; history.replaceState(null, '', '/tournament/' + TS(LID) + (SPL === 'All' ? '' : '/' + encodeURIComponent(SPL))); load(); }
   });
   function chips(m) {
     var sp = (m.splits || []).filter(function (x) { return x; });
@@ -722,7 +722,8 @@ html { overflow-x: hidden; overflow-x: clip; }
     LVF.load(LID, SPL).then(function (ds) { DS = ds; draw(); }).catch(function () { $('tbody').innerHTML = '<div class="row empty" style="color:var(--muted);font-size:12px">Could not load this tournament</div>'; });
   }
   function boot() {
-    var h = RK().split('/'); LID = h[0]; SPL = h[1] || 'All';
+    var h = RK().split('/'); LID = h[0] === 'Worlds' ? 'WLDs' : h[0]; SPL = h[1] || 'All';
+    if (h[0] === 'WLDs') { try { history.replaceState(null, '', '/tournament/Worlds' + (h[1] ? '/' + h[1] : '')); } catch (e) {} }
     LVF.loadMeta().then(function (M) {
       if (!M.leagues[LID]) { location.replace('/404.html'); return; }
       if (SPL !== 'All' && (M.leagues[LID].splits || []).indexOf(SPL) < 0) SPL = 'All';
@@ -776,7 +777,7 @@ html { overflow-x: hidden; overflow-x: clip; }
     items = tm.map(function (t) { var r = SD.tr[t[0]]; return {h: '/team/' + t[0], l: t[1], pre: lg(t[0], 20), post: SD.g[r] ? '<img class="mi" src="' + SD.g[r] + '" alt="' + r + '" title="' + r + '" width="18" height="18">' : ''}; })
       .concat(pl.map(function (p) { return {h: '/player/' + encodeURIComponent(p[0]), l: p[0], pre: '', post: (SD.r[p[2]] || '') + lg(p[1], 20)}; }))
       .concat(ch.map(function (c) { return {h: '/champion/' + encodeURIComponent(c[0]), l: c[0], pre: '<img class="cs" src="' + c[1] + '" alt="" width="20" height="20">', post: ''}; }))
-      .concat(tn.map(function (t) { return {h: '/tournament/' + t[0], l: t[1], pre: '<span style="width:20px;display:flex;justify-content:center">' + (LVF.evIcon(t[0], 18) || '') + '</span>', post: ''}; }));
+      .concat(tn.map(function (t) { return {h: '/tournament/' + TS(t[0]), l: t[1], pre: '<span style="width:20px;display:flex;justify-content:center">' + (LVF.evIcon(t[0], 18) || '') + '</span>', post: ''}; }));
     var row = function (x, i) { return '<a data-i="' + i + '">' + x.pre + '<b>' + esc(x.l) + '</b><i>' + x.post + '</i></a>'; };
     var h = '';
     if (tm.length) h += '<div class="sh">Teams</div>' + items.slice(0, tm.length).map(function (x, i) { return row(x, i); }).join('');

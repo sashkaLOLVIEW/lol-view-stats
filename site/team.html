@@ -569,7 +569,7 @@ html { overflow-x: hidden; overflow-x: clip; }
     items = tm.map(function (t) { var r = SD.tr[t[0]]; return {h: '/team/' + t[0], l: t[1], pre: lg(t[0], 20), post: SD.g[r] ? '<img class="mi" src="' + SD.g[r] + '" alt="' + r + '" title="' + r + '" width="18" height="18">' : ''}; })
       .concat(pl.map(function (p) { return {h: '/player/' + encodeURIComponent(p[0]), l: p[0], pre: '', post: (SD.r[p[2]] || '') + lg(p[1], 20)}; }))
       .concat(ch.map(function (c) { return {h: '/champion/' + encodeURIComponent(c[0]), l: c[0], pre: '<img class="cs" src="' + c[1] + '" alt="" width="20" height="20">', post: ''}; }))
-      .concat(tn.map(function (t) { return {h: '/tournament/' + t[0], l: t[1], pre: '<span style="width:20px;display:flex;justify-content:center">' + (LVF.evIcon(t[0], 18) || '') + '</span>', post: ''}; }));
+      .concat(tn.map(function (t) { return {h: '/tournament/' + TS(t[0]), l: t[1], pre: '<span style="width:20px;display:flex;justify-content:center">' + (LVF.evIcon(t[0], 18) || '') + '</span>', post: ''}; }));
     var row = function (x, i) { return '<a data-i="' + i + '">' + x.pre + '<b>' + esc(x.l) + '</b><i>' + x.post + '</i></a>'; };
     var h = '';
     if (tm.length) h += '<div class="sh">Teams</div>' + items.slice(0, tm.length).map(function (x, i) { return row(x, i); }).join('');
