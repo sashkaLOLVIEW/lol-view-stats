@@ -1,5 +1,5 @@
 {
- "fetched": 1794889622.590094,
+ "fetched": 1794976160.6734116,
  "players": {
   "Cube": {
    "contract": "2027-11-16",
@@ -361,16 +361,6 @@
    "team": "Anyone's Legend",
    "league": "LPL"
   },
-  "Zeus": {
-   "contract": "2026-11-16",
-   "team": "Hanwha Life Esports",
-   "league": "LCK"
-  },
-  "Kanavi": {
-   "contract": "2026-11-16",
-   "team": "Hanwha Life Esports",
-   "league": "LCK"
-  },
   "Zeka": {
    "contract": "2027-11-15",
    "team": "Hanwha Life Esports",
@@ -383,46 +373,6 @@
   },
   "Delight": {
    "contract": "2027-11-15",
-   "team": "Hanwha Life Esports",
-   "league": "LCK"
-  },
-  "Panther": {
-   "contract": "2026-11-16",
-   "team": "Hanwha Life Esports",
-   "league": "LCK"
-  },
-  "Jackal": {
-   "contract": "2026-11-16",
-   "team": "Hanwha Life Esports",
-   "league": "LCK"
-  },
-  "Cracker": {
-   "contract": "2026-11-16",
-   "team": "Hanwha Life Esports",
-   "league": "LCK"
-  },
-  "Valiant": {
-   "contract": "2026-11-16",
-   "team": "Hanwha Life Esports",
-   "league": "LCK"
-  },
-  "Pyeonsik": {
-   "contract": "2026-11-16",
-   "team": "Hanwha Life Esports",
-   "league": "LCK"
-  },
-  "Bluffing": {
-   "contract": "2026-11-16",
-   "team": "Hanwha Life Esports",
-   "league": "LCK"
-  },
-  "Homme": {
-   "contract": "2026-11-16",
-   "team": "Hanwha Life Esports",
-   "league": "LCK"
-  },
-  "Sin": {
-   "contract": "2026-11-16",
    "team": "Hanwha Life Esports",
    "league": "LCK"
   },
@@ -446,16 +396,6 @@
    "team": "Dplus Kia",
    "league": "LCK"
   },
-  "ShowMaker": {
-   "contract": "2026-11-16",
-   "team": "Dplus Kia",
-   "league": "LCK"
-  },
-  "Smash": {
-   "contract": "2026-11-16",
-   "team": "Dplus Kia",
-   "league": "LCK"
-  },
   "Career": {
    "contract": "2027-11-15",
    "team": "Dplus Kia",
@@ -476,46 +416,6 @@
    "team": "Dplus Kia",
    "league": "LCK"
   },
-  "Garden": {
-   "contract": "2026-11-16",
-   "team": "Dplus Kia",
-   "league": "LCK"
-  },
-  "Wayne": {
-   "contract": "2026-11-16",
-   "team": "Dplus Kia",
-   "league": "LCK"
-  },
-  "Loopy": {
-   "contract": "2026-11-16",
-   "team": "Dplus Kia",
-   "league": "LCK"
-  },
-  "cvMax": {
-   "contract": "2026-11-16",
-   "team": "Dplus Kia",
-   "league": "LCK"
-  },
-  "PoohManDu": {
-   "contract": "2026-11-16",
-   "team": "Dplus Kia",
-   "league": "LCK"
-  },
-  "Hachani": {
-   "contract": "2026-11-16",
-   "team": "Dplus Kia",
-   "league": "LCK"
-  },
-  "Woong": {
-   "contract": "2026-11-16",
-   "team": "Dplus Kia",
-   "league": "LCK"
-  },
-  "Sungmin": {
-   "contract": "2026-11-16",
-   "team": "Dplus Kia",
-   "league": "LCK"
-  },
   "PerfecT": {
    "contract": "2028-11-20",
    "team": "kt Rolster",
@@ -531,23 +431,8 @@
    "team": "kt Rolster",
    "league": "LCK"
   },
-  "Jiwoo": {
-   "contract": "2026-11-16",
-   "team": "kt Rolster",
-   "league": "LCK"
-  },
-  "Effort": {
-   "contract": "2026-11-16",
-   "team": "kt Rolster",
-   "league": "LCK"
-  },
   "Sero": {
    "contract": "2027-11-15",
-   "team": "kt Rolster",
-   "league": "LCK"
-  },
-  "Sylvie": {
-   "contract": "2026-11-16",
    "team": "kt Rolster",
    "league": "LCK"
   },
@@ -561,16 +446,6 @@
    "team": "kt Rolster",
    "league": "LCK"
   },
-  "Ghost": {
-   "contract": "2026-11-16",
-   "team": "kt Rolster",
-   "league": "LCK"
-  },
-  "Pollu": {
-   "contract": "2026-11-16",
-   "team": "kt Rolster",
-   "league": "LCK"
-  },
   "Score": {
    "contract": "2029-11-19",
    "team": "kt Rolster",
@@ -581,23 +456,8 @@
    "team": "kt Rolster",
    "league": "LCK"
   },
-  "Sonstar": {
-   "contract": "2026-11-16",
-   "team": "kt Rolster",
-   "league": "LCK"
-  },
-  "Spark": {
-   "contract": "2026-11-16",
-   "team": "kt Rolster",
-   "league": "LCK"
-  },
-  "Lilac": {
-   "contract": "2026-11-16",
-   "team": "kt Rolster",
-   "league": "LCK"
-  },
   "Casting": {
-   "contract": "2027-11-15",
+   "contract": "2028-11-20",
    "team": "HANJIN BRION",
    "league": "LCK"
   },
@@ -611,11 +471,6 @@
    "team": "HANJIN BRION",
    "league": "LCK"
   },
-  "Pungyeon": {
-   "contract": "2026-11-16",
-   "team": "HANJIN BRION",
-   "league": "LCK"
-  },
   "Teddy": {
    "contract": "2027-11-15",
    "team": "HANJIN BRION",
@@ -626,23 +481,8 @@
    "team": "HANJIN BRION",
    "league": "LCK"
   },
-  "DDahyuk": {
-   "contract": "2026-11-16",
-   "team": "HANJIN BRION",
-   "league": "LCK"
-  },
-  "Tempester": {
-   "contract": "2026-11-16",
-   "team": "HANJIN BRION",
-   "league": "LCK"
-  },
-  "OddEye": {
-   "contract": "2026-11-16",
-   "team": "HANJIN BRION",
-   "league": "LCK"
-  },
-  "PlanB": {
-   "contract": "2026-11-16",
+  "Poss": {
+   "contract": "2027-11-15",
    "team": "HANJIN BRION",
    "league": "LCK"
   },
@@ -651,19 +491,14 @@
    "team": "HANJIN BRION",
    "league": "LCK"
   },
-  "Duke": {
-   "contract": "2026-11-16",
+  "OnFleek": {
+   "contract": "2027-11-15",
    "team": "HANJIN BRION",
    "league": "LCK"
   },
   "Ssumday": {
-   "contract": "2026-11-16",
+   "contract": "2027-11-15",
    "team": "HANJIN BRION",
-   "league": "LCK"
-  },
-  "Doran": {
-   "contract": "2026-11-16",
-   "team": "T1",
    "league": "LCK"
   },
   "Oner": {
@@ -686,91 +521,6 @@
    "team": "T1",
    "league": "LCK"
   },
-  "Haetae": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "Guardian": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "Painter": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "Carim": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "Guti": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "Cypher": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "Eclipse": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "Cloud": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "Jinbeom": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "kkOma": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "Tom": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "Mata": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "Easyhoon": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "DooTi": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "Nagne": {
-   "contract": "2026-11-16",
-   "team": "T1",
-   "league": "LCK"
-  },
-  "Kiin": {
-   "contract": "2026-11-16",
-   "team": "Gen.G",
-   "league": "LCK"
-  },
-  "Canyon": {
-   "contract": "2026-11-16",
-   "team": "Gen.G",
-   "league": "LCK"
-  },
   "Chovy": {
    "contract": "2027-11-15",
    "team": "Gen.G",
@@ -786,73 +536,13 @@
    "team": "Gen.G",
    "league": "LCK"
   },
-  "Ripple": {
-   "contract": "2026-11-16",
-   "team": "Gen.G",
-   "league": "LCK"
-  },
-  "Courage": {
-   "contract": "2026-11-16",
-   "team": "Gen.G",
-   "league": "LCK"
-  },
-  "Kemish": {
-   "contract": "2026-11-16",
-   "team": "Gen.G",
-   "league": "LCK"
-  },
-  "MUDAI": {
-   "contract": "2026-11-16",
-   "team": "Gen.G",
-   "league": "LCK"
-  },
-  "Lumos": {
-   "contract": "2026-11-16",
-   "team": "Gen.G",
-   "league": "LCK"
-  },
-  "SIRIUSS": {
-   "contract": "2026-11-16",
-   "team": "Gen.G",
-   "league": "LCK"
-  },
   "Ryu": {
    "contract": "2028-11-20",
    "team": "Gen.G",
    "league": "LCK"
   },
-  "Lyn": {
-   "contract": "2026-11-16",
-   "team": "Gen.G",
-   "league": "LCK"
-  },
-  "Nova": {
-   "contract": "2026-11-16",
-   "team": "Gen.G",
-   "league": "LCK"
-  },
-  "Jerry": {
-   "contract": "2026-11-16",
-   "team": "Gen.G",
-   "league": "LCK"
-  },
   "DuDu": {
-   "contract": "2026-11-16",
-   "team": "DN SOOPers",
-   "league": "LCK"
-  },
-  "Sharvel": {
-   "contract": "2026-11-16",
-   "team": "DN SOOPers",
-   "league": "LCK"
-  },
-  "Pyosik": {
-   "contract": "2026-11-16",
-   "team": "DN SOOPers",
-   "league": "LCK"
-  },
-  "Clozer": {
-   "contract": "2026-11-16",
+   "contract": "2028-11-20",
    "team": "DN SOOPers",
    "league": "LCK"
   },
@@ -861,99 +551,24 @@
    "team": "DN SOOPers",
    "league": "LCK"
   },
-  "Peter": {
-   "contract": "2026-11-16",
-   "team": "DN SOOPers",
-   "league": "LCK"
-  },
-  "Life": {
-   "contract": "2026-11-16",
-   "team": "DN SOOPers",
-   "league": "LCK"
-  },
-  "Lancer": {
-   "contract": "2026-11-16",
-   "team": "DN SOOPers",
-   "league": "LCK"
-  },
-  "DDoIV": {
-   "contract": "2026-11-16",
-   "team": "DN SOOPers",
-   "league": "LCK"
-  },
   "Flip": {
    "contract": "2027-11-15",
    "team": "DN SOOPers",
    "league": "LCK"
   },
-  "Enosh": {
-   "contract": "2026-11-16",
-   "team": "DN SOOPers",
-   "league": "LCK"
-  },
-  "Quantum": {
-   "contract": "2026-11-16",
-   "team": "DN SOOPers",
-   "league": "LCK"
-  },
   "Ggoong": {
-   "contract": "2026-11-16",
+   "contract": "2028-11-20",
    "team": "DN SOOPers",
    "league": "LCK"
   },
   "Minit": {
-   "contract": "2026-11-16",
+   "contract": "2027-11-15",
    "team": "DN SOOPers",
    "league": "LCK"
   },
-  "Millimas": {
-   "contract": "2026-11-16",
+  "Crazy": {
+   "contract": "2027-11-15",
    "team": "DN SOOPers",
-   "league": "LCK"
-  },
-  "RapidStar": {
-   "contract": "2026-11-16",
-   "team": "DN SOOPers",
-   "league": "LCK"
-  },
-  "Frog": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Willer": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Vincenzo": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Ucal": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Aiming": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Andil": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Rich": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Winner": {
-   "contract": "2026-11-16",
-   "team": "KRX",
    "league": "LCK"
   },
   "AKaJe": {
@@ -966,71 +581,6 @@
    "team": "KRX",
    "league": "LCK"
   },
-  "Minous": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Joker": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Naehyun": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Saroo": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Frozen": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Raise": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Catch": {
-   "contract": "2026-11-16",
-   "team": "KRX",
-   "league": "LCK"
-  },
-  "Kingen": {
-   "contract": "2026-11-16",
-   "team": "NS REDFORCE",
-   "league": "LCK"
-  },
-  "Sponge": {
-   "contract": "2026-11-16",
-   "team": "NS REDFORCE",
-   "league": "LCK"
-  },
-  "Scout": {
-   "contract": "2026-11-16",
-   "team": "NS REDFORCE",
-   "league": "LCK"
-  },
-  "Calix": {
-   "contract": "2026-11-16",
-   "team": "NS REDFORCE",
-   "league": "LCK"
-  },
-  "Diable": {
-   "contract": "2026-11-16",
-   "team": "NS REDFORCE",
-   "league": "LCK"
-  },
-  "Lehends": {
-   "contract": "2026-11-16",
-   "team": "NS REDFORCE",
-   "league": "LCK"
-  },
   "Janus": {
    "contract": "2027-11-15",
    "team": "NS REDFORCE",
@@ -1038,21 +588,6 @@
   },
   "MihawK": {
    "contract": "2027-11-15",
-   "team": "NS REDFORCE",
-   "league": "LCK"
-  },
-  "SeTab": {
-   "contract": "2026-11-16",
-   "team": "NS REDFORCE",
-   "league": "LCK"
-  },
-  "Lucy": {
-   "contract": "2026-11-16",
-   "team": "NS REDFORCE",
-   "league": "LCK"
-  },
-  "Pleata": {
-   "contract": "2026-11-16",
    "team": "NS REDFORCE",
    "league": "LCK"
   },
@@ -1066,93 +601,18 @@
    "team": "NS REDFORCE",
    "league": "LCK"
   },
-  "Crazy": {
-   "contract": "2026-11-16",
-   "team": "NS REDFORCE",
-   "league": "LCK"
-  },
-  "bonO": {
-   "contract": "2026-11-16",
-   "team": "NS REDFORCE",
-   "league": "LCK"
-  },
-  "Clear": {
-   "contract": "2026-11-16",
-   "team": "BNK FEARX",
-   "league": "LCK"
-  },
-  "Raptor": {
-   "contract": "2026-11-16",
-   "team": "BNK FEARX",
-   "league": "LCK"
-  },
   "VicLa": {
-   "contract": "2026-11-16",
-   "team": "BNK FEARX",
-   "league": "LCK"
-  },
-  "Daystar": {
-   "contract": "2026-11-16",
-   "team": "BNK FEARX",
-   "league": "LCK"
-  },
-  "Taeyoon": {
-   "contract": "2026-11-16",
-   "team": "BNK FEARX",
-   "league": "LCK"
-  },
-  "Kellin": {
-   "contract": "2026-11-16",
-   "team": "BNK FEARX",
-   "league": "LCK"
-  },
-  "Kangin": {
-   "contract": "2026-11-16",
-   "team": "BNK FEARX",
-   "league": "LCK"
-  },
-  "Zephyr": {
-   "contract": "2026-11-16",
-   "team": "BNK FEARX",
-   "league": "LCK"
-  },
-  "Grizzly": {
-   "contract": "2026-11-16",
-   "team": "BNK FEARX",
-   "league": "LCK"
-  },
-  "MG": {
-   "contract": "2026-11-16",
-   "team": "BNK FEARX",
-   "league": "LCK"
-  },
-  "Slayer": {
-   "contract": "2026-11-16",
-   "team": "BNK FEARX",
-   "league": "LCK"
-  },
-  "Luon": {
-   "contract": "2026-11-16",
-   "team": "BNK FEARX",
-   "league": "LCK"
-  },
-  "Edo": {
-   "contract": "2026-11-16",
+   "contract": "2027-11-15",
    "team": "BNK FEARX",
    "league": "LCK"
   },
   "Rather": {
-   "contract": "2026-11-16",
+   "contract": "2028-11-20",
    "team": "BNK FEARX",
    "league": "LCK"
   },
   "Lira": {
-   "contract": "2026-11-16",
-   "team": "BNK FEARX",
-   "league": "LCK"
-  },
-  "Key": {
-   "contract": "2026-11-16",
+   "contract": "2027-11-15",
    "team": "BNK FEARX",
    "league": "LCK"
   },
@@ -2361,366 +1821,6 @@
    "team": "SC",
    "league": "LEC"
   },
-  "Addusto": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Frankfurt",
-   "league": "LEC"
-  },
-  "D4nKa": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Frankfurt",
-   "league": "LEC"
-  },
-  "Sencux": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Frankfurt",
-   "league": "LEC"
-  },
-  "Devn": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Frankfurt",
-   "league": "LEC"
-  },
-  "Richu": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Frankfurt",
-   "league": "LEC"
-  },
-  "Bleim": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Frankfurt",
-   "league": "LEC"
-  },
-  "Kami": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Frankfurt",
-   "league": "LEC"
-  },
-  "Notiko": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Frankfurt",
-   "league": "LEC"
-  },
-  "Szygenda": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Frankfurt",
-   "league": "LEC"
-  },
-  "Irrelevant": {
-   "contract": "2026-11-16",
-   "team": "Berlin International Gaming",
-   "league": "LEC"
-  },
-  "Habubu": {
-   "contract": "2026-11-16",
-   "team": "Berlin International Gaming",
-   "league": "LEC"
-  },
-  "Reeker": {
-   "contract": "2026-11-16",
-   "team": "Berlin International Gaming",
-   "league": "LEC"
-  },
-  "Patrik": {
-   "contract": "2026-11-16",
-   "team": "Berlin International Gaming",
-   "league": "LEC"
-  },
-  "Kaiser": {
-   "contract": "2026-11-16",
-   "team": "Berlin International Gaming",
-   "league": "LEC"
-  },
-  "Don Arts": {
-   "contract": "2026-11-16",
-   "team": "Berlin International Gaming",
-   "league": "LEC"
-  },
-  "Pandar": {
-   "contract": "2026-11-16",
-   "team": "Berlin International Gaming",
-   "league": "LEC"
-  },
-  "113": {
-   "contract": "2026-11-16",
-   "team": "Berlin International Gaming",
-   "league": "LEC"
-  },
-  "Jenax": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Spandau",
-   "league": "LEC"
-  },
-  "Xagog": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Spandau",
-   "league": "LEC"
-  },
-  "PowerOfEvil": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Spandau",
-   "league": "LEC"
-  },
-  "Seaz": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Spandau",
-   "league": "LEC"
-  },
-  "x4NTY": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Spandau",
-   "league": "LEC"
-  },
-  "FUN k3y": {
-   "contract": "2026-11-16",
-   "team": "Eintracht Spandau",
-   "league": "LEC"
-  },
-  "Venour": {
-   "contract": "2026-11-16",
-   "team": "Kaufland Hangry Knights",
-   "league": "LEC"
-  },
-  "Densi": {
-   "contract": "2026-11-16",
-   "team": "Kaufland Hangry Knights",
-   "league": "LEC"
-  },
-  "Abbedagge": {
-   "contract": "2026-11-16",
-   "team": "Kaufland Hangry Knights",
-   "league": "LEC"
-  },
-  "Unforgiven": {
-   "contract": "2026-11-16",
-   "team": "Kaufland Hangry Knights",
-   "league": "LEC"
-  },
-  "Leggifant": {
-   "contract": "2026-11-16",
-   "team": "Kaufland Hangry Knights",
-   "league": "LEC"
-  },
-  "Edward": {
-   "contract": "2026-11-16",
-   "team": "Kaufland Hangry Knights",
-   "league": "LEC"
-  },
-  "jokaa": {
-   "contract": "2026-11-16",
-   "team": "Rossmann Centaurs",
-   "league": "LEC"
-  },
-  "Pasu": {
-   "contract": "2026-11-16",
-   "team": "Rossmann Centaurs",
-   "league": "LEC"
-  },
-  "Fooneses": {
-   "contract": "2026-11-16",
-   "team": "Rossmann Centaurs",
-   "league": "LEC"
-  },
-  "c0st0m": {
-   "contract": "2026-11-16",
-   "team": "Rossmann Centaurs",
-   "league": "LEC"
-  },
-  "Infoneral": {
-   "contract": "2026-11-16",
-   "team": "Rossmann Centaurs",
-   "league": "LEC"
-  },
-  "storm": {
-   "contract": "2026-11-16",
-   "team": "Rossmann Centaurs",
-   "league": "LEC"
-  },
-  "Leks": {
-   "contract": "2026-11-16",
-   "team": "Rossmann Centaurs",
-   "league": "LEC"
-  },
-  "Zorenous": {
-   "contract": "2026-11-16",
-   "team": "TeamOrangeGaming",
-   "league": "LEC"
-  },
-  "Woldjo": {
-   "contract": "2026-11-16",
-   "team": "TeamOrangeGaming",
-   "league": "LEC"
-  },
-  "Sajator": {
-   "contract": "2026-11-16",
-   "team": "TeamOrangeGaming",
-   "league": "LEC"
-  },
-  "Ryuk": {
-   "contract": "2026-11-16",
-   "team": "TeamOrangeGaming",
-   "league": "LEC"
-  },
-  "Lilipp": {
-   "contract": "2026-11-16",
-   "team": "TeamOrangeGaming",
-   "league": "LEC"
-  },
-  "Whiteknight": {
-   "contract": "2026-11-16",
-   "team": "TeamOrangeGaming",
-   "league": "LEC"
-  },
-  "DeadShadow": {
-   "contract": "2026-11-16",
-   "team": "TeamOrangeGaming",
-   "league": "LEC"
-  },
-  "Vizicsacsi": {
-   "contract": "2026-11-16",
-   "team": "E WIE EINFACH E-SPORTS",
-   "league": "LEC"
-  },
-  "Afroboi": {
-   "contract": "2026-11-16",
-   "team": "E WIE EINFACH E-SPORTS",
-   "league": "LEC"
-  },
-  "Relative": {
-   "contract": "2026-11-16",
-   "team": "E WIE EINFACH E-SPORTS",
-   "league": "LEC"
-  },
-  "Noz2k": {
-   "contract": "2026-11-16",
-   "team": "E WIE EINFACH E-SPORTS",
-   "league": "LEC"
-  },
-  "Wildenbruch": {
-   "contract": "2026-11-16",
-   "team": "E WIE EINFACH E-SPORTS",
-   "league": "LEC"
-  },
-  "Lothi": {
-   "contract": "2026-11-16",
-   "team": "E WIE EINFACH E-SPORTS",
-   "league": "LEC"
-  },
-  "Shelfmade": {
-   "contract": "2026-11-16",
-   "team": "G2 NORD",
-   "league": "LEC"
-  },
-  "Markoon": {
-   "contract": "2026-11-16",
-   "team": "G2 NORD",
-   "league": "LEC"
-  },
-  "Toasty": {
-   "contract": "2026-11-16",
-   "team": "G2 NORD",
-   "league": "LEC"
-  },
-  "Rin": {
-   "contract": "2026-11-16",
-   "team": "G2 NORD",
-   "league": "LEC"
-  },
-  "Tockimo": {
-   "contract": "2026-11-16",
-   "team": "G2 NORD",
-   "league": "LEC"
-  },
-  "BliZarD": {
-   "contract": "2026-11-16",
-   "team": "G2 NORD",
-   "league": "LEC"
-  },
-  "Nico": {
-   "contract": "2026-11-16",
-   "team": "G2 NORD",
-   "league": "LEC"
-  },
-  "Michel": {
-   "contract": "2026-11-16",
-   "team": "G2 NORD",
-   "league": "LEC"
-  },
-  "FornoReason": {
-   "contract": "2026-11-16",
-   "team": "Unicorns of Love - Sexy Edition",
-   "league": "LEC"
-  },
-  "White": {
-   "contract": "2026-11-16",
-   "team": "Unicorns of Love - Sexy Edition",
-   "league": "LEC"
-  },
-  "Kanin": {
-   "contract": "2026-11-16",
-   "team": "Unicorns of Love - Sexy Edition",
-   "league": "LEC"
-  },
-  "DenVoksne": {
-   "contract": "2026-11-16",
-   "team": "Unicorns of Love - Sexy Edition",
-   "league": "LEC"
-  },
-  "Twiizt": {
-   "contract": "2026-11-16",
-   "team": "Unicorns of Love - Sexy Edition",
-   "league": "LEC"
-  },
-  "Sheepy": {
-   "contract": "2026-11-16",
-   "team": "Unicorns of Love - Sexy Edition",
-   "league": "LEC"
-  },
-  "Sam": {
-   "contract": "2026-11-16",
-   "team": "Unicorns of Love - Sexy Edition",
-   "league": "LEC"
-  },
-  "Sven": {
-   "contract": "2026-11-16",
-   "team": "VfB Stuttgart",
-   "league": "LEC"
-  },
-  "Zwickl": {
-   "contract": "2026-11-16",
-   "team": "VfB Stuttgart",
-   "league": "LEC"
-  },
-  "Luke": {
-   "contract": "2026-11-16",
-   "team": "VfB Stuttgart",
-   "league": "LEC"
-  },
-  "Tazaku": {
-   "contract": "2026-11-16",
-   "team": "VfB Stuttgart",
-   "league": "LEC"
-  },
-  "Jakobobbi": {
-   "contract": "2026-11-16",
-   "team": "VfB Stuttgart",
-   "league": "LEC"
-  },
-  "MaxSchallah": {
-   "contract": "2026-11-16",
-   "team": "VfB Stuttgart",
-   "league": "LEC"
-  },
-  "GreenThor": {
-   "contract": "2026-11-16",
-   "team": "VfB Stuttgart",
-   "league": "LEC"
-  },
-  "Dizl": {
-   "contract": "2026-11-16",
-   "team": "VfB Stuttgart",
-   "league": "LEC"
-  },
   "Kozi": {
    "contract": "2027-11-15",
    "team": "UCAM Esports Club",
@@ -2951,6 +2051,11 @@
    "team": "LUA",
    "league": "LEC"
   },
+  "Slayer": {
+   "contract": "2026-11-16",
+   "team": "Movistar KOI Fénix",
+   "league": "LEC"
+  },
   "XnS": {
    "contract": "2026-11-16",
    "team": "Movistar KOI Fénix",
@@ -3012,6 +2117,11 @@
    "league": "LEC"
   },
   "Chonocleas": {
+   "contract": "2026-11-16",
+   "team": "PCIFIC Esports",
+   "league": "LEC"
+  },
+  "Zeus": {
    "contract": "2026-11-16",
    "team": "PCIFIC Esports",
    "league": "LEC"
@@ -3306,41 +2416,6 @@
    "team": "Dignitas",
    "league": "LCS"
   },
-  "Emi": {
-   "contract": "Day After Worlds 2026",
-   "team": "Dignitas",
-   "league": "LCS"
-  },
-  "Srtty": {
-   "contract": "2026-11-16",
-   "team": "Disguised",
-   "league": "LCS"
-  },
-  "Kryra": {
-   "contract": "2026-11-16",
-   "team": "Disguised",
-   "league": "LCS"
-  },
-  "Callme": {
-   "contract": "2026-11-16",
-   "team": "Disguised",
-   "league": "LCS"
-  },
-  "Sajed": {
-   "contract": "2026-11-16",
-   "team": "Disguised",
-   "league": "LCS"
-  },
-  "Lyonz": {
-   "contract": "2026-11-16",
-   "team": "Disguised",
-   "league": "LCS"
-  },
-  "ido": {
-   "contract": "Day After Worlds 2026",
-   "team": "Disguised",
-   "league": "LCS"
-  },
   "Gakgos": {
    "contract": "2027-11-15",
    "team": "FlyQuest",
@@ -3348,16 +2423,6 @@
   },
   "Gryffinn": {
    "contract": "2027-11-15",
-   "team": "FlyQuest",
-   "league": "LCS"
-  },
-  "Quad": {
-   "contract": "2026-11-17",
-   "team": "FlyQuest",
-   "league": "LCS"
-  },
-  "Massu": {
-   "contract": "2026-11-17",
    "team": "FlyQuest",
    "league": "LCS"
   },
@@ -3371,11 +2436,6 @@
    "team": "FlyQuest",
    "league": "LCS"
   },
-  "Apollo": {
-   "contract": "Day After Worlds 2026",
-   "team": "FlyQuest",
-   "league": "LCS"
-  },
   "Dhokla": {
    "contract": "2027-11-15",
    "team": "LYON",
@@ -3383,16 +2443,6 @@
   },
   "Inspired": {
    "contract": "2027-11-15",
-   "team": "LYON",
-   "league": "LCS"
-  },
-  "Saint": {
-   "contract": "2026-11-17",
-   "team": "LYON",
-   "league": "LCS"
-  },
-  "Berserker": {
-   "contract": "2026-11-16",
    "team": "LYON",
    "league": "LCS"
   },
@@ -3406,23 +2456,8 @@
    "team": "LYON",
    "league": "LCS"
   },
-  "Reignover": {
-   "contract": "Day After Worlds 2026",
-   "team": "LYON",
-   "league": "LCS"
-  },
-  "Rigby": {
-   "contract": "Day After Worlds 2026",
-   "team": "LYON",
-   "league": "LCS"
-  },
   "Impact": {
    "contract": "2027-11-15",
-   "team": "Sentinels",
-   "league": "LCS"
-  },
-  "Hambak": {
-   "contract": "2026-11-17",
    "team": "Sentinels",
    "league": "LCS"
   },
@@ -3446,46 +2481,6 @@
    "team": "Sentinels",
    "league": "LCS"
   },
-  "Dayos": {
-   "contract": "Day After Worlds 2026",
-   "team": "Sentinels",
-   "league": "LCS"
-  },
-  "Fudge": {
-   "contract": "2026-11-17",
-   "team": "Shopify Rebellion",
-   "league": "LCS"
-  },
-  "Contractz": {
-   "contract": "2026-11-17",
-   "team": "Shopify Rebellion",
-   "league": "LCS"
-  },
-  "Zinie": {
-   "contract": "2026-11-17",
-   "team": "Shopify Rebellion",
-   "league": "LCS"
-  },
-  "Bvoy": {
-   "contract": "2026-11-17",
-   "team": "Shopify Rebellion",
-   "league": "LCS"
-  },
-  "Zeyzal": {
-   "contract": "2026-11-14",
-   "team": "Shopify Rebellion",
-   "league": "LCS"
-  },
-  "Reven": {
-   "contract": "Day After Worlds 2026",
-   "team": "Shopify Rebellion",
-   "league": "LCS"
-  },
-  "Damonte": {
-   "contract": "Day After Worlds 2026",
-   "team": "Shopify Rebellion",
-   "league": "LCS"
-  },
   "Morgan": {
    "contract": "2028-11-20",
    "team": "Team Liquid",
@@ -3498,26 +2493,6 @@
   },
   "Quid": {
    "contract": "2027-11-15",
-   "team": "Team Liquid",
-   "league": "LCS"
-  },
-  "Yeon": {
-   "contract": "2026-11-17",
-   "team": "Team Liquid",
-   "league": "LCS"
-  },
-  "CoreJJ": {
-   "contract": "2026-11-17",
-   "team": "Team Liquid",
-   "league": "LCS"
-  },
-  "Spawn": {
-   "contract": "Day After Worlds 2026",
-   "team": "Team Liquid",
-   "league": "LCS"
-  },
-  "Spookz": {
-   "contract": "Day After Worlds 2026",
    "team": "Team Liquid",
    "league": "LCS"
   },
@@ -3743,6 +2718,11 @@
   },
   "uZent": {
    "contract": "2027-11-15",
+   "team": "LOUD",
+   "league": "LCS"
+  },
+  "Raise": {
+   "contract": "Day After Worlds 2026",
    "team": "LOUD",
    "league": "LCS"
   },
@@ -3983,6 +2963,11 @@
   },
   "Damage": {
    "contract": "2026-10-27",
+   "team": "Ei Nerd Esports",
+   "league": "LCS"
+  },
+  "Doran": {
+   "contract": "Day After Worlds 2026",
    "team": "Ei Nerd Esports",
    "league": "LCS"
   },
@@ -4837,24 +3822,6 @@
   },
   {
    "league": "LCK",
-   "player": "Zeus",
-   "team": "Hanwha Life Esports",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Kanavi",
-   "team": "Hanwha Life Esports",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "Zeka",
    "team": "Hanwha Life Esports",
    "tri": "",
@@ -4879,78 +3846,6 @@
    "role": "",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LCK",
-   "player": "Panther",
-   "team": "Hanwha Life Esports",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Jackal",
-   "team": "Hanwha Life Esports",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Cracker",
-   "team": "Hanwha Life Esports",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Valiant",
-   "team": "Hanwha Life Esports",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Pyeonsik",
-   "team": "Hanwha Life Esports",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Bluffing",
-   "team": "Hanwha Life Esports",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Homme",
-   "team": "Hanwha Life Esports",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Sin",
-   "team": "Hanwha Life Esports",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LCK",
@@ -4990,24 +3885,6 @@
   },
   {
    "league": "LCK",
-   "player": "ShowMaker",
-   "team": "Dplus Kia",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Smash",
-   "team": "Dplus Kia",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "Career",
    "team": "Dplus Kia",
    "tri": "",
@@ -5044,78 +3921,6 @@
   },
   {
    "league": "LCK",
-   "player": "Garden",
-   "team": "Dplus Kia",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Wayne",
-   "team": "Dplus Kia",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Loopy",
-   "team": "Dplus Kia",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "cvMax",
-   "team": "Dplus Kia",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "PoohManDu",
-   "team": "Dplus Kia",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Hachani",
-   "team": "Dplus Kia",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Woong",
-   "team": "Dplus Kia",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Sungmin",
-   "team": "Dplus Kia",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "PerfecT",
    "team": "kt Rolster",
    "tri": "",
@@ -5143,39 +3948,12 @@
   },
   {
    "league": "LCK",
-   "player": "Jiwoo",
-   "team": "kt Rolster",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Effort",
-   "team": "kt Rolster",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "Sero",
    "team": "kt Rolster",
    "tri": "",
    "role": "",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LCK",
-   "player": "Sylvie",
-   "team": "kt Rolster",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LCK",
@@ -5197,24 +3975,6 @@
   },
   {
    "league": "LCK",
-   "player": "Ghost",
-   "team": "kt Rolster",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Pollu",
-   "team": "kt Rolster",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "Score",
    "team": "kt Rolster",
    "tri": "",
@@ -5233,39 +3993,12 @@
   },
   {
    "league": "LCK",
-   "player": "Sonstar",
-   "team": "kt Rolster",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Spark",
-   "team": "kt Rolster",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Lilac",
-   "team": "kt Rolster",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "Casting",
    "team": "HANJIN BRION",
    "tri": "",
    "role": "",
-   "raw_end": "November 15, 2027",
-   "contract": "2027-11-15"
+   "raw_end": "November 20, 2028",
+   "contract": "2028-11-20"
   },
   {
    "league": "LCK",
@@ -5287,15 +4020,6 @@
   },
   {
    "league": "LCK",
-   "player": "Pungyeon",
-   "team": "HANJIN BRION",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "Teddy",
    "team": "HANJIN BRION",
    "tri": "",
@@ -5314,39 +4038,12 @@
   },
   {
    "league": "LCK",
-   "player": "DDahyuk",
+   "player": "Poss",
    "team": "HANJIN BRION",
    "tri": "",
    "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Tempester",
-   "team": "HANJIN BRION",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "OddEye",
-   "team": "HANJIN BRION",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "PlanB",
-   "team": "HANJIN BRION",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
+   "raw_end": "November 15, 2027",
+   "contract": "2027-11-15"
   },
   {
    "league": "LCK",
@@ -5359,12 +4056,12 @@
   },
   {
    "league": "LCK",
-   "player": "Duke",
+   "player": "OnFleek",
    "team": "HANJIN BRION",
    "tri": "",
    "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
+   "raw_end": "November 15, 2027",
+   "contract": "2027-11-15"
   },
   {
    "league": "LCK",
@@ -5372,17 +4069,8 @@
    "team": "HANJIN BRION",
    "tri": "",
    "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Doran",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
+   "raw_end": "November 15, 2027",
+   "contract": "2027-11-15"
   },
   {
    "league": "LCK",
@@ -5422,159 +4110,6 @@
   },
   {
    "league": "LCK",
-   "player": "Haetae",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Guardian",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Painter",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Carim",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Guti",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Cypher",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Eclipse",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Cloud",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Jinbeom",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "kkOma",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Tom",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Mata",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Easyhoon",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "DooTi",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Nagne",
-   "team": "T1",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Kiin",
-   "team": "Gen.G",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Canyon",
-   "team": "Gen.G",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "Chovy",
    "team": "Gen.G",
    "tri": "",
@@ -5602,60 +4137,6 @@
   },
   {
    "league": "LCK",
-   "player": "Ripple",
-   "team": "Gen.G",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Courage",
-   "team": "Gen.G",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Kemish",
-   "team": "Gen.G",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "MUDAI",
-   "team": "Gen.G",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Lumos",
-   "team": "Gen.G",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "SIRIUSS",
-   "team": "Gen.G",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "Ryu",
    "team": "Gen.G",
    "tri": "",
@@ -5665,66 +4146,12 @@
   },
   {
    "league": "LCK",
-   "player": "Lyn",
-   "team": "Gen.G",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Nova",
-   "team": "Gen.G",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Jerry",
-   "team": "Gen.G",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "DuDu",
    "team": "DN SOOPers",
    "tri": "",
    "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Sharvel",
-   "team": "DN SOOPers",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Pyosik",
-   "team": "DN SOOPers",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Clozer",
-   "team": "DN SOOPers",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
+   "raw_end": "November 20, 2028",
+   "contract": "2028-11-20"
   },
   {
    "league": "LCK",
@@ -5737,42 +4164,6 @@
   },
   {
    "league": "LCK",
-   "player": "Peter",
-   "team": "DN SOOPers",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Life",
-   "team": "DN SOOPers",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Lancer",
-   "team": "DN SOOPers",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "DDoIV",
-   "team": "DN SOOPers",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "Flip",
    "team": "DN SOOPers",
    "tri": "",
@@ -5782,30 +4173,12 @@
   },
   {
    "league": "LCK",
-   "player": "Enosh",
-   "team": "DN SOOPers",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Quantum",
-   "team": "DN SOOPers",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "Ggoong",
    "team": "DN SOOPers",
    "tri": "",
    "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
+   "raw_end": "November 20, 2028",
+   "contract": "2028-11-20"
   },
   {
    "league": "LCK",
@@ -5813,26 +4186,17 @@
    "team": "DN SOOPers",
    "tri": "",
    "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
+   "raw_end": "November 15, 2027",
+   "contract": "2027-11-15"
   },
   {
    "league": "LCK",
-   "player": "Millimas",
+   "player": "Crazy",
    "team": "DN SOOPers",
    "tri": "",
    "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "RapidStar",
-   "team": "DN SOOPers",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
+   "raw_end": "November 15, 2027",
+   "contract": "2027-11-15"
   },
   {
    "league": "LCK",
@@ -5840,80 +4204,8 @@
    "team": "DN SOOPers",
    "tri": "",
    "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Frog",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Willer",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Vincenzo",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Ucal",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Aiming",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Andil",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Rich",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Winner",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
+   "raw_end": "November 20, 2028",
+   "contract": "2028-11-20"
   },
   {
    "league": "LCK",
@@ -5935,123 +4227,6 @@
   },
   {
    "league": "LCK",
-   "player": "Minous",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Joker",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Naehyun",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Saroo",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Frozen",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Raise",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Catch",
-   "team": "KRX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Kingen",
-   "team": "NS REDFORCE",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Sponge",
-   "team": "NS REDFORCE",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Scout",
-   "team": "NS REDFORCE",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Calix",
-   "team": "NS REDFORCE",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Diable",
-   "team": "NS REDFORCE",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Lehends",
-   "team": "NS REDFORCE",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "Janus",
    "team": "NS REDFORCE",
    "tri": "",
@@ -6067,33 +4242,6 @@
    "role": "",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LCK",
-   "player": "SeTab",
-   "team": "NS REDFORCE",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Lucy",
-   "team": "NS REDFORCE",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Pleata",
-   "team": "NS REDFORCE",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LCK",
@@ -6115,138 +4263,12 @@
   },
   {
    "league": "LCK",
-   "player": "Crazy",
-   "team": "NS REDFORCE",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "bonO",
-   "team": "NS REDFORCE",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Clear",
-   "team": "BNK FEARX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Raptor",
-   "team": "BNK FEARX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
    "player": "VicLa",
    "team": "BNK FEARX",
    "tri": "",
    "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Daystar",
-   "team": "BNK FEARX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Taeyoon",
-   "team": "BNK FEARX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Kellin",
-   "team": "BNK FEARX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Kangin",
-   "team": "BNK FEARX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Zephyr",
-   "team": "BNK FEARX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Grizzly",
-   "team": "BNK FEARX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "MG",
-   "team": "BNK FEARX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Slayer",
-   "team": "BNK FEARX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Luon",
-   "team": "BNK FEARX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Edo",
-   "team": "BNK FEARX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
+   "raw_end": "November 15, 2027",
+   "contract": "2027-11-15"
   },
   {
    "league": "LCK",
@@ -6254,8 +4276,8 @@
    "team": "BNK FEARX",
    "tri": "",
    "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
+   "raw_end": "November 20, 2028",
+   "contract": "2028-11-20"
   },
   {
    "league": "LCK",
@@ -6263,17 +4285,8 @@
    "team": "BNK FEARX",
    "tri": "",
    "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCK",
-   "player": "Key",
-   "team": "BNK FEARX",
-   "tri": "",
-   "role": "",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
+   "raw_end": "November 15, 2027",
+   "contract": "2027-11-15"
   },
   {
    "league": "LCP",
@@ -9976,681 +7989,6 @@
   },
   {
    "league": "LEC",
-   "player": "Addusto",
-   "team": "Eintracht Frankfurt",
-   "tri": "SGE",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "D4nKa",
-   "team": "Eintracht Frankfurt",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Sencux",
-   "team": "Eintracht Frankfurt",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Devn",
-   "team": "Eintracht Frankfurt",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Richu",
-   "team": "Eintracht Frankfurt",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Bleim",
-   "team": "Eintracht Frankfurt",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Kami",
-   "team": "Eintracht Frankfurt",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Notiko",
-   "team": "Eintracht Frankfurt",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Szygenda",
-   "team": "Eintracht Frankfurt",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Irrelevant",
-   "team": "Berlin International Gaming",
-   "tri": "BIG",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Habubu",
-   "team": "Berlin International Gaming",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Reeker",
-   "team": "Berlin International Gaming",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Patrik",
-   "team": "Berlin International Gaming",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Kaiser",
-   "team": "Berlin International Gaming",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Don Arts",
-   "team": "Berlin International Gaming",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Pandar",
-   "team": "Berlin International Gaming",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "113",
-   "team": "Berlin International Gaming",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Jenax",
-   "team": "Eintracht Spandau",
-   "tri": "EINS",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Xagog",
-   "team": "Eintracht Spandau",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "PowerOfEvil",
-   "team": "Eintracht Spandau",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Seaz",
-   "team": "Eintracht Spandau",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "x4NTY",
-   "team": "Eintracht Spandau",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "FUN k3y",
-   "team": "Eintracht Spandau",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Venour",
-   "team": "Kaufland Hangry Knights",
-   "tri": "KHK",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Densi",
-   "team": "Kaufland Hangry Knights",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Abbedagge",
-   "team": "Kaufland Hangry Knights",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Unforgiven",
-   "team": "Kaufland Hangry Knights",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Leggifant",
-   "team": "Kaufland Hangry Knights",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Boda",
-   "team": "Kaufland Hangry Knights",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Doss",
-   "team": "Kaufland Hangry Knights",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Edward",
-   "team": "Kaufland Hangry Knights",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "jokaa",
-   "team": "Rossmann Centaurs",
-   "tri": "ROSS",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Pasu",
-   "team": "Rossmann Centaurs",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Fooneses",
-   "team": "Rossmann Centaurs",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "c0st0m",
-   "team": "Rossmann Centaurs",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Infoneral",
-   "team": "Rossmann Centaurs",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "storm",
-   "team": "Rossmann Centaurs",
-   "tri": "",
-   "role": "Sub",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Hazel",
-   "team": "Rossmann Centaurs",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Leks",
-   "team": "Rossmann Centaurs",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Zorenous",
-   "team": "TeamOrangeGaming",
-   "tri": "TOG",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Woldjo",
-   "team": "TeamOrangeGaming",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Sajator",
-   "team": "TeamOrangeGaming",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Ryuk",
-   "team": "TeamOrangeGaming",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Lilipp",
-   "team": "TeamOrangeGaming",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Whiteknight",
-   "team": "TeamOrangeGaming",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "DeadShadow",
-   "team": "TeamOrangeGaming",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Vizicsacsi",
-   "team": "E WIE EINFACH E-SPORTS",
-   "tri": "EWI",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Afroboi",
-   "team": "E WIE EINFACH E-SPORTS",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Relative",
-   "team": "E WIE EINFACH E-SPORTS",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Noz2k",
-   "team": "E WIE EINFACH E-SPORTS",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Wildenbruch",
-   "team": "E WIE EINFACH E-SPORTS",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Lothi",
-   "team": "E WIE EINFACH E-SPORTS",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Shelfmade",
-   "team": "G2 NORD",
-   "tri": "G2N",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Markoon",
-   "team": "G2 NORD",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Toasty",
-   "team": "G2 NORD",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Rin",
-   "team": "G2 NORD",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Tockimo",
-   "team": "G2 NORD",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "BliZarD",
-   "team": "G2 NORD",
-   "tri": "",
-   "role": "Sub",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Nico",
-   "team": "G2 NORD",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Michel",
-   "team": "G2 NORD",
-   "tri": "",
-   "role": "Sub",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "FornoReason",
-   "team": "Unicorns of Love - Sexy Edition",
-   "tri": "USE",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "White",
-   "team": "Unicorns of Love - Sexy Edition",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Kanin",
-   "team": "Unicorns of Love - Sexy Edition",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "DenVoksne",
-   "team": "Unicorns of Love - Sexy Edition",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Twiizt",
-   "team": "Unicorns of Love - Sexy Edition",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Sheepy",
-   "team": "Unicorns of Love - Sexy Edition",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Sam",
-   "team": "Unicorns of Love - Sexy Edition",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Sven",
-   "team": "VfB Stuttgart",
-   "tri": "VfB",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Zwickl",
-   "team": "VfB Stuttgart",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Luke",
-   "team": "VfB Stuttgart",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Tazaku",
-   "team": "VfB Stuttgart",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Jakobobbi",
-   "team": "VfB Stuttgart",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "MaxSchallah",
-   "team": "VfB Stuttgart",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "GreenThor",
-   "team": "VfB Stuttgart",
-   "tri": "",
-   "role": "Coach",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Dizl",
-   "team": "VfB Stuttgart",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
    "player": "Kozi",
    "team": "UCAM Esports Club",
    "tri": "UCAM",
@@ -11749,69 +9087,6 @@
   },
   {
    "league": "LCS",
-   "player": "Emi",
-   "team": "Dignitas",
-   "tri": "",
-   "role": "LCS Strategic Coach",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LCS",
-   "player": "Srtty",
-   "team": "Disguised",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCS",
-   "player": "Kryra",
-   "team": "Disguised",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCS",
-   "player": "Callme",
-   "team": "Disguised",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCS",
-   "player": "Sajed",
-   "team": "Disguised",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCS",
-   "player": "Lyonz",
-   "team": "Disguised",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCS",
-   "player": "ido",
-   "team": "Disguised",
-   "tri": "",
-   "role": "LCS Head Coach",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LCS",
    "player": "Gakgos",
    "team": "FlyQuest",
    "tri": "",
@@ -11827,24 +9102,6 @@
    "role": "Jungle",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LCS",
-   "player": "Quad",
-   "team": "FlyQuest",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCS",
-   "player": "Massu",
-   "team": "FlyQuest",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
   },
   {
    "league": "LCS",
@@ -11866,15 +9123,6 @@
   },
   {
    "league": "LCS",
-   "player": "Apollo",
-   "team": "FlyQuest",
-   "tri": "",
-   "role": "LCS Strategic Coach",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LCS",
    "player": "Dhokla",
    "team": "LYON",
    "tri": "",
@@ -11890,24 +9138,6 @@
    "role": "Jungle",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LCS",
-   "player": "Saint",
-   "team": "LYON",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCS",
-   "player": "Berserker",
-   "team": "LYON",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LCS",
@@ -11929,39 +9159,12 @@
   },
   {
    "league": "LCS",
-   "player": "Reignover",
-   "team": "LYON",
-   "tri": "",
-   "role": "LCS Head Coach",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LCS",
-   "player": "Rigby",
-   "team": "LYON",
-   "tri": "",
-   "role": "LCS Strategic Coach",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LCS",
    "player": "Impact",
    "team": "Sentinels",
    "tri": "",
    "role": "Top",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LCS",
-   "player": "Hambak",
-   "team": "Sentinels",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
   },
   {
    "league": "LCS",
@@ -12001,78 +9204,6 @@
   },
   {
    "league": "LCS",
-   "player": "Dayos",
-   "team": "Sentinels",
-   "tri": "",
-   "role": "LCS Strategic Coach",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LCS",
-   "player": "Fudge",
-   "team": "Shopify Rebellion",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCS",
-   "player": "Contractz",
-   "team": "Shopify Rebellion",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCS",
-   "player": "Zinie",
-   "team": "Shopify Rebellion",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCS",
-   "player": "Bvoy",
-   "team": "Shopify Rebellion",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCS",
-   "player": "Zeyzal",
-   "team": "Shopify Rebellion",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 14, 2026",
-   "contract": "2026-11-14"
-  },
-  {
-   "league": "LCS",
-   "player": "Reven",
-   "team": "Shopify Rebellion",
-   "tri": "",
-   "role": "LCS Head Coach",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LCS",
-   "player": "Damonte",
-   "team": "Shopify Rebellion",
-   "tri": "",
-   "role": "LCS Strategic Coach",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LCS",
    "player": "Morgan",
    "team": "Team Liquid",
    "tri": "",
@@ -12097,42 +9228,6 @@
    "role": "Mid",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LCS",
-   "player": "Yeon",
-   "team": "Team Liquid",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCS",
-   "player": "CoreJJ",
-   "team": "Team Liquid",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 17, 2026",
-   "contract": "2026-11-17"
-  },
-  {
-   "league": "LCS",
-   "player": "Spawn",
-   "team": "Team Liquid",
-   "tri": "",
-   "role": "LCS Head Coach",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LCS",
-   "player": "Spookz",
-   "team": "Team Liquid",
-   "tri": "",
-   "role": "LCS Strategic Coach",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
   },
   {
    "league": "LCS",
