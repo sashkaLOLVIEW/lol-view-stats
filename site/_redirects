@@ -1,0 +1,4 @@
+/player/*      /player      200
+/team/*        /team        200
+/champion/*    /champion    200
+/tournament/*  /tournament  200
