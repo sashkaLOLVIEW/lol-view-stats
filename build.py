@@ -1034,7 +1034,7 @@ def main(csv):
     build_scopes.build(csv, out / "data", lambda n: CODE.get(NAME_FIX.get(n, n)) or re.sub(r"[^A-Z0-9]", "", "".join(x[0] for x in n.split()).upper())[:4] or n[:3].upper(), _icon, FILTER_LEAGUES, LEAGUE, TIER1_LEAGUES)
     export_oe_items(csv, out / "data")
     wr(out / "data" / "logos.json", json.dumps(logos_all))
-    for _f in ("favicon.svg", "favicon.ico", "apple-touch-icon.png", "icon-192.png", "icon-512.png"):
+    for _f in ("favicon.svg", "favicon.ico", "apple-touch-icon.png", "icon-192.png", "icon-512.png", "_redirects"):
         if (ROOT / "site" / _f).exists(): (out / _f).write_bytes((ROOT / "site" / _f).read_bytes())
     if (ROOT / "site" / "filters.js").exists(): wr(out / "filters.js", rd("site/filters.js").replace("/*EI*/{}/*EI*/", json.dumps(json.load(open(ROOT / "config" / "event_icons.json")))))
 

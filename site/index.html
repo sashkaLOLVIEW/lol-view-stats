@@ -907,7 +907,7 @@ body { padding-top: 0; }
   var hasTeam = {};
   $('rank-list').innerHTML = rank.slice(0, 5).map(function (r, i) {
     var n = i + 1;
-    return '<div class="row"><span class="rk ' + (n < 4 ? 'r' + n : '') + '">' + n + '</span><div class="team"><span class="logo">' + logo(r[2]) + '</span><div class="grow"><a class="name" href="' + (hasTeam[r[2]] ? 'team.html#' + r[2] : 'rankings.html') + '">' + r[0] + '</a><div class="sub">' + r[1] + '</div></div></div>' + chgChip(r[3]) + '</div>';
+    return '<div class="row"><span class="rk ' + (n < 4 ? 'r' + n : '') + '">' + n + '</span><div class="team"><span class="logo">' + logo(r[2]) + '</span><div class="grow"><a class="name" href="' + (hasTeam[r[2]] ? '/team/' + r[2] : 'rankings.html') + '">' + r[0] + '</a><div class="sub">' + r[1] + '</div></div></div>' + chgChip(r[3]) + '</div>';
   }).join('');
   function ago(ts) { var s = Math.max(0, (Date.now() - Date.parse(ts)) / 1000); if (s < 3600) return Math.max(1, Math.floor(s / 60)) + 'm ago'; if (s < 86400) return Math.floor(s / 3600) + 'h ago'; return Math.floor(s / 86400) + 'd ago'; }
   function showUpd() { if (rankTs) document.querySelector('.updated').innerHTML = '<b>Updated:</b> ' + ago(rankTs); else if (rankUpd) document.querySelector('.updated').innerHTML = '<b>Updated:</b> ' + rankUpd; }
@@ -1087,7 +1087,7 @@ body { padding-top: 0; }
       var vals = [c.pk, c.bn, c.pr + '%', c.pk ? c.w : '-', c.pk ? c.l : '-', fm(c.wr, 0, c.pk ? '%' : ''), c.kda == null ? '-' : c.kda.toFixed(1), c.cs == null ? '-' : c.cs.toFixed(1), fm(c.dpm), c.gd == null ? '-' : (c.gd > 0 ? '+' : '') + c.gd.toLocaleString('en-US'), fm(c.csd, 1)], cells = '';
       for (var k = 0; k < 11; k++) cells += '<span class="cell">' + vals[k] + '</span>';
       var ico = CHAMPS[c.c] ? '<span class="champ" style="padding:0;overflow:hidden"><img src="' + CHAMPS[c.c] + '" alt="" width="34" height="34" style="display:block;width:100%;height:100%;object-fit:cover"></span>' : '<span class="champ">' + c.c.slice(0, 2).toUpperCase() + '</span>';
-      return '<div class="crow"><span class="rk">' + (i + 1) + '</span><span class="cp">' + ico + '</span><a class="cl cn" href="champion.html#' + encodeURIComponent(c.c) + '">' + c.c + '</a>' + cells + '</div>';
+      return '<div class="crow"><span class="rk">' + (i + 1) + '</span><span class="cp">' + ico + '</span><a class="cl cn" href="/champion/' + encodeURIComponent(c.c) + '">' + c.c + '</a>' + cells + '</div>';
     }).join('');
   }
   renderBoard();
@@ -1196,7 +1196,7 @@ body { padding-top: 0; }
     var tot = rows.reduce(function (t, r) { return t + r.n; }, 0), tw = rows.reduce(function (t, r) { return t + r.w; }, 0);
     $('lead').innerHTML = rows.map(function (r) {
       var pc = r.n ? Math.round(r.w / r.n * 100) : null;
-      return '<div class="lb' + (r.c === c ? ' on' : '') + '"><a class="tn" href="team.html#' + r.c + '">' + logo(r.c, 22) + '<span>' + r.c + '</span></a><div class="tr">' + (r.n ? '<i style="width:' + pc + '%"></i>' : '') + '</div><div class="v">' + (r.n ? pc + '%<span>' + r.w + '/' + r.n + '</span>' : '-<span>0 games</span>') + '</div></div>';
+      return '<div class="lb' + (r.c === c ? ' on' : '') + '"><a class="tn" href="/team/' + r.c + '">' + logo(r.c, 22) + '<span>' + r.c + '</span></a><div class="tr">' + (r.n ? '<i style="width:' + pc + '%"></i>' : '') + '</div><div class="v">' + (r.n ? pc + '%<span>' + r.w + '/' + r.n + '</span>' : '-<span>0 games</span>') + '</div></div>';
     }).join('');
   }
   function drawFC() {
@@ -1212,7 +1212,7 @@ body { padding-top: 0; }
     var cap = nar ? 5 : 10, lg = nar ? 12 : 22, cr = nar ? 9 : 17;
     pts.forEach(function (p, i) {
       var x = X(i), on = p.c === c, col = on ? 'var(--fg)' : 'var(--muted)', sw = on ? 2.4 : 1.6, yh = Y(p.h), yf = Y(p.f), y00 = (yh + yf) / 2;
-      o += '<a href="team.html#' + p.c + '" style="cursor:pointer"><title>' + FCD.names[p.c] + ': avg gold diff in wins ' + fk(Math.round(p.h)) + ', in losses ' + fk(Math.round(p.f)) + '</title>'
+      o += '<a href="/team/' + p.c + '" style="cursor:pointer"><title>' + FCD.names[p.c] + ': avg gold diff in wins ' + fk(Math.round(p.h)) + ', in losses ' + fk(Math.round(p.f)) + '</title>'
         + '<rect x="' + (x - cw / 2) + '" y="' + Tp + '" width="' + cw + '" height="' + ih + '" fill="transparent"/>'
         + '<line x1="' + x + '" y1="' + yh + '" x2="' + x + '" y2="' + yf + '" stroke="' + col + '" stroke-width="' + sw + '" stroke-linecap="round"/>'
         + '<line x1="' + (x - cap) + '" y1="' + yh + '" x2="' + (x + cap) + '" y2="' + yh + '" stroke="' + col + '" stroke-width="' + sw + '" stroke-linecap="round"/>'
@@ -1296,10 +1296,10 @@ body { padding-top: 0; }
     var ch = (SD.c || []).filter(function (c) { return c[0].toLowerCase().indexOf(q) > -1; }).sort(rank(q)).slice(0, 5);
     var LW = {DK: 1, G2: 1, TL: 1, TLAW: 1};
     var lg = function (c, s) { return SD.l[c] ? '<img' + (LW[c] ? ' class="lwi"' : '') + ' src="' + SD.l[c] + '" alt="" width="' + s + '" height="' + s + '">' : ''; };
-    items = tm.map(function (t) { var r = SD.tr[t[0]]; return {h: 'team.html#' + t[0], l: t[1], pre: lg(t[0], 20), post: SD.g[r] ? '<img class="mi" src="' + SD.g[r] + '" alt="' + r + '" title="' + r + '" width="18" height="18">' : ''}; })
-      .concat(pl.map(function (p) { return {h: 'player.html#' + encodeURIComponent(p[0]), l: p[0], pre: '', post: (SD.r[p[2]] || '') + lg(p[1], 20)}; }))
-      .concat(ch.map(function (c) { return {h: 'champion.html#' + encodeURIComponent(c[0]), l: c[0], pre: '<img class="cs" src="' + c[1] + '" alt="" width="20" height="20">', post: ''}; }))
-      .concat(tn.map(function (t) { return {h: 'tournament.html#' + t[0], l: t[1], pre: '<span style="width:20px;display:flex;justify-content:center">' + (LVF.evIcon(t[0], 18) || '') + '</span>', post: ''}; }));
+    items = tm.map(function (t) { var r = SD.tr[t[0]]; return {h: '/team/' + t[0], l: t[1], pre: lg(t[0], 20), post: SD.g[r] ? '<img class="mi" src="' + SD.g[r] + '" alt="' + r + '" title="' + r + '" width="18" height="18">' : ''}; })
+      .concat(pl.map(function (p) { return {h: '/player/' + encodeURIComponent(p[0]), l: p[0], pre: '', post: (SD.r[p[2]] || '') + lg(p[1], 20)}; }))
+      .concat(ch.map(function (c) { return {h: '/champion/' + encodeURIComponent(c[0]), l: c[0], pre: '<img class="cs" src="' + c[1] + '" alt="" width="20" height="20">', post: ''}; }))
+      .concat(tn.map(function (t) { return {h: '/tournament/' + t[0], l: t[1], pre: '<span style="width:20px;display:flex;justify-content:center">' + (LVF.evIcon(t[0], 18) || '') + '</span>', post: ''}; }));
     var row = function (x, i) { return '<a data-i="' + i + '">' + x.pre + '<b>' + esc(x.l) + '</b><i>' + x.post + '</i></a>'; };
     var h = '';
     if (tm.length) h += '<div class="sh">Teams</div>' + items.slice(0, tm.length).map(function (x, i) { return row(x, i); }).join('');
@@ -1363,7 +1363,7 @@ body { padding-top: 0; }
   LVF.loadMeta().then(function (m) {
     var MAJ = ['WLDs', 'MSI', 'FST', 'AC', 'LCK', 'LPL', 'LEC', 'LCS', 'LCP', 'CBLOL'], HIDE = { EWC: 1, DCGI: 1 }, ids = Object.keys(m.leagues).filter(function (id) { return !HIDE[id] && LVF.evIcon(id, 22); });
     ids.sort(function (a, b) { var x = MAJ.indexOf(a), y = MAJ.indexOf(b); return (x < 0 ? 99 : x) - (y < 0 ? 99 : y) || (a < b ? -1 : 1); });
-    document.getElementById('tgrid').innerHTML = ids.map(function (id) { return '<a href="tournament.html#' + id + '" title="' + LVF.leagueName(id) + '" aria-label="' + LVF.leagueName(id) + '"><span class="ti">' + LVF.evIcon(id, 18) + '</span></a>'; }).join('');
+    document.getElementById('tgrid').innerHTML = ids.map(function (id) { return '<a href="/tournament/' + id + '" title="' + LVF.leagueName(id) + '" aria-label="' + LVF.leagueName(id) + '"><span class="ti">' + LVF.evIcon(id, 18) + '</span></a>'; }).join('');
   });
 })();
 </script>
