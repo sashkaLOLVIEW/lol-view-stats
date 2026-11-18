@@ -1,0 +1,30 @@
+=== /tournament/WLDs -> https://prohub.lol/tournament/WLDs | h1=Worlds
+HTTP 200 https://prohub.lol/filters.js
+HTTP 200 https://prohub.lol/data/champs.json
+HTTP 200 https://prohub.lol/data/meta.json
+HTTP 200 https://prohub.lol/data/meta.json
+HTTP 200 https://prohub.lol/data/meta.json
+HTTP 200 https://prohub.lol/data/events.json
+HTTP 200 https://prohub.lol/data/lg-WLDs.json
+=== /tournament/LCK -> https://prohub.lol/tournament/LCK | h1=LCK
+HTTP 200 https://prohub.lol/filters.js
+HTTP 200 https://prohub.lol/data/champs.json
+HTTP 200 https://prohub.lol/data/meta.json
+HTTP 200 https://prohub.lol/data/meta.json
+HTTP 200 https://prohub.lol/data/events.json
+HTTP 200 https://prohub.lol/data/meta.json
+HTTP 200 https://prohub.lol/data/lg-LCK.json
+=== /player/Faker -> https://prohub.lol/player/Faker | h1=  Faker
+HTTP 200 https://prohub.lol/filters.js
+HTTP 200 https://prohub.lol/data/champs.json
+HTTP 200 https://prohub.lol/data/meta.json
+HTTP 200 https://prohub.lol/data/meta.json
+HTTP 200 https://prohub.lol/data/meta.json
+=== /tournament.html#WLDs -> https://prohub.lol/tournament/WLDs | h1=Worlds
+HTTP 200 https://prohub.lol/filters.js
+HTTP 200 https://prohub.lol/data/champs.json
+HTTP 200 https://prohub.lol/data/meta.json
+HTTP 200 https://prohub.lol/data/meta.json
+HTTP 200 https://prohub.lol/data/events.json
+HTTP 200 https://prohub.lol/data/meta.json
+HTTP 200 https://prohub.lol/data/lg-WLDs.json
