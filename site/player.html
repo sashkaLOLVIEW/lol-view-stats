@@ -765,7 +765,7 @@ html { overflow-x: hidden; overflow-x: clip; }
   function want() { var hh = wanted; if (window.LVF && hh && !D.players[hh]) LVF.has('player', hh).then(function (ok) { if (ok) LVF.focus('player', hh); else location.replace('/404.html'); }, function () { if (!$('stats').innerHTML) $('hero').innerHTML = '<div style="padding:28px;color:var(--muted)">Could not load this player. Check your connection and refresh.</div>'; }); }
   want();
   function setD(nd) {
-    D = nd; if (nd !== D0) Object.keys(nd.players).forEach(function (n) { var o = D0.players[n]; if (o && o.face && !nd.players[n].face) nd.players[n].face = o.face; });
+    D = nd; if (nd !== D0) Object.keys(nd.players).forEach(function (n) { var o = D0.players[n]; if (!o) return; var q = nd.players[n]; if (o.face && !q.face) q.face = o.face; if (o.bd && !q.bd) q.bd = o.bd; if (o.contract && !q.contract) q.contract = o.contract; });
     names = Object.keys(D.players).sort(function (a, b) { return a.toLowerCase() < b.toLowerCase() ? -1 : 1; });
     AGG = {}; names.forEach(function (n) { AGG[n] = agg(D.players[n].games); });
     var hh = wanted || (D.players.Chovy ? 'Chovy' : names[0]);

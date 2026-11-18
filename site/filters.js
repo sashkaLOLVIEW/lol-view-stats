@@ -42,7 +42,7 @@
     return { lg: lg, keep: keep, games: keep.map(function (i) { var r = {}; Object.keys(G).forEach(function (k) { r[k] = G[k][i]; }); r.sp = d.splitNames[G.sp[i]]; r.lg = lg; return r; }), rows: pick(d.rows), teams: pick(d.teams) };
   }
   function dataset(sc) {
-    var S0 = sc || S, ids = S0.league === 'ALL' ? Object.keys(meta.leagues) : [S0.league];
+    var S0 = sc || S, ids = S0.league === 'ALL' ? (ENT && !sc ? entityLeagues() : Object.keys(meta.leagues)) : [S0.league];
     return Promise.all(ids.map(loadLeague)).then(function (ds) {
       var out = { games: [], rows: null, teams: null };
       ds.forEach(function (d, i) {
@@ -116,11 +116,12 @@
   function iconsFor(names, ic) { var o = {}; names.forEach(function (n) { if (ic[n]) o[n] = ic[n]; }); return o; }
   function newest(a) { return a.slice().sort(function (x, y) { return x.date < y.date ? 1 : x.date > y.date ? -1 : 0; }); }
   function mode(a) { var c = {}, b = null; a.forEach(function (x) { c[x] = (c[x] || 0) + 1; if (!b || c[x] > c[b]) b = x; }); return b; }
+  function pi(n, k) { var x = meta && meta.pinfo && meta.pinfo[n]; return x ? x[k] || null : null; }   // age / contract from meta.json (every player, not just the current event)
   function profPlayers(ds, ic) {
     var rows = base(ds), by = {}; rows.forEach(function (o) { (by[o.player] = by[o.player] || []).push(o); });
     var P = {}, used = {}, champs = {};
     Object.keys(by).forEach(function (n) {
-      var g = newest(by[n]); P[n] = { name: n, team: g[0].team, role: mode(g.map(function (x) { return x.role; })), region: null, face: null, bd: null, contract: null, games: g };
+      var g = newest(by[n]); P[n] = { name: n, team: g[0].team, role: mode(g.map(function (x) { return x.role; })), region: null, face: null, bd: pi(n, 0), contract: pi(n, 1), games: g };
       g.forEach(function (x) { champs[x.champ] = 1; });
     });
     return { players: P, icons: iconsFor(Object.keys(champs), ic), logos: {} };
@@ -273,7 +274,7 @@
     var cur = S.league + '|' + S.split, tl = (o.tour.filter(function (t) { return t[0] === cur; })[0] || [0, ''])[1];
     var h = dd('year', yl, [['All', 'All years']].concat(o.years.map(function (y) { return [String(y), String(y)]; })), S.year, o.years.length <= 1) + dd('tour', tl, o.tour, cur, o.tour.length <= 1);
     if (o.stage) h += dd('stage', (o.stage.filter(function (x) { return x[0] === S.stage; })[0] || o.stage[0])[1], o.stage, S.stage, false);
-    bar.innerHTML = h + '<span class="lst">' + (status || '') + '</span>' + (isDefault() ? '' : '<button type="button" class="rs" data-reset="1">' + 'Reset' + '</button>');
+    bar.innerHTML = h + '<span class="lst">' + (status || '') + '</span>' + (atHome() ? '' : '<button type="button" class="rs" data-reset="1">' + 'Reset' + '</button>');
     if (open) { var d = bar.querySelector('#' + open); if (d) d.classList.add('open'); }
   }
   function apply() {
@@ -314,14 +315,17 @@
       apply();
     }).catch(function () { bar.style.display = 'none'; });
   }
-  /* default scope: the current event; for a player / team that is not in it, their most recent event */
+  /* default scope: the current event; a player / team page opens on "All" (every event they played, all years) */
   function baseDefault() { return { league: 'WLDs', split: 'All', stage: 'All', year: 'All' }; }
   function entityDefault() {
     var T = ENT ? tuples() : [];
-    if (!ENT || !T.length || T.some(function (t) { return t[0] === meta.current; })) return baseDefault();
-    var p = T.slice().sort(function (a, b) { return a[4] < b[4] ? 1 : a[4] > b[4] ? -1 : 0; })[0];
-    return { league: p[0], split: p[2] || 'All', stage: 'All', year: String(p[1]) };
+    if (!ENT || !T.length) return baseDefault();
+    var lgs = {}; T.forEach(function (t) { lgs[t[0]] = 1; }); var ids = Object.keys(lgs);
+    return { league: ids.length > 1 ? 'ALL' : ids[0], split: 'All', stage: 'All', year: 'All' };   // "All" is only offered when there is more than one event
   }
+  /* the scope the Reset button goes back to */
+  function entityLeagues() { var o = {}; tuples().forEach(function (t) { o[t[0]] = 1; }); var k = Object.keys(o); return k.length ? k : Object.keys(meta.leagues); }   // "All" on a player / team page: only the files they appear in
+  function atHome() { var d = ENT && meta ? entityDefault() : baseDefault(); return Object.keys(d).every(function (k) { return S[k] === d[k]; }); }
   function focus(kind, name) {
     var same = ENT && ENT.kind === kind && ENT.name === name; ENT = { kind: kind, name: name };
     if (same || !bar || !meta) return; Object.assign(S, entityDefault()); return apply();

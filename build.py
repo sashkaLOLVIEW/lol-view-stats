@@ -1033,6 +1033,11 @@ def main(csv):
         return _ic[c]
     build_scopes.build(csv, out / "data", lambda n: CODE.get(NAME_FIX.get(n, n)) or re.sub(r"[^A-Z0-9]", "", "".join(x[0] for x in n.split()).upper())[:4] or n[:3].upper(), _icon, FILTER_LEAGUES, LEAGUE, TIER1_LEAGUES)
     export_oe_items(csv, out / "data")
+    try:                                            # age / contract for every player in the filter data, so the player page shows them under any filter
+        _mp = out / "data" / "meta.json"; _m = json.loads(_mp.read_text(encoding="utf-8")); _low = {k.lower(): v for k, v in PI.items()}
+        _m["pinfo"] = {n: [v.get("bd"), v.get("contract")] for n in _m["players"] for v in [PI.get(n) or _low.get(n.lower()) or {}] if v.get("bd") or v.get("contract")}
+        _mp.write_text(json.dumps(_m, separators=(",", ":")), encoding="utf-8")
+    except Exception as e: print("  player info for filters skipped:", e)
     wr(out / "data" / "logos.json", json.dumps(logos_all))
     for _f in ("favicon.svg", "favicon.ico", "apple-touch-icon.png", "icon-192.png", "icon-512.png", "_redirects"):
         if (ROOT / "site" / _f).exists(): (out / _f).write_bytes((ROOT / "site" / _f).read_bytes())
