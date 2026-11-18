@@ -1022,7 +1022,7 @@ def main(csv):
     wr(out / "match.html", stamp(jreplace(s, "SD", build_search(s, WD, CH))))
     try: ov_snapshots(csv, w, GD, PD, TD, out, set(pbi))
     except Exception as e: print("  overview snapshots skipped:", repr(e))
-    wr(out / "live.html", '<!doctype html><meta charset="utf-8"><title>Match</title><script>var h=location.hash.replace(/^#live\\//,"#");location.replace("match.html"+h)</script>')   # old links   # season stats for the live page's role-by-role team comparison   # live game page: polls Riot's feed in the browser, no build-time data
+    wr(out / "live.html", '<!doctype html><meta charset="utf-8"><title>Match</title><script>var h=location.hash.replace(/^#live\\//,"#");location.replace("/match"+h)</script>')   # old links   # season stats for the live page's role-by-role team comparison   # live game page: polls Riot's feed in the browser, no build-time data
     s = rd("site/bootcamp.html"); s = jreplace(s, "BC", build_bootcamp(WD, logos_all, s)); s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "bootcamp.html", stamp(s))
     wr(out / ".nojekyll", "")
     import build_scopes

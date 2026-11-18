@@ -492,7 +492,7 @@ html { overflow-x: hidden; overflow-x: clip; }
     var HGT = chr.slice().reverse();
     var HRT = HGT.map(function (g) {
       var d = gde(g);
-      return '<a class="hrow" href="/game.html#' + (g.lg ? encodeURIComponent(g.gid) + '@' + g.lg : g.gid) + '">' + '<span class="rl"><span class="res' + (g.win ? ' w' : ' l') + '">' + (g.win ? 'VICTORY' : 'DEFEAT') + '</span><span class="gt">' + fmtT(g.gl) + '</span></span>'
+      return '<a class="hrow" href="/game/' + (g.lg ? encodeURIComponent(g.gid) + '@' + g.lg : g.gid) + '">' + '<span class="rl"><span class="res' + (g.win ? ' w' : ' l') + '">' + (g.win ? 'VICTORY' : 'DEFEAT') + '</span><span class="gt">' + fmtT(g.gl) + '</span></span>'
         + '<span class="op">' + logo(g.opp, 24) + '<b>' + g.opp + '</b></span>'
         + '<span class="m"><img class="mi" src="' + KI + '" alt="">' + Math.round(g.k) + '<span class="vs">vs</span>' + Math.round(ok(g)) + '</span>'
         + '<span class="m gdv ' + (d > 0 ? 'up' : d < 0 ? 'dn' : '') + '"><img class="mi" src="' + GI + '" alt="">' + (d > 0 ? '+' : d < 0 ? '\u2212' : '') + Math.abs(d).toLocaleString('en-US') + '</span>'
