@@ -18,7 +18,7 @@
   var lname = function (id) { return id === 'ALL' ? 'All leagues' : (NAMES[id] || id); };
 
   /* ---------- data ---------- */
-  function jget(u) { return fetch(u.charAt(0) === '/' ? u : '/' + u).then(function (r) { if (!r.ok) throw new Error(u); return r.json(); }); }
+  function jget(u) { return fetch(u).then(function (r) { if (!r.ok) throw new Error(u); return r.json(); }); }
   function loadMeta() { return meta ? Promise.resolve(meta) : jget('data/meta.json').then(function (m) { meta = m; uniqueCodes(); return m; }); }
   function uniqueCodes() {
     var seen = {}; meta.teams.forEach(function (t) { var c = t[1], n = 2; while (seen[c] && seen[c] !== t[0]) c = t[1] + n++; seen[c] = t[0]; t[1] = c; });
@@ -287,14 +287,14 @@
     }).catch(function (e) { render('Could not load data'); console.error(e); });
   }
   function place() {
-    var pg = (location.pathname.split('/').filter(Boolean)[0] || 'index').replace(/\.html$/, '') + '.html', r = PLACE[pg] || PLACE['index.html'], el = $(r[1]);
+    var pg = (location.pathname.split('/').pop().replace(/\.html$/, '') || 'index') + '.html', r = PLACE[pg] || PLACE['index.html'], el = $(r[1]);
     if (!el) { el = $('.page > .topbar'); r = ['after', '']; }
     if (!el) return false;
     if (r[0] === 'append') el.appendChild(bar); else if (r[0] === 'prepend') el.insertBefore(bar, el.firstChild); else el.parentNode.insertBefore(bar, el.nextSibling);
     return true;
   }
   function init() {
-    if (!$('.page > .topbar') || /^\/(tournament|rankings|match|game|bootcamp)(\.html)?(\/|$)/.test(location.pathname)) return;
+    if (!$('.page > .topbar') || /\/(tournament|rankings|match|game|bootcamp)(\.html)?$/.test(location.pathname)) return;
     css(); bar = document.createElement('div'); bar.id = 'lvf';
     loadMeta().then(function () {
       if (!place()) return;

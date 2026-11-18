@@ -821,7 +821,7 @@ body { padding-top: 0; }
       var rows = [['Kills', 'kills', t.k, o.k, t.k], ['Gold', 'gold', t.gold, o.gold, k1(t.gold)], ['Turrets', 'turret', t.towers, o.towers, t.towers], ['Dragons', 'dragon', dn(t), dn(o), dn(t)], ['Barons', 'nashor', t.barons, o.barons, t.barons]];
       return '<div class="sc-st' + (r ? ' r' : '') + '">' + rows.map(function (x) { return '<div title="' + x[0] + '"' + (x[2] < x[3] ? ' class="trail"' : '') + '>' + im(x[1], 'si') + (x[1] === 'kills' && !r ? im('kills', 'si kx') : '') + '<b>' + x[4] + '</b></div>'; }).join('') + '</div>';
     };
-    var sideTeam = function (t, r) { return '<div class="sc-team' + (r ? ' r' : '') + '">' + logo(t.code, 64) + '<div><a class="sc-name" style="display:block" href="/team/' + t.code + '">' + t.code + '</a><div class="sc-full">' + t.name + '</div><span class="tag' + (t.win ? ' win' : ' loss') + '">' + (t.win ? 'WIN' : 'LOSS') + '</span></div></div>'; };
+    var sideTeam = function (t, r) { return '<div class="sc-team' + (r ? ' r' : '') + '">' + logo(t.code, 64) + '<div><a class="sc-name" style="display:block" href="team.html#' + t.code + '">' + t.code + '</a><div class="sc-full">' + t.name + '</div><span class="tag' + (t.win ? ' win' : ' loss') + '">' + (t.win ? 'WIN' : 'LOSS') + '</span></div></div>'; };
     var CLK = '<svg class="clk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
     $('score').innerHTML = sideTeam(A, 0) + stat(A, 0, B) + '<div class="sc-mid"><div class="sc-c"><div class="sc-time">' + CLK + fmtT(g.len) + '</div>' + (g.patch ? '<div class="sc-sub">' + g.patch + '</div>' : '') + '</div>' + im('kills', 'sc-x') + '</div>' + stat(B, 1, A) + sideTeam(B, 1);
     var _m = 'Worlds 2026 · Main stage · Swiss Round 1 · Match ' + g.n + ' · ' + g.date + ' · Blue side ' + A.code + ' vs Red side ' + B.code;
@@ -1221,7 +1221,7 @@ body { padding-top: 0; }
     var side = function (t, r) {
       var lg = t.image ? '<img' + (WHITE_LOGO.test(t.code || "") ? ' class="lwi"' : '') + ' src="' + esc(t.image) + '" alt="" width="64" height="64" style="display:block;object-fit:contain;flex:none">' : '<span class="ph" style="width:64px;height:64px;flex:none">' + esc((t.code || "?").slice(0, 3)) + "</span>";
       var rk = TR[t.code];
-      return '<div class="sc-team' + (r ? " r" : "") + '">' + lg + '<div><a class="sc-name" style="display:block" href="/team/' + esc(t.code) + '">' + esc(t.code) + '</a><div class="sc-full">' + esc(teamName(t)) + "</div>" + (rk ? '<span class="tag rk" title="Power ranking">#' + rk + "</span>" : "") + "</div></div>";
+      return '<div class="sc-team' + (r ? " r" : "") + '">' + lg + '<div><a class="sc-name" style="display:block" href="team.html#' + esc(t.code) + '">' + esc(t.code) + '</a><div class="sc-full">' + esc(teamName(t)) + "</div>" + (rk ? '<span class="tag rk" title="Power ranking">#' + rk + "</span>" : "") + "</div></div>";
     };
     $("match").className = "match idle";
     $("match").innerHTML = side(tm[0], 0) +
@@ -1312,7 +1312,7 @@ body { padding-top: 0; }
     var stateText = live ? 'Live' : paused ? "Paused" : f.gameState === "finished" ? "Game finished" : esc(f.gameState || "");
     var wins = function (t) { return t && t.result ? t.result.gameWins : 0; };
     var $m = $("match");
-    var liveSide = function (t, r) { var rk = TR[t.code]; return '<div class="sc-team' + (r ? " r" : "") + '">' + logoHtml(t) + '<div><a class="sc-name" style="display:block" href="/team/' + esc(t.code) + '">' + esc(t.code) + '</a><div class="sc-full">' + esc(teamName(t)) + "</div>" + (rk ? '<span class="tag rk" title="Power ranking">#' + rk + "</span>" : "") + "</div></div>"; };
+    var liveSide = function (t, r) { var rk = TR[t.code]; return '<div class="sc-team' + (r ? " r" : "") + '">' + logoHtml(t) + '<div><a class="sc-name" style="display:block" href="team.html#' + esc(t.code) + '">' + esc(t.code) + '</a><div class="sc-full">' + esc(teamName(t)) + "</div>" + (rk ? '<span class="tag rk" title="Power ranking">#' + rk + "</span>" : "") + "</div></div>"; };
     $m.className = "match" + (live ? "" : " idle");
     $m.innerHTML =
       liveSide(bt, 0) +
@@ -1615,10 +1615,10 @@ body { padding-top: 0; }
     var ch = (SD.c || []).filter(function (c) { return c[0].toLowerCase().indexOf(q) > -1; }).sort(rank(q)).slice(0, 5);
     var LW = {DK: 1, G2: 1, TL: 1, TLAW: 1};
     var lg = function (c, s) { return SD.l[c] ? '<img' + (LW[c] ? ' class="lwi"' : '') + ' src="' + SD.l[c] + '" alt="" width="' + s + '" height="' + s + '">' : ''; };
-    items = tm.map(function (t) { var r = SD.tr[t[0]]; return {h: '/team/' + t[0], l: t[1], pre: lg(t[0], 20), post: SD.g[r] ? '<img class="mi" src="' + SD.g[r] + '" alt="' + r + '" title="' + r + '" width="18" height="18">' : ''}; })
-      .concat(pl.map(function (p) { return {h: '/player/' + encodeURIComponent(p[0]), l: p[0], pre: '', post: (SD.r[p[2]] || '') + lg(p[1], 20)}; }))
-      .concat(ch.map(function (c) { return {h: '/champion/' + encodeURIComponent(c[0]), l: c[0], pre: '<img class="cs" src="' + c[1] + '" alt="" width="20" height="20">', post: ''}; }))
-      .concat(tn.map(function (t) { return {h: '/tournament/' + t[0], l: t[1], pre: '<span style="width:20px;display:flex;justify-content:center">' + (LVF.evIcon(t[0], 18) || '') + '</span>', post: ''}; }));
+    items = tm.map(function (t) { var r = SD.tr[t[0]]; return {h: 'team.html#' + t[0], l: t[1], pre: lg(t[0], 20), post: SD.g[r] ? '<img class="mi" src="' + SD.g[r] + '" alt="' + r + '" title="' + r + '" width="18" height="18">' : ''}; })
+      .concat(pl.map(function (p) { return {h: 'player.html#' + encodeURIComponent(p[0]), l: p[0], pre: '', post: (SD.r[p[2]] || '') + lg(p[1], 20)}; }))
+      .concat(ch.map(function (c) { return {h: 'champion.html#' + encodeURIComponent(c[0]), l: c[0], pre: '<img class="cs" src="' + c[1] + '" alt="" width="20" height="20">', post: ''}; }))
+      .concat(tn.map(function (t) { return {h: 'tournament.html#' + t[0], l: t[1], pre: '<span style="width:20px;display:flex;justify-content:center">' + (LVF.evIcon(t[0], 18) || '') + '</span>', post: ''}; }));
     var row = function (x, i) { return '<a data-i="' + i + '">' + x.pre + '<b>' + esc(x.l) + '</b><i>' + x.post + '</i></a>'; };
     var h = '';
     if (tm.length) h += '<div class="sh">Teams</div>' + items.slice(0, tm.length).map(function (x, i) { return row(x, i); }).join('');
