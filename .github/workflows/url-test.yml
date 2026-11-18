@@ -9,21 +9,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy preview and probe
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CF_PROJECT: ${{ vars.CF_PAGES_PROJECT || 'prohub' }}
+      - name: Probe live site in a real browser
         run: |
-          set -x
-          npx --yes wrangler@3 pages deploy dist --project-name "$CF_PROJECT" --branch url-test --commit-dirty=true 2>&1 | tee deploy.log
-          URL=$(grep -o 'https://[a-z0-9.-]*pages.dev' deploy.log | tail -1)
-          echo "URL=$URL" > result.txt
-          sleep 25
-          for u in /player/Faker /team/T1 /champion/Ahri /tournament/LCK/Spring /player /nothing/x; do
-            echo "=== $u" >> result.txt
-            curl -s -i --max-time 20 "$URL$u" | grep -a -i "^HTTP\|^location\|window.RK\|<title>" | head -6 >> result.txt
-            echo >> result.txt
-          done
-          cat result.txt
-          mkdir -p out && cp result.txt deploy.log out/ && cd out && git init -q && git checkout -q -b url-result && git add -A && git -c user.name=bot -c user.email=bot@users.noreply.github.com commit -qm result && git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" url-result
+          pip install playwright >/dev/null && python -m playwright install --with-deps chromium >/dev/null 2>&1
+          sleep 60
+          cat > probe.py <<'P'
+          from playwright.sync_api import sync_playwright
+          out=[]
+          with sync_playwright() as p:
+              b=p.chromium.launch()
+              for u in ['/tournament/WLDs','/tournament/LCK','/player/Faker','/tournament.html#WLDs']:
+                  pg=b.new_page(); log=[]
+                  pg.on('console',lambda m:log.append('console.'+m.type+': '+m.text[:200]) if m.type in('error','warning') else None)
+                  pg.on('pageerror',lambda e:log.append('pageerror: '+str(e)[:300]))
+                  pg.on('response',lambda r:log.append('HTTP %d %s'%(r.status,r.url[-80:])) if r.status>=400 or ('/data/' in r.url) or r.url.endswith('filters.js') else None)
+                  pg.on('requestfailed',lambda r:log.append('FAILED '+r.url[-80:]))
+                  pg.goto('https://prohub.lol'+u); pg.wait_for_timeout(5000)
+                  out.append('=== %s -> %s | h1=%s'%(u,pg.url,pg.evaluate("(document.querySelector('h1')||{}).textContent")))
+                  out+=log[:25]
+          open('result.txt','w').write('\n'.join(out))
+          P
+          sed -i 's/^          //' probe.py
+          python probe.py; cat result.txt
+          mkdir -p out && cp result.txt out/ && cd out && git init -q && git checkout -q -b url-result && git add -A && git -c user.name=bot -c user.email=bot@users.noreply.github.com commit -qm result && git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" url-result
