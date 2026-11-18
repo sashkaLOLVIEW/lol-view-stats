@@ -1,0 +1,44 @@
+name: URL rewrite test
+on:
+  push:
+    branches: [url-test]
+permissions:
+  contents: write
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build test site
+        run: |
+          mkdir -p t && cd t
+          for n in pa pb pc pd; do
+            printf '<!doctype html><title>%s</title><body><p id=x>PAGE-%s</p><script>document.getElementById("x").textContent="PAGE-%s path="+location.pathname</script>' $n $n $n > $n-page.html
+          done
+          echo '<!doctype html><title>404</title>NOTFOUND-PAGE' > 404.html
+          echo '<!doctype html><title>home</title>HOME' > index.html
+          cat > _redirects <<'R'
+          /pa/*  /pa-page.html  200
+          /pb/*  /pb-page  200
+          /pc/*  /pc-page  200!
+          /pd/*  /pd-page.html  200!
+          R
+          sed -i 's/^ *//' _redirects; cat _redirects
+      - name: Deploy preview and probe
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_PROJECT: ${{ vars.CF_PAGES_PROJECT || 'prohub' }}
+        run: |
+          set -x
+          npx --yes wrangler@3 pages deploy t --project-name "$CF_PROJECT" --branch url-test --commit-dirty=true 2>&1 | tee deploy.log
+          URL=$(grep -o 'https://[a-z0-9.-]*pages.dev' deploy.log | tail -1)
+          echo "URL=$URL" > result.txt
+          sleep 25
+          for u in /pa/Faker /pb/Faker /pc/Faker /pd/Faker /pa-page.html /pb-page /nothing/x; do
+            echo "=== $u" >> result.txt
+            curl -s -i --max-time 20 "$URL$u" | head -c 700 >> result.txt
+            echo >> result.txt
+          done
+          cat result.txt
+          mkdir -p out && cp result.txt deploy.log out/ && cd out && git init -q && git checkout -q -b url-result && git add -A && git -c user.name=bot -c user.email=bot@users.noreply.github.com commit -qm result && git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" url-result
