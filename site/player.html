@@ -351,8 +351,13 @@ html { scroll-padding-top: 84px; }
 .vtabs { display: inline-flex; gap: 4px; margin: 18px 0 4px; padding: 3px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
 .vtabs button { height: 30px; padding: 0 14px; border: 0; border-radius: 7px; background: transparent; color: var(--muted); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
 .vtabs button.on { background: var(--fg); color: var(--bg); }
+@media (max-width: 760px) { .vrow .vtabs { display: flex; width: 100%; box-sizing: border-box; gap: 2px; } .vtabs button { flex: 1 1 auto; padding: 0 4px; font-size: 12px; white-space: nowrap; } }
+@media (max-width: 380px) { .vtabs button { font-size: 11px; padding: 0 3px; } }
 #tres { display: none; margin-top: 12px; }
-body.tr-on #tres { display: block; } body.tr-on .body, body.tr-on .perf { display: none; }
+body.tr-on #tres { display: block; }
+body[data-v="tr"] .body, body[data-v="mh"] .body, body[data-v="pf"] .body { display: none; }
+body:not([data-v="mh"]) .hist, body:not([data-v="pf"]) .perf, body[data-v="tr"] .hist, body[data-v="tr"] .perf { display: none; }
+body[data-v="mh"] .hist { margin-top: 14px; } body[data-v="pf"] .perf { margin-top: 18px; }
 .trt { width: 100%; border-collapse: collapse; font-size: 14px; }
 .trt th { text-align: left; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--line); }
 .trt td { padding: 11px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
@@ -465,7 +470,7 @@ body { padding-top: 0; }
 }
 </style>
 </head>
-<body>
+<body data-v="ov">
 <style>
 /* uniform gap between the navbar and the page content */
 .page > .topbar + * { margin-top: 52px !important; padding-top: 0 !important; }
@@ -508,7 +513,7 @@ html { overflow-x: hidden; overflow-x: clip; }
     </div>
   </header>
   <section class="hero" id="hero"></section>
-  <div class="vrow" id="vrow"><div class="vtabs" id="vtabs" role="tablist"><button type="button" class="on" data-v="ov">Overview</button><button type="button" data-v="tr">Tournament results</button></div></div>
+  <div class="vrow" id="vrow"><div class="vtabs" id="vtabs" role="tablist"><button type="button" class="on" data-v="ov">Overview</button><button type="button" data-v="tr">Results</button><button type="button" data-v="mh">Match History</button><button type="button" data-v="pf">Performance</button></div></div>
   <div id="tres"></div>
   <div class="body">
     <aside class="side"><div id="stats"></div></aside>
@@ -518,9 +523,9 @@ html { overflow-x: hidden; overflow-x: clip; }
         <div class="tbl" id="tbody"></div>
       </div></div>
       <div id="poolmore"></div>
-      <div class="hist"><div class="hhd"><h2>Match History</h2><div class="cfd" id="cfd"></div></div><div id="hist"></div></div>
     </section>
   </div>
+  <div class="hist"><div class="hhd"><h2>Match History</h2><div class="cfd" id="cfd"></div></div><div id="hist"></div></div>
   <section class="perf">
     <h2>Performance<span class="cov" id="ovr" title="Overall score: average of the three charts"></span></h2>
     <div class="radars" id="radars"></div>
@@ -676,7 +681,7 @@ html { overflow-x: hidden; overflow-x: clip; }
     var chn = Object.keys(chs).sort(function (a, b) { return chs[b].n - chs[a].n || (a < b ? -1 : 1); });
     if (champSel && !chs[champSel]) champSel = '';
     var cimg = function (c) { return D.icons[chs[c].ic] ? '<img class="ci" src="' + D.icons[chs[c].ic] + '" alt="">' : ''; };
-    $('cfd').hidden = chn.length < 2; if (champSel && chn.length < 2) champSel = '';
+    $('cfd').hidden = chn.length < 1; if (champSel && chn.length < 1) champSel = '';
     $('cfd').innerHTML = '<button type="button" class="cb' + (champSel ? ' sel' : '') + '">' + (champSel ? cimg(champSel) + champSel : LVF.evIcon('ALLCH', 16) + 'All') + '<svg class="cv" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m2 4 3 3 3-3"/></svg></button><div class="cm"><button type="button" data-c=""' + (champSel ? '' : ' class="on"') + '>' + LVF.evIcon('ALLCH', 16) + 'All<span class="n">' + P.games.length + '</span></button>' +
       chn.map(function (c) { return '<button type="button" data-c="' + c.replace(/"/g, '&quot;') + '"' + (c === champSel ? ' class="on"' : '') + '>' + cimg(c) + c + '<span class="n">' + chs[c].n + '</span></button>'; }).join('') + '</div>';
     var ky = function (g) { return g.dt || g.date || ''; };
@@ -751,7 +756,7 @@ html { overflow-x: hidden; overflow-x: clip; }
     (resP = resP || fetch('/data/results.json').then(function (r) { return r.json(); })).then(function (j) { RES = j; if (document.body.classList.contains('tr-on') && cur === name) draw(); }, function () { box.innerHTML = '<div style="padding:24px 4px;color:var(--muted)">Tournament results unavailable.</div>'; });
   }
   function setView(v) {
-    document.body.classList.toggle('tr-on', v === 'tr');
+    document.body.classList.toggle('tr-on', v === 'tr'); document.body.setAttribute('data-v', v);
     Array.prototype.forEach.call(document.querySelectorAll('#vtabs button'), function (b) { var on = b.dataset.v === v; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
     if (v === 'tr') renderRes();
   }
