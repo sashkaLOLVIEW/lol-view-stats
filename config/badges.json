@@ -36,6 +36,10 @@
     "msi2017": {
       "name": "MSI: 2017",
       "event": "MSI"
+    },
+    "worlds2026": {
+      "name": "Worlds: 2026",
+      "event": "WLDs"
     }
   },
   "awards": {
@@ -49,6 +53,21 @@
       "msi2016",
       "msi2017",
       "games1000"
+    ],
+    "Bin": [
+      "worlds2026"
+    ],
+    "Xun": [
+      "worlds2026"
+    ],
+    "Knight": [
+      "worlds2026"
+    ],
+    "Viper": [
+      "worlds2026"
+    ],
+    "ON": [
+      "worlds2026"
     ]
   }
 }
