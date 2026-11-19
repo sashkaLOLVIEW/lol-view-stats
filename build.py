@@ -770,6 +770,40 @@ def iso2(v):
     return v if re.fullmatch(r"[a-z]{2}", v) else COUNTRY.get(v)
 
 # ----------------------------------------------------------------------------------------------
+# 4a. short match numbers: every Riot match id gets its own small number (48213) that never changes once assigned.
+# The list lives in config/match_ids.json (committed by the update job), so the numbers - and every link - stay stable.
+MN_FILE = ROOT / "config" / "match_ids.json"
+_MN = {"next": 1, "ids": {}}
+def mn_load():
+    global _MN
+    try: _MN = json.loads(MN_FILE.read_text(encoding="utf-8")); _MN.setdefault("ids", {}); _MN.setdefault("next", 1 + max(_MN["ids"].values() or [0]))
+    except Exception: _MN = {"next": 1, "ids": {}}
+def _mn_key(st):
+    try:
+        t = pd.Timestamp(st); t = t.tz_localize("UTC") if t.tzinfo is None else t.tz_convert("UTC"); return t.value
+    except Exception: return 0
+def mn_assign(pairs):
+    """pairs: (start time, riot match id). New ids get the next numbers, oldest match first."""
+    ids = _MN["ids"]; new = {}
+    for st, mid in pairs:
+        if mid and mid not in ids: kk = _mn_key(st); new[mid] = min(new.get(mid, kk), kk)
+    for mid, _k in sorted(new.items(), key=lambda kv: (kv[1], kv[0])):
+        ids[mid] = _MN["next"]; _MN["next"] += 1
+    if new:
+        body = ",\n".join("  %s: %d" % (json.dumps(k), v) for k, v in sorted(ids.items(), key=lambda kv: kv[1]))
+        MN_FILE.write_text('{\n"next": %d,\n"ids": {\n%s\n}\n}\n' % (_MN["next"], body), encoding="utf-8")
+        print("  match numbers: %d new, %d total" % (len(new), len(ids)))
+def MN(mid):
+    """short number (as a string) for a Riot match id; unknown ids stay as they are"""
+    n = _MN["ids"].get(mid) if mid else None
+    return str(n) if n else mid
+def mn_publish(out):
+    """data/mm/<n // 200>.json = {number: riot id} (the match page reads one small file); data/match_rev.json = {riot id: number} (only read for old long links)"""
+    d = out / "data" / "mm"; d.mkdir(parents=True, exist_ok=True); sh = {}
+    for mid, n in _MN["ids"].items(): sh.setdefault(n // 200, {})[str(n)] = mid
+    for k, v in sh.items(): (d / ("%d.json" % k)).write_text(json.dumps(v, separators=(",", ":")), encoding="utf-8")
+    (out / "data" / "match_rev.json").write_text(json.dumps(_MN["ids"], separators=(",", ":")), encoding="utf-8")
+
 # 4b. upcoming matches (from data/schedule.json, written by fetch_schedule.py)
 # ----------------------------------------------------------------------------------------------
 UP_KEYS = ["global", "lck", "lpl", "lec", "lcs", "cblol", "lcp"]
@@ -786,7 +820,7 @@ def build_upcoming(path=ROOT / "data" / "schedule.json"):
         if t0 + pd.Timedelta(hours=3) < now: continue
         h, a = UP_ALIAS.get(m["home"], m["home"]), UP_ALIAS.get(m["away"], m["away"])
         uk = t0.tz_convert(TZ)
-        row = [h, a, uk.strftime("%H:%M"), uk.strftime("%b %-d"), "BO%d" % m["bo"], m["league"], int(t0.timestamp() * 1000), m.get("mid")]
+        row = [h, a, uk.strftime("%H:%M"), uk.strftime("%b %-d"), "BO%d" % m["bo"], m["league"], int(t0.timestamp() * 1000), MN(m.get("mid"))]
         keys = {"global"}                       # Worlds / MSI etc. appear only under Global
         if m["league"] in UP_KEYS: keys.add(m["league"])
         for k in keys:
@@ -938,6 +972,10 @@ def main(csv):
         if len(_rgm.get("gold") or []) > 6 and _rgm.get("v", 0) >= 2 and g_["gold"] != _rgm["gold"]:
             g_["gold"] = _rgm["gold"] + [g_["gold"][-1]]    # 1-minute Riot series, closed with the OE final diff
         if _rgm.get("obj"): g_["obj"] = _rgm["obj"]       # objective times (for the icons under the gold graph)
+    mn_load(); _pairs = [(g_.get("start"), g_["mid"]) for g_ in GD["games"] if g_.get("mid")]
+    try: _pairs += [(m_["start"], m_["mid"]) for m_ in json.loads((ROOT / "data" / "schedule.json").read_text(encoding="utf-8"))["matches"] if m_.get("mid")]
+    except Exception: pass
+    mn_assign(_pairs)
     RK, RKUPD, RKTS = build_rankings(csv); HAS = {c: 1 for c in TD['teams']}
 
     FACES = {p["name"]: p["face"] for p in PD["players"].values() if p["face"]}
@@ -995,7 +1033,8 @@ def main(csv):
     _sd = build_search(s, WD, CH); s = jreplace(s, "TN", {t[0]: t[1] for t in _sd["t"]})   # team code -> full name (alphabetical team grouping)
     s = jreplace(s, "SD", _sd); wr(out / "players.html", stamp(s))
     # data pages
-    for fn, val in (("game", GD), ("player", PD), ("team", {k: v for k, v in TD.items() if k != "icons"}), ("champion", CD)):
+    GDS = dict(GD, games=[dict(g_, mid=MN(g_["mid"])) if g_.get("mid") else g_ for g_ in GD["games"]])    # the game page links to /match/<short number>
+    for fn, val in (("game", GDS), ("player", PD), ("team", {k: v for k, v in TD.items() if k != "icons"}), ("champion", CD)):
         s = rd("site/%s.html" % fn); s = jreplace(s, "D", val)
         if fn == "team": s = jreplace(s, "COACH", load_coaches())
         if fn == "player":
@@ -1033,6 +1072,7 @@ def main(csv):
         return _ic[c]
     build_scopes.build(csv, out / "data", lambda n: CODE.get(NAME_FIX.get(n, n)) or re.sub(r"[^A-Z0-9]", "", "".join(x[0] for x in n.split()).upper())[:4] or n[:3].upper(), _icon, FILTER_LEAGUES, LEAGUE, TIER1_LEAGUES)
     export_oe_items(csv, out / "data")
+    mn_publish(out)    # short match numbers -> Riot ids (after build_scopes, which recreates dist/data)
     try:                                            # age / contract for every player in the filter data, so the player page shows them under any filter
         _mp = out / "data" / "meta.json"; _m = json.loads(_mp.read_text(encoding="utf-8")); _low = {k.lower(): v for k, v in PI.items()}
         _m["pinfo"] = {n: [v.get("bd"), v.get("contract")] for n in _m["players"] for v in [PI.get(n) or _low.get(n.lower()) or {}] if v.get("bd") or v.get("contract")}

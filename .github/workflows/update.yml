@@ -93,6 +93,17 @@ jobs:
         run: |
           mkdir -p runlog
           set -o pipefail; python build.py 2>&1 | tee runlog/build.txt
+      - name: Save new match numbers to the repository (config/match_ids.json)
+        run: |
+          set -e
+          if [ -n "$(git status --porcelain config/match_ids.json)" ]; then
+            git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add config/match_ids.json
+            git commit -qm "Match numbers: add new matches [skip ci]"
+            ok=0; for i in 1 2 3; do if git pull --rebase --autostash -q origin main && git push -q origin HEAD:main; then ok=1; break; fi; sleep 5; done
+            [ "$ok" = 1 ]   # if the numbers could not be saved, stop here: they must never be used without being stored
+            git log -1 --oneline
+          fi
       - name: Save the run log (branch run-log, for debugging)
         if: always()
         run: |

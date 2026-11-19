@@ -1096,10 +1096,12 @@ html { overflow-x: hidden; overflow-x: clip; }
     var h = "", pm = location.pathname.match(/^\/match\/(.+?)\/?$/);
     if (pm) { try { h = decodeURIComponent(pm[1]); } catch (e) { h = pm[1]; } }
     else { try { h = decodeURIComponent(location.hash.slice(1)); } catch (e) {} }
-    var m = h.match(/^(?:live\/)?(\d{6,})(?:\/(?:g\/)?(.+))?$/);
+    var parts = h.replace(/^live\//, "").split("/"), a = parts[0] || "", b = parts.slice(1).join("/").replace(/^g\//, "");
     // old #id/g/key links: move them onto the clean path in place
-    if (!pm && m) { try { history.replaceState(null, "", "/match/" + m[1] + (m[2] ? "/" + encodeURIComponent(normKey(m[2])) : "")); } catch (e) {} }
-    return { mid: m ? m[1] : null, key: m && m[2] ? normKey(m[2]) : null };
+    if (!pm && /^\d{9,}$/.test(a)) { try { history.replaceState(null, "", "/match/" + a + (b ? "/" + encodeURIComponent(normKey(b)) : "")); } catch (e) {} }
+    var no = (b.match(/^game(\d+)$/) || [])[1];
+    // /match/48213/game2: 48213 is the short number the site gave the match (old links carry the long Riot id)
+    return { short: /^\d{1,8}$/.test(a) ? a : null, mid: /^\d{9,}$/.test(a) ? a : null, no: no ? +no : 0, key: !no && b ? normKey(b) : null };
   }
   // old links name a game as riot/<match>/<game> or by its Oracle's Elixir id; the page's own key is the Riot game id
   function normKey(k) {
@@ -1107,11 +1109,36 @@ html { overflow-x: hidden; overflow-x: clip; }
     if (/^LOLTMNT/.test(k)) for (var g in MAP) if (MAP[g] === k) return g;
     return k;
   }
-  function go(key) { try { history.pushState(null, "", "/match/" + matchId + (key ? "/" + encodeURIComponent(key) : "")); } catch (e) {} route(); }
+  // the address of a view: /match/48213 (overview) or /match/48213/game2; a single-game match is just /match/48213
+  function urlFor(key) {
+    var base = "/match/" + (S.short || matchId), gs = (S.match && S.match.games) || [];
+    if (!key || gs.length === 1) return base;
+    for (var i = 0; i < gs.length; i++) if (gs[i].id === key || MAP[gs[i].id] === key) return base + "/game" + (gs[i].number || i + 1);
+    return base + "/" + encodeURIComponent(key);
+  }
+  // the address bar always shows the short form; old long links are rewritten in place once the match is known
+  function canon() {
+    if (!S.match) return;
+    var want = urlFor(S.key);
+    if (location.pathname !== want) { try { history.replaceState(null, "", want); } catch (e) {} }
+    if (!S.short && matchId && !S.revTried) {
+      S.revTried = 1;
+      fetch("/data/match_rev.json").then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { if (j && j[matchId]) { S.short = String(j[matchId]); canon(); } }).catch(function () {});
+    }
+  }
+  // gameN in the address -> the Riot game id; a single-game match opens its game straight away
+  function applyNo() {
+    if (!S.match) return;
+    var gs = S.match.games || [];
+    if (S.pendNo) { var g = gs.filter(function (x) { return (x.number || 0) === S.pendNo; })[0] || gs[S.pendNo - 1]; S.key = g ? g.id : null; S.pendNo = 0; }
+    else if (!S.key && !S.auto1 && gs.length === 1 && !S.upcoming) { S.key = gs[0].id; S.auto1 = 1; }
+    canon();
+  }
+  function go(key) { try { history.pushState(null, "", urlFor(key)); } catch (e) {} route(); }
   function route() {
     var r = readRoute();
-    if (r.mid && matchId && r.mid !== matchId) { location.reload(); return; }
-    S.key = r.key; if (S.match) draw();
+    if ((r.mid && matchId && r.mid !== matchId) || (r.short && S.short && r.short !== S.short)) { location.reload(); return; }
+    S.key = r.key; S.pendNo = r.no; applyNo(); if (S.match) draw();
   }
   window.addEventListener("hashchange", route); window.addEventListener("popstate", route);
 
@@ -1363,9 +1390,12 @@ html { overflow-x: hidden; overflow-x: clip; }
     }).catch(function () {});
   }
   function boot() {
-    var r = readRoute(); matchId = r.mid; S.key = r.key;
-    loadMatch().then(loadSnap).then(function () { draw(); }).catch(noLive_or_retry);
-    function noLive_or_retry(e) { noLive(e); setTimeout(boot, 10000); }
+    var r = readRoute(); S.key = r.key; S.pendNo = r.no; S.short = r.short;
+    var ready = r.short
+      ? fetch("/data/mm/" + Math.floor(+r.short / 200) + ".json").then(function (x) { return x.ok ? x.json() : null; }).then(function (m) { var id = m && m[r.short]; if (!id) { location.replace("/404.html"); throw new Error("stop"); } matchId = id; })
+      : (matchId = r.mid, Promise.resolve());
+    ready.then(loadMatch).then(function (ch) { applyNo(); return ch; }).then(loadSnap).then(function () { draw(); }).catch(noLive_or_retry);
+    function noLive_or_retry(e) { if (e && e.message === "stop") return; noLive(e); setTimeout(boot, 10000); }
   }
   boot();
   // keep the series up to date; a live game is polled faster
