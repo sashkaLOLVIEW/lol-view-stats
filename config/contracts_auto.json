@@ -1,5 +1,5 @@
 {
- "fetched": 1794976160.6734116,
+ "fetched": 1795062664.6618998,
  "players": {
   "Cube": {
    "contract": "2027-11-16",
@@ -1236,11 +1236,6 @@
    "team": "Team Heretics",
    "league": "LEC"
   },
-  "Serin": {
-   "contract": "2027-11-15",
-   "team": "Team Heretics",
-   "league": "LEC"
-  },
   "Hype": {
    "contract": "2028-11-20",
    "team": "Team Heretics",
@@ -1253,11 +1248,6 @@
   },
   "Nukeduck": {
    "contract": "Day After Worlds 2027",
-   "team": "Team Heretics",
-   "league": "LEC"
-  },
-  "Daglas": {
-   "contract": "2027-11-15",
    "team": "Team Heretics",
    "league": "LEC"
   },
@@ -2746,17 +2736,12 @@
    "team": "paiN Gaming",
    "league": "LCS"
   },
-  "Keine": {
-   "contract": "2026-11-16",
-   "team": "paiN Gaming",
-   "league": "LCS"
-  },
   "Namiru": {
    "contract": "2027-11-15",
    "team": "paiN Gaming",
    "league": "LCS"
   },
-  "Trigger": {
+  "Hena": {
    "contract": "2026-11-16",
    "team": "paiN Gaming",
    "league": "LCS"
@@ -2766,7 +2751,7 @@
    "team": "paiN Gaming",
    "league": "LCS"
   },
-  "Kuri": {
+  "Ceos": {
    "contract": "2026-11-16",
    "team": "paiN Gaming",
    "league": "LCS"
@@ -2841,11 +2826,6 @@
    "team": "RED Canids Kalunga",
    "league": "LCS"
   },
-  "Zekas": {
-   "contract": "2028-11-20",
-   "team": "Vivo Keyd Stars",
-   "league": "LCS"
-  },
   "Disamis": {
    "contract": "2028-11-20",
    "team": "Vivo Keyd Stars",
@@ -2853,11 +2833,6 @@
   },
   "Mireu": {
    "contract": "2027-11-15",
-   "team": "Vivo Keyd Stars",
-   "league": "LCS"
-  },
-  "ceo": {
-   "contract": "2026-11-16",
    "team": "Vivo Keyd Stars",
    "league": "LCS"
   },
@@ -2873,21 +2848,6 @@
   },
   "sarolu": {
    "contract": "2026-11-16",
-   "team": "Vivo Keyd Stars",
-   "league": "LCS"
-  },
-  "Qats": {
-   "contract": "2027-11-15",
-   "team": "Vivo Keyd Stars",
-   "league": "LCS"
-  },
-  "BUERO": {
-   "contract": "2028-11-20",
-   "team": "Vivo Keyd Stars",
-   "league": "LCS"
-  },
-  "zay": {
-   "contract": "2028-11-20",
    "team": "Vivo Keyd Stars",
    "league": "LCS"
   },
@@ -6927,15 +6887,6 @@
   },
   {
    "league": "LEC",
-   "player": "Serin",
-   "team": "Team Heretics",
-   "tri": "",
-   "role": "MID",
-   "raw_end": "November 15, 2027",
-   "contract": "2027-11-15"
-  },
-  {
-   "league": "LEC",
    "player": "Hype",
    "team": "Team Heretics",
    "tri": "",
@@ -6960,15 +6911,6 @@
    "role": "HEAD COACH",
    "raw_end": "Day After Worlds 2027",
    "contract": "Day After Worlds 2027"
-  },
-  {
-   "league": "LEC",
-   "player": "Daglas",
-   "team": "Team Heretics",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 15, 2027",
-   "contract": "2027-11-15"
   },
   {
    "league": "LEC",
@@ -9681,15 +9623,6 @@
   },
   {
    "league": "LCS",
-   "player": "Keine",
-   "team": "paiN Gaming",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCS",
    "player": "Namiru",
    "team": "paiN Gaming",
    "tri": "",
@@ -9699,7 +9632,7 @@
   },
   {
    "league": "LCS",
-   "player": "Trigger",
+   "player": "Hena",
    "team": "paiN Gaming",
    "tri": "",
    "role": "Bot",
@@ -9717,7 +9650,7 @@
   },
   {
    "league": "LCS",
-   "player": "Kuri",
+   "player": "Ceos",
    "team": "paiN Gaming",
    "tri": "",
    "role": "Support",
@@ -9861,15 +9794,6 @@
   },
   {
    "league": "LCS",
-   "player": "Zekas",
-   "team": "Vivo Keyd Stars",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 20, 2028",
-   "contract": "2028-11-20"
-  },
-  {
-   "league": "LCS",
    "player": "Disamis",
    "team": "Vivo Keyd Stars",
    "tri": "",
@@ -9885,15 +9809,6 @@
    "role": "Mid",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LCS",
-   "player": "ceo",
-   "team": "Vivo Keyd Stars",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LCS",
@@ -9921,33 +9836,6 @@
    "role": "Jungle",
    "raw_end": "November 16, 2026",
    "contract": "2026-11-16"
-  },
-  {
-   "league": "LCS",
-   "player": "Qats",
-   "team": "Vivo Keyd Stars",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 15, 2027",
-   "contract": "2027-11-15"
-  },
-  {
-   "league": "LCS",
-   "player": "BUERO",
-   "team": "Vivo Keyd Stars",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 20, 2028",
-   "contract": "2028-11-20"
-  },
-  {
-   "league": "LCS",
-   "player": "zay",
-   "team": "Vivo Keyd Stars",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 20, 2028",
-   "contract": "2028-11-20"
   },
   {
    "league": "LCS",
