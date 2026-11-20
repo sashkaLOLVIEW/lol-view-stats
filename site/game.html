@@ -671,7 +671,11 @@ html { overflow-x: hidden; overflow-x: clip; }
   D.games.forEach(function (g, j) { if (g.id === hraw) { hi = j; found = true; } });
   // One page per match: a game that belongs to a Riot match opens on the match page (match.html), everything else is shown here.
   var LV = location.hash.match(/^#riot\/(\d+)\/(\d+)/);
-  if (hraw.lastIndexOf('@') > 0) loadOE(hraw.slice(0, hraw.lastIndexOf('@')), hraw.slice(hraw.lastIndexOf('@') + 1));
+  if (hraw.lastIndexOf('@') > 0) {
+    var oeId = hraw.slice(0, hraw.lastIndexOf('@')), oeLg = hraw.slice(hraw.lastIndexOf('@') + 1);
+    // a game that belongs to a match with a match page opens there; everything else is shown here
+    fetch('/data/game_mid.json').then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }).then(function (M) { if (M[oeId]) location.replace('/match/' + M[oeId] + '/' + encodeURIComponent(oeId)); else loadOE(oeId, oeLg); });
+  }
   else if (LV) location.replace('/match/' + LV[1] + '/' + LV[2]);
   else if (hraw.length > 0 && found && D.games[hi] && D.games[hi].mid) location.replace('/match/' + D.games[hi].mid + '/' + encodeURIComponent(D.games[hi].id));
   else if (!found) location.replace('/404.html');

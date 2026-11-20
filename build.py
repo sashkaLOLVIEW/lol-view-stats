@@ -1072,6 +1072,7 @@ def main(csv):
         return _ic[c]
     build_scopes.build(csv, out / "data", lambda n: CODE.get(NAME_FIX.get(n, n)) or re.sub(r"[^A-Z0-9]", "", "".join(x[0] for x in n.split()).upper())[:4] or n[:3].upper(), _icon, FILTER_LEAGUES, LEAGUE, TIER1_LEAGUES)
     export_oe_items(csv, out / "data")
+    (out / "data" / "game_mid.json").write_text(json.dumps({g_["id"]: MN(g_["mid"]) for g_ in GD["games"] if g_.get("mid")}, separators=(",", ":")), encoding="utf-8")   # game id -> match number, so old game links open the match page
     mn_publish(out)    # short match numbers -> Riot ids (after build_scopes, which recreates dist/data)
     try:                                            # age / contract for every player in the filter data, so the player page shows them under any filter
         _mp = out / "data" / "meta.json"; _m = json.loads(_mp.read_text(encoding="utf-8")); _low = {k.lower(): v for k, v in PI.items()}
