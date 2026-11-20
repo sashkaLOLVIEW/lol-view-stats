@@ -557,13 +557,13 @@ html { scroll-padding-top: 84px; }
 .page > .topbar + .finder, .hg .finder { margin-top: 160px !important; }
 /* home layout: left = search + Top Performers (4 card-widths) + Player Stats, right = Power Rankings (1 card-width) */
 @media (min-width: 1081px) {
-  .hg { display: grid; grid-template-columns: calc(80% - 3px) minmax(0, 1fr); column-gap: 15px; align-items: start; }
+  .hg { display: grid; grid-template-columns: calc(80% - 3px) minmax(0, 1fr); column-gap: 31px; align-items: start; }
   .hg-l { display: contents; }
   .hg .finder { grid-column: 1 / -1; grid-row: 1; min-width: 0; }
   .hg .cols { grid-column: 1; grid-row: 2; min-width: 0; }
   .hg .cols { grid-template-columns: minmax(0, 1fr); grid-template-areas: "tp" "players"; grid-template-rows: auto auto; }
   .hg .col-rank { grid-area: auto; grid-column: 2; grid-row: 2; margin-top: 0; align-self: stretch; }
-  .hg .col-rank::before { display: block; content: ""; position: absolute; left: -8px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--divider) 12%, var(--divider) 88%, transparent); }
+  .hg .col-rank::before { display: block; content: ""; position: absolute; left: -16px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--divider) 12%, var(--divider) 88%, transparent); }
   .hg .col-rank .hd-row { flex-wrap: wrap; height: auto; min-height: 40px; row-gap: 2px; } .hg .col-rank h2 a { white-space: nowrap; }
   .hg .col-players::before { display: none; }
   .hg .finder { align-items: center; margin-bottom: 52px; }
