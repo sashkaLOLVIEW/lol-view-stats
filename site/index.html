@@ -572,8 +572,8 @@ html { scroll-padding-top: 84px; }
 
 .finder { position: relative; }
 .hg { position: relative; }
-.hero-bg { position: absolute; z-index: -1; pointer-events: none; left: 50%; width: 100vw; transform: translateX(-50%); top: 0; height: 430px; background: url(/hero-bg.webp) center 42% / cover no-repeat; opacity: .1; filter: saturate(.05); -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%); mask-image: linear-gradient(to bottom, #000 45%, transparent 100%); }
-@media (max-width: 760px) { .hero-bg { height: 300px; } }
+.hero-bg { position: absolute; z-index: -1; pointer-events: none; left: 50%; width: 100vw; transform: translateX(-50%); top: -52px; height: 500px; background: url(/hero-bg.webp) center 42% / cover no-repeat; opacity: .1; filter: saturate(.05); -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 45%, transparent 100%), linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%); -webkit-mask-composite: source-in; mask-image: linear-gradient(to bottom, #000 0, #000 45%, transparent 100%), linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%); mask-composite: intersect; }
+@media (max-width: 760px) { .hero-bg { top: -52px; height: 340px; } }
 
 @media (max-width: 760px) { .page > .topbar + .finder { margin-top: 56px !important; } }
 .finder .search input { height: 46px; border-radius: 10px; padding: 0 56px 0 20px; font-size: 15px; }
