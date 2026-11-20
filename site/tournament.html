@@ -445,6 +445,14 @@ html { scroll-padding-top: 84px; }
 .tn .fact.na b { color: var(--dim); font-weight: 500; }
 .tn .parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
 .tn .grp { grid-column: 1 / -1; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: var(--muted); margin: 8px 0 -2px; } .tn .grp:first-child { margin-top: 0; }
+.tn .ptc { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; align-self: start; min-width: 0; }
+.tn .ptc > .pt { border: 0; border-radius: 0; background: none; border-bottom: 1px solid var(--divider, var(--line)); }
+.tn .ros { display: flex; flex-direction: column; padding: 4px 0; }
+.tn .pr { display: flex; align-items: center; gap: 10px; height: 30px; padding: 0 14px; font-size: 13px; color: var(--fg); text-decoration: none; min-width: 0; }
+.tn a.pr:hover { background: var(--stripe, var(--surface-2)); }
+.tn .pr .flag { width: 20px; height: 15px; border-radius: 3px; object-fit: cover; box-shadow: 0 0 0 1px var(--line); flex: none; } .tn .pr .noflag { width: 20px; height: 15px; flex: none; }
+.tn .pr b { font-weight: 500; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tn .pr .ri { color: var(--muted); display: inline-flex; flex: none; } .tn .pr.sub b { color: var(--muted); }
 .tn .pt { display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; color: var(--fg); text-decoration: none; font-size: 13px; font-weight: 500; transition: border-color .15s; }
 .tn .pt:hover { border-color: var(--muted); }
 .tn .pt span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -603,6 +611,8 @@ html { overflow-x: hidden; overflow-x: clip; }
   function chev() { return ''; }
 
   var $ = function (id) { return document.getElementById(id); };
+  var CC = {};
+  var ROLEI = {"Top": "<svg width=\"15\" height=\"15\" viewBox=\"0 0 114 112\" fill=\"none\" aria-hidden=\"true\"><path d=\"M72 71L42 71L42 41L72 41L72 71Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M101.055 1.13167e-06L-9.79135e-06 9.9662e-06L-9.56827e-07 101.055L22 79.0552L22 21L80.0552 21L101.055 1.13167e-06Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M35.5112 91L92 91L92 34.5112L114 12.5112L114 112L14.5112 112L35.5112 91Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M101.055 1.13167e-06L-9.79135e-06 9.9662e-06L-9.56827e-07 101.055L22 79.0552L22 21L80.0552 21L101.055 1.13167e-06Z\" fill=\"currentColor\"/></svg>", "Jungle": "<svg width=\"15\" height=\"15\" viewBox=\"0 0 112 125\" fill=\"none\" aria-hidden=\"true\"><path d=\"M64.5 60C66.9 64.8 68.1667 71.3333 68.5 74L74 61C73.6667 60 73.2 56 74 48C74.8 40 84.6667 13.3333 89.5 1C85.3333 6.66667 76 19.5 72 25.5C68 31.5 61.3333 44 58.5 49.5C59.5 51 62.1 55.2 64.5 60Z\" fill=\"currentColor\"/> <path d=\"M81 97.5C78.2 99.9 74.5 104.167 73 106L72.5 91.5C73 89.5 74.3 84.5 75.5 80.5C76.7 76.5 80 68 86.5 56.5C88.1667 54 92.9 47.7 96.5 44.5C100.1 41.3 106 37.5 111.5 34.5C104 43 105 42 98 54.5C92.302 64.6751 91.3333 80.6667 91.5 90C89.1667 91.5 83.8 95.1 81 97.5Z\" fill=\"currentColor\"/> <path d=\"M61 89C61 108.2 57.6667 121 56 125C43.2 105.8 26.6667 93 20 89C19.5 83 18 69.1 16 61.5C14 53.9 4.5 40.3333 0 34.5C4.5 36.5 15.4 42.2 23 49C30.6 55.8 35.8333 66.5 37.5 71C37.5 66.3333 37.2 54.4 36 44C34.8 33.6 25.8333 10.3333 21.5 0C25.3333 5.83333 33 15 39 25.5C43.1287 32.7252 61 65 61 89Z\" fill=\"currentColor\"/></svg>", "Mid": "<svg width=\"15\" height=\"15\" viewBox=\"0 0 114 112\" fill=\"none\" aria-hidden=\"true\"><path d=\"M0 0H84.7495L63.7495 21H22V62.7495L0 84.7495V0Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M29.312 112H114V27.3118L92 49.3118V91H50.312L29.312 112Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M114 18.2324L20.2324 112H0V93.8281L93.8291 0H114V18.2324Z\" fill=\"currentColor\"/></svg>", "Bot": "<svg width=\"15\" height=\"15\" viewBox=\"0 0 114 112\" fill=\"none\" aria-hidden=\"true\"><path d=\"M42 41H72V71H42V41Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M12.9448 112H114V10.9448L92 32.9448V91H33.9448L12.9448 112Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M78.4888 21H22V77.4888L0 99.4888V0H99.4888L78.4888 21Z\" fill=\"currentColor\" fill-opacity=\"0.15\"/> <path d=\"M12.9448 112H114V10.9448L92 32.9448V91H33.9448L12.9448 112Z\" fill=\"currentColor\"/></svg>", "Support": "<svg width=\"15\" height=\"15\" viewBox=\"0 0 136 114\" fill=\"none\" aria-hidden=\"true\"><path d=\"M63 39.5L67.5 45.5L72.5 39.5L84.5 100.5L67.5 114L51.5 100.5L63 39.5Z\" fill=\"currentColor\"/> <path d=\"M87.5 65L78.5 36L92 22.5L136 24C134 26.1667 128.9 30.7 124.5 33.5C120.1 36.3 114 39.5 108.5 40H97L108.5 56.5L87.5 65Z\" fill=\"currentColor\"/> <path d=\"M67.5 32.5L47 9L51.5 0H84.5L88.5 9L67.5 32.5Z\" fill=\"currentColor\"/> <path d=\"M56 36L44 24H0C1.66667 25.3333 3 29.5 13 34.5C20.7398 38.3699 27.1667 40.1667 28.5 40H38.5L27 56.5L48.5 65L56 36Z\" fill=\"currentColor\"/></svg>"};
   var UP = {"global": []};
   var RES = [], U = { game: '/game.html' };
   var PSH = 25, LID = null, SPL = 'All', shown = 10, DS = null, psort = 'rt', pdir = -1;
@@ -642,7 +652,18 @@ html { overflow-x: hidden; overflow-x: clip; }
         fact('Games', '<b><span>' + ds.games.length + '</span></b>') + fact('Teams', '<b><span>' + (ev ? ev.t.length : standings(ds, M).length) + '</span></b>').replace('class="fact', INTL.indexOf(LID) >= 0 ? 'class="fact' : 'style="grid-column: span 2" class="fact') + '</div>';
     }
     if (ev && ev.t && ev.t.length) {
-      var chip = function (r) { return '<a class="pt" href="/team/' + r[2] + '">' + logo(r[2], 24) + '<span>' + esc(tname(M, r[2])) + '</span>' + (ev.on ? '' : '<em' + (r[0] === 1 ? ' class="top"' : '') + '>' + plc(r[0], r[1]) + '</em>') + '</a>'; };
+      var ORD = ['Top', 'Jungle', 'Mid', 'Bot', 'Support'];
+      var roster = function (code) {
+        var by = {};
+        PL.filter(function (p) { return p.t === code && !/^missing/i.test(p.p); }).forEach(function (p) { var o = by[p.p]; if (!o) o = by[p.p] = { p: p.p, g: 0, r: p.r, rg: 0 }; o.g += p.g; if (p.g > o.rg) { o.rg = p.g; o.r = p.r; } });
+        var all = Object.keys(by).map(function (k) { return by[k]; }).sort(function (a, b) { return b.g - a.g; }), st = {}, starters = [], subs = [];
+        all.forEach(function (o) { if (!st[o.r]) { st[o.r] = 1; starters.push(o); } else subs.push(o); });
+        starters.sort(function (a, b) { return ORD.indexOf(a.r) - ORD.indexOf(b.r); });
+        var one = function (o, sub) { var cc = CC[o.p]; return '<a class="pr' + (sub ? ' sub' : '') + '" href="/player/' + encodeURIComponent(o.p) + '">' + (cc ? '<img class="flag" src="https://flagcdn.com/w40/' + cc + '.png" srcset="https://flagcdn.com/w80/' + cc + '.png 2x" width="20" height="15" alt="' + cc.toUpperCase() + '" title="' + cc.toUpperCase() + '">' : '<span class="noflag"></span>') + '<b>' + esc(o.p) + '</b><span class="ri" title="' + esc(o.r) + '">' + (ROLEI[o.r] || '') + '</span></a>'; };
+        var h2 = starters.map(function (o) { return one(o, 0); }).join('') + subs.map(function (o) { return one(o, 1); }).join('');
+        return h2 ? '<div class="ros">' + h2 + '</div>' : '';
+      };
+      var chip = function (r) { return '<div class="ptc"><a class="pt" href="/team/' + r[2] + '">' + logo(r[2], 24) + '<span>' + esc(tname(M, r[2])) + '</span>' + (ev.on ? '' : '<em' + (r[0] === 1 ? ' class="top"' : '') + '>' + plc(r[0], r[1]) + '</em>') + '</a>' + roster(r[2]) + '</div>'; };
       h += '<h2 class="sec">Participants</h2><div class="parts">';
       if (ev.groups && Object.keys(ev.groups).length) {
         var seen = {};
