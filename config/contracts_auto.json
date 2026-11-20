@@ -1,5 +1,5 @@
 {
- "fetched": 1795062664.6618998,
+ "fetched": 1795148930.4988036,
  "players": {
   "Cube": {
    "contract": "2027-11-16",
@@ -1061,28 +1061,8 @@
    "team": "GIANTX",
    "league": "LEC"
   },
-  "Razork": {
-   "contract": "2026-11-16",
-   "team": "Fnatic",
-   "league": "LEC"
-  },
-  "Upset": {
-   "contract": "2026-11-16",
-   "team": "Fnatic",
-   "league": "LEC"
-  },
   "Lospa": {
    "contract": "2027-11-15",
-   "team": "Fnatic",
-   "league": "LEC"
-  },
-  "Vladi": {
-   "contract": "2026-11-16",
-   "team": "Fnatic",
-   "league": "LEC"
-  },
-  "Soboro": {
-   "contract": "2026-11-16",
    "team": "Fnatic",
    "league": "LEC"
   },
@@ -1094,11 +1074,6 @@
   "Gaax": {
    "contract": "Day After Worlds 2026",
    "team": "Fnatic",
-   "league": "LEC"
-  },
-  "BrokenBlade": {
-   "contract": "2026-11-16",
-   "team": "G2 Esports",
    "league": "LEC"
   },
   "Caps": {
@@ -1113,11 +1088,6 @@
   },
   "Hans Sama": {
    "contract": "2028-11-20",
-   "team": "G2 Esports",
-   "league": "LEC"
-  },
-  "Labrov": {
-   "contract": "2026-11-16",
    "team": "G2 Esports",
    "league": "LEC"
   },
@@ -1136,28 +1106,13 @@
    "team": "G2 Esports",
    "league": "LEC"
   },
-  "Myrwn": {
-   "contract": "2026-11-16",
-   "team": "Movistar KOI",
-   "league": "LEC"
-  },
   "Elyoya": {
    "contract": "2027-11-15",
    "team": "Movistar KOI",
    "league": "LEC"
   },
-  "Supa": {
-   "contract": "2026-11-16",
-   "team": "Movistar KOI",
-   "league": "LEC"
-  },
   "Alvaro": {
    "contract": "2027-11-16",
-   "team": "Movistar KOI",
-   "league": "LEC"
-  },
-  "Jojopyun": {
-   "contract": "2026-11-16",
    "team": "Movistar KOI",
    "league": "LEC"
   },
@@ -1176,21 +1131,6 @@
    "team": "Movistar KOI",
    "league": "LEC"
   },
-  "Sr Antonio": {
-   "contract": "2026-11-16",
-   "team": "Movistar KOI",
-   "league": "LEC"
-  },
-  "NightSlayer": {
-   "contract": "2026-11-16",
-   "team": "Movistar KOI",
-   "league": "LEC"
-  },
-  "Maynter": {
-   "contract": "2026-11-16",
-   "team": "Natus Vincere",
-   "league": "LEC"
-  },
   "Rhilech": {
    "contract": "2027-11-15",
    "team": "Natus Vincere",
@@ -1203,11 +1143,6 @@
   },
   "Larssen": {
    "contract": "2027-11-15",
-   "team": "Natus Vincere",
-   "league": "LEC"
-  },
-  "SamD": {
-   "contract": "2026-11-16",
    "team": "Natus Vincere",
    "league": "LEC"
   },
@@ -1261,16 +1196,6 @@
    "team": "Karmine Corp",
    "league": "LEC"
   },
-  "Yike": {
-   "contract": "2026-11-16",
-   "team": "Karmine Corp",
-   "league": "LEC"
-  },
-  "kyeahoo": {
-   "contract": "2026-11-16",
-   "team": "Karmine Corp",
-   "league": "LEC"
-  },
   "Caliste": {
    "contract": "2028-11-20",
    "team": "Karmine Corp",
@@ -1289,31 +1214,6 @@
   "Zeph": {
    "contract": "Day After Worlds 2027",
    "team": "Karmine Corp",
-   "league": "LEC"
-  },
-  "Jopa": {
-   "contract": "2026-11-16",
-   "team": "SK Gaming",
-   "league": "LEC"
-  },
-  "Mikyx": {
-   "contract": "2026-11-16",
-   "team": "SK Gaming",
-   "league": "LEC"
-  },
-  "Skeanz": {
-   "contract": "2026-11-16",
-   "team": "SK Gaming",
-   "league": "LEC"
-  },
-  "Wunder": {
-   "contract": "2026-11-16",
-   "team": "SK Gaming",
-   "league": "LEC"
-  },
-  "Lider": {
-   "contract": "2026-11-16",
-   "team": "SK Gaming",
    "league": "LEC"
   },
   "Own3r": {
@@ -1336,48 +1236,8 @@
    "team": "SK Gaming",
    "league": "LEC"
   },
-  "Striker": {
-   "contract": "2026-11-16",
-   "team": "Shifters",
-   "league": "LEC"
-  },
-  "Rooster": {
-   "contract": "2026-11-16",
-   "team": "Shifters",
-   "league": "LEC"
-  },
-  "nuc": {
-   "contract": "2026-11-16",
-   "team": "Shifters",
-   "league": "LEC"
-  },
-  "Boukada": {
-   "contract": "2026-11-16",
-   "team": "Shifters",
-   "league": "LEC"
-  },
-  "Paduck": {
-   "contract": "2026-11-16",
-   "team": "Shifters",
-   "league": "LEC"
-  },
-  "Trymbi": {
-   "contract": "2026-11-16",
-   "team": "Shifters",
-   "league": "LEC"
-  },
   "MenQ": {
    "contract": "Day After Worlds 2026",
-   "team": "Shifters",
-   "league": "LEC"
-  },
-  "Stend": {
-   "contract": "2026-11-16",
-   "team": "Shifters",
-   "league": "LEC"
-  },
-  "Sheo": {
-   "contract": "2026-11-16",
    "team": "Shifters",
    "league": "LEC"
   },
@@ -6572,48 +6432,12 @@
   },
   {
    "league": "LEC",
-   "player": "Razork",
-   "team": "Fnatic",
-   "tri": "FNC",
-   "role": "JUNGLE",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Upset",
-   "team": "Fnatic",
-   "tri": "",
-   "role": "ADC",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
    "player": "Lospa",
    "team": "Fnatic",
    "tri": "",
    "role": "SUPPORT",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LEC",
-   "player": "Vladi",
-   "team": "Fnatic",
-   "tri": "",
-   "role": "MID",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Soboro",
-   "team": "Fnatic",
-   "tri": "",
-   "role": "TOP",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LEC",
@@ -6632,15 +6456,6 @@
    "role": "STRATEGIC COACH",
    "raw_end": "Day After Worlds 2026",
    "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
-   "player": "BrokenBlade",
-   "team": "G2 Esports",
-   "tri": "G2",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LEC",
@@ -6671,15 +6486,6 @@
   },
   {
    "league": "LEC",
-   "player": "Labrov",
-   "team": "G2 Esports",
-   "tri": "",
-   "role": "SUPPORT",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
    "player": "Rodrigo",
    "team": "G2 Esports",
    "tri": "",
@@ -6707,15 +6513,6 @@
   },
   {
    "league": "LEC",
-   "player": "Myrwn",
-   "team": "Movistar KOI",
-   "tri": "MKOI",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
    "player": "Elyoya",
    "team": "Movistar KOI",
    "tri": "",
@@ -6725,30 +6522,12 @@
   },
   {
    "league": "LEC",
-   "player": "Supa",
-   "team": "Movistar KOI",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
    "player": "Alvaro",
    "team": "Movistar KOI",
    "tri": "",
    "role": "Support",
    "raw_end": "November 16, 2027",
    "contract": "2027-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Jojopyun",
-   "team": "Movistar KOI",
-   "tri": "",
-   "role": "MID",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LEC",
@@ -6779,33 +6558,6 @@
   },
   {
    "league": "LEC",
-   "player": "Sr Antonio",
-   "team": "Movistar KOI",
-   "tri": "",
-   "role": "JUNGLE",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "NightSlayer",
-   "team": "Movistar KOI",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Maynter",
-   "team": "Natus Vincere",
-   "tri": "NAVI",
-   "role": "TOP",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
    "player": "Rhilech",
    "team": "Natus Vincere",
    "tri": "",
@@ -6830,15 +6582,6 @@
    "role": "MID",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LEC",
-   "player": "SamD",
-   "team": "Natus Vincere",
-   "tri": "",
-   "role": "ADC",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LEC",
@@ -6932,24 +6675,6 @@
   },
   {
    "league": "LEC",
-   "player": "Yike",
-   "team": "Karmine Corp",
-   "tri": "",
-   "role": "JUNGLE",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "kyeahoo",
-   "team": "Karmine Corp",
-   "tri": "",
-   "role": "MID",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
    "player": "Caliste",
    "team": "Karmine Corp",
    "tri": "",
@@ -6983,51 +6708,6 @@
    "role": "ASSISTANT COACH",
    "raw_end": "Day After Worlds 2027",
    "contract": "Day After Worlds 2027"
-  },
-  {
-   "league": "LEC",
-   "player": "Jopa",
-   "team": "SK Gaming",
-   "tri": "SK",
-   "role": "ADC",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Mikyx",
-   "team": "SK Gaming",
-   "tri": "",
-   "role": "SUPPORT",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Skeanz",
-   "team": "SK Gaming",
-   "tri": "",
-   "role": "JUNGLE",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Wunder",
-   "team": "SK Gaming",
-   "tri": "",
-   "role": "TOP",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Lider",
-   "team": "SK Gaming",
-   "tri": "",
-   "role": "MID",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LEC",
@@ -7067,84 +6747,12 @@
   },
   {
    "league": "LEC",
-   "player": "Striker",
-   "team": "Shifters",
-   "tri": "SHFT",
-   "role": "HEAD COACH",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Rooster",
-   "team": "Shifters",
-   "tri": "",
-   "role": "TOP",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "nuc",
-   "team": "Shifters",
-   "tri": "",
-   "role": "MID",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Boukada",
-   "team": "Shifters",
-   "tri": "",
-   "role": "JUNGLE",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Paduck",
-   "team": "Shifters",
-   "tri": "",
-   "role": "ADC",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Trymbi",
-   "team": "Shifters",
-   "tri": "",
-   "role": "SUPPORT",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
    "player": "MenQ",
    "team": "Shifters",
    "tri": "",
    "role": "ASSISTANT COACH",
    "raw_end": "Day After Worlds 2026",
    "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
-   "player": "Stend",
-   "team": "Shifters",
-   "tri": "",
-   "role": "SUPPORT",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Sheo",
-   "team": "Shifters",
-   "tri": "",
-   "role": "JUNGLE",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LEC",
