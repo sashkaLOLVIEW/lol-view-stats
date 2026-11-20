@@ -518,6 +518,7 @@ html { scroll-padding-top: 84px; }
 .hd-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 32px; }
 .hd-row .updated { margin: 0; height: auto; padding: 0; background: none; border: 0; border-radius: 0; color: var(--muted); font-size: 12px; white-space: nowrap; }
 .hd-row .updated b { color: var(--muted); font-weight: 500; }
+#rankings > .updated { margin: 12px 0 0; height: auto; padding: 0; background: none; border: 0; border-radius: 0; color: var(--muted); font-size: 12px; } #rankings > .updated b { color: var(--muted); font-weight: 500; }
 .hd-row + .stack { margin-top: 12px; }
 .pdd .rgb { width: 100px; } .pdd.rgdd { position: relative; } .pdd.rgdd.open .rgm { display: block; } .pdd.rgdd.open .rgb { border-color: var(--muted); } .pdd.rgdd.open .rgb svg.cv { transform: rotate(180deg); } .pdd .rgm { min-width: 100%; }
 </style>
@@ -830,8 +831,9 @@ html { overflow-x: hidden; overflow-x: clip; }
   </main>
   </div>
     <aside class="col col-rank" id="rankings">
-      <div class="hd-row">      <h2><a href="rankings.html" style="display:flex;align-items:center;gap:7px">Power Rankings <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2><div class="updated"><b>Updated:</b> 10/19/26 6:00 AM</div></div>
+      <div class="hd-row">      <h2><a href="rankings.html" style="display:flex;align-items:center;gap:7px">Power Rankings <svg width="8" height="11" viewBox="0 0 8 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 1.500 4 4-4 4"/></svg></a></h2></div>
       <div class="stack" id="rank-list"></div>
+      <div class="updated"><b>Updated:</b> 10/19/26 6:00 AM</div>
     </aside>
   </div>
   <section class="y27" id="y2027" aria-label="2027 season">
