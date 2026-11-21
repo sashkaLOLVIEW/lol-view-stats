@@ -1024,6 +1024,8 @@ def main(csv):
     # recent results (all series)
     s = rd("site/results.html"); s = jreplace(s, "RES", allres); s = jreplace(s, "LOGOS", logos_all)
     s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "results.html", stamp(s))
+    for fn_ in ("teams", "tournaments"):
+        s = rd("site/%s.html" % fn_); s = jreplace(s, "LOGOS", logos_all); s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / (fn_ + ".html"), stamp(s))
     # tournament pages (one template, routed by #LEAGUE[/split])
     s = rd("site/tournament.html"); s = jreplace(s, "LOGOS", logos_all); s = jreplace(s, "CC", {n: iso2(v.get("cc")) for n, v in load_player_info().items() if iso2(v.get("cc"))}); s = jreplace(s, "UP", build_upcoming())
     s = jreplace(s, "SD", build_search(s, WD, CH)); wr(out / "tournament.html", stamp(s))

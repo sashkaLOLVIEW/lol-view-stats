@@ -296,7 +296,7 @@
     return true;
   }
   function init() {
-    if (!$('.page > .topbar') || /^\/(tournament|rankings|match|game|bootcamp)(\.html)?(\/|$)/.test(location.pathname)) return;
+    if (!$('.page > .topbar') || /^\/(tournament|tournaments|teams|rankings|match|game|bootcamp)(\.html)?(\/|$)/.test(location.pathname)) return;
     css(); bar = document.createElement('div'); bar.id = 'lvf';
     loadMeta().then(function () {
       if (!place()) return;
