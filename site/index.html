@@ -104,6 +104,11 @@ h2 svg { flex: none; }
 .updated { margin-top: 14px; height: 27px; display: flex; align-items: center; padding: 0 8px; background: var(--updated-bg); border: 1.5px solid var(--updated-line); border-radius: 4px; color: var(--updated-fg); font-size: 13px; font-weight: 500; }
 .updated b { font-weight: 700; margin-right: 4px; }
 .col-rank .stack { margin-top: 16px; }
+/* Power Rankings: one table instead of separate pills */
+#rankings #rank-list { gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; flex: none; }
+#rankings #rank-list .row { background: none; border: 0; border-radius: 0; border-top: 1px solid var(--divider, var(--line)); }
+#rankings #rank-list .row:first-child { border-top: 0; }
+
 .team { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
 .chg { flex: none; min-width: 32px; height: 18px; padding: 0 6px; border-radius: 6px; background: var(--pill); display: inline-flex; align-items: center; justify-content: center; gap: 3px; font-size: 12px; font-weight: 700; color: var(--fg); }
 .chg, .chg.up, .chg.down { color: var(--fg); } .chg.up svg { color: var(--green); } .chg.down svg { color: var(--red); }
