@@ -428,20 +428,19 @@ html { scroll-padding-top: 84px; }
 @media (max-width: 1080px) { .stko-row { grid-template-columns: 1fr; } .fcol { grid-column: auto; margin-top: 44px; } .fcol::before { display: none; } }
 
 
-.fs27 { margin-top: 44px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 24px 28px 18px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.6fr); gap: 20px 40px; }
+.fs-row { margin-top: 44px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.fs27 { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px 20px 14px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .fs27 .fs-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
-.fs27 h3 { margin: 8px 0 10px; font-size: 22px; font-weight: 700; letter-spacing: .01em; }
-.fs27 p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--muted); max-width: 62ch; }
-.fs27 .fs-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; align-self: center; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-.fs27 .fs-f { padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; min-width: 0; border-top: 1px solid var(--divider, var(--line)); border-left: 1px solid var(--divider, var(--line)); }
+.fs27 h3 { margin: 8px 0 10px; font-size: 20px; font-weight: 700; letter-spacing: .01em; }
+.fs27 p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
+.fs27 .fs-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-top: auto; }
+.fs27 .fs-f { padding: 10px 12px; display: flex; flex-direction: column; gap: 3px; min-width: 0; border-top: 1px solid var(--divider, var(--line)); border-left: 1px solid var(--divider, var(--line)); }
 .fs27 .fs-f:nth-child(-n+2) { border-top: 0; } .fs27 .fs-f:nth-child(odd) { border-left: 0; }
 .fs27 .fs-f small { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
-.fs27 .fs-f b { font-size: 15px; font-weight: 700; } .fs27 .fs-f b.tba { color: var(--muted); font-weight: 600; }
-.fs27 .fs-f span { font-size: 12px; color: var(--muted); }
-.fs27 .fs-foot { grid-column: 1 / -1; border-top: 1px solid var(--divider, var(--line)); padding-top: 12px; font-size: 12px; color: var(--muted); }
+.fs27 .fs-f b { font-size: 14px; font-weight: 700; } .fs27 .fs-f b.tba { color: var(--muted); font-weight: 600; }
+.fs27 .fs-foot { border-top: 1px solid var(--divider, var(--line)); padding-top: 10px; font-size: 12px; color: var(--muted); }
 .fs27 .fs-foot a { color: var(--fg); text-decoration: underline; text-underline-offset: 2px; }
-@media (max-width: 900px) { .fs27 { grid-template-columns: minmax(0, 1fr); padding: 20px 18px 16px; gap: 18px; } .fs27 h3 { font-size: 19px; } }
-@media (max-width: 480px) { .fs27 .fs-facts { grid-template-columns: minmax(0, 1fr); } .fs27 .fs-f { border-left: 0 !important; border-top: 1px solid var(--divider, var(--line)) !important; } .fs27 .fs-f:first-child { border-top: 0 !important; } }
+@media (max-width: 1080px) { .fs-row { grid-template-columns: minmax(0, 1fr); } }
 .y27 { margin-top: 44px; }
 .y27 .y-sub { margin: 22px 0 12px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
 .y27 .y-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
@@ -856,20 +855,35 @@ html { overflow-x: hidden; overflow-x: clip; }
       <div class="updated"><b>Updated:</b> 10/19/26 6:00 AM</div>
     </aside>
   </div>
-  <section class="fs27" id="first-stand-2027" aria-label="First Stand: All In 2027">
-    <div class="fs-main">
-      <div class="fs-eyebrow">2027 &middot; International &middot; Announced</div>
-      <h3>First Stand: All In</h3>
-      <p>A one-time expanded edition of First Stand that opens the 2027 international season in China. Riot calls it the largest tournament it has ever produced, with more teams and more players than any previous international event. It replaces the Southeast Asia date announced earlier, and First Stand 2028 will be held in Southeast Asia.</p>
-    </div>
-    <div class="fs-facts">
-      <div class="fs-f"><small>Host</small><b>China</b><span>Moved from Southeast Asia</span></div>
-      <div class="fs-f"><small>Dates</small><b class="tba">To be announced</b><span>Opens the 2027 season</span></div>
-      <div class="fs-f"><small>Teams</small><b class="tba">To be announced</b><span>Most ever at an international (2026: 8)</span></div>
-      <div class="fs-f"><small>Format &amp; qualification</small><b class="tba">To be announced</b><span>Details expected in January</span></div>
-    </div>
-    <div class="fs-foot">Announced at the League of Legends Showcase, 13 Nov 2026 &middot; <a href="/tournament/FST">Past First Stand results</a></div>
-  </section>
+  <div class="fs-row">
+    <section class="fs27" id="first-stand-2027" aria-label="First Stand: All In">
+      <div class="fs-main">
+        <div class="fs-eyebrow">2027 &middot; International &middot; Announced</div>
+        <h3>First Stand: All In</h3>
+        <p>A one-time expanded First Stand opening the 2027 international season in China, with more teams and players than any previous international event. First Stand 2028 returns to Southeast Asia.</p>
+      </div>
+      <div class="fs-facts"><div class="fs-f"><small>Host</small><b>China</b></div><div class="fs-f"><small>Dates</small><b class="tba">TBA</b></div><div class="fs-f"><small>Teams</small><b class="tba">TBA</b></div><div class="fs-f"><small>Format</small><b class="tba">TBA</b></div></div>
+      <div class="fs-foot">Announced 13 Nov 2026 &middot; <a href="/tournament/FST">Past First Stand results</a></div>
+    </section>
+    <section class="fs27" id="msi-2027" aria-label="Mid-Season Invitational">
+      <div class="fs-main">
+        <div class="fs-eyebrow">2027 &middot; International</div>
+        <h3>Mid-Season Invitational</h3>
+        <p>The mid-year international tournament bringing together top regional teams. Host, dates and format have not been announced yet.</p>
+      </div>
+      <div class="fs-facts"><div class="fs-f"><small>Host</small><b class="tba">TBA</b></div><div class="fs-f"><small>Dates</small><b class="tba">TBA</b></div><div class="fs-f"><small>Teams</small><b class="tba">TBA</b></div><div class="fs-f"><small>Format</small><b class="tba">TBA</b></div></div>
+      <div class="fs-foot">Details to be announced &middot; <a href="/tournament/MSI">Past MSI results</a></div>
+    </section>
+    <section class="fs27" id="worlds-2027" aria-label="World Championship">
+      <div class="fs-main">
+        <div class="fs-eyebrow">2027 &middot; International</div>
+        <h3>World Championship</h3>
+        <p>The season-ending international tournament crowning the world champion. Host, dates and format have not been announced yet.</p>
+      </div>
+      <div class="fs-facts"><div class="fs-f"><small>Host</small><b class="tba">TBA</b></div><div class="fs-f"><small>Dates</small><b class="tba">TBA</b></div><div class="fs-f"><small>Teams</small><b class="tba">TBA</b></div><div class="fs-f"><small>Format</small><b class="tba">TBA</b></div></div>
+      <div class="fs-foot">Details to be announced &middot; <a href="/tournament/WLDs">Past Worlds results</a></div>
+    </section>
+  </div>
   <section class="y27" id="y2027" aria-label="2027 season">
     <h2>2027</h2>
     <div class="y-sub">Regional splits</div>
