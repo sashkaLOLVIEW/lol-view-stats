@@ -444,7 +444,7 @@ html { scroll-padding-top: 84px; }
 .fs27.fs-hero { grid-column: 1 / -1; height: 280px; background: #E96E31; border: 2px solid #E4A484; transition: box-shadow .2s ease; color: #fff; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); grid-template-rows: 1fr auto; gap: 0 56px; padding: 28px 32px 18px; box-sizing: border-box; }
 .fs27[hidden] { display: none; }
 .fs27.fs-hero { position: relative; overflow: hidden; isolation: isolate; }
-.fs27.fs-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: url(/fst-bg.webp) center 30% / cover no-repeat; opacity: .1; filter: saturate(.05); -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent), linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent), linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent); mask-composite: intersect; }
+.fs27.fs-hero::before { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 450px; max-width: 100%; z-index: -1; pointer-events: none; background: url(/fst-bg.webp) center / cover no-repeat; opacity: .1; filter: saturate(.05); -webkit-mask-image: linear-gradient(to right, transparent, #000 65%); mask-image: linear-gradient(to right, transparent, #000 65%); }
 .fs27.fs-hero:hover { box-shadow: 0 0 0 6px #E4A484; }
 .fs-hero h3 { margin: 0 0 12px; font-size: 40px; color: #fff; }
 .fs-hero p { color: rgba(255,255,255,.92); font-size: 14px; max-width: 60ch; }
