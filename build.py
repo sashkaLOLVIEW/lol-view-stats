@@ -1082,7 +1082,7 @@ def main(csv):
         _mp.write_text(json.dumps(_m, separators=(",", ":")), encoding="utf-8")
     except Exception as e: print("  player info for filters skipped:", e)
     wr(out / "data" / "logos.json", json.dumps(logos_all))
-    for _f in ("favicon.svg", "favicon.ico", "apple-touch-icon.png", "icon-192.png", "icon-512.png", "_redirects"):
+    for _f in ("favicon.svg", "fst-bg.webp", "favicon.ico", "apple-touch-icon.png", "icon-192.png", "icon-512.png", "_redirects"):
         if (ROOT / "site" / _f).exists(): (out / _f).write_bytes((ROOT / "site" / _f).read_bytes())
     if (ROOT / "site" / "filters.js").exists(): wr(out / "filters.js", rd("site/filters.js").replace("/*EI*/{}/*EI*/", json.dumps(json.load(open(ROOT / "config" / "event_icons.json")))))
 
