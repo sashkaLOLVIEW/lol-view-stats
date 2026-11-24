@@ -441,20 +441,19 @@ html { scroll-padding-top: 84px; }
 .fs27 .fs-f b { font-size: 14px; font-weight: 700; } .fs27 .fs-f b.tba { color: var(--muted); font-weight: 600; }
 .fs27 .fs-foot { border-top: 1px solid var(--divider, var(--line)); padding-top: 10px; font-size: 12px; color: var(--muted); }
 .fs27 .fs-foot a { color: var(--fg); text-decoration: underline; text-underline-offset: 2px; }
-.fs27.fs-hero { grid-column: 1 / -1; height: 280px; background: #E96E31; border: 2px solid #E4A484; transition: box-shadow .2s ease; color: #fff; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); grid-template-rows: 1fr auto; gap: 0 56px; padding: 28px 32px 18px; box-sizing: border-box; }
-.fs27[hidden] { display: none; }
+.fs27.fs-hero { grid-column: 1 / -1; height: 200px; background: #E96E31; border: 2px solid #E4A484; transition: box-shadow .2s ease; color: #fff; display: flex; flex-direction: column; justify-content: space-between; gap: 0; padding: 28px 32px 24px; box-sizing: border-box; }
 .fs27.fs-hero { position: relative; overflow: hidden; isolation: isolate; }
 .fs27.fs-hero::before { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 450px; max-width: 100%; z-index: -1; pointer-events: none; background: url(/fst-bg.webp) center / cover no-repeat; opacity: .1; filter: saturate(.05); -webkit-mask-image: linear-gradient(to right, transparent, #000 65%); mask-image: linear-gradient(to right, transparent, #000 65%); }
 .fs27.fs-hero:hover { box-shadow: 0 0 0 6px #E4A484; }
-.fs-hero h3 { margin: 0 0 12px; font-size: 40px; color: #fff; }
-.fs-hero p { color: rgba(255,255,255,.92); font-size: 14px; max-width: 60ch; }
-.fs-hero .fs-facts { display: flex; flex-direction: column; justify-content: center; gap: 12px; border: 0; border-radius: 0; margin: 0; overflow: visible; }
-.fs-hero .fs-f { flex-direction: row; justify-content: space-between; align-items: baseline; border: 0 !important; padding: 0; gap: 16px; }
+.fs-hero h3 { margin: 0; font-size: 40px; color: #fff; }
+.fs-hero p { color: rgba(255,255,255,.92); font-size: 14px; max-width: 110ch; margin-top: 8px; }
+.fs-hero .fs-main > p, .fs-hero .fs-facts { opacity: 0; transform: translateY(6px); transition: opacity .2s ease, transform .2s ease; }
+.fs27.fs-hero:hover .fs-main > p, .fs27.fs-hero:hover .fs-facts { opacity: 1; transform: none; }
+.fs-hero .fs-facts { display: flex; flex-direction: row; gap: 56px; border: 0; border-radius: 0; margin: 0; overflow: visible; }
+.fs-hero .fs-f { flex-direction: column; border: 0 !important; padding: 0; gap: 3px; }
 .fs-hero .fs-f small { color: rgba(255,255,255,.8); font-size: 11px; }
-.fs-hero .fs-f b, .fs-hero .fs-f b.tba { color: #fff; font-size: 16px; text-align: right; }
-.fs-hero .fs-foot { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.35); color: rgba(255,255,255,.9); }
-.fs-hero .fs-foot a { color: #fff; }
-@media (max-width: 1080px) { .fs27.fs-hero { height: auto; grid-template-columns: minmax(0, 1fr); gap: 20px; } }
+.fs-hero .fs-f b, .fs-hero .fs-f b.tba { color: #fff; font-size: 16px; text-align: left; }
+@media (max-width: 1080px), (hover: none) { .fs27.fs-hero { height: auto; gap: 18px; } .fs-hero .fs-main > p, .fs-hero .fs-facts { opacity: 1; transform: none; } .fs-hero .fs-facts { flex-wrap: wrap; gap: 20px 40px; } .fs-hero h3 { font-size: 32px; } }
 @media (max-width: 1080px) { .fs-row { grid-template-columns: minmax(0, 1fr); } }
 .y27 { margin-top: 44px; }
 .y27 .y-sub { margin: 22px 0 12px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
@@ -875,7 +874,6 @@ html { overflow-x: hidden; overflow-x: clip; }
         <p>A one-time expanded First Stand opening the 2027 international season in China, with more teams and players than any previous international event.</p>
       </div>
       <div class="fs-facts"><div class="fs-f"><small>Host</small><b>China</b></div><div class="fs-f"><small>Dates</small><b class="tba">TBA</b></div><div class="fs-f"><small>Teams</small><b class="tba">TBA</b></div><div class="fs-f"><small>Format</small><b class="tba">TBA</b></div></div>
-      <div class="fs-foot">Announced 13 Nov 2026 &middot; <a href="/tournament/FST">Past First Stand results</a></div>
     </section>
     <section class="fs27" id="msi-2027" hidden aria-label="Mid-Season Invitational">
       <div class="fs-main">
