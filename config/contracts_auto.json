@@ -1,5 +1,5 @@
 {
- "fetched": 1795408968.3072894,
+ "fetched": 1795494875.016386,
  "players": {
   "Cube": {
    "contract": "2027-11-16",
@@ -2211,11 +2211,6 @@
    "team": "DIA Ozarox Esports",
    "league": "LEC"
   },
-  "Thanatos": {
-   "contract": "2028-11-20",
-   "team": "Cloud9",
-   "league": "LCS"
-  },
   "Blaber": {
    "contract": "2028-11-20",
    "team": "Cloud9",
@@ -2344,31 +2339,6 @@
   "Quid": {
    "contract": "2027-11-15",
    "team": "Team Liquid",
-   "league": "LCS"
-  },
-  "Zamudo": {
-   "contract": "2026-11-16",
-   "team": "NRG",
-   "league": "LCS"
-  },
-  "Kisno": {
-   "contract": "2026-11-16",
-   "team": "NRG",
-   "league": "LCS"
-  },
-  "Sushee": {
-   "contract": "2026-11-16",
-   "team": "NRG",
-   "league": "LCS"
-  },
-  "Spica": {
-   "contract": "2026-11-16",
-   "team": "NRG",
-   "league": "LCS"
-  },
-  "Phymini": {
-   "contract": "2026-11-16",
-   "team": "NRG",
    "league": "LCS"
   },
   "Zothve": {
@@ -8538,15 +8508,6 @@
   },
   {
    "league": "LCS",
-   "player": "Thanatos",
-   "team": "Cloud9",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 20, 2028",
-   "contract": "2028-11-20"
-  },
-  {
-   "league": "LCS",
    "player": "Blaber",
    "team": "Cloud9",
    "tri": "",
@@ -8778,51 +8739,6 @@
    "role": "Mid",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LCS",
-   "player": "Zamudo",
-   "team": "NRG",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCS",
-   "player": "Kisno",
-   "team": "NRG",
-   "tri": "",
-   "role": "Jungle",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCS",
-   "player": "Sushee",
-   "team": "NRG",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCS",
-   "player": "Spica",
-   "team": "NRG",
-   "tri": "",
-   "role": "Support",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LCS",
-   "player": "Phymini",
-   "team": "NRG",
-   "tri": "",
-   "role": "Mid",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
   },
   {
    "league": "LCS",
