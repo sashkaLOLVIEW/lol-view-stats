@@ -162,6 +162,7 @@ img.lwi { }
 @container (max-width: 1000px) { .ser { padding-right: 20px; } .ser .sb { width: 20px; font-size: 10px; } }
 
 .hhd { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; } .hhd .cfd { margin-left: auto; }.hhd h2 { margin: 0; }
+.statt { margin: 0 0 10px; font-size: 15px; font-weight: 600; text-transform: none; letter-spacing: normal; color: var(--fg); }
 .cfd { position: relative; }
 .cfd .cb { display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; color: var(--fg); font: inherit; font-size: 13px; cursor: pointer; }
 .cfd .cb small { color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
@@ -645,7 +646,7 @@ html { overflow-x: hidden; overflow-x: clip; }
     var BI = { medal: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2h8l-2.5 6h-3z"/><circle cx="12" cy="15" r="6"/><path d="m12 12.5.9 1.8 2 .3-1.4 1.4.3 2-1.8-.9-1.8.9.3-2-1.4-1.4 2-.3z"/></svg>' };
     $('hero').insertAdjacentHTML('beforeend', (BD.awards[name] || []).length ? '<div class="badges">' + BD.awards[name].map(function (id) { var d = BD.defs[id]; return d ? '<span class="badge" tabindex="0" role="img" aria-label="' + d.name + '" data-tip="' + d.name + '">' + (d.event && window.LVF ? LVF.evIcon(d.event, 20) : (BI[d.icon] || BI.medal)) + '</span>' : ''; }).join('') + '</div>' : '');
     var st = [['WR %', Math.round(ag.w / ag.n * 100) + '%'], ['KDA', ag.kda.toFixed(1)], ['KILLS', ag.k.toFixed(1)], ['DEATHS', ag.d.toFixed(1)], ['CS/M', ag.cspm.toFixed(1)], ['KP %', ag.kp.toFixed(1) + '%'], ['FIRST BLOOD %', ag.fb == null ? '-' : Math.round(ag.fb) + '%'], ['DMG/M (%)', Math.round(ag.dpm) + ' (' + ag.ds.toFixed(1) + '%)'], ['GOLD/M (%)', Math.round(ag.gpm) + ' (' + ag.gs.toFixed(1) + '%)']];
-    $('stats').innerHTML = st.map(function (s) { return '<div class="srow"><span>' + s[0] + '</span><b>' + s[1] + '</b></div>'; }).join('');
+    $('stats').innerHTML = '<h2 class="statt">Statistics</h2>' + st.map(function (s) { return '<div class="srow"><span>' + s[0] + '</span><b>' + s[1] + '</b></div>'; }).join('');
     var by = {}; P.games.forEach(function (g) { (by[g.champ] = by[g.champ] || []).push(g); });
     champRows = Object.keys(by).map(function (c) { var a = agg(by[c]); a.name = c; a.ic = by[c][0].ic; a.wr = a.w / a.n * 100; return a; });
     drawTable();
