@@ -441,6 +441,16 @@ html { scroll-padding-top: 84px; }
 .fs27 .fs-f b { font-size: 14px; font-weight: 700; } .fs27 .fs-f b.tba { color: var(--muted); font-weight: 600; }
 .fs27 .fs-foot { border-top: 1px solid var(--divider, var(--line)); padding-top: 10px; font-size: 12px; color: var(--muted); }
 .fs27 .fs-foot a { color: var(--fg); text-decoration: underline; text-underline-offset: 2px; }
+.fs27.fs-hero { grid-column: 1 / -1; height: 280px; background: #FF5602; border-color: #FF5602; color: #fff; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); grid-template-rows: 1fr auto; gap: 0 56px; padding: 28px 32px 18px; box-sizing: border-box; }
+.fs-hero h3 { margin: 0 0 12px; font-size: 28px; color: #fff; }
+.fs-hero p { color: rgba(255,255,255,.92); font-size: 14px; max-width: 60ch; }
+.fs-hero .fs-facts { display: flex; flex-direction: column; justify-content: center; gap: 12px; border: 0; border-radius: 0; margin: 0; overflow: visible; }
+.fs-hero .fs-f { flex-direction: row; justify-content: space-between; align-items: baseline; border: 0 !important; padding: 0; gap: 16px; }
+.fs-hero .fs-f small { color: rgba(255,255,255,.8); font-size: 11px; }
+.fs-hero .fs-f b, .fs-hero .fs-f b.tba { color: #fff; font-size: 16px; text-align: right; }
+.fs-hero .fs-foot { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.35); color: rgba(255,255,255,.9); }
+.fs-hero .fs-foot a { color: #fff; }
+@media (max-width: 1080px) { .fs27.fs-hero { height: auto; grid-template-columns: minmax(0, 1fr); gap: 20px; } }
 @media (max-width: 1080px) { .fs-row { grid-template-columns: minmax(0, 1fr); } }
 .y27 { margin-top: 44px; }
 .y27 .y-sub { margin: 22px 0 12px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
@@ -597,8 +607,6 @@ html { scroll-padding-top: 84px; }
 
 .finder { position: relative; }
 .hg { position: relative; }
-.hero-bg { position: absolute; z-index: -1; pointer-events: none; left: 50%; width: 100vw; transform: translateX(-50%); top: -52px; height: 500px; background: url(/hero-bg.webp) center 12% / cover no-repeat; opacity: .1; filter: saturate(.05); -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 45%, transparent 100%), linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%); -webkit-mask-composite: source-in; mask-image: linear-gradient(to bottom, #000 0, #000 45%, transparent 100%), linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%); mask-composite: intersect; }
-@media (max-width: 760px) { .hero-bg { top: -52px; height: 340px; } }
 
 @media (max-width: 760px) { .page > .topbar + .finder { margin-top: 56px !important; } }
 .finder .search input { height: 46px; border-radius: 10px; padding: 0 56px 0 20px; font-size: 15px; }
@@ -822,7 +830,7 @@ html { overflow-x: hidden; overflow-x: clip; }
   </header>
 
 
-  <div class="hg"><div class="hero-bg" aria-hidden="true"></div><div class="hg-l">
+  <div class="hg"><div class="hg-l">
   <section class="finder">
     <label class="search">
       <svg width="18" height="18" viewBox="0 0 12 12" fill="none" stroke="var(--dim)" stroke-width="1.2" aria-hidden="true"><circle cx="5" cy="5" r="3.6"/><path d="m8 8 3 3"/></svg>
@@ -857,9 +865,8 @@ html { overflow-x: hidden; overflow-x: clip; }
     </aside>
   </div>
   <div class="fs-row">
-    <section class="fs27" id="first-stand-2027" aria-label="First Stand: All In">
+    <section class="fs27 fs-hero" id="first-stand-2027" aria-label="First Stand: All In">
       <div class="fs-main">
-        <div class="fs-eyebrow">2027 &middot; International &middot; Announced</div>
         <h3>First Stand: All In</h3>
         <p>A one-time expanded First Stand opening the 2027 international season in China, with more teams and players than any previous international event. First Stand 2028 returns to Southeast Asia.</p>
       </div>
