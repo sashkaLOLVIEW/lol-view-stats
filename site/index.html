@@ -442,6 +442,7 @@ html { scroll-padding-top: 84px; }
 .fs27 .fs-foot { border-top: 1px solid var(--divider, var(--line)); padding-top: 10px; font-size: 12px; color: var(--muted); }
 .fs27 .fs-foot a { color: var(--fg); text-decoration: underline; text-underline-offset: 2px; }
 .fs27.fs-hero { grid-column: 1 / -1; height: 280px; background: #E96E31; border: 2px solid #E4A484; transition: box-shadow .2s ease; color: #fff; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); grid-template-rows: 1fr auto; gap: 0 56px; padding: 28px 32px 18px; box-sizing: border-box; }
+.fs27[hidden] { display: none; }
 .fs27.fs-hero { position: relative; overflow: hidden; isolation: isolate; }
 .fs27.fs-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: url(/fst-bg.webp) center 30% / cover no-repeat; opacity: .1; filter: saturate(.05); -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent), linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent), linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent); mask-composite: intersect; }
 .fs27.fs-hero:hover { box-shadow: 0 0 0 6px #E4A484; }
@@ -876,7 +877,7 @@ html { overflow-x: hidden; overflow-x: clip; }
       <div class="fs-facts"><div class="fs-f"><small>Host</small><b>China</b></div><div class="fs-f"><small>Dates</small><b class="tba">TBA</b></div><div class="fs-f"><small>Teams</small><b class="tba">TBA</b></div><div class="fs-f"><small>Format</small><b class="tba">TBA</b></div></div>
       <div class="fs-foot">Announced 13 Nov 2026 &middot; <a href="/tournament/FST">Past First Stand results</a></div>
     </section>
-    <section class="fs27" id="msi-2027" aria-label="Mid-Season Invitational">
+    <section class="fs27" id="msi-2027" hidden aria-label="Mid-Season Invitational">
       <div class="fs-main">
         <div class="fs-eyebrow">2027 &middot; International</div>
         <h3>Mid-Season Invitational</h3>
@@ -885,7 +886,7 @@ html { overflow-x: hidden; overflow-x: clip; }
       <div class="fs-facts"><div class="fs-f"><small>Host</small><b class="tba">TBA</b></div><div class="fs-f"><small>Dates</small><b class="tba">TBA</b></div><div class="fs-f"><small>Teams</small><b class="tba">TBA</b></div><div class="fs-f"><small>Format</small><b class="tba">TBA</b></div></div>
       <div class="fs-foot">Details to be announced &middot; <a href="/tournament/MSI">Past MSI results</a></div>
     </section>
-    <section class="fs27" id="worlds-2027" aria-label="World Championship">
+    <section class="fs27" id="worlds-2027" hidden aria-label="World Championship">
       <div class="fs-main">
         <div class="fs-eyebrow">2027 &middot; International</div>
         <h3>World Championship</h3>
