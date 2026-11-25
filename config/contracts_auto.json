@@ -1,5 +1,5 @@
 {
- "fetched": 1795494875.016386,
+ "fetched": 1795581568.4216058,
  "players": {
   "Cube": {
    "contract": "2027-11-16",
@@ -1046,33 +1046,8 @@
    "team": "Saigon MVK Academy",
    "league": "LCP"
   },
-  "Guilhoto": {
-   "contract": "Day After Worlds 2026",
-   "team": "GIANTX",
-   "league": "LEC"
-  },
-  "Rhuckz": {
-   "contract": "Day After Worlds 2026",
-   "team": "GIANTX",
-   "league": "LEC"
-  },
-  "Maxlore": {
-   "contract": "Day After Worlds 2026",
-   "team": "GIANTX",
-   "league": "LEC"
-  },
   "Lospa": {
    "contract": "2027-11-15",
-   "team": "Fnatic",
-   "league": "LEC"
-  },
-  "GrabbZ": {
-   "contract": "Day After Worlds 2026",
-   "team": "Fnatic",
-   "league": "LEC"
-  },
-  "Gaax": {
-   "contract": "Day After Worlds 2026",
    "team": "Fnatic",
    "league": "LEC"
   },
@@ -1096,11 +1071,6 @@
    "team": "G2 Esports",
    "league": "LEC"
   },
-  "Memento": {
-   "contract": "Day After Worlds 2026",
-   "team": "G2 Esports",
-   "league": "LEC"
-  },
   "Perkz": {
    "contract": "Day After Worlds 2027",
    "team": "G2 Esports",
@@ -1118,16 +1088,6 @@
   },
   "Melzhet": {
    "contract": "Day After Worlds 2028",
-   "team": "Movistar KOI",
-   "league": "LEC"
-  },
-  "Alphari": {
-   "contract": "Day After Worlds 2026",
-   "team": "Movistar KOI",
-   "league": "LEC"
-  },
-  "Independent": {
-   "contract": "Day After Worlds 2026",
    "team": "Movistar KOI",
    "league": "LEC"
   },
@@ -1156,16 +1116,6 @@
    "team": "Natus Vincere",
    "league": "LEC"
   },
-  "Fredy122": {
-   "contract": "Day After Worlds 2026",
-   "team": "Natus Vincere",
-   "league": "LEC"
-  },
-  "GotoOne": {
-   "contract": "Day After Worlds 2026",
-   "team": "Natus Vincere",
-   "league": "LEC"
-  },
   "Tracyn": {
    "contract": "2027-11-15",
    "team": "Team Heretics",
@@ -1183,11 +1133,6 @@
   },
   "Nukeduck": {
    "contract": "Day After Worlds 2027",
-   "team": "Team Heretics",
-   "league": "LEC"
-  },
-  "Mithy": {
-   "contract": "Day After Worlds 2026",
    "team": "Team Heretics",
    "league": "LEC"
   },
@@ -1221,11 +1166,6 @@
    "team": "SK Gaming",
    "league": "LEC"
   },
-  "Duffman": {
-   "contract": "Day After Worlds 2026",
-   "team": "SK Gaming",
-   "league": "LEC"
-  },
   "Baguette": {
    "contract": "Day After Worlds 2027",
    "team": "SK Gaming",
@@ -1236,48 +1176,8 @@
    "team": "SK Gaming",
    "league": "LEC"
   },
-  "MenQ": {
-   "contract": "Day After Worlds 2026",
-   "team": "Shifters",
-   "league": "LEC"
-  },
   "Naak Nako": {
    "contract": "2027-11-15",
-   "team": "Team Vitality",
-   "league": "LEC"
-  },
-  "Lyncas": {
-   "contract": "2026-11-16",
-   "team": "Team Vitality",
-   "league": "LEC"
-  },
-  "Carzzy": {
-   "contract": "2026-11-16",
-   "team": "Team Vitality",
-   "league": "LEC"
-  },
-  "Fleshy": {
-   "contract": "2026-11-16",
-   "team": "Team Vitality",
-   "league": "LEC"
-  },
-  "Pad": {
-   "contract": "2026-11-16",
-   "team": "Team Vitality",
-   "league": "LEC"
-  },
-  "Arvindir": {
-   "contract": "Day After Worlds 2026",
-   "team": "Team Vitality",
-   "league": "LEC"
-  },
-  "FIESTA": {
-   "contract": "2026-11-16",
-   "team": "Team Vitality",
-   "league": "LEC"
-  },
-  "Hansen": {
-   "contract": "Day After Worlds 2026",
    "team": "Team Vitality",
    "league": "LEC"
   },
@@ -2221,11 +2121,6 @@
    "team": "Cloud9",
    "league": "LCS"
   },
-  "Tactical": {
-   "contract": "2028-11-20",
-   "team": "Cloud9",
-   "league": "LCS"
-  },
   "Vulcan": {
    "contract": "2029-11-15",
    "team": "Cloud9",
@@ -2259,11 +2154,6 @@
   "Swiffer": {
    "contract": "Day After Worlds 2027",
    "team": "Dignitas",
-   "league": "LCS"
-  },
-  "Gakgos": {
-   "contract": "2027-11-15",
-   "team": "FlyQuest",
    "league": "LCS"
   },
   "Gryffinn": {
@@ -2301,7 +2191,7 @@
    "team": "LYON",
    "league": "LCS"
   },
-  "Impact": {
+  "Hambak": {
    "contract": "2027-11-15",
    "team": "Sentinels",
    "league": "LCS"
@@ -6375,57 +6265,12 @@
   },
   {
    "league": "LEC",
-   "player": "Guilhoto",
-   "team": "GIANTX",
-   "tri": "",
-   "role": "HEAD COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
-   "player": "Rhuckz",
-   "team": "GIANTX",
-   "tri": "",
-   "role": "ASSISTANT COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
-   "player": "Maxlore",
-   "team": "GIANTX",
-   "tri": "",
-   "role": "ASSISTANT COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
    "player": "Lospa",
    "team": "Fnatic",
    "tri": "",
    "role": "SUPPORT",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LEC",
-   "player": "GrabbZ",
-   "team": "Fnatic",
-   "tri": "",
-   "role": "HEAD COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
-   "player": "Gaax",
-   "team": "Fnatic",
-   "tri": "",
-   "role": "STRATEGIC COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
   },
   {
    "league": "LEC",
@@ -6465,15 +6310,6 @@
   },
   {
    "league": "LEC",
-   "player": "Memento",
-   "team": "G2 Esports",
-   "tri": "",
-   "role": "ASSISTANT COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
    "player": "Perkz",
    "team": "G2 Esports",
    "tri": "",
@@ -6507,24 +6343,6 @@
    "role": "HEAD COACH",
    "raw_end": "Day After Worlds 2028",
    "contract": "Day After Worlds 2028"
-  },
-  {
-   "league": "LEC",
-   "player": "Alphari",
-   "team": "Movistar KOI",
-   "tri": "",
-   "role": "ASSISTANT COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
-   "player": "Independent",
-   "team": "Movistar KOI",
-   "tri": "",
-   "role": "ASSISTANT COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
   },
   {
    "league": "LEC",
@@ -6573,24 +6391,6 @@
   },
   {
    "league": "LEC",
-   "player": "Fredy122",
-   "team": "Natus Vincere",
-   "tri": "",
-   "role": "HEAD COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
-   "player": "GotoOne",
-   "team": "Natus Vincere",
-   "tri": "",
-   "role": "ASSISTANT COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
    "player": "Tracyn",
    "team": "Team Heretics",
    "tri": "TH",
@@ -6624,15 +6424,6 @@
    "role": "HEAD COACH",
    "raw_end": "Day After Worlds 2027",
    "contract": "Day After Worlds 2027"
-  },
-  {
-   "league": "LEC",
-   "player": "Mithy",
-   "team": "Team Heretics",
-   "tri": "",
-   "role": "STRATEGIC COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
   },
   {
    "league": "LEC",
@@ -6690,15 +6481,6 @@
   },
   {
    "league": "LEC",
-   "player": "Duffman",
-   "team": "SK Gaming",
-   "tri": "",
-   "role": "ASSISTANT COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
    "player": "Baguette",
    "team": "SK Gaming",
    "tri": "",
@@ -6717,84 +6499,12 @@
   },
   {
    "league": "LEC",
-   "player": "MenQ",
-   "team": "Shifters",
-   "tri": "",
-   "role": "ASSISTANT COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
    "player": "Naak Nako",
    "team": "Team Vitality",
    "tri": "VIT",
    "role": "TOP",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LEC",
-   "player": "Lyncas",
-   "team": "Team Vitality",
-   "tri": "",
-   "role": "JUNGLE",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Carzzy",
-   "team": "Team Vitality",
-   "tri": "",
-   "role": "ADC",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Fleshy",
-   "team": "Team Vitality",
-   "tri": "",
-   "role": "SUPPORT",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Pad",
-   "team": "Team Vitality",
-   "tri": "",
-   "role": "HEAD COACH",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Arvindir",
-   "team": "Team Vitality",
-   "tri": "",
-   "role": "STRATEGIC COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
-  },
-  {
-   "league": "LEC",
-   "player": "FIESTA",
-   "team": "Team Vitality",
-   "tri": "",
-   "role": "MID",
-   "raw_end": "November 16, 2026",
-   "contract": "2026-11-16"
-  },
-  {
-   "league": "LEC",
-   "player": "Hansen",
-   "team": "Team Vitality",
-   "tri": "",
-   "role": "STRATEGIC COACH",
-   "raw_end": "Day After Worlds 2026",
-   "contract": "Day After Worlds 2026"
   },
   {
    "league": "LEC",
@@ -8526,15 +8236,6 @@
   },
   {
    "league": "LCS",
-   "player": "Tactical",
-   "team": "Cloud9",
-   "tri": "",
-   "role": "Bot",
-   "raw_end": "November 20, 2028",
-   "contract": "2028-11-20"
-  },
-  {
-   "league": "LCS",
    "player": "Vulcan",
    "team": "Cloud9",
    "tri": "",
@@ -8595,15 +8296,6 @@
    "role": "LCS Head Coach",
    "raw_end": "Day After Worlds 2027",
    "contract": "Day After Worlds 2027"
-  },
-  {
-   "league": "LCS",
-   "player": "Gakgos",
-   "team": "FlyQuest",
-   "tri": "",
-   "role": "Top",
-   "raw_end": "November 15, 2027",
-   "contract": "2027-11-15"
   },
   {
    "league": "LCS",
@@ -8670,10 +8362,10 @@
   },
   {
    "league": "LCS",
-   "player": "Impact",
+   "player": "Hambak",
    "team": "Sentinels",
    "tri": "",
-   "role": "Top",
+   "role": "Jungle",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
   },
