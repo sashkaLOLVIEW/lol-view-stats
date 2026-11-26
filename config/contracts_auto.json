@@ -1,5 +1,5 @@
 {
- "fetched": 1795581568.4216058,
+ "fetched": 1795667871.9096737,
  "players": {
   "Cube": {
    "contract": "2027-11-16",
@@ -1148,11 +1148,6 @@
   },
   "Busio": {
    "contract": "2027-11-15",
-   "team": "Karmine Corp",
-   "league": "LEC"
-  },
-  "Reapered": {
-   "contract": "Day After Worlds 2027",
    "team": "Karmine Corp",
    "league": "LEC"
   },
@@ -6451,15 +6446,6 @@
    "role": "SUPPORT",
    "raw_end": "November 15, 2027",
    "contract": "2027-11-15"
-  },
-  {
-   "league": "LEC",
-   "player": "Reapered",
-   "team": "Karmine Corp",
-   "tri": "",
-   "role": "HEAD COACH",
-   "raw_end": "Day After Worlds 2027",
-   "contract": "Day After Worlds 2027"
   },
   {
    "league": "LEC",
