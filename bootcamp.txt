@@ -1,0 +1,3 @@
+soloQ accounts: 80 players, 0 typed by hand, 0 to look up on Leaguepedia
+  accounts with a #tag: 190 for 64 of 80 players
+no RIOT_API_KEY secret: soloQ ranks are skipped (add the secret in the repository settings to turn the Bootcamp page on)
